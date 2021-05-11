@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="搞清楚动画设置的每一个选项, 为之后学习优化打好基础.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity 动画相关页面">
+<meta property="og:url" content="https://kuroha.vip/unity/unity_animation.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="搞清楚动画设置的每一个选项, 为之后学习优化打好基础.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/unity/Mecanim.png">
+<meta property="og:image" content="https://kuroha.vip/unity/AnimationWindow.png">
+<meta property="og:image" content="https://kuroha.vip/unity/AnimationWindowRecord.png">
+<meta property="og:image" content="https://kuroha.vip/unity/AnimatorWindow.png">
+<meta property="og:image" content="https://kuroha.vip/unity/AnimatorWindowEntry.png">
+<meta property="article:published_time" content="2021-03-17T08:17:00.000Z">
+<meta property="article:modified_time" content="2021-05-11T15:12:08.698Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="Unity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/unity/Mecanim.png">
+
+
+<link rel="canonical" href="https://kuroha.vip/unity/unity_animation.html">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="../js/galmenu/css/GalMenu.css">
+
+<title>Unity 动画相关页面 | 二次元游宅客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">二次元游宅客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">47</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-捉小猫"><a href="/catch_the_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mecanim-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">Mecanim 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Animation-Clip-%E7%9A%84%E6%9D%A5%E6%BA%90"><span class="nav-number">2.</span> <span class="nav-text">Animation Clip 的来源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Model-Animation-Clip-Import"><span class="nav-number">2.1.</span> <span class="nav-text">Model Animation Clip Import</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Record-Animation-Clip"><span class="nav-number">2.2.</span> <span class="nav-text">Record Animation Clip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Animation-Events"><span class="nav-number">2.3.</span> <span class="nav-text">Animation Events</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Animation-Controller"><span class="nav-number">3.</span> <span class="nav-text">Animation Controller</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sub-State-Machine"><span class="nav-number">3.1.</span> <span class="nav-text">Sub-State Machine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Blend-Tree"><span class="nav-number">3.2.</span> <span class="nav-text">Blend Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E6%B8%A1%E6%9D%A1%E4%BB%B6"><span class="nav-number">3.3.</span> <span class="nav-text">过渡条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Animation-Clip-%E5%8D%95%E4%B8%AA%E5%8A%A8%E7%94%BB%E5%89%AA%E8%BE%91"><span class="nav-number">3.4.</span> <span class="nav-text">Animation Clip 单个动画剪辑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solo-%E5%92%8C-Mute-%E5%8A%9F%E8%83%BD"><span class="nav-number">3.4.1.</span> <span class="nav-text">Solo 和 Mute 功能</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Animator-%E7%BB%84%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">Animator 组件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Timeline"><span class="nav-number">5.</span> <span class="nav-text">Timeline</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/avatar/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="dGVuY2VudDovL0FkZENvbnRhY3QvP2Zyb21JZD00NSZmcm9tU3ViSWQ9MSZzdWJjbWQ9YWxsJnVpbj0xODMyNjEzMDAx" title="QQ → tencent:&#x2F;&#x2F;AddContact&#x2F;?fromId&#x3D;45&amp;fromSubId&#x3D;1&amp;subcmd&#x3D;all&amp;uin&#x3D;1832613001"><i class="fab fa-qq fa-fw"></i>QQ</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://kuroha.vip/images/weixin.png" title="WeChat → https:&#x2F;&#x2F;kuroha.vip&#x2F;images&#x2F;weixin.png"><i class="fab fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      我的朋友们
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9ub2FoYXBwcy5naXRodWIuaW8v" title="https:&#x2F;&#x2F;noahapps.github.io&#x2F;">Noah</span>
+        </li>
+    </ul>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/unity/unity_animation.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity 动画相关页面
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-17 16:17:00" itemprop="dateCreated datePublished" datetime="2021-03-17T16:17:00+08:00">2021-03-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-11 23:12:08" itemprop="dateModified" datetime="2021-05-11T23:12:08+08:00">2021-05-11</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">搞清楚动画设置的每一个选项, 为之后学习优化打好基础.</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+
+<h1 id="Mecanim-简介"><a href="#Mecanim-简介" class="headerlink" title="Mecanim 简介"></a>Mecanim 简介</h1><p>Unity 的动画系统英文名为: Mecanim, 是一个丰富而复杂的系统. 它支持从模型中直接导入的动画 (Model Import Settings), 也支持直接在 Unity 中创建的或录制的动画.</p>
+<p>Unity 中动画的最小单位是 &quot;动画剪辑 (Animation Clip)&quot;, 这是最小的一个动画单位, 里面包含了对游戏物体的 &quot;位置&quot;, &quot;旋转&quot;, &quot;缩放&quot;, &quot;颜色&quot; 等等很多属性的变化规则. 但是这些动画剪辑并不能直接应用到游戏物体上, 而是需要先在一个叫做 &quot;Animation Controller&quot; 的系统中对这些动画进行设置才行, 包括动画的播放条件, 动画之间的转换规则, 还可以使用遮罩来设置动画的生效范围等.</p>
+<p>使用 &quot;Animation Controller&quot; 将多个动画剪辑设置好规则之后, 就可以将这个 &quot;Animation Controller&quot; 应用到游戏物体上了, Unity 有一个叫做 &quot;Animator&quot; 的游戏组件可以使用并解析 &quot;Animation Controller&quot;.</p>
+<p>这样一个动画从导入或创建直到最后控制游戏物体的动作的整个流程就完成了.</p>
+<p><img data-src="Mecanim.png" alt="Mecanim"></p>
+<ol>
+<li>Project 中的动画放置到 Animation Controller 中</li>
+<li>在 Animation Controller 中混合动画生成一个 Animation Controller 文件</li>
+<li>人物骨骼文件加骨骼遮罩文件生成 Avatar 文件</li>
+<li>Animator 组件引用前面的 Animation Controller 文件和 Avatar 文件.</li>
+</ol>
+<h1 id="Animation-Clip-的来源"><a href="#Animation-Clip-的来源" class="headerlink" title="Animation Clip 的来源"></a>Animation Clip 的来源</h1><p>Unity 支持从外部源导入动画, 并允许在编辑器中使用 Animation 窗口从头开始创建动画剪辑.</p>
+<h2 id="Model-Animation-Clip-Import"><a href="#Model-Animation-Clip-Import" class="headerlink" title="Model Animation Clip Import"></a>Model Animation Clip Import</h2><p>要将模型动画导入到 Unity 中, 需要在模型导入页面的 Animation 选项卡中对动画进行帧数剪辑以及循环帧调整, 具体见另一篇模型导入的博客. <a href="https://kuroha.vip/unity_model_import_settings.html">跳转</a></p>
+<h2 id="Record-Animation-Clip"><a href="#Record-Animation-Clip" class="headerlink" title="Record Animation Clip"></a>Record Animation Clip</h2><p>在 Unity 的 Animation 窗口中还可以创建和编辑动画剪辑.</p>
+<p><img data-src="AnimationWindow.png" alt="AnimationWindow"></p>
+<p>左侧最下方的 &quot;Dopesheet&quot; 是关键帧查看模式, &quot;Curves&quot; 是曲线查看模式. 录制动画时关注点是关键帧, 所以使用关键帧模式, 但是调整动画时, 必须使用曲线模式, 因为 Unity 默认使用平滑插值曲线, 但是有些时候我们会希望使用线性动画曲, 因此必须打开曲线模式查看关键帧之间的过渡方式.</p>
+<p>选中想要查看的动画属性, 之后按下 <kbd>F</kbd> 键可以将右侧的视图缩放到适合观察这几个属性的缩放级别, 便于观察.</p>
+<p>按下 <kbd>A</kbd> 键则可以快速将右侧的视图缩放至查看全部动画属性的缩放级别.</p>
+<p><img data-src="AnimationWindowRecord.png" alt="AnimationWindowRecord"></p>
+<p>Preview: 启用时 Scene 窗口中会实时预览动画的样子, 关闭后 Scene 不会进行实时预览.</p>
+<p>第二个按钮是: 录制模式 [注] 如果打开录制模式, 那么预览模式也会始终打开.</p>
+<p>右侧时间线的标题颜色, 在预览模式下是<font color='blue'>蓝色</font>的, 在录制模式下是<font color='red'>红色</font>的.</p>
+<p>后面的按钮分别是:</p>
+<ul>
+<li>将播放的开头移到动画的开头.</li>
+<li>将播放的开头移到动画的上一个关键帧.</li>
+<li>将播放的开头移到动画的下一个关键帧.</li>
+<li>将播放的开头移到动画的结尾.</li>
+</ul>
+<p>还可使用以下键盘快捷键来控制动画播放开头:</p>
+<table>
+<thead>
+<tr>
+<th align="left">快捷键</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><kbd>,</kbd></td>
+<td align="left">跳到上一帧</td>
+</tr>
+<tr>
+<td align="left"><kbd>.</kbd></td>
+<td align="left">跳到下一帧</td>
+</tr>
+<tr>
+<td align="left"><kbd>Alt</kbd> + <kbd>,</kbd></td>
+<td align="left">跳到上一个关键帧</td>
+</tr>
+<tr>
+<td align="left"><kbd>Alt</kbd> + <kbd>.</kbd></td>
+<td align="left">跳到下一个关键帧</td>
+</tr>
+</tbody></table>
+<h2 id="Animation-Events"><a href="#Animation-Events" class="headerlink" title="Animation Events"></a>Animation Events</h2><p>时间线区域可以给动画添加动画事件, 动画的事件函数还可以接收一个参数, 这个参数可以是: <code>float</code>, <code>string</code>, <code>int</code>, <code>object</code>, <code>AnimationEvent</code> 类型, 其中 AnimationEvent 类型可以将动画的很多信息一次性全部传给动画事件函数.</p>
+<h1 id="Animation-Controller"><a href="#Animation-Controller" class="headerlink" title="Animation Controller"></a>Animation Controller</h1><p>Animation Controller 使用一种 &quot;状态机&quot; 的方式来管理所有的动画剪辑, 通过打开 Animator 窗口便可以看到图形化的状态机.</p>
+<p><img data-src="AnimatorWindow.png" alt="AnimatorWindow"></p>
+<ul>
+<li>Entry: 进入状态机的入口, 会连接一个初始的动画剪辑, 默认的动画剪辑为橙色, 过度线也是橙色. 另外 Entry 也可以使用普通的过渡条件过渡到其他的动画类型.</li>
+</ul>
+<p><img data-src="AnimatorWindowEntry.png" alt="AnimatorWindowEntry"></p>
+<ul>
+<li><p>Any State, 任意状态, 是一个始终存在的特殊状态. 当某个状态 &quot;无论当前是什么状态, 只要满足要求均可以跳转过去&quot; 的时候, 使用 Any State 将十分方便. 另外 <font color='red'>Unity 不允许将 Any State 作为退出过渡动画</font>.</p>
+</li>
+<li><p>Exit 出口, 退出状态机的出口.</p>
+</li>
+</ul>
+<h2 id="Sub-State-Machine"><a href="#Sub-State-Machine" class="headerlink" title="Sub-State Machine"></a>Sub-State Machine</h2><p>[<strong>常用</strong>] Sub-State Machine, 译为: 子状态机, 可以理解为就是动画剪辑在状态机中的一个文件夹, 当动画剪辑特别多的时候, 可以用来很方便的整理和规划所有的动画剪辑.</p>
+<h2 id="Blend-Tree"><a href="#Blend-Tree" class="headerlink" title="Blend Tree"></a>Blend Tree</h2><p>动画混合树.</p>
+<p>// TODO...</p>
+<h2 id="过渡条件"><a href="#过渡条件" class="headerlink" title="过渡条件"></a>过渡条件</h2><p>// TODO...</p>
+<h2 id="Animation-Clip-单个动画剪辑"><a href="#Animation-Clip-单个动画剪辑" class="headerlink" title="Animation Clip 单个动画剪辑"></a>Animation Clip 单个动画剪辑</h2><h3 id="Solo-和-Mute-功能"><a href="#Solo-和-Mute-功能" class="headerlink" title="Solo 和 Mute 功能"></a>Solo 和 Mute 功能</h3><p>这个功能主要应用于动画测试. 测试的时候一般需要控制变量, 每次测试都是测试特定的一条动画转换, 因此需要其他的动画切换此时就非常碍事了. 可以使用 <code>Solo</code> 仅启用勾选了 Solo 的动画过渡, 剩余的全部禁用.</p>
+<p>而有时候需要仅禁用一个动画转换, 其他的全部都要启用, 测试就可以使用 <code>Mute</code> 只禁用掉勾选了 Mute 的动画过渡, 剩余的全部启用.</p>
+<p>Unity 允许 Solo 和 Mute 同时勾选, 但是为了方便理解, <font color='red'><strong>禁止 1 条动画过渡同时勾选 Solo 和 Mute</strong></font>, 同时在使用这个功能时, 只允许同时使用其中一种, <font color='red'><strong>禁止两种同时使用</strong></font>.</p>
+<p>勾选了 Solo 的过渡箭头为<font color='green'><strong>绿色</strong></font>, 勾选了 Mute 的过渡箭头为<font color='red'><strong>红色</strong></font>.</p>
+<h1 id="Animator-组件"><a href="#Animator-组件" class="headerlink" title="Animator 组件"></a>Animator 组件</h1><p>Animator 组件挂载在游戏物体上, 其中需要引用 Animation Controller, 人形游戏物体还需要引用 Avatar.</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Controller</td>
+<td align="left">引用管理此角色动画的 Animator Controller</td>
+</tr>
+<tr>
+<td align="left">Avatar</td>
+<td align="left">人形角色的 Avatar</td>
+</tr>
+<tr>
+<td align="left">Apply Root Motion</td>
+<td align="left">勾选后, 在动画播放期间, 物体的运动相关参数完全由动画本身接管, 此时脚本控制无效. 取消勾选后, 则是由脚本来控制物体的运动参数</td>
+</tr>
+<tr>
+<td align="left">Update Mode</td>
+<td align="left"><strong>Normal</strong>: 与 Update 调用同步更新, 同时动画的速度与游戏时间标度一致; <strong>Animate Physics</strong>: 与 FixedUpdate 调用同步更新, 如果要对具有物理交互的对象的运动进行动画化, 应使用此模式, 例如可四处推动刚体对象的角色; <strong>Unscaled Time</strong>: 与 Update 调用同步更新, 但是动画的速度永远以 100% 的速度播放, 与时间标度无关. 应用于 UI 动画.</td>
+</tr>
+<tr>
+<td align="left">Culling Mode</td>
+<td align="left">动画剔除模式, <strong>Always Animate</strong>: 始终进行动画化; <strong>Cull Update Transforms</strong>: 剔除 Transform 的更新, 未显示时禁用 Transform 的重定向, IK和写入; <strong>Cull Completely</strong>: 完全剔除, 未显示时完全禁用动画</td>
+</tr>
+</tbody></table>
+<h1 id="Timeline"><a href="#Timeline" class="headerlink" title="Timeline"></a>Timeline</h1><p>// TODO...</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>咕噜咕噜~</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/donate/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/unity/unity_animation.html" title="Unity 动画相关页面">https://kuroha.vip/unity/unity_animation.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="https://twitter.com/KurohaKirito">
+          <span class="icon">
+            <i class="fab fa-twitter"></i>
+          </span>
+
+          <span class="label">Twitter</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+          <span class="icon">
+            <i class="fab fa-telegram"></i>
+          </span>
+
+          <span class="label">Telegram</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/images/followme/wechat.png">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
+
+          <span class="label">WeChat</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/atom.xml">
+          <span class="icon">
+            <i class="fa fa-rss"></i>
+          </span>
+
+          <span class="label">RSS</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Unity/" rel="tag"><i class="fa fa-tag"></i> Unity</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/unity/unity_model_import_settings.html" rel="prev" title="Unity 导入模型设置页面">
+                  <i class="fa fa-chevron-left"></i> Unity 导入模型设置页面
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/unity/unity_editor.html" rel="next" title="Unity 自定义编辑器">
+                  Unity 自定义编辑器 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-leaf"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kuroha</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="../js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="../js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="../js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="../js/crash_cheat.js"></script>
+
+
+<!--究极看板娘效果-->
+
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="../js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="../js/live2d_demo/autoload.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="../js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="../js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="../js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="../js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+</body>
+</html>

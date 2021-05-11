@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="搞清楚导入模型时的每一个选项, 为之后学习优化打好基础.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity 导入模型设置页面">
+<meta property="og:url" content="https://kuroha.vip/unity/unity_model_import_settings.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="搞清楚导入模型时的每一个选项, 为之后学习优化打好基础.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/unity/SceneView.png">
+<meta property="og:image" content="https://kuroha.vip/unity/MeshesView.png">
+<meta property="og:image" content="https://kuroha.vip/unity/GeometryView.png">
+<meta property="og:image" content="https://kuroha.vip/unity/model_animation.png">
+<meta property="article:published_time" content="2021-03-17T08:17:00.000Z">
+<meta property="article:modified_time" content="2021-05-11T15:12:08.701Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="Unity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/unity/SceneView.png">
+
+
+<link rel="canonical" href="https://kuroha.vip/unity/unity_model_import_settings.html">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="../js/galmenu/css/GalMenu.css">
+
+<title>Unity 导入模型设置页面 | 二次元游宅客</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">二次元游宅客</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">47</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-捉小猫"><a href="/catch_the_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Model"><span class="nav-number">1.</span> <span class="nav-text">Model</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Scene-%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">Scene 设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Scale-Factor"><span class="nav-number">1.1.1.</span> <span class="nav-text">Scale Factor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Convert-Units"><span class="nav-number">1.1.2.</span> <span class="nav-text">Convert Units</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bake-Axis-Conversion"><span class="nav-number">1.1.3.</span> <span class="nav-text">Bake Axis Conversion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Import-BlendShapes"><span class="nav-number">1.1.4.</span> <span class="nav-text">Import BlendShapes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Import-Visibility"><span class="nav-number">1.1.5.</span> <span class="nav-text">Import Visibility</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Import-Cameras"><span class="nav-number">1.1.6.</span> <span class="nav-text">Import Cameras</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Import-Lights"><span class="nav-number">1.1.7.</span> <span class="nav-text">Import Lights</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Preserve-Hierarchy"><span class="nav-number">1.1.8.</span> <span class="nav-text">Preserve Hierarchy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Meshes-%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">Meshes 设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mesh-Compression"><span class="nav-number">1.2.1.</span> <span class="nav-text">Mesh Compression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Read-Write-Enabled"><span class="nav-number">1.2.2.</span> <span class="nav-text">Read&#x2F;Write Enabled</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Optimize-Mesh"><span class="nav-number">1.2.3.</span> <span class="nav-text">Optimize Mesh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-Colliders"><span class="nav-number">1.2.4.</span> <span class="nav-text">Generate Colliders</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Geometry-%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text">Geometry 设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Keep-Quads"><span class="nav-number">1.3.1.</span> <span class="nav-text">Keep Quads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Weld-Vertices"><span class="nav-number">1.3.2.</span> <span class="nav-text">Weld Vertices</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Index-Format"><span class="nav-number">1.3.3.</span> <span class="nav-text">Index Format</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Legacy-Blend-Shape-Normals"><span class="nav-number">1.3.4.</span> <span class="nav-text">Legacy Blend Shape Normals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Normals"><span class="nav-number">1.3.5.</span> <span class="nav-text">Normals</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Normals-Mode"><span class="nav-number">1.3.6.</span> <span class="nav-text">Normals Mode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Smoothness-Source"><span class="nav-number">1.3.7.</span> <span class="nav-text">Smoothness Source</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Smoothing-Angle"><span class="nav-number">1.3.8.</span> <span class="nav-text">Smoothing Angle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tangents"><span class="nav-number">1.3.9.</span> <span class="nav-text">Tangents</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Swap-UVs"><span class="nav-number">1.3.10.</span> <span class="nav-text">Swap UVs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-Lightmap-UVs"><span class="nav-number">1.3.11.</span> <span class="nav-text">Generate Lightmap UVs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Rig"><span class="nav-number">2.</span> <span class="nav-text">Rig</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Animation-Type"><span class="nav-number">2.1.</span> <span class="nav-text">Animation Type</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#None"><span class="nav-number">2.1.1.</span> <span class="nav-text">None</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Legacy"><span class="nav-number">2.1.2.</span> <span class="nav-text">Legacy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generic"><span class="nav-number">2.1.3.</span> <span class="nav-text">Generic</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Humanoid"><span class="nav-number">2.1.4.</span> <span class="nav-text">Humanoid</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Animation"><span class="nav-number">3.</span> <span class="nav-text">Animation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Import-Constraints"><span class="nav-number">3.1.</span> <span class="nav-text">Import Constraints</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Import-Animation"><span class="nav-number">3.2.</span> <span class="nav-text">Import Animation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bake-Animations"><span class="nav-number">3.3.</span> <span class="nav-text">Bake Animations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Resample-Curves"><span class="nav-number">3.4.</span> <span class="nav-text">Resample Curves</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Anim-Compression"><span class="nav-number">3.5.</span> <span class="nav-text">Anim. Compression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Animated-Custom-Properties"><span class="nav-number">3.6.</span> <span class="nav-text">Animated Custom Properties</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Loop-Time"><span class="nav-number">3.7.</span> <span class="nav-text">Loop Time</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Additive-Reference-Pose"><span class="nav-number">3.8.</span> <span class="nav-text">Additive Reference Pose</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Curves"><span class="nav-number">3.9.</span> <span class="nav-text">Curves</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Events"><span class="nav-number">3.10.</span> <span class="nav-text">Events</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mask"><span class="nav-number">3.11.</span> <span class="nav-text">Mask</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Motion"><span class="nav-number">3.12.</span> <span class="nav-text">Motion</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Materials"><span class="nav-number">4.</span> <span class="nav-text">Materials</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/avatar/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="dGVuY2VudDovL0FkZENvbnRhY3QvP2Zyb21JZD00NSZmcm9tU3ViSWQ9MSZzdWJjbWQ9YWxsJnVpbj0xODMyNjEzMDAx" title="QQ → tencent:&#x2F;&#x2F;AddContact&#x2F;?fromId&#x3D;45&amp;fromSubId&#x3D;1&amp;subcmd&#x3D;all&amp;uin&#x3D;1832613001"><i class="fab fa-qq fa-fw"></i>QQ</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://kuroha.vip/images/weixin.png" title="WeChat → https:&#x2F;&#x2F;kuroha.vip&#x2F;images&#x2F;weixin.png"><i class="fab fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      我的朋友们
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+        </li>
+        <li class="links-of-blogroll-item">
+          <span class="exturl" data-url="aHR0cHM6Ly9ub2FoYXBwcy5naXRodWIuaW8v" title="https:&#x2F;&#x2F;noahapps.github.io&#x2F;">Noah</span>
+        </li>
+    </ul>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/unity/unity_model_import_settings.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity 导入模型设置页面
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-17 16:17:00" itemprop="dateCreated datePublished" datetime="2021-03-17T16:17:00+08:00">2021-03-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-11 23:12:08" itemprop="dateModified" datetime="2021-05-11T23:12:08+08:00">2021-05-11</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+        </span>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">搞清楚导入模型时的每一个选项, 为之后学习优化打好基础.</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <a id="more"></a>
+
+<p>Model Import Settings 页面有四个选项卡, 分别是: Model, Rig, Animation, Materials</p>
+<h1 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h1><p>Model 标签页主要是对模型进行设置, 共有三个方面的设置: Scene (场景), Meshes (网格), Geometry (几何)</p>
+<h2 id="Scene-设置"><a href="#Scene-设置" class="headerlink" title="Scene 设置"></a>Scene 设置</h2><p><img data-src="SceneView.png" alt="SceneView"></p>
+<h3 id="Scale-Factor"><a href="#Scale-Factor" class="headerlink" title="Scale Factor"></a>Scale Factor</h3><p>如果原始文件的比例 (来自模型文件) 不符合项目中的预期比例, 可以通过修改此值, 设置模型在 Unity 中的全局比例.</p>
+<h3 id="Convert-Units"><a href="#Convert-Units" class="headerlink" title="Convert Units"></a>Convert Units</h3><p>启用此选项可将模型文件中定义的模型比例转换为 Unity 的比例.</p>
+<p>转换公式为: 1cm (file) ⇒ 0.01m (Unity)</p>
+<h3 id="Bake-Axis-Conversion"><a href="#Bake-Axis-Conversion" class="headerlink" title="Bake Axis Conversion"></a>Bake Axis Conversion</h3><p>导入模型时, 如果模型使用的轴系和 Unity 中的轴系不一致，启用此属性可将轴转换结果直接烘焙到资源数据 (例如顶点或动画数据) 中.</p>
+<p>禁用此属性可在运行时补偿根物体的 Transform 组件变换, 以模拟轴转换.</p>
+<p>已知问题: Blender 导出的模型导入 Unity 后, 勾选此属性, 会在 Y 轴上产生 180 度旋转.</p>
+<p>原因: Blender 中将 -Y 轴的外观定义为 &quot;前视图&quot;, 但是 Blender 导出器在导出模型的时候却将 +Y 轴的外观定义为 &quot;前视图&quot;, 因此这是 Blender 导出器的 Bug.</p>
+<h3 id="Import-BlendShapes"><a href="#Import-BlendShapes" class="headerlink" title="Import BlendShapes"></a>Import BlendShapes</h3><p>允许 Unity 导入包含网格的 BlendShapes. (混合形状法线 / 表情), 导入混合形状法线时需要在 FBX 文件中具有平滑组.</p>
+<p>比如模型表情的实现, 模型导入到 Unity 中后, 基础模型要开启 <strong>Import BlendShapes</strong>, 对应的面部 <strong>SkinnedMeshRenderer</strong> 上会多出 <strong>BlendShape</strong> 的配置, 调整这些值就可以看到表情变化了.</p>
+<h3 id="Import-Visibility"><a href="#Import-Visibility" class="headerlink" title="Import Visibility"></a>Import Visibility</h3><p>导入可见性, 如果模型在导出之前设置为隐藏, 之后这个模型被导入到了 Unity 中, 并且勾选了这个选项, 那么模型拖到场景中之后就是隐藏的.</p>
+<h3 id="Import-Cameras"><a href="#Import-Cameras" class="headerlink" title="Import Cameras"></a>Import Cameras</h3><p>是否导入摄像机, 有的模型会在制作时就打好了摄像机, 这时导出的 FBX 文件中便保存了摄像机的信息.</p>
+<h3 id="Import-Lights"><a href="#Import-Lights" class="headerlink" title="Import Lights"></a>Import Lights</h3><p>灯光信息是否导入, 模型的灯光信息已经在 3D 软件中制作好了, 是否导入.</p>
+<h3 id="Preserve-Hierarchy"><a href="#Preserve-Hierarchy" class="headerlink" title="Preserve Hierarchy"></a>Preserve Hierarchy</h3><p>保留层次结构, 即使此模型只有一个根, 也要始终创建一个明确的预制根.</p>
+<p>通常, 导入模型的时候, Unity 会从模型中剥离所有空的根节点作为优化策略, 但是, 如果有多个 FBX 文件, 且它们具有相同层次结构的某些部分, 则可以使用此选项保留原始层次结构. 这样即使是多个文件构成的一个模型, 他们的层级结构也不会乱.</p>
+<h2 id="Meshes-设置"><a href="#Meshes-设置" class="headerlink" title="Meshes 设置"></a>Meshes 设置</h2><p><img data-src="MeshesView.png" alt="MeshesView"></p>
+<h3 id="Mesh-Compression"><a href="#Mesh-Compression" class="headerlink" title="Mesh Compression"></a>Mesh Compression</h3><table>
+<thead>
+<tr>
+<th align="left">压缩选项</th>
+<th align="left">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Off</td>
+<td align="left">不进行压缩</td>
+</tr>
+<tr>
+<td align="left">Low</td>
+<td align="left">使用低压缩比</td>
+</tr>
+<tr>
+<td align="left">Medium</td>
+<td align="left">使用中等压缩比</td>
+</tr>
+<tr>
+<td align="left">High</td>
+<td align="left">使用高压缩比</td>
+</tr>
+</tbody></table>
+<p>压缩网格, 在每个组件中使用网格边界和更低的位深来压缩网格数据.</p>
+<p>提高压缩比可以减小网格的文件大小, 但是会降低网格的精度.</p>
+<p>选用规则: 尽可能用压缩比高, 并且网格物体看起来与未压缩版本没有太大不同的压缩比率.</p>
+<p>这用来优化游戏体积非常有用.</p>
+<h3 id="Read-Write-Enabled"><a href="#Read-Write-Enabled" class="headerlink" title="Read/Write Enabled"></a>Read/Write Enabled</h3><p>启用此选项后, Unity 会将 Mesh 数据上传到 GPU 可寻址内存, 同时也将其保留在 CPU 可寻址内存中.</p>
+<p>这意味着 Unity 可以在运行时访问 Mesh 数据, 并且我们可以从脚本中访问它.</p>
+<p>例如要按程序生成网格或者要从网格复制某些数据, 则必须要勾选此选项.</p>
+<p>禁用此选项后, Unity 会将 Mesh 数据上传到 GPU 可寻址内存, 然后将其从 CPU 可寻址内存中删除.</p>
+<p>默认情况下, 此选项是禁用的.</p>
+<p>在大多数情况下, 应禁用此选项以节省运行时的内存使用量.</p>
+<p><strong>什么时候需要设置模型的 Read/Write Enabled ?</strong></p>
+<p>默认 Read/Write Enabled 不勾选的情况下, 粒子系统发射模型粒子时, 模型的 Mesh 是不可修改的, 如果想要在代码中实时地根据特定逻辑修改粒子系统中的粒子模型, 就必须将模型设置为 Read/Write Enabled.</p>
+<p>只有在以下情况下才能启此选项：</p>
+<ul>
+<li><strong>在代码中读取或写入网格数据</strong>. 比如代码中对 mesh 属性进行再次赋值时.</li>
+<li>将网格传递到 StaticBatchingUtility.Combine() 以在运行时合并网格时.</li>
+<li>使用网格以在运行时使用 NavMesh 构建组件来烘焙 NavMesh 时.</li>
+<li>当网格是凸面时, 可将网格与网格碰撞体一起使用, 并且网格碰撞体的变换具有负缩放时. 例如 (-1, 1, 1)</li>
+<li>将网格与网格碰撞体一起使用, 并且网格碰撞体的变换倾斜或截断时. 例如, 当旋转的变换具有缩放的父变换时</li>
+<li>将网格与网格碰撞体一起使用, 并且网格碰撞体的 Cooking Options 标志设置为默认值以外的任何值时.</li>
+</ul>
+<p>[<strong>注意</strong>]</p>
+<ul>
+<li>当 Unity 通过脚本创建一个网格时, 该值最初设置为 true.</li>
+<li>未标记为可读的网格在运行时从脚本访问任何数据数组时将抛出错误.</li>
+<li><strong>Unity Editor 中, 在游戏和渲染循环之外始终允许访问, 无论此设置如何.</strong></li>
+</ul>
+<h3 id="Optimize-Mesh"><a href="#Optimize-Mesh" class="headerlink" title="Optimize Mesh"></a>Optimize Mesh</h3><p>优化 Mesh, 让 Unity 确定三角形在网格中列出的顺序. Unity 会对顶点和索引重新排序以改善 GPU 性能.</p>
+<table>
+<thead>
+<tr>
+<th align="left">优化选项</th>
+<th align="left">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Nothing</td>
+<td align="left">不进行优化</td>
+</tr>
+<tr>
+<td align="left">Everything</td>
+<td align="left">[<strong>默认值</strong>] 让 Unity 重排多边形和顶点的顶点和索引.</td>
+</tr>
+<tr>
+<td align="left">Polygon Order</td>
+<td align="left">让 Unity 仅对多边形重新排序</td>
+</tr>
+<tr>
+<td align="left">Vertex Order</td>
+<td align="left">让 Unity 仅对顶点重新排序</td>
+</tr>
+</tbody></table>
+<h3 id="Generate-Colliders"><a href="#Generate-Colliders" class="headerlink" title="Generate Colliders"></a>Generate Colliders</h3><p>是否自动生成网格碰撞器.</p>
+<p>用于为环境几何体快速生成碰撞网格, <strong>禁止用于移动几何体</strong>.</p>
+<h2 id="Geometry-设置"><a href="#Geometry-设置" class="headerlink" title="Geometry 设置"></a>Geometry 设置</h2><p><img data-src="GeometryView.png" alt="GeometryView"></p>
+<h3 id="Keep-Quads"><a href="#Keep-Quads" class="headerlink" title="Keep Quads"></a>Keep Quads</h3><p>启用此属性可使 Unity 停止将包含四个顶点的多边形转换为三角形. </p>
+<p>四边形的曲面细分要比多边形的曲面细分效率更高.</p>
+<p>勾选此选项之后, 如果一个网格有四边形和三角形, 或者转换为三角形的 N 边形, 那么 Unity 会创建两个子网格来分离四边形和三角形. 一个子网格只包含三角形, 另一个只只包含四边形.</p>
+<h3 id="Weld-Vertices"><a href="#Weld-Vertices" class="headerlink" title="Weld Vertices"></a>Weld Vertices</h3><p>合并在空间中共享相同位置的顶点, 前提是这些顶点总体上共享相同的属性, 包括 UV, 法线, 切线和 VertexColor. 通过减少网格的总数量来优化网格的顶点计数.</p>
+<p>默认情况下启用此选项.</p>
+<h3 id="Index-Format"><a href="#Index-Format" class="headerlink" title="Index Format"></a>Index Format</h3><p>定义网格索引缓冲区的大小, 默认 Auto 即可.</p>
+<h3 id="Legacy-Blend-Shape-Normals"><a href="#Legacy-Blend-Shape-Normals" class="headerlink" title="Legacy Blend Shape Normals"></a>Legacy Blend Shape Normals</h3><p>启用此选项可基于 Smoothing Angle 值来计算法线.</p>
+<h3 id="Normals"><a href="#Normals" class="headerlink" title="Normals"></a>Normals</h3><p>定义是否以及如何计算法线.</p>
+<ul>
+<li>Import [默认值] 从文件中导入法线. 如果文件不包含法线, 则将计算法线.</li>
+<li>Calculate 直接根据 Normals Mode, Smoothness Source, Smoothing Angle 属性来计算法线.</li>
+<li>None 禁用法线. 如果网格既未正常贴图，也不受实时光照的影响，则使用此选项。</li>
+</ul>
+<h3 id="Normals-Mode"><a href="#Normals-Mode" class="headerlink" title="Normals Mode"></a>Normals Mode</h3><p>定义 Unity 计算法线的方式.</p>
+<h3 id="Smoothness-Source"><a href="#Smoothness-Source" class="headerlink" title="Smoothness Source"></a>Smoothness Source</h3><p>设置如何确定平滑行为</p>
+<h3 id="Smoothing-Angle"><a href="#Smoothing-Angle" class="headerlink" title="Smoothing Angle"></a>Smoothing Angle</h3><p>控制是否为硬边拆分顶点. 通常, 值越大, 产生的顶点越少.</p>
+<h3 id="Tangents"><a href="#Tangents" class="headerlink" title="Tangents"></a>Tangents</h3><p>定义如何导入或计算顶点切线.</p>
+<h3 id="Swap-UVs"><a href="#Swap-UVs" class="headerlink" title="Swap UVs"></a>Swap UVs</h3><p>在网格中交换 UV 通道.</p>
+<p>当漫射纹理使用光照贴图中的 UV 时需要勾选此选项.</p>
+<h3 id="Generate-Lightmap-UVs"><a href="#Generate-Lightmap-UVs" class="headerlink" title="Generate Lightmap UVs"></a>Generate Lightmap UVs</h3><p>为光照贴图创建第二个 UV 通道.</p>
+<h1 id="Rig"><a href="#Rig" class="headerlink" title="Rig"></a>Rig</h1><p>这个菜单项主要是对骨骼动画的类型进行设置.</p>
+<h2 id="Animation-Type"><a href="#Animation-Type" class="headerlink" title="Animation Type"></a>Animation Type</h2><table>
+<thead>
+<tr>
+<th align="left">动画类型</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">None</td>
+<td align="left">不导入动画</td>
+</tr>
+<tr>
+<td align="left">Legacy</td>
+<td align="left">使用旧版动画系统</td>
+</tr>
+<tr>
+<td align="left">Generic</td>
+<td align="left">非人形骨架动画系统, 通用动画系统</td>
+</tr>
+<tr>
+<td align="left">Humanoid</td>
+<td align="left">人形骨架动画系统</td>
+</tr>
+</tbody></table>
+<h3 id="None"><a href="#None" class="headerlink" title="None"></a>None</h3><p>静态组件选择 None, 不使用动画系统.</p>
+<h3 id="Legacy"><a href="#Legacy" class="headerlink" title="Legacy"></a>Legacy</h3><p>使用传统的动画系统.</p>
+<p>Generation 导入动画的方式.</p>
+<ul>
+<li>Don’t Import 不导入动画</li>
+<li>Store in Original Roots (Deprecated) 以原始根存储 (已弃用)</li>
+<li>Store in Nodes (Deprecated) 存储在节点中 (已弃用)</li>
+<li>Store in Root (Deprecated) 根存储 (已弃用)</li>
+<li>Store in Root (New) 根存储 (新)</li>
+</ul>
+<p>Skin Weights 设置可以影响单个顶点的最大骨骼数量.</p>
+<h3 id="Generic"><a href="#Generic" class="headerlink" title="Generic"></a>Generic</h3><p>通用动画系统</p>
+<p>Avatar Definition 选择如何获取 Avatar 的定义</p>
+<ul>
+<li>Create from this model 根据此模型创建 Avatar</li>
+<li>Copy from Other Avatar 使用另一份 Avatar</li>
+</ul>
+<p>Root node 设置 Avatar 的根节点</p>
+<p>Source 另一份 Avatar 的引用</p>
+<p>Skin Weights 设置可以影响单个顶点的最大骨骼数量</p>
+<p>Max Bones/Vertex 定义每个顶点的最大骨骼数. 可为每个顶点设置 1 到 32 个骨骼, 但是用来影响顶点的骨骼数量越多, 性能成本就越高</p>
+<p>Min Bone Weight 设置考虑骨骼权重的最低阈值. 权重计算将忽略小于此值的任何值, 并且 Unity 会将高于此值的骨骼权重放大, 且总计为 1.0</p>
+<p>Optimize Game Object 在 Avatar 和 Animator 组件中删除和存储所导入角色的游戏对象变换层级视图. 如果启用此选项, 角色的 SkinnedMeshRenderer 将使用 Unity 动画系统的内部骨架, 因此可提高动画角色的性能.</p>
+<p>Extra Transforms to Expose 指定已启用 Optimize Game Object 时, 希望 Unity 忽略的 Transform.</p>
+<h3 id="Humanoid"><a href="#Humanoid" class="headerlink" title="Humanoid"></a>Humanoid</h3><p>人形动画系统, 这个系统中的配置和 Generic 中的配置就只是多了一个 Configure… 按钮, 点击这个按钮会打开骨骼配置界面.</p>
+<p>// TODO... 骨骼配置界面</p>
+<h1 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h1><p>将模型中配置好的动画导入到 Unity 中, 形成 <strong>Animation Clips</strong> 动画文件, &quot;创建动画剪辑&quot; 这一步实质上就是定义动画段的起点和终点, 使它们尽可能匹配所需循环的第一帧和最后一帧, 之后在 <strong>Animator Controller</strong> 中就可以拖入这个动画文件进行动画的混合 (Blend Trees), 转换, 过渡等操作.</p>
+<p><img data-src="model_animation.png" alt="model_animation"></p>
+<h2 id="Import-Constraints"><a href="#Import-Constraints" class="headerlink" title="Import Constraints"></a>Import Constraints</h2><p>是否要将此模型资源的<strong>约束</strong>导入到 Unity 中.</p>
+<h2 id="Import-Animation"><a href="#Import-Animation" class="headerlink" title="Import Animation"></a>Import Animation</h2><p>是否要将此模型资源的<strong>动画</strong>导入到 Unity 中.</p>
+<h2 id="Bake-Animations"><a href="#Bake-Animations" class="headerlink" title="Bake Animations"></a>Bake Animations</h2><p>是否要通过反向动力学 (IK) 或模拟 (Simulation) 创建烘焙动画来推进运动关键帧.</p>
+<p>这个选项仅适用于 <strong>Autodesk Maya</strong>, <strong>Autodesk 3ds Max</strong> 和 <strong>Cinema 4D</strong> 文件.</p>
+<h2 id="Resample-Curves"><a href="#Resample-Curves" class="headerlink" title="Resample Curves"></a>Resample Curves</h2><p>仅当导入文件包含欧拉曲线时才会显示此选项. [<strong>默认启用</strong>]</p>
+<p>对模型中的动画曲线重新采样为<strong>四元数值</strong>, 并为动画中的每个帧生成一个新的<strong>四元数关键帧</strong>.</p>
+<p>仅当原始动画中的关键点之间存在插值问题时, 才应禁用此选项来保留最初创作的动画曲线.</p>
+<h2 id="Anim-Compression"><a href="#Anim-Compression" class="headerlink" title="Anim. Compression"></a>Anim. Compression</h2><p>导入动画时要使用的压缩类型.</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Off</td>
+<td align="left">禁用动画压缩</td>
+</tr>
+<tr>
+<td align="left">Keyframe Reduction</td>
+<td align="left">导入时减少冗余关键帧, 这个选项会影响动画文件大小(运行时内存)以及如何计算动画曲线</td>
+</tr>
+<tr>
+<td align="left">Keyframe Reduction and Compression</td>
+<td align="left">导入时减少关键帧并在文件中存储动画时压缩关键帧, 这仅影响文件大小, 运行时内存大小与 Keyframe Reduction 相同</td>
+</tr>
+<tr>
+<td align="left">Optimal</td>
+<td align="left">让 Unity 决定是通过减少关键帧还是通过使用密集格式来压缩动画, 此选项仅适用于 Generic 和 Humanoid 动画类型骨架</td>
+</tr>
+</tbody></table>
+<p>选择 Off 选项时, 意味着 Unity 不会在动画导入时减少关键帧数量, 因此可产生最高精度的动画, 但性能会降低, 文件会更大, 运行时内存大小将增加. 因此通常<font color='red'><strong>建议不要使用此选项 Off</strong></font>;</p>
+<p>如果需要更高精度的动画, 应启用关键帧减少 (Keyframe Reduction) 功能并减小允许的 Animation Compression Error 值.</p>
+<ul>
+<li>Rotation Error: 定义应减少的旋转曲线数量百分比.</li>
+<li>Position Error: 定义应减少的位置曲线数量.</li>
+<li>Scale Error: 定义应减少的比例曲线数量.</li>
+</ul>
+<p>以上数值使用的值越小, 压缩时舍弃的曲线数越少, 获得的动画精度便越高.</p>
+<h2 id="Animated-Custom-Properties"><a href="#Animated-Custom-Properties" class="headerlink" title="Animated Custom Properties"></a>Animated Custom Properties</h2><p>不勾选的时候, Unity 在导入 FBX 文件时仅支持一小部分属性, 例如转换, 旋转, 缩放和可见性, 而勾选此选项之后可以导入指定为 &quot;自定义用户属性&quot; 的任何 FBX 属性. 之后可以使用 <code>extraUserProperties</code> 在导入器脚本中指定标准 FBX 属性来处理这些属性.</p>
+<h2 id="Loop-Time"><a href="#Loop-Time" class="headerlink" title="Loop Time"></a>Loop Time</h2><p>表示这个动画切片在被应用时, 是否要循环播放.</p>
+<ul>
+<li>Loop Pose: 是否在循环播放的过程中, 对单次切片的开头和结尾时的姿态进行循环插值处理, 使开头和结尾连贯. 如果一个循环动画的首尾帧有差别, 选中这个选项 Unity 会对动画进行插帧让首尾帧看起来是连贯的, 循环起来没有缝隙, 但是很大概率会使动画变得很奇怪, 另外动画师一般都会做好可无缝循环的动画, 因此此选项基本不用.</li>
+<li>Cycle Offset: 是一个 0 到 1 之间的数值, 用来设定循环时, 起始播放位置的偏移, 并不会改变动画的长度. 如果按照截断动画的角度去想, 可以理解为这个选项仅控制第一次播放的动画长度, 不影响后续的循环动画.</li>
+</ul>
+<h2 id="Additive-Reference-Pose"><a href="#Additive-Reference-Pose" class="headerlink" title="Additive Reference Pose"></a>Additive Reference Pose</h2><p>启用此选项可以设置附加动画层基础参考姿势的帧.</p>
+<ul>
+<li>Pose Frame: 输入一个帧编号以用作参考姿势.</li>
+</ul>
+<h2 id="Curves"><a href="#Curves" class="headerlink" title="Curves"></a>Curves</h2><p>设置动画曲线.</p>
+<h2 id="Events"><a href="#Events" class="headerlink" title="Events"></a>Events</h2><p>设置动画事件.</p>
+<h2 id="Mask"><a href="#Mask" class="headerlink" title="Mask"></a>Mask</h2><p>设置动画遮罩.</p>
+<h2 id="Motion"><a href="#Motion" class="headerlink" title="Motion"></a>Motion</h2><p>设置根运动节点.</p>
+<h1 id="Materials"><a href="#Materials" class="headerlink" title="Materials"></a>Materials</h1><p>// TODO...</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>咕噜咕噜~</div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/donate/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/unity/unity_model_import_settings.html" title="Unity 导入模型设置页面">https://kuroha.vip/unity/unity_model_import_settings.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="https://twitter.com/KurohaKirito">
+          <span class="icon">
+            <i class="fab fa-twitter"></i>
+          </span>
+
+          <span class="label">Twitter</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+          <span class="icon">
+            <i class="fab fa-telegram"></i>
+          </span>
+
+          <span class="label">Telegram</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/images/followme/wechat.png">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
+
+          <span class="label">WeChat</span>
+        </a>
+      </div>
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/atom.xml">
+          <span class="icon">
+            <i class="fa fa-rss"></i>
+          </span>
+
+          <span class="label">RSS</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Unity/" rel="tag"><i class="fa fa-tag"></i> Unity</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/unity/unity_texture_import_settings.html" rel="prev" title="Unity 导入图片设置页面">
+                  <i class="fa fa-chevron-left"></i> Unity 导入图片设置页面
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/unity/unity_animation.html" rel="next" title="Unity 动画相关页面">
+                  Unity 动画相关页面 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-leaf"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Kuroha</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">240k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">3:38</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+  
+
+
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="../js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="../js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="../js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="../js/crash_cheat.js"></script>
+
+
+<!--究极看板娘效果-->
+
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="../js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="../js/live2d_demo/autoload.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="../js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="../js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="../js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="../js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+</body>
+</html>

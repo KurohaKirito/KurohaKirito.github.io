@@ -420,49 +420,6 @@
       </tags>
   </entry>
   <entry>
-    <title>委托(二) 委托与 &quot;回调和回调函数&quot;</title>
-    <url>/csharp/delegate_02.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="回调与回调函数"><a href="#回调与回调函数" class="headerlink" title="回调与回调函数"></a>回调与回调函数</h1><p>我也不太清楚为什么会出来一个 &quot;<font color='red'>回调函数</font>&quot; 的概念, 回调函数不就是一个参数吗?</p>
-<blockquote>
-<p>将方法 A 作为 方法 B 的一个参数传入到方法 B 中, 那么方法 A 就是方法 B 的回调函数.</p>
-</blockquote>
-<p>可以这样理解:</p>
-<ol>
-<li><p>&quot;回调&quot; 是一种技术: <font color='red'>将方法作为参数传入另一个方法!</font> 在各大编程语言, 脚本语言中都有实现这门技术!</p>
-</li>
-<li><p>&quot;回调函数&quot; 就是作为参数的方法!</p>
-</li>
-</ol>
-<p>强调: <strong>回调是一项技术! 回调函数是一个参数!</strong></p>
-<h1 id="quot-回调-quot-的用途"><a href="#quot-回调-quot-的用途" class="headerlink" title="&quot;回调&quot; 的用途"></a>&quot;回调&quot; 的用途</h1><ol>
-<li><p>因为 A 是作为参数传入 B 的, 那么在 B 中就可以编写很多的判断逻辑来准确控制 A 的执行时机, 当然用 retuan 返回执行标志, 通过执行标志来控制 A 的执行也是可以的, 但是这样不是还得对执行标志进行一次判断吗? 当然这个没什么影响, 但是万一这个执行标志无法返回呢, 对吧?</p>
-</li>
-<li><p>如果 B 中需要处理很复杂的数据, 而且这个数据很难使用 return 返回, 甚至可能根本无法使用 return, 但是 A 又必须要用到这个数据, 此时就可以利用 &quot;回调&quot; 这项技术了, 将 A 传入 B, 在 B 的内部执行 A, 这样 A 就可以获取到需要的数据了.</p>
-</li>
-<li><p>假设方法 B 可以随机获得一种食材, 食材有多种多样烹饪方法, 可以红烧, 可以清蒸, 可以煎炸, 此时就可以给 B 添加一个 &quot;回调函数&quot; 参数, 这个参数就是烹饪方法 A, 那么在执行方法 B 获取食材的同时就可以将烹饪方法 A 一并传入, 这样一道菜就直接做好了! 而且只要传入不同的 A 就可以做出不同的菜, 甚至在 B 里面还可以写判断方法, 控制某些食材只能用某些特定的烹饪方法!</p>
-</li>
-</ol>
-<p>总结: &quot;回调&quot; 可以做菜~!</p>
-<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><p>csharp 中由于方法无法作为参数进行传递, 所以想要在 csharp 中实现 &quot;回调&quot; 需要使用委托来实现, 下面是一个简单的示例.</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">namespace_CallBackTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">CallBackTest</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 随机器</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">readonly</span> Random random = <span class="keyword">new</span> Random();</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            CallBackTest callBackTest = <span class="keyword">new</span> CallBackTest();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 获取食材的同时将烹饪方法作为参数传入, 实现内部调用 -- 这就是 &quot;回调&quot; !</span></span><br><span class="line">            <span class="comment">// 含义为: 先获取食材, 之后使用参数内的烹饪方式对食材进行处理, 得到烹饪后的食物.</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook2);<span class="comment">//清蒸</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook3);<span class="comment">//煎炸</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line"></span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 获取食材</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;cook&quot;&gt;</span>烹饪方法<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GetIngredients</span>(<span class="params">Action&lt;<span class="keyword">string</span>&gt; cook</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">string</span> str_ingredient = <span class="keyword">string</span>.Empty;</span><br><span class="line">            <span class="keyword">int</span> int_ingredient = random.Next(<span class="number">1</span>, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (int_ingredient &gt; <span class="number">75</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                str_ingredient = <span class="string">&quot;大棒肉(&quot;</span> + int_ingredient + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(int_ingredient &gt; <span class="number">25</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                str_ingredient = <span class="string">&quot;鲈鱼(&quot;</span> + int_ingredient + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (int_ingredient == <span class="number">25</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                str_ingredient = <span class="string">&quot;杂烩兔肉块(&quot;</span> + int_ingredient + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">string</span>.IsNullOrEmpty(str_ingredient))</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;白忙了一天, 没有获得任何食材(&quot;</span> + int_ingredient + <span class="string">&quot;) !&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                cook(str_ingredient);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 烧烤</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;ingredient&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Cook1</span>(<span class="params"><span class="keyword">string</span> ingredient</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;获得了 &lt;烧烤&quot;</span> + ingredient + <span class="string">&quot;&gt; !&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 清蒸</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;ingredient&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Cook2</span>(<span class="params"><span class="keyword">string</span> ingredient</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;获得了 &lt;清蒸&quot;</span> + ingredient + <span class="string">&quot;&gt; !&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 煎炸</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;ingredient&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Cook3</span>(<span class="params"><span class="keyword">string</span> ingredient</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;获得了 &lt;炸&quot;</span> + ingredient + <span class="string">&quot;&gt; !&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzE5ODAxMTMx">回调函数（callback）是什么？<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL3EvMTAxMDAwMDAwNDE0OTEzMQ==">js的回调函数一般都用来做什么<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>CSharp</category>
-      </categories>
-      <tags>
-        <tag>CSharp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>csharp 中一些琐碎的知识</title>
     <url>/csharp/csharp_others.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -744,6 +701,49 @@
 </li>
 </ol>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8xMzMxNTkw">理解委托类型<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>CSharp</category>
+      </categories>
+      <tags>
+        <tag>CSharp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>委托(二) 委托与 &quot;回调和回调函数&quot;</title>
+    <url>/csharp/delegate_02.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="回调与回调函数"><a href="#回调与回调函数" class="headerlink" title="回调与回调函数"></a>回调与回调函数</h1><p>我也不太清楚为什么会出来一个 &quot;<font color='red'>回调函数</font>&quot; 的概念, 回调函数不就是一个参数吗?</p>
+<blockquote>
+<p>将方法 A 作为 方法 B 的一个参数传入到方法 B 中, 那么方法 A 就是方法 B 的回调函数.</p>
+</blockquote>
+<p>可以这样理解:</p>
+<ol>
+<li><p>&quot;回调&quot; 是一种技术: <font color='red'>将方法作为参数传入另一个方法!</font> 在各大编程语言, 脚本语言中都有实现这门技术!</p>
+</li>
+<li><p>&quot;回调函数&quot; 就是作为参数的方法!</p>
+</li>
+</ol>
+<p>强调: <strong>回调是一项技术! 回调函数是一个参数!</strong></p>
+<h1 id="quot-回调-quot-的用途"><a href="#quot-回调-quot-的用途" class="headerlink" title="&quot;回调&quot; 的用途"></a>&quot;回调&quot; 的用途</h1><ol>
+<li><p>因为 A 是作为参数传入 B 的, 那么在 B 中就可以编写很多的判断逻辑来准确控制 A 的执行时机, 当然用 retuan 返回执行标志, 通过执行标志来控制 A 的执行也是可以的, 但是这样不是还得对执行标志进行一次判断吗? 当然这个没什么影响, 但是万一这个执行标志无法返回呢, 对吧?</p>
+</li>
+<li><p>如果 B 中需要处理很复杂的数据, 而且这个数据很难使用 return 返回, 甚至可能根本无法使用 return, 但是 A 又必须要用到这个数据, 此时就可以利用 &quot;回调&quot; 这项技术了, 将 A 传入 B, 在 B 的内部执行 A, 这样 A 就可以获取到需要的数据了.</p>
+</li>
+<li><p>假设方法 B 可以随机获得一种食材, 食材有多种多样烹饪方法, 可以红烧, 可以清蒸, 可以煎炸, 此时就可以给 B 添加一个 &quot;回调函数&quot; 参数, 这个参数就是烹饪方法 A, 那么在执行方法 B 获取食材的同时就可以将烹饪方法 A 一并传入, 这样一道菜就直接做好了! 而且只要传入不同的 A 就可以做出不同的菜, 甚至在 B 里面还可以写判断方法, 控制某些食材只能用某些特定的烹饪方法!</p>
+</li>
+</ol>
+<p>总结: &quot;回调&quot; 可以做菜~!</p>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><p>csharp 中由于方法无法作为参数进行传递, 所以想要在 csharp 中实现 &quot;回调&quot; 需要使用委托来实现, 下面是一个简单的示例.</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">namespace_CallBackTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">CallBackTest</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 随机器</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">readonly</span> Random random = <span class="keyword">new</span> Random();</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            CallBackTest callBackTest = <span class="keyword">new</span> CallBackTest();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 获取食材的同时将烹饪方法作为参数传入, 实现内部调用 -- 这就是 &quot;回调&quot; !</span></span><br><span class="line">            <span class="comment">// 含义为: 先获取食材, 之后使用参数内的烹饪方式对食材进行处理, 得到烹饪后的食物.</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook2);<span class="comment">//清蒸</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook3);<span class="comment">//煎炸</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line"></span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 获取食材</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;cook&quot;&gt;</span>烹饪方法<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GetIngredients</span>(<span class="params">Action&lt;<span class="keyword">string</span>&gt; cook</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">string</span> str_ingredient = <span class="keyword">string</span>.Empty;</span><br><span class="line">            <span class="keyword">int</span> int_ingredient = random.Next(<span class="number">1</span>, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (int_ingredient &gt; <span class="number">75</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                str_ingredient = <span class="string">&quot;大棒肉(&quot;</span> + int_ingredient + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(int_ingredient &gt; <span class="number">25</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                str_ingredient = <span class="string">&quot;鲈鱼(&quot;</span> + int_ingredient + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (int_ingredient == <span class="number">25</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                str_ingredient = <span class="string">&quot;杂烩兔肉块(&quot;</span> + int_ingredient + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">string</span>.IsNullOrEmpty(str_ingredient))</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;白忙了一天, 没有获得任何食材(&quot;</span> + int_ingredient + <span class="string">&quot;) !&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                cook(str_ingredient);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 烧烤</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;ingredient&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Cook1</span>(<span class="params"><span class="keyword">string</span> ingredient</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;获得了 &lt;烧烤&quot;</span> + ingredient + <span class="string">&quot;&gt; !&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 清蒸</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;ingredient&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Cook2</span>(<span class="params"><span class="keyword">string</span> ingredient</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;获得了 &lt;清蒸&quot;</span> + ingredient + <span class="string">&quot;&gt; !&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 煎炸</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;ingredient&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Cook3</span>(<span class="params"><span class="keyword">string</span> ingredient</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;获得了 &lt;炸&quot;</span> + ingredient + <span class="string">&quot;&gt; !&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzE5ODAxMTMx">回调函数（callback）是什么？<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL3EvMTAxMDAwMDAwNDE0OTEzMQ==">js的回调函数一般都用来做什么<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>CSharp</category>
@@ -1420,8 +1420,6 @@
     <content><![CDATA[<a id="more"></a>
 
 <h1 id="2020-年-04-月-07-号"><a href="#2020-年-04-月-07-号" class="headerlink" title="2020 年 04 月 07 号"></a>2020 年 04 月 07 号</h1><h2 id="低血糖"><a href="#低血糖" class="headerlink" title="低血糖? !"></a>低血糖? !</h2><p>今早上起床的时候, 先是在床上玩了会游戏, 一看时间该去上班了, 就赶紧收拾去上班. 但是不知道是站起来的时候用力太猛还是其他的什么原因, 突然感觉胸口, 或者说心脏堵得慌, 感觉心脏的跳动频率都慢下来了, 正纳闷呢, 突然大脑就开始急速运转, 我能明显感觉到当时大脑就是在飞速地思考, 当然思考的都是些乱七八糟的东西, 之后大脑以及整个头部, 包括脸, 脖子都渐渐地变得麻木, 知觉越来越轻, 最后知觉完全消失, 我就倒在桌子上了, 刚倒那一瞬间, 我能感觉到我的手臂以及躯干都在试图维持住身体的平衡, 试图支撑住身体, 但是身体就是不争气, 在不停地往下倒, 手臂再怎么用力也无济于事, 大概就短短 2 秒左右吧, 我感觉我的手臂真的是尽了最大努力了, 最后身体倒在了桌子上, 头重重地砸在了桌面上, 桌子也因为整个身体的重量被推到了一边, 还好即时醒过来了, 也可能是疼的吧, 毕竟手臂磕在桌沿上了嘛. 之后我赶紧坐在了床边, 努力回想刚刚的经过. (怎么回事? 我刚刚是怎么了? 难道刚刚我是晕倒了? 我身体不会是出事了吧?) 不一会, 耳朵就开始耳鸣, 嗡 ~ ~ 嗡 ~ ~ 持续了大概 2 分钟吧, 这样晕倒的事情就告一段落了, 后面就正常生活工作. 现在下班回到家, 也没感觉到身体有什么不适, 总之, 后面多注意一下身体吧.</p>
-<h1 id="2020-年-04-月-10-号"><a href="#2020-年-04-月-10-号" class="headerlink" title="2020 年 04 月 10 号"></a>2020 年 04 月 10 号</h1><p>之前清明节的时候送给 Sakura (小樱) 的项链她戴上了, 她戴上了啊! 是不是对我有感觉了呢? 还是为了不让我心凉, 戴上让我看看呢? 唉, 不得而知啊...总之她还发了照片给我, 好开心😊</p>
-<p><img data-src="/images/diary/2020_04/Sakura_001.jpg" alt="Sakura"></p>
 <h1 id="2020-年-04-月-11-号"><a href="#2020-年-04-月-11-号" class="headerlink" title="2020 年 04 月 11 号"></a>2020 年 04 月 11 号</h1><h2 id="人生的意义"><a href="#人生的意义" class="headerlink" title="人生的意义? !"></a>人生的意义? !</h2><p>事件起源自王健的一次提问, 他问我驱动我前进的动力是什么? 驱动着我继续活下去的意念是什么? 我当时的回答的原文是:</p>
 <blockquote>
 <p>如果是其他人问我的话, 我应该会回复: 梦想吧!</p>
@@ -1451,8 +1449,29 @@
 <li><p>每个人都有自己的事可忙, 而不是无所事事. 闲时大家都有自己的兴趣爱好, 放松自己的同时, 又不会影响到他人.</p>
 </li>
 </ol>
-<p><strong>这段时间和 Sakura 的相处 (不就是微信上聊天嘛, 还想处? 弄得跟真的似的!), 我好累啊, 虽然原因是自己太投入了, 忘记了自己的生活, 但是我还是好希望她能搭理一下我😂, Kuroha! Fight!</strong></p>
-<p><img data-src="/images/diary/2020_04/666.png" alt="对面表示不想和你说话, 并向你扔了一张 666 !"></p>
+]]></content>
+      <categories>
+        <category>Diary</category>
+      </categories>
+      <tags>
+        <tag>Diary</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>日记系列--2020年06月</title>
+    <url>/diary/2020_06.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="2020-年-06-月-15-号"><a href="#2020-年-06-月-15-号" class="headerlink" title="2020 年 06 月 15 号"></a>2020 年 06 月 15 号</h1><h2 id="生活开始走上正轨了"><a href="#生活开始走上正轨了" class="headerlink" title="生活开始走上正轨了"></a>生活开始走上正轨了</h2><p>真的是好久好久没有写日记了, 最近还是发生了很多大事的:</p>
+<ol>
+<li>五一放假时给姐姐转养老费, 然后被银行黑了 4000 RMB!</li>
+<li>从五月十号开始直到六月十四号一直寄住在同事家里, 心里总不是滋味.</li>
+<li>六月十三号答辩结束, 老师还说我做的不错, 可是谁都不知道我只花了一周的事件准备毕设, 包括开题报告, 论文, PPT, 作品 (一款沙盒游戏)...</li>
+<li>六月十一号加班到凌晨两点, 真的服! 现在我都不知道当时咋坚持下来的, 哦, 对了, 是边听歌边敲代码坚持下来的...</li>
+</ol>
+<p>今天终于发工资了, 由于五月份请假太多, 导致工资只有 4174 元, 连这一个月的开销都不够: 1200 房租, 1000 花呗, 2000 爸爸的养老费... 不过还好, 下个月爸爸的养老费就是一月 1000 了, 由于不请假了, 工资也会上去, 总之生活在慢慢变好!</p>
+<p>还发现了一张当时玩 2048 游戏的分数记录, 我居然玩到了最大的方块到了 16384 !</p>
+<p><img data-src="/images/diary/2020_06/2048_MaxScore.jpg" alt="2048_MaxScore"></p>
 ]]></content>
       <categories>
         <category>Diary</category>
@@ -1493,29 +1512,6 @@
       </tags>
   </entry>
   <entry>
-    <title>日记系列--2020年06月</title>
-    <url>/diary/2020_06.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="2020-年-06-月-15-号"><a href="#2020-年-06-月-15-号" class="headerlink" title="2020 年 06 月 15 号"></a>2020 年 06 月 15 号</h1><h2 id="生活开始走上正轨了"><a href="#生活开始走上正轨了" class="headerlink" title="生活开始走上正轨了"></a>生活开始走上正轨了</h2><p>真的是好久好久没有写日记了, 最近还是发生了很多大事的:</p>
-<ol>
-<li>五一放假时给姐姐转养老费, 然后被银行黑了 4000 RMB!</li>
-<li>从五月十号开始直到六月十四号一直寄住在同事家里, 心里总不是滋味.</li>
-<li>六月十三号答辩结束, 老师还说我做的不错, 可是谁都不知道我只花了一周的事件准备毕设, 包括开题报告, 论文, PPT, 作品 (一款沙盒游戏)...</li>
-<li>六月十一号加班到凌晨两点, 真的服! 现在我都不知道当时咋坚持下来的, 哦, 对了, 是边听歌边敲代码坚持下来的...</li>
-</ol>
-<p>今天终于发工资了, 由于五月份请假太多, 导致工资只有 4174 元, 连这一个月的开销都不够: 1200 房租, 1000 花呗, 2000 爸爸的养老费... 不过还好, 下个月爸爸的养老费就是一月 1000 了, 由于不请假了, 工资也会上去, 总之生活在慢慢变好!</p>
-<p>还发现了一张当时玩 2048 游戏的分数记录, 我居然玩到了最大的方块到了 16384 !</p>
-<p><img data-src="/images/diary/2020_06/2048_MaxScore.jpg" alt="2048_MaxScore"></p>
-]]></content>
-      <categories>
-        <category>Diary</category>
-      </categories>
-      <tags>
-        <tag>Diary</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>游戏笔记</title>
     <url>/game/game_note.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -1527,8 +1523,9 @@
 </li>
 </ul>
 <h1 id="游戏王"><a href="#游戏王" class="headerlink" title="游戏王"></a>游戏王</h1><ul>
-<li><p>网盘: <span class="exturl" data-url="aHR0cDovL3lnb2NvcmUueXMxNjguY29tLw==">娱乐力量全开<i class="fa fa-external-link-alt"></i></span></p>
-</li>
+<li>网盘: <span class="exturl" data-url="aHR0cDovL3lnb2NvcmUueXMxNjguY29tLw==">娱乐力量全开<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<ul>
 <li><p>服务器: <span class="exturl" data-url="aHR0cHM6Ly95Z28yMzMuY29tLw==">223<i class="fa fa-external-link-alt"></i></span></p>
 </li>
 <li><p>开源: <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xsbHlhc3ZpZWwvWUdPUHJvVW5pdHlfVjI=">YGOPro2<i class="fa fa-external-link-alt"></i></span></p>
@@ -1562,6 +1559,12 @@
 </ul>
 <h1 id="维诺之战"><a href="#维诺之战" class="headerlink" title="维诺之战"></a>维诺之战</h1><ul>
 <li>手册: <span class="exturl" data-url="aHR0cDovL3d3dy53ZXNub3RoLm9yZy9tYW51YWwvZGV2L21hbnVhbC56aF9DTi5odG1sI19wcmVmYWNl">WiKi<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h1 id="饥荒联机版"><a href="#饥荒联机版" class="headerlink" title="饥荒联机版"></a>饥荒联机版</h1><ul>
+<li><p>官网: <span class="exturl" data-url="aHR0cHM6Ly9hY2NvdW50cy5rbGVpLmNvbS9hY2NvdW50L2luZm8=">Klei<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>直播掉落: <span class="exturl" data-url="aHR0cHM6Ly9saXZlLmJpbGliaWxpLmNvbS9ibGFja2JvYXJkL3N0YXJ2ZS0yMDIwLXBjLmh0bWw=">BiliBili<i class="fa fa-external-link-alt"></i></span></p>
+</li>
 </ul>
 ]]></content>
       <categories>
@@ -2001,112 +2004,6 @@
       </tags>
   </entry>
   <entry>
-    <title>学习社会保险制度</title>
-    <url>/lifetips/social_insurance.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="社会保险的结构构成"><a href="#社会保险的结构构成" class="headerlink" title="社会保险的结构构成"></a>社会保险的结构构成</h1><blockquote>
-<p>注: 由于后续政策可能变动, 所以在阅读本文之前, 请注意文章的最新更新时间.</p>
-</blockquote>
-<p>直接上图:</p>
-<p><img data-src="/images/social_insurance/Social_Insurance.png" alt="保险的构成"></p>
-<ul>
-<li><p>&quot;社会保险&quot; 简称 &quot;社保&quot;, &quot;城镇职工社会保险&quot; 简称 &quot;职保&quot;, &quot;城乡居民社会保险&quot; 简称 &quot;居保&quot;.</p>
-</li>
-<li><p>&quot;社保&quot; 一词非常广泛, 内部包含 7 种社会保险.</p>
-</li>
-<li><p>&quot;社保&quot; 分为两个大类: 一个是针对就业群体的 &quot;职保&quot;, 另一个是针对无业人群的 &quot;居保&quot;.</p>
-</li>
-<li><p>&quot;职保&quot; 全称: &quot;城镇职工社会保险&quot;, 它包含五种保险: &quot;城镇职工基本养老保险&quot;, &quot;城镇职工基本医疗保险&quot;, &quot;城镇职工失业保险&quot;, &quot;城镇职工工伤保险&quot;, &quot;城镇职工生育保险&quot;.</p>
-</li>
-<li><p>&quot;居保&quot; 全称: &quot;城乡居民社会保险&quot;, 它只包含两种保险: &quot;城乡居民基本养老保险&quot; 和 &quot;城乡居民基本医疗保险&quot;. 由于 &quot;失业保险&quot;, &quot;工伤保险&quot;, &quot;生育保险&quot; 都是和工作息息相关的, 所以 &quot;居保&quot; 自然不包含这三种保险.</p>
-</li>
-<li><p>&quot;医保&quot; 一词非常容易混淆, 它指代两种保险: &quot;城镇职工基本医疗保险&quot; 和 &quot;城乡居民基本医疗保险&quot;, 不同情况下要弄清具体含义.</p>
-</li>
-</ul>
-<h2 id="城镇职工基本养老保险"><a href="#城镇职工基本养老保险" class="headerlink" title="城镇职工基本养老保险"></a>城镇职工基本养老保险</h2><ul>
-<li><p>&quot;城镇职工基本养老保险&quot; 的目的是保障我们年迈退休后的基本生活需求, 为我们提供稳定可靠的生活经济来源.</p>
-</li>
-<li><p>&quot;城镇职工基本养老保险&quot; 是由企业和我们按照不同的缴费比例共同缴纳费用的. <font color=red>按月缴纳</font>.</p>
-</li>
-<li><p>&quot;城镇职工基本养老保险&quot; 的待遇是当我们退休后可以领取到养老金. (有前提条件)</p>
-</li>
-</ul>
-<h2 id="城镇职工基本医疗保险"><a href="#城镇职工基本医疗保险" class="headerlink" title="城镇职工基本医疗保险"></a>城镇职工基本医疗保险</h2><ul>
-<li><p>&quot;城镇职工基本医疗保险&quot; 简称 &quot;医保&quot;.</p>
-</li>
-<li><p>&quot;城镇职工基本医疗保险&quot; 的目的是减轻我们生活中因患病或受伤害而带来的医疗开销.</p>
-</li>
-<li><p>&quot;城镇职工基本医疗保险&quot; 也是由企业和我们按照不同的缴费比例共同缴纳费用的. <font color=red>按月缴纳</font>.</p>
-</li>
-<li><p>&quot;城镇职工基本医疗保险&quot; 的待遇是当我们患病并去医疗机构就诊而发生医疗费用后, 由医疗保险机构给予一定的经济补偿.</p>
-</li>
-</ul>
-<h2 id="城镇职工失业保险"><a href="#城镇职工失业保险" class="headerlink" title="城镇职工失业保险"></a>城镇职工失业保险</h2><ul>
-<li><p>&quot;城镇职工失业保险&quot; 的目的是为那些因失业而暂时中断生活经济来源的劳动者提供物质帮助以保障其基本生活, 并通过专业训练, 职业介绍等手段为其再就业创造条件.</p>
-</li>
-<li><p>&quot;城镇职工失业保险&quot; 也是由企业和我们按照不同的缴费比例共同缴纳费用的. <font color=red>按月缴纳</font>.</p>
-</li>
-<li><p>&quot;城镇职工失业保险&quot; 的最主要待遇是当我们失业时可以领取到失业保险金. (有前提条件)</p>
-</li>
-</ul>
-<h2 id="城镇职工工伤保险"><a href="#城镇职工工伤保险" class="headerlink" title="城镇职工工伤保险"></a>城镇职工工伤保险</h2><ul>
-<li><p>&quot;城镇职工工伤保险&quot; 是指劳动者在工作中或在规定的特殊情况下, 遭受意外伤害或患职业病导致暂时或永久丧失劳动能力甚至死亡时, 劳动者或其遗属从国家和社会获得物质帮助的一种社会保险制度.</p>
-</li>
-<li><p>&quot;城镇职工保险&quot; 生效的认定办法: 工伤保险实行无过错责任原则. 无论工伤事故的责任归于用人单位还是职工个人或第三者, 用人单位均应承担保险责任.</p>
-</li>
-<li><p>&quot;城镇职工工伤保险&quot; 的缴费: 劳动者不缴纳工伤保险费, <font color = red>全部费用由用人单位负担, 按月缴纳</font>.</p>
-</li>
-<li><p>&quot;城镇职工工伤保险&quot; 的待遇是当我们因工负伤或职业病暂时或永久失去劳动能力以及死亡时, 可以获得工伤保险金.</p>
-</li>
-</ul>
-<h2 id="城镇职工生育保险"><a href="#城镇职工生育保险" class="headerlink" title="城镇职工生育保险"></a>城镇职工生育保险</h2><ul>
-<li><p>&quot;城镇职工生育保险&quot; 是在劳动者因生育子女而导致劳动力暂时中断时, 由国家和社会及时给予物质帮助的一项社会保险制度.</p>
-</li>
-<li><p>&quot;城镇职工生育保险&quot; 的缴费: 劳动者不缴纳生育保险费, <font color = red>全部费用由用人单位负担, 按月缴纳</font>.</p>
-</li>
-<li><p>&quot;城镇职工生育保险&quot; 的待遇主要包括两项: 一是生育津贴, 二是生育医疗待遇.</p>
-</li>
-</ul>
-<h2 id="城乡居民基本养老保险"><a href="#城乡居民基本养老保险" class="headerlink" title="城乡居民基本养老保险"></a>城乡居民基本养老保险</h2><ul>
-<li><p>&quot;城乡居民基本养老保险&quot; 的目的是保障城镇老年居民和乡村老年居民的基本生活需求, 为他们提供稳定可靠的生活经济来源.</p>
-</li>
-<li><p>&quot;城乡居民基本养老保险&quot; 的缴费是自选档次进行缴费, 档次越高费用越高, 国家补贴一部分费用. <font color=red>按年缴纳</font>.</p>
-</li>
-<li><p>&quot;城乡居民基本养老保险&quot; 的待遇也是可以领取到养老金, 采用多缴多得原则, 年轻时上缴的总金额越多, 年迈时领取到的养老金也就越多. (有前提条件))</p>
-</li>
-</ul>
-<h2 id="城乡居民基本医疗保险"><a href="#城乡居民基本医疗保险" class="headerlink" title="城乡居民基本医疗保险"></a>城乡居民基本医疗保险</h2><ul>
-<li><p>&quot;城乡居民基本医疗保险&quot; 也简称 &quot;医保&quot;, 医保是最需要大家关注的保险, 应当深入了解学习.</p>
-</li>
-<li><p>&quot;城乡居民基本医疗保险&quot; 的目的是减轻城镇居民和乡村居民因患病或受伤害而带来的医疗开销.</p>
-</li>
-<li><p>&quot;城乡居民基本医疗保险&quot; 的缴费也是自选档次进行缴费, 档次越高费用越高, 国家补贴一部分费用. <font color=red>按年缴纳</font>.</p>
-</li>
-<li><p>&quot;城乡居民基本医疗保险&quot; 的待遇也是当我们患病并去医疗机构就诊而发生医疗费用后, 由医疗保险机构给予一定的经济补偿, 但是报销比例比起 &quot;城镇职工基本医疗保险&quot; 要低一些.</p>
-</li>
-</ul>
-<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h2 id="我只是一个农民-我想知道我一直缴纳的-quot-社保-quot-是什么"><a href="#我只是一个农民-我想知道我一直缴纳的-quot-社保-quot-是什么" class="headerlink" title="我只是一个农民, 我想知道我一直缴纳的 &quot;社保&quot; 是什么?"></a>我只是一个农民, 我想知道我一直缴纳的 &quot;社保&quot; 是什么?</h2><p>农民不属于职工, 所以农民所缴纳的社保就是指 &quot;城乡居民社会保险&quot;, 包含 &quot;城乡居民基本养老保险&quot; 和 &quot;城乡居民基本医疗保险&quot; 两种.</p>
-<h2 id="我现在只是一名学生-既不是失业-也不是就业-那么我一直缴纳的-quot-社保-quot-是什么"><a href="#我现在只是一名学生-既不是失业-也不是就业-那么我一直缴纳的-quot-社保-quot-是什么" class="headerlink" title="我现在只是一名学生, 既不是失业, 也不是就业, 那么我一直缴纳的 &quot;社保&quot; 是什么?"></a>我现在只是一名学生, 既不是失业, 也不是就业, 那么我一直缴纳的 &quot;社保&quot; 是什么?</h2><p>学生也不属于职工, 所以学生所缴纳的社保也是指 &quot;城乡居民社会保险&quot;, 但是学生不同于农民的地方是学生所缴纳的社保中不包含 &quot;城乡居民基本养老保险&quot;, 只包含 &quot;城乡居民基本医疗保险&quot;. 所以大多数时候老师或者校方会直接询问你是否缴纳 &quot;医保&quot;, 而不是询问你是否缴纳 &quot;社保&quot;. 当然这里所说的 &quot;医保&quot; 就是指 &quot;城乡居民基本医疗保险&quot;.</p>
-<h2 id="我刚刚参加工作-听说了-quot-五险一金-quot-它是什么"><a href="#我刚刚参加工作-听说了-quot-五险一金-quot-它是什么" class="headerlink" title="我刚刚参加工作, 听说了 &quot;五险一金&quot;, 它是什么?"></a>我刚刚参加工作, 听说了 &quot;五险一金&quot;, 它是什么?</h2><p>由于已经参加了工作, 便成为了职工人员, 所以就出现了 &quot;五险一金&quot;. &quot;五险&quot; 自然就是指 &quot;城镇职工社会保险&quot; 了, 由于 &quot;城镇职工社会保险&quot; 包含五种保险, 所以也被称作 &quot;五险&quot;, 而 &quot;一金&quot; 指的是 &quot;住房公积金&quot;.</p>
-<h2 id="我听说-quot-五险一金-quot-中有一个叫做-quot-生育险-quot-可是我一个男生-交-quot-生育险-quot-有什么用"><a href="#我听说-quot-五险一金-quot-中有一个叫做-quot-生育险-quot-可是我一个男生-交-quot-生育险-quot-有什么用" class="headerlink" title="我听说 &quot;五险一金&quot; 中有一个叫做 &quot;生育险&quot;, 可是我一个男生, 交 &quot;生育险&quot; 有什么用?"></a>我听说 &quot;五险一金&quot; 中有一个叫做 &quot;生育险&quot;, 可是我一个男生, 交 &quot;生育险&quot; 有什么用?</h2><ul>
-<li><p>虽然男生们不能生育宝宝, 但是男生们在公司也是有 10 天看护假期的, 按照生育险规定, 已参保的男性职工按规定享受看护假假期津贴.</p>
-</li>
-<li><p>男生们不能生育宝宝, 但是你的太太是要生育宝宝的啊, 如果你的太太没有就业, 也就没有缴纳生育险, 但是由于你缴纳了 &quot;职保&quot;(职保包含生育险), 那么你的太太同样可以享受其中的生育险待遇.</p>
-</li>
-</ul>
-<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI2ODQ2NDUwOS9hbnN3ZXIvMzM5NDY1OTQy">知乎用户 ID: 51社保余清泉<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-]]></content>
-      <categories>
-        <category>LifeTips</category>
-      </categories>
-      <tags>
-        <tag>生活知识</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>如何使用 MPV 播放器</title>
     <url>/lifetips/how_to_use_mpv_player.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -2404,6 +2301,112 @@
       </tags>
   </entry>
   <entry>
+    <title>学习社会保险制度</title>
+    <url>/lifetips/social_insurance.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="社会保险的结构构成"><a href="#社会保险的结构构成" class="headerlink" title="社会保险的结构构成"></a>社会保险的结构构成</h1><blockquote>
+<p>注: 由于后续政策可能变动, 所以在阅读本文之前, 请注意文章的最新更新时间.</p>
+</blockquote>
+<p>直接上图:</p>
+<p><img data-src="/images/social_insurance/Social_Insurance.png" alt="保险的构成"></p>
+<ul>
+<li><p>&quot;社会保险&quot; 简称 &quot;社保&quot;, &quot;城镇职工社会保险&quot; 简称 &quot;职保&quot;, &quot;城乡居民社会保险&quot; 简称 &quot;居保&quot;.</p>
+</li>
+<li><p>&quot;社保&quot; 一词非常广泛, 内部包含 7 种社会保险.</p>
+</li>
+<li><p>&quot;社保&quot; 分为两个大类: 一个是针对就业群体的 &quot;职保&quot;, 另一个是针对无业人群的 &quot;居保&quot;.</p>
+</li>
+<li><p>&quot;职保&quot; 全称: &quot;城镇职工社会保险&quot;, 它包含五种保险: &quot;城镇职工基本养老保险&quot;, &quot;城镇职工基本医疗保险&quot;, &quot;城镇职工失业保险&quot;, &quot;城镇职工工伤保险&quot;, &quot;城镇职工生育保险&quot;.</p>
+</li>
+<li><p>&quot;居保&quot; 全称: &quot;城乡居民社会保险&quot;, 它只包含两种保险: &quot;城乡居民基本养老保险&quot; 和 &quot;城乡居民基本医疗保险&quot;. 由于 &quot;失业保险&quot;, &quot;工伤保险&quot;, &quot;生育保险&quot; 都是和工作息息相关的, 所以 &quot;居保&quot; 自然不包含这三种保险.</p>
+</li>
+<li><p>&quot;医保&quot; 一词非常容易混淆, 它指代两种保险: &quot;城镇职工基本医疗保险&quot; 和 &quot;城乡居民基本医疗保险&quot;, 不同情况下要弄清具体含义.</p>
+</li>
+</ul>
+<h2 id="城镇职工基本养老保险"><a href="#城镇职工基本养老保险" class="headerlink" title="城镇职工基本养老保险"></a>城镇职工基本养老保险</h2><ul>
+<li><p>&quot;城镇职工基本养老保险&quot; 的目的是保障我们年迈退休后的基本生活需求, 为我们提供稳定可靠的生活经济来源.</p>
+</li>
+<li><p>&quot;城镇职工基本养老保险&quot; 是由企业和我们按照不同的缴费比例共同缴纳费用的. <font color=red>按月缴纳</font>.</p>
+</li>
+<li><p>&quot;城镇职工基本养老保险&quot; 的待遇是当我们退休后可以领取到养老金. (有前提条件)</p>
+</li>
+</ul>
+<h2 id="城镇职工基本医疗保险"><a href="#城镇职工基本医疗保险" class="headerlink" title="城镇职工基本医疗保险"></a>城镇职工基本医疗保险</h2><ul>
+<li><p>&quot;城镇职工基本医疗保险&quot; 简称 &quot;医保&quot;.</p>
+</li>
+<li><p>&quot;城镇职工基本医疗保险&quot; 的目的是减轻我们生活中因患病或受伤害而带来的医疗开销.</p>
+</li>
+<li><p>&quot;城镇职工基本医疗保险&quot; 也是由企业和我们按照不同的缴费比例共同缴纳费用的. <font color=red>按月缴纳</font>.</p>
+</li>
+<li><p>&quot;城镇职工基本医疗保险&quot; 的待遇是当我们患病并去医疗机构就诊而发生医疗费用后, 由医疗保险机构给予一定的经济补偿.</p>
+</li>
+</ul>
+<h2 id="城镇职工失业保险"><a href="#城镇职工失业保险" class="headerlink" title="城镇职工失业保险"></a>城镇职工失业保险</h2><ul>
+<li><p>&quot;城镇职工失业保险&quot; 的目的是为那些因失业而暂时中断生活经济来源的劳动者提供物质帮助以保障其基本生活, 并通过专业训练, 职业介绍等手段为其再就业创造条件.</p>
+</li>
+<li><p>&quot;城镇职工失业保险&quot; 也是由企业和我们按照不同的缴费比例共同缴纳费用的. <font color=red>按月缴纳</font>.</p>
+</li>
+<li><p>&quot;城镇职工失业保险&quot; 的最主要待遇是当我们失业时可以领取到失业保险金. (有前提条件)</p>
+</li>
+</ul>
+<h2 id="城镇职工工伤保险"><a href="#城镇职工工伤保险" class="headerlink" title="城镇职工工伤保险"></a>城镇职工工伤保险</h2><ul>
+<li><p>&quot;城镇职工工伤保险&quot; 是指劳动者在工作中或在规定的特殊情况下, 遭受意外伤害或患职业病导致暂时或永久丧失劳动能力甚至死亡时, 劳动者或其遗属从国家和社会获得物质帮助的一种社会保险制度.</p>
+</li>
+<li><p>&quot;城镇职工保险&quot; 生效的认定办法: 工伤保险实行无过错责任原则. 无论工伤事故的责任归于用人单位还是职工个人或第三者, 用人单位均应承担保险责任.</p>
+</li>
+<li><p>&quot;城镇职工工伤保险&quot; 的缴费: 劳动者不缴纳工伤保险费, <font color = red>全部费用由用人单位负担, 按月缴纳</font>.</p>
+</li>
+<li><p>&quot;城镇职工工伤保险&quot; 的待遇是当我们因工负伤或职业病暂时或永久失去劳动能力以及死亡时, 可以获得工伤保险金.</p>
+</li>
+</ul>
+<h2 id="城镇职工生育保险"><a href="#城镇职工生育保险" class="headerlink" title="城镇职工生育保险"></a>城镇职工生育保险</h2><ul>
+<li><p>&quot;城镇职工生育保险&quot; 是在劳动者因生育子女而导致劳动力暂时中断时, 由国家和社会及时给予物质帮助的一项社会保险制度.</p>
+</li>
+<li><p>&quot;城镇职工生育保险&quot; 的缴费: 劳动者不缴纳生育保险费, <font color = red>全部费用由用人单位负担, 按月缴纳</font>.</p>
+</li>
+<li><p>&quot;城镇职工生育保险&quot; 的待遇主要包括两项: 一是生育津贴, 二是生育医疗待遇.</p>
+</li>
+</ul>
+<h2 id="城乡居民基本养老保险"><a href="#城乡居民基本养老保险" class="headerlink" title="城乡居民基本养老保险"></a>城乡居民基本养老保险</h2><ul>
+<li><p>&quot;城乡居民基本养老保险&quot; 的目的是保障城镇老年居民和乡村老年居民的基本生活需求, 为他们提供稳定可靠的生活经济来源.</p>
+</li>
+<li><p>&quot;城乡居民基本养老保险&quot; 的缴费是自选档次进行缴费, 档次越高费用越高, 国家补贴一部分费用. <font color=red>按年缴纳</font>.</p>
+</li>
+<li><p>&quot;城乡居民基本养老保险&quot; 的待遇也是可以领取到养老金, 采用多缴多得原则, 年轻时上缴的总金额越多, 年迈时领取到的养老金也就越多. (有前提条件))</p>
+</li>
+</ul>
+<h2 id="城乡居民基本医疗保险"><a href="#城乡居民基本医疗保险" class="headerlink" title="城乡居民基本医疗保险"></a>城乡居民基本医疗保险</h2><ul>
+<li><p>&quot;城乡居民基本医疗保险&quot; 也简称 &quot;医保&quot;, 医保是最需要大家关注的保险, 应当深入了解学习.</p>
+</li>
+<li><p>&quot;城乡居民基本医疗保险&quot; 的目的是减轻城镇居民和乡村居民因患病或受伤害而带来的医疗开销.</p>
+</li>
+<li><p>&quot;城乡居民基本医疗保险&quot; 的缴费也是自选档次进行缴费, 档次越高费用越高, 国家补贴一部分费用. <font color=red>按年缴纳</font>.</p>
+</li>
+<li><p>&quot;城乡居民基本医疗保险&quot; 的待遇也是当我们患病并去医疗机构就诊而发生医疗费用后, 由医疗保险机构给予一定的经济补偿, 但是报销比例比起 &quot;城镇职工基本医疗保险&quot; 要低一些.</p>
+</li>
+</ul>
+<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h2 id="我只是一个农民-我想知道我一直缴纳的-quot-社保-quot-是什么"><a href="#我只是一个农民-我想知道我一直缴纳的-quot-社保-quot-是什么" class="headerlink" title="我只是一个农民, 我想知道我一直缴纳的 &quot;社保&quot; 是什么?"></a>我只是一个农民, 我想知道我一直缴纳的 &quot;社保&quot; 是什么?</h2><p>农民不属于职工, 所以农民所缴纳的社保就是指 &quot;城乡居民社会保险&quot;, 包含 &quot;城乡居民基本养老保险&quot; 和 &quot;城乡居民基本医疗保险&quot; 两种.</p>
+<h2 id="我现在只是一名学生-既不是失业-也不是就业-那么我一直缴纳的-quot-社保-quot-是什么"><a href="#我现在只是一名学生-既不是失业-也不是就业-那么我一直缴纳的-quot-社保-quot-是什么" class="headerlink" title="我现在只是一名学生, 既不是失业, 也不是就业, 那么我一直缴纳的 &quot;社保&quot; 是什么?"></a>我现在只是一名学生, 既不是失业, 也不是就业, 那么我一直缴纳的 &quot;社保&quot; 是什么?</h2><p>学生也不属于职工, 所以学生所缴纳的社保也是指 &quot;城乡居民社会保险&quot;, 但是学生不同于农民的地方是学生所缴纳的社保中不包含 &quot;城乡居民基本养老保险&quot;, 只包含 &quot;城乡居民基本医疗保险&quot;. 所以大多数时候老师或者校方会直接询问你是否缴纳 &quot;医保&quot;, 而不是询问你是否缴纳 &quot;社保&quot;. 当然这里所说的 &quot;医保&quot; 就是指 &quot;城乡居民基本医疗保险&quot;.</p>
+<h2 id="我刚刚参加工作-听说了-quot-五险一金-quot-它是什么"><a href="#我刚刚参加工作-听说了-quot-五险一金-quot-它是什么" class="headerlink" title="我刚刚参加工作, 听说了 &quot;五险一金&quot;, 它是什么?"></a>我刚刚参加工作, 听说了 &quot;五险一金&quot;, 它是什么?</h2><p>由于已经参加了工作, 便成为了职工人员, 所以就出现了 &quot;五险一金&quot;. &quot;五险&quot; 自然就是指 &quot;城镇职工社会保险&quot; 了, 由于 &quot;城镇职工社会保险&quot; 包含五种保险, 所以也被称作 &quot;五险&quot;, 而 &quot;一金&quot; 指的是 &quot;住房公积金&quot;.</p>
+<h2 id="我听说-quot-五险一金-quot-中有一个叫做-quot-生育险-quot-可是我一个男生-交-quot-生育险-quot-有什么用"><a href="#我听说-quot-五险一金-quot-中有一个叫做-quot-生育险-quot-可是我一个男生-交-quot-生育险-quot-有什么用" class="headerlink" title="我听说 &quot;五险一金&quot; 中有一个叫做 &quot;生育险&quot;, 可是我一个男生, 交 &quot;生育险&quot; 有什么用?"></a>我听说 &quot;五险一金&quot; 中有一个叫做 &quot;生育险&quot;, 可是我一个男生, 交 &quot;生育险&quot; 有什么用?</h2><ul>
+<li><p>虽然男生们不能生育宝宝, 但是男生们在公司也是有 10 天看护假期的, 按照生育险规定, 已参保的男性职工按规定享受看护假假期津贴.</p>
+</li>
+<li><p>男生们不能生育宝宝, 但是你的太太是要生育宝宝的啊, 如果你的太太没有就业, 也就没有缴纳生育险, 但是由于你缴纳了 &quot;职保&quot;(职保包含生育险), 那么你的太太同样可以享受其中的生育险待遇.</p>
+</li>
+</ul>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzI2ODQ2NDUwOS9hbnN3ZXIvMzM5NDY1OTQy">知乎用户 ID: 51社保余清泉<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+]]></content>
+      <categories>
+        <category>LifeTips</category>
+      </categories>
+      <tags>
+        <tag>生活知识</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>常见的网络相关名词的含义 (一)</title>
     <url>/network/network_concept_mean_1.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -2661,6 +2664,40 @@
       </categories>
       <tags>
         <tag>Oracle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JSON 参考手册</title>
+    <url>/program/json_notes.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在实现毕业设计游戏的存档读档功能时选用了 JSON 文件进行读取和存储, 于是赶紧学习了一下 JSON 是啥...</p>
+<h1 id="JSON-简介"><a href="#JSON-简介" class="headerlink" title="JSON 简介"></a>JSON 简介</h1><p>JSON 全称是: JavaScript Object Notation (JavaScript 对象表示法)</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;sites&quot;</span>:</span><br><span class="line">    [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>:<span class="string">&quot;Kuroha&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;url&quot;</span>:<span class="string">&quot;kuroha.vip&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>:<span class="string">&quot;google&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;url&quot;</span>:<span class="string">&quot;www.google.com&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="JSON-语法"><a href="#JSON-语法" class="headerlink" title="JSON 语法"></a>JSON 语法</h1><ol>
+<li><p>JSON 语法是 JavaScript 语法的子集.</p>
+</li>
+<li><p>JOSN 的数据使用 键值对 (Key/Value) 表示. Key 必须是 string, Value 可以是 string, 可以是 number, 可以是 bool 等等, 数据与数据之间使用 , 分割.</p>
+ <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;aaa&quot;</span> : <span class="string">&quot;Kuroha&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;bbb&quot;</span> : <span class="number">1234</span>,</span><br><span class="line">    <span class="attr">&quot;ccc&quot;</span> : <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;ddd&quot;</span> : <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;eee&quot;</span> : <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JSON 中的类使用 {} 表示. 一个类中可以包含多个数据. 这里的数据可以是 类, 数组, 单条数据等.</p>
+ <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;sites1&quot;</span> :</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">&quot;name&quot;</span>:<span class="string">&quot;google&quot;</span>,</span><br><span class="line"></span><br><span class="line">        <span class="attr">&quot;url&quot;</span>:<span class="string">&quot;www.google.com&quot;</span>,</span><br><span class="line"></span><br><span class="line">        <span class="attr">&quot;二次元游宅客&quot;</span> :</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>:<span class="string">&quot;Kuroha&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;url&quot;</span>:<span class="string">&quot;kuroha.vip&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        <span class="attr">&quot;sites1_1&quot;</span> :</span><br><span class="line">        [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">&quot;name&quot;</span>:<span class="string">&quot;Kirito&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;url&quot;</span>:<span class="string">&quot;sao.com&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">&quot;name&quot;</span>:<span class="string">&quot;Asuna&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;url&quot;</span>:<span class="string">&quot;sao.online&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JSON 中的数组使用 [] 表示. 一个数组中可以包含多个类, 此时只能有类中的数据, 不能有类名. 数组中只包含数据的时候, 不能有数据名(Key), 只能有数据(Value). 因为数组是: 值的集合. (不同于编程语言, 这些值的类型是可以不同的.)</p>
+ <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;aaa&quot;</span> :</span><br><span class="line">    [</span><br><span class="line">        <span class="string">&quot;bbb&quot;</span>,</span><br><span class="line">        <span class="string">&quot;ccc&quot;</span>,</span><br><span class="line"></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span> : <span class="string">&quot;游宅客&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;url&quot;</span> : <span class="string">&quot;kuroha.vip&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Program</category>
+      </categories>
+      <tags>
+        <tag>JSON</tag>
       </tags>
   </entry>
   <entry>
@@ -2964,72 +3001,121 @@
       </tags>
   </entry>
   <entry>
-    <title>JSON 参考手册</title>
-    <url>/program/json_notes.html</url>
+    <title>Unity 动画相关页面</title>
+    <url>/unity/unity_animation.html</url>
     <content><![CDATA[<a id="more"></a>
 
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在实现毕业设计游戏的存档读档功能时选用了 JSON 文件进行读取和存储, 于是赶紧学习了一下 JSON 是啥...</p>
-<h1 id="JSON-简介"><a href="#JSON-简介" class="headerlink" title="JSON 简介"></a>JSON 简介</h1><p>JSON 全称是: JavaScript Object Notation (JavaScript 对象表示法)</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;sites&quot;</span>:</span><br><span class="line">    [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>:<span class="string">&quot;Kuroha&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;url&quot;</span>:<span class="string">&quot;kuroha.vip&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>:<span class="string">&quot;google&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;url&quot;</span>:<span class="string">&quot;www.google.com&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="JSON-语法"><a href="#JSON-语法" class="headerlink" title="JSON 语法"></a>JSON 语法</h1><ol>
-<li><p>JSON 语法是 JavaScript 语法的子集.</p>
-</li>
-<li><p>JOSN 的数据使用 键值对 (Key/Value) 表示. Key 必须是 string, Value 可以是 string, 可以是 number, 可以是 bool 等等, 数据与数据之间使用 , 分割.</p>
- <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;aaa&quot;</span> : <span class="string">&quot;Kuroha&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;bbb&quot;</span> : <span class="number">1234</span>,</span><br><span class="line">    <span class="attr">&quot;ccc&quot;</span> : <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">&quot;ddd&quot;</span> : <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">&quot;eee&quot;</span> : <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>JSON 中的类使用 {} 表示. 一个类中可以包含多个数据. 这里的数据可以是 类, 数组, 单条数据等.</p>
- <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;sites1&quot;</span> :</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">&quot;name&quot;</span>:<span class="string">&quot;google&quot;</span>,</span><br><span class="line"></span><br><span class="line">        <span class="attr">&quot;url&quot;</span>:<span class="string">&quot;www.google.com&quot;</span>,</span><br><span class="line"></span><br><span class="line">        <span class="attr">&quot;二次元游宅客&quot;</span> :</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span>:<span class="string">&quot;Kuroha&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;url&quot;</span>:<span class="string">&quot;kuroha.vip&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        <span class="attr">&quot;sites1_1&quot;</span> :</span><br><span class="line">        [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">&quot;name&quot;</span>:<span class="string">&quot;Kirito&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;url&quot;</span>:<span class="string">&quot;sao.com&quot;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">&quot;name&quot;</span>:<span class="string">&quot;Asuna&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;url&quot;</span>:<span class="string">&quot;sao.online&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>JSON 中的数组使用 [] 表示. 一个数组中可以包含多个类, 此时只能有类中的数据, 不能有类名. 数组中只包含数据的时候, 不能有数据名(Key), 只能有数据(Value). 因为数组是: 值的集合. (不同于编程语言, 这些值的类型是可以不同的.)</p>
- <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;aaa&quot;</span> :</span><br><span class="line">    [</span><br><span class="line">        <span class="string">&quot;bbb&quot;</span>,</span><br><span class="line">        <span class="string">&quot;ccc&quot;</span>,</span><br><span class="line"></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;name&quot;</span> : <span class="string">&quot;游宅客&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;url&quot;</span> : <span class="string">&quot;kuroha.vip&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-</li>
+<h1 id="Mecanim-简介"><a href="#Mecanim-简介" class="headerlink" title="Mecanim 简介"></a>Mecanim 简介</h1><p>Unity 的动画系统英文名为: Mecanim, 是一个丰富而复杂的系统. 它支持从模型中直接导入的动画 (Model Import Settings), 也支持直接在 Unity 中创建的或录制的动画.</p>
+<p>Unity 中动画的最小单位是 &quot;动画剪辑 (Animation Clip)&quot;, 这是最小的一个动画单位, 里面包含了对游戏物体的 &quot;位置&quot;, &quot;旋转&quot;, &quot;缩放&quot;, &quot;颜色&quot; 等等很多属性的变化规则. 但是这些动画剪辑并不能直接应用到游戏物体上, 而是需要先在一个叫做 &quot;Animation Controller&quot; 的系统中对这些动画进行设置才行, 包括动画的播放条件, 动画之间的转换规则, 还可以使用遮罩来设置动画的生效范围等.</p>
+<p>使用 &quot;Animation Controller&quot; 将多个动画剪辑设置好规则之后, 就可以将这个 &quot;Animation Controller&quot; 应用到游戏物体上了, Unity 有一个叫做 &quot;Animator&quot; 的游戏组件可以使用并解析 &quot;Animation Controller&quot;.</p>
+<p>这样一个动画从导入或创建直到最后控制游戏物体的动作的整个流程就完成了.</p>
+<p><img data-src="Mecanim.png" alt="Mecanim"></p>
+<ol>
+<li>Project 中的动画放置到 Animation Controller 中</li>
+<li>在 Animation Controller 中混合动画生成一个 Animation Controller 文件</li>
+<li>人物骨骼文件加骨骼遮罩文件生成 Avatar 文件</li>
+<li>Animator 组件引用前面的 Animation Controller 文件和 Avatar 文件.</li>
 </ol>
-]]></content>
-      <categories>
-        <category>Program</category>
-      </categories>
-      <tags>
-        <tag>JSON</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何创建自定义瓦片</title>
-    <url>/unity/unity_customizeTile.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="选用待继承的瓦片"><a href="#选用待继承的瓦片" class="headerlink" title="选用待继承的瓦片"></a>选用待继承的瓦片</h1><p>编写自定义瓦片其实就是通过继承 Unity 原有瓦片, 并添加新数据来创建自己的瓦片, 因此首先需要选用待继承的瓦片, 这个根据项目的需要选择即可.</p>
-<p>如果瓦片需要播放动画, 便需要继承动画瓦片, 需要使用预制体就继承预制体瓦片, 需要使用普通瓦片, 随机瓦片, 规则瓦片时都可以继承自规则瓦片.</p>
-<h1 id="添加自定义数据"><a href="#添加自定义数据" class="headerlink" title="添加自定义数据"></a>添加自定义数据</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 魔剑镇魂曲瓦片, 继承自 RuleTile</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">[<span class="meta">Serializable</span>]</span><br><span class="line">[<span class="meta">CreateAssetMenu(fileName = <span class="meta-string">&quot;New Sword Requiem Tile.asset&quot;</span>, menuName = <span class="meta-string">&quot;Sword Requiem Tile&quot;</span>)</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SwordRequiemTile</span> : <span class="title">RuleTile</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 枚举: 地形类型</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> EM_Terrain defaultTerrainType;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面是我自定义的 <code>Sword Requiem Tile</code>, 只添加了一个简单的枚举类型数据.</p>
+<h1 id="Animation-Clip-的来源"><a href="#Animation-Clip-的来源" class="headerlink" title="Animation Clip 的来源"></a>Animation Clip 的来源</h1><p>Unity 支持从外部源导入动画, 并允许在编辑器中使用 Animation 窗口从头开始创建动画剪辑.</p>
+<h2 id="Model-Animation-Clip-Import"><a href="#Model-Animation-Clip-Import" class="headerlink" title="Model Animation Clip Import"></a>Model Animation Clip Import</h2><p>要将模型动画导入到 Unity 中, 需要在模型导入页面的 Animation 选项卡中对动画进行帧数剪辑以及循环帧调整, 具体见另一篇模型导入的博客. <a href="https://kuroha.vip/unity_model_import_settings.html">跳转</a></p>
+<h2 id="Record-Animation-Clip"><a href="#Record-Animation-Clip" class="headerlink" title="Record Animation Clip"></a>Record Animation Clip</h2><p>在 Unity 的 Animation 窗口中还可以创建和编辑动画剪辑.</p>
+<p><img data-src="AnimationWindow.png" alt="AnimationWindow"></p>
+<p>左侧最下方的 &quot;Dopesheet&quot; 是关键帧查看模式, &quot;Curves&quot; 是曲线查看模式. 录制动画时关注点是关键帧, 所以使用关键帧模式, 但是调整动画时, 必须使用曲线模式, 因为 Unity 默认使用平滑插值曲线, 但是有些时候我们会希望使用线性动画曲, 因此必须打开曲线模式查看关键帧之间的过渡方式.</p>
+<p>选中想要查看的动画属性, 之后按下 <kbd>F</kbd> 键可以将右侧的视图缩放到适合观察这几个属性的缩放级别, 便于观察.</p>
+<p>按下 <kbd>A</kbd> 键则可以快速将右侧的视图缩放至查看全部动画属性的缩放级别.</p>
+<p><img data-src="AnimationWindowRecord.png" alt="AnimationWindowRecord"></p>
+<p>Preview: 启用时 Scene 窗口中会实时预览动画的样子, 关闭后 Scene 不会进行实时预览.</p>
+<p>第二个按钮是: 录制模式 [注] 如果打开录制模式, 那么预览模式也会始终打开.</p>
+<p>右侧时间线的标题颜色, 在预览模式下是<font color='blue'>蓝色</font>的, 在录制模式下是<font color='red'>红色</font>的.</p>
+<p>后面的按钮分别是:</p>
 <ul>
-<li><p>Serializable: 标记此类可以被序列化.</p>
+<li>将播放的开头移到动画的开头.</li>
+<li>将播放的开头移到动画的上一个关键帧.</li>
+<li>将播放的开头移到动画的下一个关键帧.</li>
+<li>将播放的开头移到动画的结尾.</li>
+</ul>
+<p>还可使用以下键盘快捷键来控制动画播放开头:</p>
+<table>
+<thead>
+<tr>
+<th align="left">快捷键</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><kbd>,</kbd></td>
+<td align="left">跳到上一帧</td>
+</tr>
+<tr>
+<td align="left"><kbd>.</kbd></td>
+<td align="left">跳到下一帧</td>
+</tr>
+<tr>
+<td align="left"><kbd>Alt</kbd> + <kbd>,</kbd></td>
+<td align="left">跳到上一个关键帧</td>
+</tr>
+<tr>
+<td align="left"><kbd>Alt</kbd> + <kbd>.</kbd></td>
+<td align="left">跳到下一个关键帧</td>
+</tr>
+</tbody></table>
+<h2 id="Animation-Events"><a href="#Animation-Events" class="headerlink" title="Animation Events"></a>Animation Events</h2><p>时间线区域可以给动画添加动画事件, 动画的事件函数还可以接收一个参数, 这个参数可以是: <code>float</code>, <code>string</code>, <code>int</code>, <code>object</code>, <code>AnimationEvent</code> 类型, 其中 AnimationEvent 类型可以将动画的很多信息一次性全部传给动画事件函数.</p>
+<h1 id="Animation-Controller"><a href="#Animation-Controller" class="headerlink" title="Animation Controller"></a>Animation Controller</h1><p>Animation Controller 使用一种 &quot;状态机&quot; 的方式来管理所有的动画剪辑, 通过打开 Animator 窗口便可以看到图形化的状态机.</p>
+<p><img data-src="AnimatorWindow.png" alt="AnimatorWindow"></p>
+<ul>
+<li>Entry: 进入状态机的入口, 会连接一个初始的动画剪辑, 默认的动画剪辑为橙色, 过度线也是橙色. 另外 Entry 也可以使用普通的过渡条件过渡到其他的动画类型.</li>
+</ul>
+<p><img data-src="AnimatorWindowEntry.png" alt="AnimatorWindowEntry"></p>
+<ul>
+<li><p>Any State, 任意状态, 是一个始终存在的特殊状态. 当某个状态 &quot;无论当前是什么状态, 只要满足要求均可以跳转过去&quot; 的时候, 使用 Any State 将十分方便. 另外 <font color='red'>Unity 不允许将 Any State 作为退出过渡动画</font>.</p>
 </li>
-<li><p>CreateAssetMenu: 标记此脚本可以在资源菜单中直接创建, 创建的默认文件为: <code>New Sword Requiem Tile.asset</code>, 菜单项的路径为: <code>Sword Requiem Tile</code>.</p>
-</li>
-<li><p>SwordRequiemTile: 继承自规则瓦片的自定义瓦片的类型名称.</p>
-</li>
-<li><p>defaultTerrainType: 自定义数据-默认地形类型.</p>
+<li><p>Exit 出口, 退出状态机的出口.</p>
 </li>
 </ul>
-<p>[<strong>注</strong>] 这个地方有一个挺大的坑, 可以看到我这里的自定义数据使用的是 &#39;字段&#39; 而非 &#39;属性&#39;, 因为使用属性, Inspector 面板中便无法持久保存瓦片属性.</p>
-<p>表现在项目中就是, 首先创建枚举, &#39;森林&#39; 的枚举值为 0, &#39;断层&#39; 为 1, 我创建了一个 Sword Requiem Tile, 默认地形类型自动初始化为 &#39;森林&#39;, 然后修改瓦片的地形类型为 &#39;断层&#39;, 之后绘制地形, 运行游戏, 发现一切正常, 但是一旦关闭 Unity, 再次打开时所有瓦片的自定义数据全部会被重置为 &#39;森林&#39;, 即默认值, 想想这个多可怕!</p>
-<p>以上情况不知道是不是我自己的失误, 总之这里使用原始的字段不会有任何问题.</p>
-<h1 id="编写自定义瓦片的-Inspector-面板"><a href="#编写自定义瓦片的-Inspector-面板" class="headerlink" title="编写自定义瓦片的 Inspector 面板"></a>编写自定义瓦片的 Inspector 面板</h1><p>之前使用 &#39;属性&#39; 作为自定义数据的时候编写了 Inspector 面板的脚本, 后来改用了 &#39;字段&#39; 之后就发现根本不用单独编写脚本了, Unity 会自动进行渲染...😅 这里就先不写 Inspector 面板该如何自定义了, 因为我也不会啊~ 留一个链接, 以便日后捡起来用.</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNDIzNDMxNQ==">自定义属性面板<i class="fa fa-external-link-alt"></i></span></p>
-<h1 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h1><p>2021 年 3 月 16 日更新自定义 Inspector 面板, 见博客: <a href="https://kuroha.vip/unity/unity_editor.html">Unity 自定义编辑器</a></p>
+<h2 id="Sub-State-Machine"><a href="#Sub-State-Machine" class="headerlink" title="Sub-State Machine"></a>Sub-State Machine</h2><p>[<strong>常用</strong>] Sub-State Machine, 译为: 子状态机, 可以理解为就是动画剪辑在状态机中的一个文件夹, 当动画剪辑特别多的时候, 可以用来很方便的整理和规划所有的动画剪辑.</p>
+<h2 id="Blend-Tree"><a href="#Blend-Tree" class="headerlink" title="Blend Tree"></a>Blend Tree</h2><p>动画混合树.</p>
+<p>// TODO...</p>
+<h2 id="过渡条件"><a href="#过渡条件" class="headerlink" title="过渡条件"></a>过渡条件</h2><p>// TODO...</p>
+<h2 id="Animation-Clip-单个动画剪辑"><a href="#Animation-Clip-单个动画剪辑" class="headerlink" title="Animation Clip 单个动画剪辑"></a>Animation Clip 单个动画剪辑</h2><h3 id="Solo-和-Mute-功能"><a href="#Solo-和-Mute-功能" class="headerlink" title="Solo 和 Mute 功能"></a>Solo 和 Mute 功能</h3><p>这个功能主要应用于动画测试. 测试的时候一般需要控制变量, 每次测试都是测试特定的一条动画转换, 因此需要其他的动画切换此时就非常碍事了. 可以使用 <code>Solo</code> 仅启用勾选了 Solo 的动画过渡, 剩余的全部禁用.</p>
+<p>而有时候需要仅禁用一个动画转换, 其他的全部都要启用, 测试就可以使用 <code>Mute</code> 只禁用掉勾选了 Mute 的动画过渡, 剩余的全部启用.</p>
+<p>Unity 允许 Solo 和 Mute 同时勾选, 但是为了方便理解, <font color='red'><strong>禁止 1 条动画过渡同时勾选 Solo 和 Mute</strong></font>, 同时在使用这个功能时, 只允许同时使用其中一种, <font color='red'><strong>禁止两种同时使用</strong></font>.</p>
+<p>勾选了 Solo 的过渡箭头为<font color='green'><strong>绿色</strong></font>, 勾选了 Mute 的过渡箭头为<font color='red'><strong>红色</strong></font>.</p>
+<h1 id="Animator-组件"><a href="#Animator-组件" class="headerlink" title="Animator 组件"></a>Animator 组件</h1><p>Animator 组件挂载在游戏物体上, 其中需要引用 Animation Controller, 人形游戏物体还需要引用 Avatar.</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Controller</td>
+<td align="left">引用管理此角色动画的 Animator Controller</td>
+</tr>
+<tr>
+<td align="left">Avatar</td>
+<td align="left">人形角色的 Avatar</td>
+</tr>
+<tr>
+<td align="left">Apply Root Motion</td>
+<td align="left">勾选后, 在动画播放期间, 物体的运动相关参数完全由动画本身接管, 此时脚本控制无效. 取消勾选后, 则是由脚本来控制物体的运动参数</td>
+</tr>
+<tr>
+<td align="left">Update Mode</td>
+<td align="left"><strong>Normal</strong>: 与 Update 调用同步更新, 同时动画的速度与游戏时间标度一致; <strong>Animate Physics</strong>: 与 FixedUpdate 调用同步更新, 如果要对具有物理交互的对象的运动进行动画化, 应使用此模式, 例如可四处推动刚体对象的角色; <strong>Unscaled Time</strong>: 与 Update 调用同步更新, 但是动画的速度永远以 100% 的速度播放, 与时间标度无关. 应用于 UI 动画.</td>
+</tr>
+<tr>
+<td align="left">Culling Mode</td>
+<td align="left">动画剔除模式, <strong>Always Animate</strong>: 始终进行动画化; <strong>Cull Update Transforms</strong>: 剔除 Transform 的更新, 未显示时禁用 Transform 的重定向, IK和写入; <strong>Cull Completely</strong>: 完全剔除, 未显示时完全禁用动画</td>
+</tr>
+</tbody></table>
+<h1 id="Timeline"><a href="#Timeline" class="headerlink" title="Timeline"></a>Timeline</h1><p>// TODO...</p>
 ]]></content>
       <categories>
         <category>Unity</category>
       </categories>
       <tags>
         <tag>Unity</tag>
-        <tag>Tile</tag>
       </tags>
   </entry>
   <entry>
@@ -3117,6 +3203,74 @@
       </categories>
       <tags>
         <tag>Unity</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何创建自定义瓦片</title>
+    <url>/unity/unity_customizeTile.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="选用待继承的瓦片"><a href="#选用待继承的瓦片" class="headerlink" title="选用待继承的瓦片"></a>选用待继承的瓦片</h1><p>编写自定义瓦片其实就是通过继承 Unity 原有瓦片, 并添加新数据来创建自己的瓦片, 因此首先需要选用待继承的瓦片, 这个根据项目的需要选择即可.</p>
+<p>如果瓦片需要播放动画, 便需要继承动画瓦片, 需要使用预制体就继承预制体瓦片, 需要使用普通瓦片, 随机瓦片, 规则瓦片时都可以继承自规则瓦片.</p>
+<h1 id="添加自定义数据"><a href="#添加自定义数据" class="headerlink" title="添加自定义数据"></a>添加自定义数据</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 魔剑镇魂曲瓦片, 继承自 RuleTile</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">[<span class="meta">Serializable</span>]</span><br><span class="line">[<span class="meta">CreateAssetMenu(fileName = <span class="meta-string">&quot;New Sword Requiem Tile.asset&quot;</span>, menuName = <span class="meta-string">&quot;Sword Requiem Tile&quot;</span>)</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SwordRequiemTile</span> : <span class="title">RuleTile</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 枚举: 地形类型</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> EM_Terrain defaultTerrainType;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面是我自定义的 <code>Sword Requiem Tile</code>, 只添加了一个简单的枚举类型数据.</p>
+<ul>
+<li><p>Serializable: 标记此类可以被序列化.</p>
+</li>
+<li><p>CreateAssetMenu: 标记此脚本可以在资源菜单中直接创建, 创建的默认文件为: <code>New Sword Requiem Tile.asset</code>, 菜单项的路径为: <code>Sword Requiem Tile</code>.</p>
+</li>
+<li><p>SwordRequiemTile: 继承自规则瓦片的自定义瓦片的类型名称.</p>
+</li>
+<li><p>defaultTerrainType: 自定义数据-默认地形类型.</p>
+</li>
+</ul>
+<p>[<strong>注</strong>] 这个地方有一个挺大的坑, 可以看到我这里的自定义数据使用的是 &#39;字段&#39; 而非 &#39;属性&#39;, 因为使用属性, Inspector 面板中便无法持久保存瓦片属性.</p>
+<p>表现在项目中就是, 首先创建枚举, &#39;森林&#39; 的枚举值为 0, &#39;断层&#39; 为 1, 我创建了一个 Sword Requiem Tile, 默认地形类型自动初始化为 &#39;森林&#39;, 然后修改瓦片的地形类型为 &#39;断层&#39;, 之后绘制地形, 运行游戏, 发现一切正常, 但是一旦关闭 Unity, 再次打开时所有瓦片的自定义数据全部会被重置为 &#39;森林&#39;, 即默认值, 想想这个多可怕!</p>
+<p>以上情况不知道是不是我自己的失误, 总之这里使用原始的字段不会有任何问题.</p>
+<h1 id="编写自定义瓦片的-Inspector-面板"><a href="#编写自定义瓦片的-Inspector-面板" class="headerlink" title="编写自定义瓦片的 Inspector 面板"></a>编写自定义瓦片的 Inspector 面板</h1><p>之前使用 &#39;属性&#39; 作为自定义数据的时候编写了 Inspector 面板的脚本, 后来改用了 &#39;字段&#39; 之后就发现根本不用单独编写脚本了, Unity 会自动进行渲染...😅 这里就先不写 Inspector 面板该如何自定义了, 因为我也不会啊~ 留一个链接, 以便日后捡起来用.</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNDIzNDMxNQ==">自定义属性面板<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h1><p>2021 年 3 月 16 日更新自定义 Inspector 面板, 见博客: <a href="https://kuroha.vip/unity/unity_editor.html">Unity 自定义编辑器</a></p>
+]]></content>
+      <categories>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+        <tag>Tile</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>EditorWindow 类中事件方法的执行顺序</title>
+    <url>/unity/unity_editorwindow_runorder.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="参与实验的事件方法"><a href="#参与实验的事件方法" class="headerlink" title="参与实验的事件方法"></a>参与实验的事件方法</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Open() <span class="comment">// 内部调用了 GetWindow() 方法</span></span><br><span class="line"></span><br><span class="line">OnEnable()</span><br><span class="line"></span><br><span class="line">OnFocus()</span><br><span class="line"></span><br><span class="line">OnGUI()</span><br><span class="line"></span><br><span class="line">OnInspectorUpdate()</span><br><span class="line"></span><br><span class="line">OnLostFocus()</span><br><span class="line"></span><br><span class="line">OnDisable()</span><br><span class="line"></span><br><span class="line">OnDestroy()</span><br><span class="line"></span><br><span class="line">OnHierarchyChange()</span><br><span class="line"></span><br><span class="line">OnProjectChange()</span><br><span class="line"></span><br><span class="line">OnSelectionChange()</span><br></pre></td></tr></table></figure>
+
+<h1 id="实验代码"><a href="#实验代码" class="headerlink" title="实验代码:"></a>实验代码:</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEditor;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyWindow</span> : <span class="title">EditorWindow</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnEnable = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnInspectorUpdate = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnHierarchyChange = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnProjectChange = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnGUI = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnFocus = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnSelectionChange = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnLostFocus = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnDisable = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnDestroy = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Open</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;打开窗口&quot;</span>);</span><br><span class="line">        Debug.Log(<span class="string">&quot;BeforeOpen&quot;</span>);</span><br><span class="line"></span><br><span class="line">        GetWindow&lt;MyWindow&gt;();</span><br><span class="line"></span><br><span class="line">        Debug.Log(<span class="string">&quot;AfterOpen&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnEnable</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnEnable)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnEnable = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnEnable&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnInspectorUpdate</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnInspectorUpdate)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnInspectorUpdate = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnInspectorUpdate&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnHierarchyChange</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnHierarchyChange)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnHierarchyChange = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnHierarchyChange&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnProjectChange</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnProjectChange)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnProjectChange = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnProjectChange&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnGUI</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnGUI)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnGUI = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnGUI&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnFocus</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnFocus)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnFocus = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnFocus&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnSelectionChange</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnSelectionChange)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnSelectionChange = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnSelectionChange&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnLostFocus</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnLostFocus)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnLostFocus = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;---------------------------------------------------------------------------------------------------------------------&quot;</span>);</span><br><span class="line">            Debug.Log(<span class="string">&quot;关闭窗口&quot;</span>);</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnLostFocus&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnDisable</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnDisable)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnDisable = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnDisable&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnDestroy</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnDestroy)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnDestroy = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnDestroy&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="实验输出"><a href="#实验输出" class="headerlink" title="实验输出"></a>实验输出</h1><p><img data-src="EditorWindowRunTime.png" alt="EditorWindowRunTime"></p>
+<h1 id="实验结论"><a href="#实验结论" class="headerlink" title="实验结论"></a>实验结论</h1><p>下图中有一个点需要特别注意, <code>OnEnable()</code> 和 <code>OnFocus()</code> 是在 <code>GetWindow()</code> 方法返回之前执行的. 因此 <font color='red'><strong><code>OnEnable()</code> 和 <code>OnFocus()</code> 中不能对 <code>GetWindow()</code> 的返回值做任何操作</strong></font>, 因为此时的返回值还是空值.</p>
+<p><img data-src="EditorWindowRunTimeUML.png" alt="EditorWindowRunTimeUML"></p>
+<p>另外的三个 Change() 类事件方法:</p>
+<ul>
+<li><p>OnHierarchyChange()</p>
+<p>  每当场景的层次结构发生变化时调用.</p>
+</li>
+<li><p>OnProjectChange()</p>
+<p>  每当项目发生更改时调用.</p>
+</li>
+<li><p>OnSelectionChange()</p>
+<p>  每当选择发生更改时调用.</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+        <tag>EditorWindow</tag>
       </tags>
   </entry>
   <entry>
@@ -3271,6 +3425,244 @@
 <li>false: 只卸载 AssetBundle 对象, 不卸载资源对象.</li>
 <li>true: 同时卸载 AssetBundle 对象和资源对象.</li>
 </ul>
+]]></content>
+      <categories>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Unity 导入模型设置页面</title>
+    <url>/unity/unity_model_import_settings.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<p>Model Import Settings 页面有四个选项卡, 分别是: Model, Rig, Animation, Materials</p>
+<h1 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h1><p>Model 标签页主要是对模型进行设置, 共有三个方面的设置: Scene (场景), Meshes (网格), Geometry (几何)</p>
+<h2 id="Scene-设置"><a href="#Scene-设置" class="headerlink" title="Scene 设置"></a>Scene 设置</h2><p><img data-src="SceneView.png" alt="SceneView"></p>
+<h3 id="Scale-Factor"><a href="#Scale-Factor" class="headerlink" title="Scale Factor"></a>Scale Factor</h3><p>如果原始文件的比例 (来自模型文件) 不符合项目中的预期比例, 可以通过修改此值, 设置模型在 Unity 中的全局比例.</p>
+<h3 id="Convert-Units"><a href="#Convert-Units" class="headerlink" title="Convert Units"></a>Convert Units</h3><p>启用此选项可将模型文件中定义的模型比例转换为 Unity 的比例.</p>
+<p>转换公式为: 1cm (file) ⇒ 0.01m (Unity)</p>
+<h3 id="Bake-Axis-Conversion"><a href="#Bake-Axis-Conversion" class="headerlink" title="Bake Axis Conversion"></a>Bake Axis Conversion</h3><p>导入模型时, 如果模型使用的轴系和 Unity 中的轴系不一致，启用此属性可将轴转换结果直接烘焙到资源数据 (例如顶点或动画数据) 中.</p>
+<p>禁用此属性可在运行时补偿根物体的 Transform 组件变换, 以模拟轴转换.</p>
+<p>已知问题: Blender 导出的模型导入 Unity 后, 勾选此属性, 会在 Y 轴上产生 180 度旋转.</p>
+<p>原因: Blender 中将 -Y 轴的外观定义为 &quot;前视图&quot;, 但是 Blender 导出器在导出模型的时候却将 +Y 轴的外观定义为 &quot;前视图&quot;, 因此这是 Blender 导出器的 Bug.</p>
+<h3 id="Import-BlendShapes"><a href="#Import-BlendShapes" class="headerlink" title="Import BlendShapes"></a>Import BlendShapes</h3><p>允许 Unity 导入包含网格的 BlendShapes. (混合形状法线 / 表情), 导入混合形状法线时需要在 FBX 文件中具有平滑组.</p>
+<p>比如模型表情的实现, 模型导入到 Unity 中后, 基础模型要开启 <strong>Import BlendShapes</strong>, 对应的面部 <strong>SkinnedMeshRenderer</strong> 上会多出 <strong>BlendShape</strong> 的配置, 调整这些值就可以看到表情变化了.</p>
+<h3 id="Import-Visibility"><a href="#Import-Visibility" class="headerlink" title="Import Visibility"></a>Import Visibility</h3><p>导入可见性, 如果模型在导出之前设置为隐藏, 之后这个模型被导入到了 Unity 中, 并且勾选了这个选项, 那么模型拖到场景中之后就是隐藏的.</p>
+<h3 id="Import-Cameras"><a href="#Import-Cameras" class="headerlink" title="Import Cameras"></a>Import Cameras</h3><p>是否导入摄像机, 有的模型会在制作时就打好了摄像机, 这时导出的 FBX 文件中便保存了摄像机的信息.</p>
+<h3 id="Import-Lights"><a href="#Import-Lights" class="headerlink" title="Import Lights"></a>Import Lights</h3><p>灯光信息是否导入, 模型的灯光信息已经在 3D 软件中制作好了, 是否导入.</p>
+<h3 id="Preserve-Hierarchy"><a href="#Preserve-Hierarchy" class="headerlink" title="Preserve Hierarchy"></a>Preserve Hierarchy</h3><p>保留层次结构, 即使此模型只有一个根, 也要始终创建一个明确的预制根.</p>
+<p>通常, 导入模型的时候, Unity 会从模型中剥离所有空的根节点作为优化策略, 但是, 如果有多个 FBX 文件, 且它们具有相同层次结构的某些部分, 则可以使用此选项保留原始层次结构. 这样即使是多个文件构成的一个模型, 他们的层级结构也不会乱.</p>
+<h2 id="Meshes-设置"><a href="#Meshes-设置" class="headerlink" title="Meshes 设置"></a>Meshes 设置</h2><p><img data-src="MeshesView.png" alt="MeshesView"></p>
+<h3 id="Mesh-Compression"><a href="#Mesh-Compression" class="headerlink" title="Mesh Compression"></a>Mesh Compression</h3><table>
+<thead>
+<tr>
+<th align="left">压缩选项</th>
+<th align="left">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Off</td>
+<td align="left">不进行压缩</td>
+</tr>
+<tr>
+<td align="left">Low</td>
+<td align="left">使用低压缩比</td>
+</tr>
+<tr>
+<td align="left">Medium</td>
+<td align="left">使用中等压缩比</td>
+</tr>
+<tr>
+<td align="left">High</td>
+<td align="left">使用高压缩比</td>
+</tr>
+</tbody></table>
+<p>压缩网格, 在每个组件中使用网格边界和更低的位深来压缩网格数据.</p>
+<p>提高压缩比可以减小网格的文件大小, 但是会降低网格的精度.</p>
+<p>选用规则: 尽可能用压缩比高, 并且网格物体看起来与未压缩版本没有太大不同的压缩比率.</p>
+<p>这用来优化游戏体积非常有用.</p>
+<h3 id="Read-Write-Enabled"><a href="#Read-Write-Enabled" class="headerlink" title="Read/Write Enabled"></a>Read/Write Enabled</h3><p>启用此选项后, Unity 会将 Mesh 数据上传到 GPU 可寻址内存, 同时也将其保留在 CPU 可寻址内存中.</p>
+<p>这意味着 Unity 可以在运行时访问 Mesh 数据, 并且我们可以从脚本中访问它.</p>
+<p>例如要按程序生成网格或者要从网格复制某些数据, 则必须要勾选此选项.</p>
+<p>禁用此选项后, Unity 会将 Mesh 数据上传到 GPU 可寻址内存, 然后将其从 CPU 可寻址内存中删除.</p>
+<p>默认情况下, 此选项是禁用的.</p>
+<p>在大多数情况下, 应禁用此选项以节省运行时的内存使用量.</p>
+<p><strong>什么时候需要设置模型的 Read/Write Enabled ?</strong></p>
+<p>默认 Read/Write Enabled 不勾选的情况下, 粒子系统发射模型粒子时, 模型的 Mesh 是不可修改的, 如果想要在代码中实时地根据特定逻辑修改粒子系统中的粒子模型, 就必须将模型设置为 Read/Write Enabled.</p>
+<p>只有在以下情况下才能启此选项：</p>
+<ul>
+<li><strong>在代码中读取或写入网格数据</strong>. 比如代码中对 mesh 属性进行再次赋值时.</li>
+<li>将网格传递到 StaticBatchingUtility.Combine() 以在运行时合并网格时.</li>
+<li>使用网格以在运行时使用 NavMesh 构建组件来烘焙 NavMesh 时.</li>
+<li>当网格是凸面时, 可将网格与网格碰撞体一起使用, 并且网格碰撞体的变换具有负缩放时. 例如 (-1, 1, 1)</li>
+<li>将网格与网格碰撞体一起使用, 并且网格碰撞体的变换倾斜或截断时. 例如, 当旋转的变换具有缩放的父变换时</li>
+<li>将网格与网格碰撞体一起使用, 并且网格碰撞体的 Cooking Options 标志设置为默认值以外的任何值时.</li>
+</ul>
+<p>[<strong>注意</strong>]</p>
+<ul>
+<li>当 Unity 通过脚本创建一个网格时, 该值最初设置为 true.</li>
+<li>未标记为可读的网格在运行时从脚本访问任何数据数组时将抛出错误.</li>
+<li><strong>Unity Editor 中, 在游戏和渲染循环之外始终允许访问, 无论此设置如何.</strong></li>
+</ul>
+<h3 id="Optimize-Mesh"><a href="#Optimize-Mesh" class="headerlink" title="Optimize Mesh"></a>Optimize Mesh</h3><p>优化 Mesh, 让 Unity 确定三角形在网格中列出的顺序. Unity 会对顶点和索引重新排序以改善 GPU 性能.</p>
+<table>
+<thead>
+<tr>
+<th align="left">优化选项</th>
+<th align="left">效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Nothing</td>
+<td align="left">不进行优化</td>
+</tr>
+<tr>
+<td align="left">Everything</td>
+<td align="left">[<strong>默认值</strong>] 让 Unity 重排多边形和顶点的顶点和索引.</td>
+</tr>
+<tr>
+<td align="left">Polygon Order</td>
+<td align="left">让 Unity 仅对多边形重新排序</td>
+</tr>
+<tr>
+<td align="left">Vertex Order</td>
+<td align="left">让 Unity 仅对顶点重新排序</td>
+</tr>
+</tbody></table>
+<h3 id="Generate-Colliders"><a href="#Generate-Colliders" class="headerlink" title="Generate Colliders"></a>Generate Colliders</h3><p>是否自动生成网格碰撞器.</p>
+<p>用于为环境几何体快速生成碰撞网格, <strong>禁止用于移动几何体</strong>.</p>
+<h2 id="Geometry-设置"><a href="#Geometry-设置" class="headerlink" title="Geometry 设置"></a>Geometry 设置</h2><p><img data-src="GeometryView.png" alt="GeometryView"></p>
+<h3 id="Keep-Quads"><a href="#Keep-Quads" class="headerlink" title="Keep Quads"></a>Keep Quads</h3><p>启用此属性可使 Unity 停止将包含四个顶点的多边形转换为三角形. </p>
+<p>四边形的曲面细分要比多边形的曲面细分效率更高.</p>
+<p>勾选此选项之后, 如果一个网格有四边形和三角形, 或者转换为三角形的 N 边形, 那么 Unity 会创建两个子网格来分离四边形和三角形. 一个子网格只包含三角形, 另一个只只包含四边形.</p>
+<h3 id="Weld-Vertices"><a href="#Weld-Vertices" class="headerlink" title="Weld Vertices"></a>Weld Vertices</h3><p>合并在空间中共享相同位置的顶点, 前提是这些顶点总体上共享相同的属性, 包括 UV, 法线, 切线和 VertexColor. 通过减少网格的总数量来优化网格的顶点计数.</p>
+<p>默认情况下启用此选项.</p>
+<h3 id="Index-Format"><a href="#Index-Format" class="headerlink" title="Index Format"></a>Index Format</h3><p>定义网格索引缓冲区的大小, 默认 Auto 即可.</p>
+<h3 id="Legacy-Blend-Shape-Normals"><a href="#Legacy-Blend-Shape-Normals" class="headerlink" title="Legacy Blend Shape Normals"></a>Legacy Blend Shape Normals</h3><p>启用此选项可基于 Smoothing Angle 值来计算法线.</p>
+<h3 id="Normals"><a href="#Normals" class="headerlink" title="Normals"></a>Normals</h3><p>定义是否以及如何计算法线.</p>
+<ul>
+<li>Import [默认值] 从文件中导入法线. 如果文件不包含法线, 则将计算法线.</li>
+<li>Calculate 直接根据 Normals Mode, Smoothness Source, Smoothing Angle 属性来计算法线.</li>
+<li>None 禁用法线. 如果网格既未正常贴图，也不受实时光照的影响，则使用此选项。</li>
+</ul>
+<h3 id="Normals-Mode"><a href="#Normals-Mode" class="headerlink" title="Normals Mode"></a>Normals Mode</h3><p>定义 Unity 计算法线的方式.</p>
+<h3 id="Smoothness-Source"><a href="#Smoothness-Source" class="headerlink" title="Smoothness Source"></a>Smoothness Source</h3><p>设置如何确定平滑行为</p>
+<h3 id="Smoothing-Angle"><a href="#Smoothing-Angle" class="headerlink" title="Smoothing Angle"></a>Smoothing Angle</h3><p>控制是否为硬边拆分顶点. 通常, 值越大, 产生的顶点越少.</p>
+<h3 id="Tangents"><a href="#Tangents" class="headerlink" title="Tangents"></a>Tangents</h3><p>定义如何导入或计算顶点切线.</p>
+<h3 id="Swap-UVs"><a href="#Swap-UVs" class="headerlink" title="Swap UVs"></a>Swap UVs</h3><p>在网格中交换 UV 通道.</p>
+<p>当漫射纹理使用光照贴图中的 UV 时需要勾选此选项.</p>
+<h3 id="Generate-Lightmap-UVs"><a href="#Generate-Lightmap-UVs" class="headerlink" title="Generate Lightmap UVs"></a>Generate Lightmap UVs</h3><p>为光照贴图创建第二个 UV 通道.</p>
+<h1 id="Rig"><a href="#Rig" class="headerlink" title="Rig"></a>Rig</h1><p>这个菜单项主要是对骨骼动画的类型进行设置.</p>
+<h2 id="Animation-Type"><a href="#Animation-Type" class="headerlink" title="Animation Type"></a>Animation Type</h2><table>
+<thead>
+<tr>
+<th align="left">动画类型</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">None</td>
+<td align="left">不导入动画</td>
+</tr>
+<tr>
+<td align="left">Legacy</td>
+<td align="left">使用旧版动画系统</td>
+</tr>
+<tr>
+<td align="left">Generic</td>
+<td align="left">非人形骨架动画系统, 通用动画系统</td>
+</tr>
+<tr>
+<td align="left">Humanoid</td>
+<td align="left">人形骨架动画系统</td>
+</tr>
+</tbody></table>
+<h3 id="None"><a href="#None" class="headerlink" title="None"></a>None</h3><p>静态组件选择 None, 不使用动画系统.</p>
+<h3 id="Legacy"><a href="#Legacy" class="headerlink" title="Legacy"></a>Legacy</h3><p>使用传统的动画系统.</p>
+<p>Generation 导入动画的方式.</p>
+<ul>
+<li>Don’t Import 不导入动画</li>
+<li>Store in Original Roots (Deprecated) 以原始根存储 (已弃用)</li>
+<li>Store in Nodes (Deprecated) 存储在节点中 (已弃用)</li>
+<li>Store in Root (Deprecated) 根存储 (已弃用)</li>
+<li>Store in Root (New) 根存储 (新)</li>
+</ul>
+<p>Skin Weights 设置可以影响单个顶点的最大骨骼数量.</p>
+<h3 id="Generic"><a href="#Generic" class="headerlink" title="Generic"></a>Generic</h3><p>通用动画系统</p>
+<p>Avatar Definition 选择如何获取 Avatar 的定义</p>
+<ul>
+<li>Create from this model 根据此模型创建 Avatar</li>
+<li>Copy from Other Avatar 使用另一份 Avatar</li>
+</ul>
+<p>Root node 设置 Avatar 的根节点</p>
+<p>Source 另一份 Avatar 的引用</p>
+<p>Skin Weights 设置可以影响单个顶点的最大骨骼数量</p>
+<p>Max Bones/Vertex 定义每个顶点的最大骨骼数. 可为每个顶点设置 1 到 32 个骨骼, 但是用来影响顶点的骨骼数量越多, 性能成本就越高</p>
+<p>Min Bone Weight 设置考虑骨骼权重的最低阈值. 权重计算将忽略小于此值的任何值, 并且 Unity 会将高于此值的骨骼权重放大, 且总计为 1.0</p>
+<p>Optimize Game Object 在 Avatar 和 Animator 组件中删除和存储所导入角色的游戏对象变换层级视图. 如果启用此选项, 角色的 SkinnedMeshRenderer 将使用 Unity 动画系统的内部骨架, 因此可提高动画角色的性能.</p>
+<p>Extra Transforms to Expose 指定已启用 Optimize Game Object 时, 希望 Unity 忽略的 Transform.</p>
+<h3 id="Humanoid"><a href="#Humanoid" class="headerlink" title="Humanoid"></a>Humanoid</h3><p>人形动画系统, 这个系统中的配置和 Generic 中的配置就只是多了一个 Configure… 按钮, 点击这个按钮会打开骨骼配置界面.</p>
+<p>// TODO... 骨骼配置界面</p>
+<h1 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h1><p>将模型中配置好的动画导入到 Unity 中, 形成 <strong>Animation Clips</strong> 动画文件, &quot;创建动画剪辑&quot; 这一步实质上就是定义动画段的起点和终点, 使它们尽可能匹配所需循环的第一帧和最后一帧, 之后在 <strong>Animator Controller</strong> 中就可以拖入这个动画文件进行动画的混合 (Blend Trees), 转换, 过渡等操作.</p>
+<p><img data-src="model_animation.png" alt="model_animation"></p>
+<h2 id="Import-Constraints"><a href="#Import-Constraints" class="headerlink" title="Import Constraints"></a>Import Constraints</h2><p>是否要将此模型资源的<strong>约束</strong>导入到 Unity 中.</p>
+<h2 id="Import-Animation"><a href="#Import-Animation" class="headerlink" title="Import Animation"></a>Import Animation</h2><p>是否要将此模型资源的<strong>动画</strong>导入到 Unity 中.</p>
+<h2 id="Bake-Animations"><a href="#Bake-Animations" class="headerlink" title="Bake Animations"></a>Bake Animations</h2><p>是否要通过反向动力学 (IK) 或模拟 (Simulation) 创建烘焙动画来推进运动关键帧.</p>
+<p>这个选项仅适用于 <strong>Autodesk Maya</strong>, <strong>Autodesk 3ds Max</strong> 和 <strong>Cinema 4D</strong> 文件.</p>
+<h2 id="Resample-Curves"><a href="#Resample-Curves" class="headerlink" title="Resample Curves"></a>Resample Curves</h2><p>仅当导入文件包含欧拉曲线时才会显示此选项. [<strong>默认启用</strong>]</p>
+<p>对模型中的动画曲线重新采样为<strong>四元数值</strong>, 并为动画中的每个帧生成一个新的<strong>四元数关键帧</strong>.</p>
+<p>仅当原始动画中的关键点之间存在插值问题时, 才应禁用此选项来保留最初创作的动画曲线.</p>
+<h2 id="Anim-Compression"><a href="#Anim-Compression" class="headerlink" title="Anim. Compression"></a>Anim. Compression</h2><p>导入动画时要使用的压缩类型.</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Off</td>
+<td align="left">禁用动画压缩</td>
+</tr>
+<tr>
+<td align="left">Keyframe Reduction</td>
+<td align="left">导入时减少冗余关键帧, 这个选项会影响动画文件大小(运行时内存)以及如何计算动画曲线</td>
+</tr>
+<tr>
+<td align="left">Keyframe Reduction and Compression</td>
+<td align="left">导入时减少关键帧并在文件中存储动画时压缩关键帧, 这仅影响文件大小, 运行时内存大小与 Keyframe Reduction 相同</td>
+</tr>
+<tr>
+<td align="left">Optimal</td>
+<td align="left">让 Unity 决定是通过减少关键帧还是通过使用密集格式来压缩动画, 此选项仅适用于 Generic 和 Humanoid 动画类型骨架</td>
+</tr>
+</tbody></table>
+<p>选择 Off 选项时, 意味着 Unity 不会在动画导入时减少关键帧数量, 因此可产生最高精度的动画, 但性能会降低, 文件会更大, 运行时内存大小将增加. 因此通常<font color='red'><strong>建议不要使用此选项 Off</strong></font>;</p>
+<p>如果需要更高精度的动画, 应启用关键帧减少 (Keyframe Reduction) 功能并减小允许的 Animation Compression Error 值.</p>
+<ul>
+<li>Rotation Error: 定义应减少的旋转曲线数量百分比.</li>
+<li>Position Error: 定义应减少的位置曲线数量.</li>
+<li>Scale Error: 定义应减少的比例曲线数量.</li>
+</ul>
+<p>以上数值使用的值越小, 压缩时舍弃的曲线数越少, 获得的动画精度便越高.</p>
+<h2 id="Animated-Custom-Properties"><a href="#Animated-Custom-Properties" class="headerlink" title="Animated Custom Properties"></a>Animated Custom Properties</h2><p>不勾选的时候, Unity 在导入 FBX 文件时仅支持一小部分属性, 例如转换, 旋转, 缩放和可见性, 而勾选此选项之后可以导入指定为 &quot;自定义用户属性&quot; 的任何 FBX 属性. 之后可以使用 <code>extraUserProperties</code> 在导入器脚本中指定标准 FBX 属性来处理这些属性.</p>
+<h2 id="Loop-Time"><a href="#Loop-Time" class="headerlink" title="Loop Time"></a>Loop Time</h2><p>表示这个动画切片在被应用时, 是否要循环播放.</p>
+<ul>
+<li>Loop Pose: 是否在循环播放的过程中, 对单次切片的开头和结尾时的姿态进行循环插值处理, 使开头和结尾连贯. 如果一个循环动画的首尾帧有差别, 选中这个选项 Unity 会对动画进行插帧让首尾帧看起来是连贯的, 循环起来没有缝隙, 但是很大概率会使动画变得很奇怪, 另外动画师一般都会做好可无缝循环的动画, 因此此选项基本不用.</li>
+<li>Cycle Offset: 是一个 0 到 1 之间的数值, 用来设定循环时, 起始播放位置的偏移, 并不会改变动画的长度. 如果按照截断动画的角度去想, 可以理解为这个选项仅控制第一次播放的动画长度, 不影响后续的循环动画.</li>
+</ul>
+<h2 id="Additive-Reference-Pose"><a href="#Additive-Reference-Pose" class="headerlink" title="Additive Reference Pose"></a>Additive Reference Pose</h2><p>启用此选项可以设置附加动画层基础参考姿势的帧.</p>
+<ul>
+<li>Pose Frame: 输入一个帧编号以用作参考姿势.</li>
+</ul>
+<h2 id="Curves"><a href="#Curves" class="headerlink" title="Curves"></a>Curves</h2><p>设置动画曲线.</p>
+<h2 id="Events"><a href="#Events" class="headerlink" title="Events"></a>Events</h2><p>设置动画事件.</p>
+<h2 id="Mask"><a href="#Mask" class="headerlink" title="Mask"></a>Mask</h2><p>设置动画遮罩.</p>
+<h2 id="Motion"><a href="#Motion" class="headerlink" title="Motion"></a>Motion</h2><p>设置根运动节点.</p>
+<h1 id="Materials"><a href="#Materials" class="headerlink" title="Materials"></a>Materials</h1><p>// TODO...</p>
 ]]></content>
       <categories>
         <category>Unity</category>
@@ -3537,6 +3929,290 @@
 <h1 id="问题解决后效果"><a href="#问题解决后效果" class="headerlink" title="问题解决后效果"></a>问题解决后效果</h1><p>使用上面脚本中的设置就可以让 MeshRenderer 也参与到 2D UI 的排序中来了, 效果还是不错的.</p>
 <p><img data-src="/images/unity_render_order/unity_render_order_2.png" alt="修复后效果"></p>
 <h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC82YmNjZjc5ZmEzNjc=">SpriteRenderer 与 MeshRenderer的渲染排序层级<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Unity 导入图片设置页面</title>
+    <url>/unity/unity_texture_import_settings.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<p><img data-src="default.png" alt="default"></p>
+<h1 id="Texture-Type"><a href="#Texture-Type" class="headerlink" title="Texture Type"></a>Texture Type</h1><p>图片的导入类型, 不同的类型适用于不同的应用场景, 也会有不同的设置属性.</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Default</td>
+<td align="left">默认. 提供对大多数属性的访问以进行图片导入.</td>
+</tr>
+<tr>
+<td align="left">Normal Map</td>
+<td align="left">法线贴图. 此选项可将颜色通道转换为适合实时法线贴图的格式</td>
+</tr>
+<tr>
+<td align="left">Editor GUI and Legacy GUI</td>
+<td align="left">编辑器 UI 和传统 UI 类型. 当一张图片要被用来作为编辑器的 UI 或者被 GUI 类所使用的时候, 选择此选项.</td>
+</tr>
+<tr>
+<td align="left">Sprite (2D and UI)</td>
+<td align="left">当图片需要作为 2D 游戏中的精灵图时或者被 UGUI 使用时选择此选项.</td>
+</tr>
+<tr>
+<td align="left">Cursor</td>
+<td align="left">将图片用作自定义光标时选择此选项</td>
+</tr>
+<tr>
+<td align="left">Cookie</td>
+<td align="left">如果图片是作为场景中灯光 Cookie 的参数的时候选择此选项</td>
+</tr>
+<tr>
+<td align="left">Lightmap</td>
+<td align="left">将图片用作光照贴图时选择此选项</td>
+</tr>
+<tr>
+<td align="left">Directional Lightmap</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Shadowmask</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Single Channel</td>
+<td align="left">当图片只需要一个通道时, 设置为单通道类型</td>
+</tr>
+</tbody></table>
+<h1 id="Texture-Shape"><a href="#Texture-Shape" class="headerlink" title="Texture Shape"></a>Texture Shape</h1><p>图片的形状, 一共有 4 种设置.</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">2D</td>
+<td align="left">所有纹理的最常见设置. 将图像文件定义为 2D 纹理. 用于将纹理映射到 3D 网格, GUI 以及其他 Project 元素</td>
+</tr>
+<tr>
+<td align="left">Cube</td>
+<td align="left">将图像文件定义为立方体贴图. 可以将其应用于天空盒子等.</td>
+</tr>
+<tr>
+<td align="left">2D Array</td>
+<td align="left">将图像文件定义为 2D 阵列纹理. 通常用作某些渲染的优化.</td>
+</tr>
+<tr>
+<td align="left">3D</td>
+<td align="left">将图像文件定义为 3D 纹理. 一些渲染技术使用 3D 纹理来表示体积.</td>
+</tr>
+</tbody></table>
+<p>// 展开细分 TODO ....</p>
+<h1 id="sRGB-Color-Texture"><a href="#sRGB-Color-Texture" class="headerlink" title="sRGB (Color Texture)"></a>sRGB (Color Texture)</h1><p>启用此属性, 可以指定图片文件存储在伽马 (γ) 空间中. 相对为线性空间. 默认勾选.</p>
+<h1 id="Alpha-Source"><a href="#Alpha-Source" class="headerlink" title="Alpha Source"></a>Alpha Source</h1><p>定义如何生成图片的 Alpha 通道.</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">None</td>
+<td align="left">无论图片文件是否包含 α 通道信息都不导入 α 通道</td>
+</tr>
+<tr>
+<td align="left">Input Texture Alpha</td>
+<td align="left">使用图片文件中的 Alpha 通道信息</td>
+</tr>
+<tr>
+<td align="left">From Gray Scale</td>
+<td align="left">根据图像文件的 RGB 平均值来生成 Alpha 通道信息</td>
+</tr>
+</tbody></table>
+<h1 id="Alpha-Is-Transparency"><a href="#Alpha-Is-Transparency" class="headerlink" title="Alpha Is Transparency"></a>Alpha Is Transparency</h1><p>勾选此选项之后, Unity 会覆写全透明像素的 RGB 值为临近不透明像素 RGB 的值, 通过这种方式使这些像素存储的 RGB 与临近像素一致, 减少 <strong>纹理过滤</strong> 时产生的瑕疵.</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNDA3NTQ1MzI=">参考链接<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="Remove-Matte-PSD"><a href="#Remove-Matte-PSD" class="headerlink" title="Remove Matte (PSD)"></a>Remove Matte (PSD)</h1><p>对使用透明度 (将彩色像素与白色混合) 的 Photoshop 文件启用特殊处理. 仅当 *.psd 文件时有效.</p>
+<h1 id="Ignore-PNG-file-gamma"><a href="#Ignore-PNG-file-gamma" class="headerlink" title="Ignore PNG file gamma"></a>Ignore PNG file gamma</h1><p>启用此属性可以糊了u PNG 文件中的 Gamma 属性.</p>
+<h1 id="Non-Power-of-2"><a href="#Non-Power-of-2" class="headerlink" title="Non Power of 2"></a>Non Power of 2</h1><p>如果图片的大小不是 2 的幂, 这将定义在导入时的缩放行为, 共有 4 个选项.</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">None</td>
+<td align="left">不进行任何的缩放, 纹理尺寸大小保持不变</td>
+</tr>
+<tr>
+<td align="left">ToNearest</td>
+<td align="left">纹理在导入时将被缩放到最近的幂大小. 例如 257x511 纹理将成为 256x512. 注意: PVRTC 格式要求纹理是正方形, 因此最终大小将变换到 512x512</td>
+</tr>
+<tr>
+<td align="left">ToLarger</td>
+<td align="left">纹理在导入时将被缩放到下一个较大的幂大小. 例如 257x511 纹理将成为 512x512</td>
+</tr>
+<tr>
+<td align="left">ToSmaller</td>
+<td align="left">纹理在导入时将被缩放到下一个较小的幂大小. 例如 257x511 纹理将成为 256x256</td>
+</tr>
+</tbody></table>
+<p>[<strong>注意</strong>] 可以在 Unity 中使用 NPOT (非 2 的幂) 纹理大小. 但是, NPOT 纹理大小通常会占用更多的内存, 并且 GPU 采样的速度可能会更慢, 因此, 在可能的情况下, 最好使用两种大小的幂 (宽高都是 2 个幂) 来<strong>提高性能</strong>.</p>
+<p><font color='red'><strong>通常仅应将 NPOT 大小用于 GUI</strong></font></p>
+<h1 id="Read-Write-Enabled"><a href="#Read-Write-Enabled" class="headerlink" title="Read/Write Enabled"></a>Read/Write Enabled</h1><p>只有启用此属性之后才可以在脚本中使用 <code>Texture2D.SetPixels</code> 以及 <code>Texture2D.GetPixels</code> 还有一些其他的 Texture2D 方法访问 Texture 数据.</p>
+<p>在内部, Unity 使用 Texture 数据的<strong>副本</strong>进行脚本访问, 意味着这个选项会使 Texture 所需的内存量增加一倍. 因此, 此属性默认情况下处于禁用状态, 并且<strong>仅在需要脚本访问权限时</strong>才应启用它.</p>
+<h1 id="Virtual-Texture-Only"><a href="#Virtual-Texture-Only" class="headerlink" title="Virtual Texture Only"></a>Virtual Texture Only</h1><p>图片仅用作虚拟图片. 通常情况下 Unity 会将纹理既作为 Texture2D (可从脚本访问), 又作为<strong>可流式纹理</strong>, 选中此选项之后, 仅作为可流式纹理使用, <font color='red'><strong>不可以从脚本访问此纹理</strong></font>.</p>
+<h1 id="Streaming-Mip-Maps"><a href="#Streaming-Mip-Maps" class="headerlink" title="Streaming Mip Maps"></a>Streaming Mip Maps</h1><p>启用此属性以在此 Texture上 使用 Mip Map Streaming.</p>
+<p>该设置对于 Unity 用 Mesh Renderer 显示的 3D 环境中的任何 Texture 都有效.</p>
+<p>漫反射贴图, 法线贴图和光照贴图对 Mip Map Streaming 均有效.</p>
+<ul>
+<li>Mip Map Priority 此数值设置 mipmap 的优先级. Unity 在分配内存资源时使用它来确定要优先处理的 mipmap. 值越大优先级越高.</li>
+</ul>
+<h1 id="Generate-Mip-Maps"><a href="#Generate-Mip-Maps" class="headerlink" title="Generate Mip Maps"></a>Generate Mip Maps</h1><p>启用此属性可启用 Mip 映射生成. Mip 贴图是 Texture 的较小版本, 当 Texture 在屏幕上很小时会使用.</p>
+<h2 id="Border-Mip-Maps"><a href="#Border-Mip-Maps" class="headerlink" title="Border Mip Maps"></a>Border Mip Maps</h2><p>启用此属性可避免颜色渗出到较低 Mip 级别的边缘.</p>
+<h2 id="Mip-Map-Filtering"><a href="#Mip-Map-Filtering" class="headerlink" title="Mip Map Filtering"></a>Mip Map Filtering</h2><p>贴图过滤. 有两种方法可以使用 mipmap 过滤来优化图像质量: Box 和 Kaiser</p>
+<ul>
+<li>Box: Mip 级别随着尺寸的减小而变得更加平滑.</li>
+<li>Kaiser: 当 mipmap 的尺寸减小时, 将对它们进行锐化算法.</li>
+</ul>
+<h2 id="Mips-Maps-Preserve-Coverage"><a href="#Mips-Maps-Preserve-Coverage" class="headerlink" title="Mips Maps Preserve Coverage"></a>Mips Maps Preserve Coverage</h2><p>如果希望生成的 mipmap 的 alpha 通道在 alpha 测试期间保留覆盖率, 请启用此属性.</p>
+<ul>
+<li>Alpha Cutoff Value: 在 Alpha 测试期间控制 Mip Map 覆盖范围的参考值.</li>
+</ul>
+<h2 id="Fadeout-Mip-Maps"><a href="#Fadeout-Mip-Maps" class="headerlink" title="Fadeout Mip Maps"></a>Fadeout Mip Maps</h2><p>淡出贴图. 启用此属性可使 Mip 贴图随着 MIP 级别的提高而淡化为灰色. 这用于局部贴图.</p>
+<ul>
+<li>Fade Range, 范围滑动条, 最左边的滚动条是开始淡出的第一个 MIP 级别, 最右边的滚动条定义纹理完全变灰的 MIP 级别.</li>
+</ul>
+<h1 id="Wrap-Mode"><a href="#Wrap-Mode" class="headerlink" title="Wrap Mode"></a>Wrap Mode</h1><p>变换模式. 选择在平铺的时候纹理的行为.</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Repeat</td>
+<td align="left">在 Tile 时重复平铺纹理</td>
+</tr>
+<tr>
+<td align="left">Clamp</td>
+<td align="left">拉伸纹理的边缘</td>
+</tr>
+<tr>
+<td align="left">Mirror</td>
+<td align="left">在每个整数边界处镜像纹理以创建重复图案</td>
+</tr>
+<tr>
+<td align="left">Mirror Once</td>
+<td align="left">镜像一次纹理, 然后将其钳位到边缘像素</td>
+</tr>
+<tr>
+<td align="left">Per-axis</td>
+<td align="left">选择此选项可单独控制 Unity 在 U 轴和 V 轴上的 Wrap Mode</td>
+</tr>
+</tbody></table>
+<h1 id="Filter-Mode"><a href="#Filter-Mode" class="headerlink" title="Filter Mode"></a>Filter Mode</h1><p>过滤模式, 选择当纹理进行变换拉伸时如何对其进行过滤.</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Point (no filter)</td>
+<td align="left">邻近取样, 即不进行任何过滤, 适用于像素风格</td>
+</tr>
+<tr>
+<td align="left">Bilinear</td>
+<td align="left">双线性, 纹理在附近显得模糊</td>
+</tr>
+<tr>
+<td align="left">Trilinear</td>
+<td align="left">三线性, 与双线性类似, 但纹理在不同的 MIP 级别之间也会模糊</td>
+</tr>
+</tbody></table>
+<h1 id="Aniso-Level"><a href="#Aniso-Level" class="headerlink" title="Aniso Level"></a>Aniso Level</h1><p>使用 Anisotropic filtering (各向异性过滤) 方式对纹理进行过滤, 当以陡峭角度查看纹理时可提高纹理质量. 适用于地板和地面纹理, 缺点是会带来较高的性能成本. 因此通常情况下会将这个等级设置为 1 或者 0.</p>
+<h1 id="Max-Size"><a href="#Max-Size" class="headerlink" title="Max Size"></a>Max Size</h1><p>设置导入的纹理的最大尺寸, 单位为像素.</p>
+<p>因为艺术家们通常更喜欢使用巨大尺寸大小的纹理, 但是在导入到 Unity 的时候可以将纹理缩小到合适的尺寸大小.</p>
+<h1 id="Resize-Algorithm"><a href="#Resize-Algorithm" class="headerlink" title="Resize Algorithm"></a>Resize Algorithm</h1><p>当纹理尺寸大于指定的最大尺寸时, 用于缩小纹理尺寸的算法.</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Mitchell</td>
+<td align="left">使用 Mitchell 算法调整纹理的大小</td>
+</tr>
+<tr>
+<td align="left">Bilinear</td>
+<td align="left">使用双线性插值调整纹理的大小, 如果图像中有很多很重要但是面积却很小的细节, 此时便可以使用这个选项, 这个方式可以保留比 Mitchell 更多的这些细节</td>
+</tr>
+</tbody></table>
+<h1 id="Format"><a href="#Format" class="headerlink" title="Format"></a>Format</h1><p>图片格式设置, 除了一些特殊要求, 自动即可😂.</p>
+<h1 id="Compression"><a href="#Compression" class="headerlink" title="Compression"></a>Compression</h1><p>纹理的压缩类型. 根据平台和压缩格式的可用性, 不同的设置可能最终会具有相同的内部格式.</p>
+<p>例如, <font color='red'><strong>低质量压缩会影响移动平台, 但不会影响台式机平台</strong></font>.</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">None</td>
+<td align="left">不压缩纹理</td>
+</tr>
+<tr>
+<td align="left">Low Quality</td>
+<td align="left">以低质量格式压缩纹理</td>
+</tr>
+<tr>
+<td align="left">Normal Quality</td>
+<td align="left">以标准格式压缩纹理</td>
+</tr>
+<tr>
+<td align="left">High Quality</td>
+<td align="left">以高质量格式压缩纹理</td>
+</tr>
+</tbody></table>
+<h1 id="Use-Crunch-Compression"><a href="#Use-Crunch-Compression" class="headerlink" title="Use Crunch Compression"></a>Use Crunch Compression</h1><p>是否使用紧缩压缩来压缩纹理. 如果可用, 推荐使用此压缩.</p>
+<p>Crunch 压缩方式是 DXT 或 ETC Texture 压缩之上的有损压缩格式, 展示图像时, Unity 在 CPU 上将纹理 &quot;解压缩&quot; 为 DXT 或 ETC, 然后在运行时将其加载到 GPU. </p>
+<p>Crunch 压缩有助于 Texture 使用最小的磁盘空间和下载带宽.</p>
+<p>Crunch 算法可能需要花费很长时间对纹理进行压缩, 但是运行时的解压缩速度非常快!</p>
+<ul>
+<li>Compressor Quality: 设置 Crunch Compression 的质量, 更高的压缩质量意味着更大的纹理和更长的压缩时间.</li>
+</ul>
+<h1 id="Split-Alpha-Channel"><a href="#Split-Alpha-Channel" class="headerlink" title="Split Alpha Channel"></a>Split Alpha Channel</h1><p>在以下平台上可以对 Texture 进行 Alpha 分割:  tvOS, iOS, Lumin, Android.</p>
+<h1 id="Override-ETC2-fallback"><a href="#Override-ETC2-fallback" class="headerlink" title="Override ETC2 fallback"></a>Override ETC2 fallback</h1><p>允许选择在不支持 ETC2 纹理格式的 Android 设备上将纹理解压缩到的纹理格式.</p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><ul>
+<li><p>LOD: Levels of Detail, 简称 LOD, 译为: <font color='green'><strong>细节层次技术</strong></font>. 该技术通常对每一原始多面体模型建立几个不同逼近精度的几何模型, 与原模型相比, 每个模型都只保留了一定层次的细节, 在绘制模型时, 根据不同的标准选择适当的层次模型来表示物体. 远视的时候使用粗糙的模型, 近视的时候使用精细的模型.</p>
+</li>
+<li><p>HUD: 游戏开发中一般用来指代仅用来向玩家显示游戏中各种信息的 UI. 原意是: 平视显示器.</p>
+</li>
+<li><p>Mip Map: <font color='green'><strong>Mip 贴图</strong></font>, 是一个包含了一个图像逐渐变小的多个版本的列表 (类似 LOD). 当纹理使用 Mip 贴图时, Unity 会在距离相机很远的地方自动使用较小版本的纹理, 这样便可以降低渲染纹理的性能成本并且又不会造成细节损失; 另外 Mip 贴图还可以减少纹理混叠和闪烁. 但是<font color='red'><strong>启用 mipmaps 会额外占用 33％ 的内存</strong></font>, 因此仅应在<strong>会根据摄像机距离而改变的纹理</strong>上使用它, 禁止在不会改变的纹理上使用它, 例如 UI 纹理, 天空盒等都禁止使用.</p>
+</li>
+<li><p>Normal maps: <font color='green'><strong>法线贴图</strong></font>. &quot;法线贴图着色器&quot; 使用 &quot;法线贴图&quot; 使低多边形模型看起来像包含更多的模型细节一样, 使模型的外观更加精细; 另外 Unity 中使用的是编码为 RGB 图像的法线贴图.</p>
+</li>
+<li><p>Alpha maps: <font color='green'><strong>阿尔法贴图</strong></font>, 就是指仅包含 Alpha 信息的 Texture. 可以使用 Alpha 贴图对材质应用不同级别的透明度.</p>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>Unity</category>
@@ -4264,6 +4940,229 @@ const dp_update = new DPlayer({
       </tags>
   </entry>
   <entry>
+    <title>Oracle 异构数据库访问</title>
+    <url>/oracle/oracle_gateways.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="🦴前言"><a href="#🦴前言" class="headerlink" title="🦴前言"></a>🦴前言</h1><p>从 Oracle 连接 SQL Server 数据库, 需要用透明网关 (Transparent Gateway), 通过它, 我们可以访问并操作 SQL Server 数据库, 当前也可以连接其他数据库, 实现数据库的异构服务.<br>目前是SQL SERVER2005异构连接.</p>
+<h1 id="🌴声明"><a href="#🌴声明" class="headerlink" title="🌴声明"></a>🌴声明</h1><ul>
+<li><p>本文写于 2020 年 07 月 29 号, 请注意文章时效性!</p>
+</li>
+<li><p>如果你要配置的环境不是 <code>Oracle Database 和 Oracle Gateways 安装在一台电脑上</code> 这种, 请出门左转 Google, 本文仅在这种环境下验证通过, 不保证 100% 适用于其他环境. 另外, 经测试, Microsoft SQL Server 无论是否安装和 Database 在同一台电脑上本文均有效!</p>
+</li>
+<li><p>在 Oracle 8i 中没有透明网关, Oracle 10.2 的透明网关是单独的一个插件 <code>10201_gateways_win32.zip</code>, 需要另外安装. 因此本文只适用于 Oracle 11 版本, 其他版本没有进行单独测试, 但相近的版本应该也是适应的. (不保证)</p>
+</li>
+</ul>
+<h1 id="🐌Oracle-Database-使用-Oracle-Gateways-访问-Microsoft-SQL-Server"><a href="#🐌Oracle-Database-使用-Oracle-Gateways-访问-Microsoft-SQL-Server" class="headerlink" title="🐌Oracle Database 使用 Oracle Gateways 访问 Microsoft SQL Server"></a>🐌Oracle Database 使用 Oracle Gateways 访问 Microsoft SQL Server</h1><p>公司中一个项目要用 Oracle 访问 SQL Server, 于是我先在自己电脑上做一下配置实验, 本次实验中 Oracle Database 和 Oracle Gateways 安装在自己电脑上, SQL Server 数据库安装在另一台电脑上.</p>
+<h2 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h2><h3 id="Oracle-Database"><a href="#Oracle-Database" class="headerlink" title="Oracle Database"></a>Oracle Database</h3><ul>
+<li>版本: Oracle Database 11.2.0.1.0 - Production (32 bit)</li>
+<li>服务器名称(IP): 192.168.11.95</li>
+<li>数据库名: orcl</li>
+<li>账号密码: scott/a</li>
+<li>本地监听: 1521</li>
+<li>对外监听: 1522</li>
+</ul>
+<h3 id="Oracle-Gateways"><a href="#Oracle-Gateways" class="headerlink" title="Oracle Gateways"></a>Oracle Gateways</h3><ul>
+<li>版本: Oracle Gateways 11.2.0.1.0 (32 bit)</li>
+<li>服务器名称(IP): 192.168.11.95</li>
+<li>数据库名: dg4msql</li>
+<li>本地监听: 1521</li>
+<li>对外监听: 1522</li>
+</ul>
+<p>[<strong>注</strong>] Oracle Database 和 Oracle Gateways 的版本和位数都必须保持一致. (不要问我怎么知道的, 问就是不知道! 🙄)</p>
+<h3 id="Microsoft-SQL-Server"><a href="#Microsoft-SQL-Server" class="headerlink" title="Microsoft SQL Server"></a>Microsoft SQL Server</h3><ul>
+<li>版本: Microsoft SQL Server 2008 R2 (64 bit)</li>
+<li>服务器名称(IP): 192.168.10.9</li>
+<li>实例名: (null)</li>
+<li>数据库名: htgl20180809</li>
+<li>账号密码: sa/sa2008</li>
+</ul>
+<h4 id="查看-Microsoft-SQL-Server-数据库的信息"><a href="#查看-Microsoft-SQL-Server-数据库的信息" class="headerlink" title="查看 Microsoft SQL Server 数据库的信息"></a>查看 Microsoft SQL Server 数据库的信息</h4><ol>
+<li><p>在 Microsoft SQL Server 的对象资源管理器中找到要查看的数据库, 右键属性</p>
+<p> <img data-src="/images/oracle_gateways/SQL_Server1.png" alt="SQL_Server_1"></p>
+</li>
+<li><p>在弹出的窗口中点击左下方的 &quot;查看连接属性&quot;.</p>
+<p> <img data-src="/images/oracle_gateways/SQL_Server2.png" alt="SQL_Server_2"></p>
+</li>
+<li><p>在弹出的窗口中就可以看到需要的信息了, 其中 <code>服务器主机名</code>, <code>实例名</code> 和 <code>数据库名</code> 在安装 Gateways 时会用到.</p>
+<p> <img data-src="/images/oracle_gateways/SQL_Server3.png" alt="SQL_Server_3"></p>
+</li>
+</ol>
+<h2 id="下载-Oracle-Database-和-Oracle-Gateways"><a href="#下载-Oracle-Database-和-Oracle-Gateways" class="headerlink" title="下载 Oracle Database 和 Oracle Gateways"></a>下载 Oracle Database 和 Oracle Gateways</h2><p>目前 Oracle 官网把所有信息都放置到一个菜单中, 导致很多平时不怎么访问这种官网的人根本找不到 Oracle 家的软件在哪里下载...还是说一下如何下载 Oracle 软件吧...</p>
+<ol>
+<li><p>登录 <span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS8=">Oracle 官网<i class="fa fa-external-link-alt"></i></span>, 展开上方的 <code>Products</code> 菜单, 点击其中的 <code>Oracle Database</code> 选项.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download1.png" alt="Oracle_Download_1"></p>
+</li>
+<li><p>点击下载最新版本的 Oracle Database 软件: <code>Download Database 19c</code>.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download2.png" alt="Oracle_Download_2"></p>
+</li>
+<li><p>随后会跳转到一个很长很长的页面, 这个页面包含了几乎所有 Oracle 的数据库产品软件, 不再受到 Oracle 支持的版本这里不会显示, 比如 10g 系列就已经不再受 Oracle 支持了, 所以这里也就找不到 10g 系列的下载地址了. 一直往下滑, 找到需要的 <code>11.2.0.1.0</code> 版本的位置, 由于我需要 32 位的数据库软件, 所以这里点击 <code>Microsoft Windows (32-bit)</code> 右侧的 <code>See All</code>, 进入相应的详细信息页面.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download3.png" alt="Oracle_Download_3"></p>
+</li>
+<li><p>详细信息页面的第一条就是 <code>Oracle Database</code> 的下载地址, Oracle 官方将软件打包成了两个压缩包, 全部下载即可. 第二条便是客户端的下载地址, 如果需要使用 PL/SQL 等软件操作数据库, 就需要下载安装 <code>Oracle Database Client</code> 了.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download4.png" alt="Oracle_Download_4"></p>
+</li>
+<li><p>详细信息页面中, 紧接着客户端的第三条信息就是 <code>Oracle Gateways</code> 的下载地址了, 点击下载即可.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download5.png" alt="Oracle_Download_5"></p>
+</li>
+<li><p>[<strong>注</strong>] 全部下载之后先不要着急解压, 先看一看下图, 下图是一个 <code>分卷压缩包</code>, 可以看到这个压缩包除了第一卷以外, 从第二卷开始, 后缀名使用了序号进行命名, 这种压缩包只要解压以 <code>zip</code> 为后缀名的第一卷即可, 以 <code>序号</code> 为后缀名并且文件名称和以 <code>zip</code> 为后缀名的文件 <strong><code>同名</code></strong> 的分卷压缩包都会自动解压.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download6.png" alt="Oracle_Download_6"></p>
+<p> 但是, 从 Oracle 官网下载的压缩包中, Database 的包被分成了两个:</p>
+<p> <code>win32_11gR2_database_1of2.zip</code></p>
+<p> <code>win32_11gR2_database_2of2.zip</code></p>
+<p> 需要注意的是这俩货可不是分卷压缩包, 必须两个都解压, 不要只解压了第一个就不管了, 不然后面会报错的. (不要问我怎么知道的, 问就是不知道! 🙄) 解压后应该是这个样子:</p>
+<p> <code>win32_11gR2_database_1of2.zip</code> 和 <code>win32_11gR2_database_2of2.zip</code> 都会解压到 database 文件夹中.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download7.png" alt="Oracle_Download_7"></p>
+</li>
+</ol>
+<h2 id="安装-Oracle-Gateways"><a href="#安装-Oracle-Gateways" class="headerlink" title="安装 Oracle Gateways"></a>安装 Oracle Gateways</h2><ol>
+<li><p>启动 gateways 文件夹中的安装程序.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install1.png" alt="Oracle_Gateways_Install_1"></p>
+</li>
+<li><p>在这个页面可以查看已经安装的产品或者卸载产品, 点击下一步进行安装配置.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install2.png" alt="Oracle_Gateways_Install_2"></p>
+</li>
+<li><p>在选择产品名称和路径时, 下面是默认配置.</p>
+<p> [<strong>注</strong>] 由于 Database 和 Gateways 安装在同一台电脑上, 为了避免两者的监听出现问题, 要将 Gateways 安装到 Database 的路径中, 所以不要使用下面的默认配置.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install3.png" alt="Oracle_Gateways_Install_3"></p>
+<p> 而是从下拉框中选择 Oracle Database 的产品名称和路径: <code>OraDb11g_home1</code>, 如图.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install4.png" alt="Oracle_Gateways_Install_4"></p>
+<p> 选择后的配置是这个样子的:</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install5.png" alt="Oracle_Gateways_Install_5"></p>
+</li>
+<li><p>选择安装产品组件, 安装用于访问 Microsoft SQL Server 的组件. 由于我之前已经安装过了, 所以截图中显示的是 &quot;重新安装&quot;, 如果你电脑上没还有安装这个组件, 应该会显示 &quot;未安装&quot;.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install6.png" alt="Oracle_Gateways_Install_6"></p>
+</li>
+<li><p>输入要连接的 Microsoft SQL Server 的信息, 包括服务器主机名, 实例名, 数据库名, 由于我之前查看 SQL Server 信息的时候发现我要连接的 SQL Server 数据库实例名为空, 所以图中填写实例名的地方空着.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install7.png" alt="Oracle_Gateways_Install_7"></p>
+</li>
+<li><p>最后点击安装.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install8.png" alt="Oracle_Gateways_Install_8"></p>
+</li>
+</ol>
+<h2 id="配置-Oracle-Database-和-Oracle-Gateways"><a href="#配置-Oracle-Database-和-Oracle-Gateways" class="headerlink" title="配置 Oracle Database 和 Oracle Gateways"></a>配置 Oracle Database 和 Oracle Gateways</h2><ol>
+<li><p>关闭数据库监听程序.</p>
+<p> Windows 服务中带有 <code>TNSListener</code> 的服务就是监听程序, 找到与待配置数据库对应的监听程序, 右键, 停止.</p>
+<p> [<strong>注</strong>] 修改 <code>监听程序</code> 和 <code>服务命名</code> 的配置文件之前, 一定要先关闭监听程序, 否则很容易导致 PL/SQL 连接数据库时报错: <code>ORA-12514: TNS: 监听程序当前无法识别连接描述符中请求的服务</code>, 甚至会导致数据库无法访问, 监听程序也无法启动, 启动监听程序时报错: <code>某些服务在未由其他服务或程序使用时将自动停止</code>, 这时就只能重启数据库了, (不说了, 说多了都是泪啊~ 😫), 为了避免这些乱七八糟的麻烦, 一开始就先把监听程序停止掉就好了.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Configure1.png" alt="Oracle_Configure_1"></p>
+</li>
+<li><p>修改 Gateways 的数据库连接配置, 配置文件路径:</p>
+<p> <code>...\product\11.2.0\dbhome_1\dg4msql\admin\initdg4msql.ora</code></p>
+<p> 这个文件告诉了 Gateways 具体要连接到哪个 SQL Server 数据库, 这个文件会使用在安装 Gateways 的时候填写的信息进行默认设置, 如果只需要连接一个 SQL Server 数据库, 默认设置就可以了, 不需要做任何改动, 当然也可以进行自定义, 下面是这个文件的默认设置.</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HS_FDS_CONNECT_INFO&#x3D;[192.168.10.9]&#x2F;&#x2F;htgl20180809</span><br><span class="line">HS_FDS_TRACE_LEVEL&#x3D;OFF</span><br><span class="line">HS_FDS_RECOVERY_ACCOUNT&#x3D;RECOVER</span><br><span class="line">HS_FDS_RECOVERY_PWD&#x3D;RECOVER</span><br></pre></td></tr></table></figure>
+
+<p> 这个文件重要配置的内容很少, 就只有异构数据库的连接信息.</p>
+<ul>
+<li><p><code>initdg4msql.ora</code> 文件的命名规则是: <code>initSID.ora</code>, Gateways 安装时默认的 SID 为 dg4msql, 所以文件的名字就是 initdg4msql.ora, 当需要连接多个 SQL Server 数据库的时候, 这里的 SID 自然就需要自定义了. 每一个要连接的 SQL Server 数据库都对应一个 initSID.ora 文件, SID 写一个通俗易懂的, 唯一的名称即可, 这个 SID 得记好, 后面还需要用到. 比如要连接两个 SQL Server 数据库 <code>htgl</code> 和 <code>cggl</code>, 那么就可以复制一份 initdg4msql.ora 文件, 并重命名为 <code>inithtgl.ora</code> 和 <code>initcggl.ora</code>, 分别进行配置即可.</p>
+</li>
+<li><p><code>HS_FDS_CONNECT_INFO</code> 的填写规则: <code>[SQL Server 服务器主机名]/SQL Server 实例名/SQL Server 数据库名</code>. 这个就是具体的 SQL Server 连接信息了.</p>
+</li>
+<li><p>这个文件夹中还有两个配置示例文件: <code>listener.ora.sample</code> 和 <code>tnsnames.ora.sample</code>, 这是用于 Database 配置时的示例文件, 用意是教会我们怎么修改 <code>监听程序</code> 和 <code>服务命名</code> 的配置, 不需要修改, 即使你修改了也不会生效, 因为文件的后缀是 <code>.sample</code>.</p>
+</li>
+</ul>
+</li>
+<li><p>修改 Oracle Database 的 <strong>监听程序</strong> 配置, 配置文件路径:</p>
+<p> <code>...\product\11.2.0\dbhome_1\NETWORK\ADMIN\listener.ora</code></p>
+<p> 在监听程序配置文件的 <code>SID_LIST_LISTENER</code> 中添加之前配置好的 Gateways SID, 下图中高亮的这段配置文本就是之前配置的 SID 为 dg4msql 的 Gateways, 其实这一段文本是从之前提到的模板文件 <code>listener.ora.sample</code> 中复制过来的.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Configure2.png" alt="Oracle_Configure_2"></p>
+<ul>
+<li><code>SID_NAME</code> 填写之前配置的 <code>initSID.ora</code> 文件使用的 SID 名.</li>
+<li><code>PROGRAM</code> 是 Gateways 所在的文件夹的名字, 可以看到目前 Gateways 就是安装到了 <code>dg4msql</code> 文件夹中, 所以不要修改这个值.</li>
+<li><code>ORACLE_HOME</code> 数据库软件的安装位置.</li>
+</ul>
+</li>
+<li><p>修改 Oracle Database 的 <strong>服务命名</strong> 配置, 配置文件路径:</p>
+<p> <code>...\product\11.2.0\dbhome_1\NETWORK\ADMIN\tnsnames.ora</code></p>
+<p> 在服务命名配置文件中添加之前创建的 dg4msql 服务. 高亮的这段配置文本就是从之前提到的模板文件 <code>tnsnames.ora.sample</code> 中复制过来的.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Configure3.png" alt="Oracle_Configure_3"></p>
+</li>
+<li><p>重启 Oracle 监听程序.</p>
+<p> 此时再将之前关闭的监听程序启动.</p>
+</li>
+</ol>
+<h2 id="创建数据库连接-DBLink"><a href="#创建数据库连接-DBLink" class="headerlink" title="创建数据库连接 DBLink"></a>创建数据库连接 DBLink</h2><p>使用下面的格式写一条语句创建 DBLink, 也可以使用 PL/SQL 进行可视化创建.</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">create database link 变量名(随意)</span></span><br><span class="line"><span class="comment">  connect to 用户名 identified by 用户密码</span></span><br><span class="line"><span class="comment">  using &#x27;透明网关标识&#x27;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> htgl</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> sa <span class="keyword">identified</span> <span class="keyword">by</span> sa2008</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;dg4msql&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="连接测试"><a href="#连接测试" class="headerlink" title="连接测试"></a>连接测试</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">--select &quot;字段名&quot; from &quot;SQL Server 中的表名&quot;@(DBLink变量名)</span></span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;rybh&quot;</span> <span class="keyword">from</span> <span class="string">&quot;ryb&quot;</span>@htgl;</span><br><span class="line"><span class="comment">--当需要多表连接查询时, 可以这样写</span></span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;zt&quot;</span> <span class="keyword">as</span> <span class="keyword">id</span>,</span><br><span class="line">       (<span class="keyword">select</span> <span class="string">&quot;xm&quot;</span> <span class="keyword">from</span> <span class="string">&quot;ryb&quot;</span>@htgl <span class="keyword">where</span> <span class="string">&quot;rybh&quot;</span> = <span class="string">&quot;htqxb&quot;</span>.<span class="string">&quot;rybh&quot;</span>@htgl) <span class="keyword">as</span> <span class="keyword">name</span></span><br><span class="line">  <span class="keyword">from</span> <span class="string">&quot;htqxb&quot;</span>@htgl</span><br><span class="line"> <span class="keyword">where</span> <span class="string">&quot;rybh&quot;</span> = <span class="string">&#x27;150007&#x27;</span>;</span><br><span class="line"><span class="comment">--另外异构数据库不支持 join 类查询.</span></span><br></pre></td></tr></table></figure>
+
+<p>[<strong>注</strong>] 使用 Oracle 访问 SQL Server 时, 你会发现总是会报这样一个错误: <code>***字段名无效!</code>. 这个错误是因为 Oracle 访问 SQL Server 时, 字段名要使用 <code>双引号</code> 括起来. (不要问我怎么知道的, 问就是不知道! 🙄) 表名最好也使用双引号括起来.</p>
+<h1 id="🦄多异构数据库的配置"><a href="#🦄多异构数据库的配置" class="headerlink" title="🦄多异构数据库的配置"></a>🦄多异构数据库的配置</h1><p>公司的项目现在又要求 Oracle 数据库必须能够访问 SQL Server 中的 <code>htgl20180809</code> 和 <code>cggl20180808</code> 这两个数据库, 之前提到过, 每一个要连接的异构数据库都对应一个 initSID.ora 文件, 唯一标识就是 SID.</p>
+<h2 id="修改-Gateways-的数据库连接配置"><a href="#修改-Gateways-的数据库连接配置" class="headerlink" title="修改 Gateways 的数据库连接配置"></a>修改 Gateways 的数据库连接配置</h2><p>建立两个 initSID.ora 文件, 起名为: <code>inithtgl.ora</code> 和 <code>initcggl.ora</code>, 对应的 SID 就是 <code>htgl</code> 和 <code>cggl</code>.</p>
+<p><img data-src="/images/oracle_gateways/Gateways_Multiple1.png" alt="Gateways_Multiple_1"></p>
+<p>这个是文件 inithtgl.ora 的内容, 连接 192.168.10.9 上的 htgl20180809 数据库.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HS_FDS_CONNECT_INFO&#x3D;[192.168.10.9]&#x2F;&#x2F;htgl20180809</span><br><span class="line">HS_FDS_TRACE_LEVEL&#x3D;OFF</span><br><span class="line">HS_FDS_RECOVERY_ACCOUNT&#x3D;RECOVER</span><br><span class="line">HS_FDS_RECOVERY_PWD&#x3D;RECOVER</span><br></pre></td></tr></table></figure>
+
+<p>这个是文件 initcggl.ora 的内容, 连接 192.168.10.9 上的 cggl20180808 数据库.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HS_FDS_CONNECT_INFO&#x3D;[192.168.10.9]&#x2F;&#x2F;cggl20180808</span><br><span class="line">HS_FDS_TRACE_LEVEL&#x3D;OFF</span><br><span class="line">HS_FDS_RECOVERY_ACCOUNT&#x3D;RECOVER</span><br><span class="line">HS_FDS_RECOVERY_PWD&#x3D;RECOVER</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改-Oracle-Database-监听程序配置"><a href="#修改-Oracle-Database-监听程序配置" class="headerlink" title="修改 Oracle Database 监听程序配置"></a>修改 Oracle Database 监听程序配置</h2><p>监听程序的配置, 其实就是把之前配置好的 Gateways 的 SID 放到监听程序的 LIST 中, 反映到文件中就是在 <code>SID_LIST_LISTENER</code> 中添加 SID 设置.</p>
+<p><img data-src="/images/oracle_gateways/Gateways_Multiple2.png" alt="Gateways_Multiple_2"></p>
+<ul>
+<li><p><code>PROGRAM</code> 是 Gateways 的安装路径, Gateways 就是安装在 dg4msql 文件夹下的, 所以这个值不能变.</p>
+</li>
+<li><p><code>SID_NAME</code> 是 Gateways 的 SID 值.</p>
+</li>
+</ul>
+<h2 id="修改-Oracle-Database-服务命名配置"><a href="#修改-Oracle-Database-服务命名配置" class="headerlink" title="修改 Oracle Database 服务命名配置"></a>修改 Oracle Database 服务命名配置</h2><p>服务命名的配置顾名思义, 就是将配置好的 Gateways 服务在服务配置文件中列出来, 告诉 Oracle 数据库我们配置了 Gateways 服务, 不然 Oracle 数据库是不知道的.</p>
+<p><img data-src="/images/oracle_gateways/Gateways_Multiple3.png" alt="Gateways_Multiple_3"></p>
+<ul>
+<li><p>= 号前面的是服务的名称, 一般保持和 SID 的名称一致, <code>dg4msql/admin</code> 文件夹中的 <code>tnsnames.sample</code> 文件也是这样教我们的.</p>
+</li>
+<li><p><code>SID</code> 改成之前配置 Gateways 时使用的 SID.</p>
+</li>
+</ul>
+<h2 id="连接测试-1"><a href="#连接测试-1" class="headerlink" title="连接测试"></a>连接测试</h2><p>配置都做好之后, 建立 DBLink, 就可以访问 SQL Server 了.</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> htgl <span class="keyword">connect</span> <span class="keyword">to</span> sa <span class="keyword">identified</span> <span class="keyword">by</span> sa2008</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;htgl&#x27;</span>;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> cggl <span class="keyword">connect</span> <span class="keyword">to</span> sa <span class="keyword">identified</span> <span class="keyword">by</span> sa2008</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;cggl&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--drop database link htgl;</span></span><br><span class="line"><span class="comment">--drop database link cggl;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;khyh&quot;</span>, <span class="string">&quot;htbh&quot;</span>, <span class="string">&quot;htmc&quot;</span>, <span class="string">&quot;htje&quot;</span> <span class="keyword">from</span> <span class="string">&quot;cghtb&quot;</span>@htgl <span class="keyword">where</span> <span class="string">&quot;wpbh&quot;</span> <span class="keyword">like</span> <span class="string">&#x27;2018%&#x27;</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;wpbh&quot;</span>, <span class="string">&quot;wpmc&quot;</span>, <span class="string">&quot;shl&quot;</span>, <span class="string">&quot;dw&quot;</span> <span class="keyword">from</span> <span class="string">&quot;cggl_sqmxb&quot;</span>@cggl;</span><br></pre></td></tr></table></figure>
+
+<p>这是 htgl20180809 数据库的查询结果:</p>
+<p><img data-src="/images/oracle_gateways/Gateways_Multiple4.png" alt="Gateways_Multiple_4"></p>
+<p>这是 cggl20180808 数据库的查询结果:</p>
+<p><img data-src="/images/oracle_gateways/Gateways_Multiple5.png" alt="Gateways_Multiple_5"></p>
+<h1 id="Oracle-连接-Oracle"><a href="#Oracle-连接-Oracle" class="headerlink" title="Oracle 连接 Oracle"></a>Oracle 连接 Oracle</h1><p>这个就比较简单了, 既然不需要使用虚拟网关, 那么直接建立 <code>database link</code> 即可.</p>
+<p>[<strong>注</strong>] <font color='red'>两台电脑必须在用一个局域网中!</font></p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> DBLinkName</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> DatabaseUser <span class="keyword">identified</span> <span class="keyword">by</span> DatabasePassword</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;DatabaseSID&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">字段</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">DBLinkName</td>
+<td align="left">创建的 DBLink 的名字</td>
+</tr>
+<tr>
+<td align="left">DatabaseUser</td>
+<td align="left">待连接数据库的登录用户名</td>
+</tr>
+<tr>
+<td align="left">DatabasePassword</td>
+<td align="left">待连接数据库的登录密码</td>
+</tr>
+<tr>
+<td align="left">DatabaseSID</td>
+<td align="left">待链接数据库的服务名, 同时要写明 IP 地址. 如果是本地数据库, 可以不加 IP 地址</td>
+</tr>
+</tbody></table>
+<h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">--连接远程计算机数据库</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> DB_DZYH</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> dzyh <span class="keyword">identified</span> <span class="keyword">by</span> dzyh123</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;192.168.10.136/dzyhcs&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--连接本地计算机数据库</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> DB_DZYH</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> dzyh <span class="keyword">identified</span> <span class="keyword">by</span> dzyh123</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;dzyhcs&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="🐬参考链接"><a href="#🐬参考链接" class="headerlink" title="🐬参考链接"></a>🐬参考链接</h1><ul>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Rhbmd4aW5nSUxvdmV5b3UvYXJ0aWNsZS9kZXRhaWxzLzgwNjc2NDM3">Oracle连接Sql Server (win32_11gR2_gateways)<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3pkYzUyNTU1NTUvYXJ0aWNsZS9kZXRhaWxzLzEyNTc1NzIz">Oracle11g+ 配置多个gateway 连接sqlserver<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Oracle</category>
+      </categories>
+      <tags>
+        <tag>Oracle</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Oracle SQL 基础</title>
     <url>/oracle/oracle_notes.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -4672,229 +5571,6 @@ const dp_update = new DPlayer({
 
 <h1 id="Oracle-中简单的分页查询实现方式"><a href="#Oracle-中简单的分页查询实现方式" class="headerlink" title="Oracle 中简单的分页查询实现方式"></a>Oracle 中简单的分页查询实现方式</h1><p>使用 <code>MINUS</code> 实现. MINUS 为差集, 返回左侧集合中在右侧集合中不存在的部分.</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">--返回第 101 - 200 行数据 (循环查询中建议使用 &lt;= 和 &lt;= 搭配)</span></span><br><span class="line"><span class="keyword">SELECT</span> yqbh <span class="keyword">FROM</span> zjb <span class="keyword">where</span> yqbh <span class="keyword">in</span> (</span><br><span class="line">   <span class="keyword">SELECT</span> yqbh</span><br><span class="line">     <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> yqbh <span class="keyword">FROM</span> zjb)</span><br><span class="line">    <span class="keyword">WHERE</span> <span class="keyword">ROWNUM</span> &lt;= <span class="number">200</span></span><br><span class="line">   <span class="keyword">MINUS</span></span><br><span class="line">   <span class="keyword">SELECT</span> yqbh</span><br><span class="line">     <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> yqbh <span class="keyword">FROM</span> zjb)</span><br><span class="line">    <span class="keyword">WHERE</span> <span class="keyword">ROWNUM</span> &lt;= <span class="number">100</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">--返回第 n - m 行数据 (单次查询中建议使用 &lt;= 和 &lt; 搭配)</span></span><br><span class="line"><span class="keyword">SELECT</span> yqbh <span class="keyword">FROM</span> zjb <span class="keyword">where</span> yqbh <span class="keyword">in</span> (</span><br><span class="line">   <span class="keyword">SELECT</span> yqbh</span><br><span class="line">     <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> yqbh <span class="keyword">FROM</span> zjb)</span><br><span class="line">    <span class="keyword">WHERE</span> <span class="keyword">ROWNUM</span> &lt;= m</span><br><span class="line">   <span class="keyword">MINUS</span></span><br><span class="line">   <span class="keyword">SELECT</span> yqbh</span><br><span class="line">     <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> yqbh <span class="keyword">FROM</span> zjb)</span><br><span class="line">    <span class="keyword">WHERE</span> <span class="keyword">ROWNUM</span> &lt; n</span><br><span class="line">);</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Oracle</category>
-      </categories>
-      <tags>
-        <tag>Oracle</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Oracle 异构数据库访问</title>
-    <url>/oracle/oracle_gateways.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="🦴前言"><a href="#🦴前言" class="headerlink" title="🦴前言"></a>🦴前言</h1><p>从 Oracle 连接 SQL Server 数据库, 需要用透明网关 (Transparent Gateway), 通过它, 我们可以访问并操作 SQL Server 数据库, 当前也可以连接其他数据库, 实现数据库的异构服务.<br>目前是SQL SERVER2005异构连接.</p>
-<h1 id="🌴声明"><a href="#🌴声明" class="headerlink" title="🌴声明"></a>🌴声明</h1><ul>
-<li><p>本文写于 2020 年 07 月 29 号, 请注意文章时效性!</p>
-</li>
-<li><p>如果你要配置的环境不是 <code>Oracle Database 和 Oracle Gateways 安装在一台电脑上</code> 这种, 请出门左转 Google, 本文仅在这种环境下验证通过, 不保证 100% 适用于其他环境. 另外, 经测试, Microsoft SQL Server 无论是否安装和 Database 在同一台电脑上本文均有效!</p>
-</li>
-<li><p>在 Oracle 8i 中没有透明网关, Oracle 10.2 的透明网关是单独的一个插件 <code>10201_gateways_win32.zip</code>, 需要另外安装. 因此本文只适用于 Oracle 11 版本, 其他版本没有进行单独测试, 但相近的版本应该也是适应的. (不保证)</p>
-</li>
-</ul>
-<h1 id="🐌Oracle-Database-使用-Oracle-Gateways-访问-Microsoft-SQL-Server"><a href="#🐌Oracle-Database-使用-Oracle-Gateways-访问-Microsoft-SQL-Server" class="headerlink" title="🐌Oracle Database 使用 Oracle Gateways 访问 Microsoft SQL Server"></a>🐌Oracle Database 使用 Oracle Gateways 访问 Microsoft SQL Server</h1><p>公司中一个项目要用 Oracle 访问 SQL Server, 于是我先在自己电脑上做一下配置实验, 本次实验中 Oracle Database 和 Oracle Gateways 安装在自己电脑上, SQL Server 数据库安装在另一台电脑上.</p>
-<h2 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h2><h3 id="Oracle-Database"><a href="#Oracle-Database" class="headerlink" title="Oracle Database"></a>Oracle Database</h3><ul>
-<li>版本: Oracle Database 11.2.0.1.0 - Production (32 bit)</li>
-<li>服务器名称(IP): 192.168.11.95</li>
-<li>数据库名: orcl</li>
-<li>账号密码: scott/a</li>
-<li>本地监听: 1521</li>
-<li>对外监听: 1522</li>
-</ul>
-<h3 id="Oracle-Gateways"><a href="#Oracle-Gateways" class="headerlink" title="Oracle Gateways"></a>Oracle Gateways</h3><ul>
-<li>版本: Oracle Gateways 11.2.0.1.0 (32 bit)</li>
-<li>服务器名称(IP): 192.168.11.95</li>
-<li>数据库名: dg4msql</li>
-<li>本地监听: 1521</li>
-<li>对外监听: 1522</li>
-</ul>
-<p>[<strong>注</strong>] Oracle Database 和 Oracle Gateways 的版本和位数都必须保持一致. (不要问我怎么知道的, 问就是不知道! 🙄)</p>
-<h3 id="Microsoft-SQL-Server"><a href="#Microsoft-SQL-Server" class="headerlink" title="Microsoft SQL Server"></a>Microsoft SQL Server</h3><ul>
-<li>版本: Microsoft SQL Server 2008 R2 (64 bit)</li>
-<li>服务器名称(IP): 192.168.10.9</li>
-<li>实例名: (null)</li>
-<li>数据库名: htgl20180809</li>
-<li>账号密码: sa/sa2008</li>
-</ul>
-<h4 id="查看-Microsoft-SQL-Server-数据库的信息"><a href="#查看-Microsoft-SQL-Server-数据库的信息" class="headerlink" title="查看 Microsoft SQL Server 数据库的信息"></a>查看 Microsoft SQL Server 数据库的信息</h4><ol>
-<li><p>在 Microsoft SQL Server 的对象资源管理器中找到要查看的数据库, 右键属性</p>
-<p> <img data-src="/images/oracle_gateways/SQL_Server1.png" alt="SQL_Server_1"></p>
-</li>
-<li><p>在弹出的窗口中点击左下方的 &quot;查看连接属性&quot;.</p>
-<p> <img data-src="/images/oracle_gateways/SQL_Server2.png" alt="SQL_Server_2"></p>
-</li>
-<li><p>在弹出的窗口中就可以看到需要的信息了, 其中 <code>服务器主机名</code>, <code>实例名</code> 和 <code>数据库名</code> 在安装 Gateways 时会用到.</p>
-<p> <img data-src="/images/oracle_gateways/SQL_Server3.png" alt="SQL_Server_3"></p>
-</li>
-</ol>
-<h2 id="下载-Oracle-Database-和-Oracle-Gateways"><a href="#下载-Oracle-Database-和-Oracle-Gateways" class="headerlink" title="下载 Oracle Database 和 Oracle Gateways"></a>下载 Oracle Database 和 Oracle Gateways</h2><p>目前 Oracle 官网把所有信息都放置到一个菜单中, 导致很多平时不怎么访问这种官网的人根本找不到 Oracle 家的软件在哪里下载...还是说一下如何下载 Oracle 软件吧...</p>
-<ol>
-<li><p>登录 <span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS8=">Oracle 官网<i class="fa fa-external-link-alt"></i></span>, 展开上方的 <code>Products</code> 菜单, 点击其中的 <code>Oracle Database</code> 选项.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Download1.png" alt="Oracle_Download_1"></p>
-</li>
-<li><p>点击下载最新版本的 Oracle Database 软件: <code>Download Database 19c</code>.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Download2.png" alt="Oracle_Download_2"></p>
-</li>
-<li><p>随后会跳转到一个很长很长的页面, 这个页面包含了几乎所有 Oracle 的数据库产品软件, 不再受到 Oracle 支持的版本这里不会显示, 比如 10g 系列就已经不再受 Oracle 支持了, 所以这里也就找不到 10g 系列的下载地址了. 一直往下滑, 找到需要的 <code>11.2.0.1.0</code> 版本的位置, 由于我需要 32 位的数据库软件, 所以这里点击 <code>Microsoft Windows (32-bit)</code> 右侧的 <code>See All</code>, 进入相应的详细信息页面.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Download3.png" alt="Oracle_Download_3"></p>
-</li>
-<li><p>详细信息页面的第一条就是 <code>Oracle Database</code> 的下载地址, Oracle 官方将软件打包成了两个压缩包, 全部下载即可. 第二条便是客户端的下载地址, 如果需要使用 PL/SQL 等软件操作数据库, 就需要下载安装 <code>Oracle Database Client</code> 了.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Download4.png" alt="Oracle_Download_4"></p>
-</li>
-<li><p>详细信息页面中, 紧接着客户端的第三条信息就是 <code>Oracle Gateways</code> 的下载地址了, 点击下载即可.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Download5.png" alt="Oracle_Download_5"></p>
-</li>
-<li><p>[<strong>注</strong>] 全部下载之后先不要着急解压, 先看一看下图, 下图是一个 <code>分卷压缩包</code>, 可以看到这个压缩包除了第一卷以外, 从第二卷开始, 后缀名使用了序号进行命名, 这种压缩包只要解压以 <code>zip</code> 为后缀名的第一卷即可, 以 <code>序号</code> 为后缀名并且文件名称和以 <code>zip</code> 为后缀名的文件 <strong><code>同名</code></strong> 的分卷压缩包都会自动解压.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Download6.png" alt="Oracle_Download_6"></p>
-<p> 但是, 从 Oracle 官网下载的压缩包中, Database 的包被分成了两个:</p>
-<p> <code>win32_11gR2_database_1of2.zip</code></p>
-<p> <code>win32_11gR2_database_2of2.zip</code></p>
-<p> 需要注意的是这俩货可不是分卷压缩包, 必须两个都解压, 不要只解压了第一个就不管了, 不然后面会报错的. (不要问我怎么知道的, 问就是不知道! 🙄) 解压后应该是这个样子:</p>
-<p> <code>win32_11gR2_database_1of2.zip</code> 和 <code>win32_11gR2_database_2of2.zip</code> 都会解压到 database 文件夹中.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Download7.png" alt="Oracle_Download_7"></p>
-</li>
-</ol>
-<h2 id="安装-Oracle-Gateways"><a href="#安装-Oracle-Gateways" class="headerlink" title="安装 Oracle Gateways"></a>安装 Oracle Gateways</h2><ol>
-<li><p>启动 gateways 文件夹中的安装程序.</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install1.png" alt="Oracle_Gateways_Install_1"></p>
-</li>
-<li><p>在这个页面可以查看已经安装的产品或者卸载产品, 点击下一步进行安装配置.</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install2.png" alt="Oracle_Gateways_Install_2"></p>
-</li>
-<li><p>在选择产品名称和路径时, 下面是默认配置.</p>
-<p> [<strong>注</strong>] 由于 Database 和 Gateways 安装在同一台电脑上, 为了避免两者的监听出现问题, 要将 Gateways 安装到 Database 的路径中, 所以不要使用下面的默认配置.</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install3.png" alt="Oracle_Gateways_Install_3"></p>
-<p> 而是从下拉框中选择 Oracle Database 的产品名称和路径: <code>OraDb11g_home1</code>, 如图.</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install4.png" alt="Oracle_Gateways_Install_4"></p>
-<p> 选择后的配置是这个样子的:</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install5.png" alt="Oracle_Gateways_Install_5"></p>
-</li>
-<li><p>选择安装产品组件, 安装用于访问 Microsoft SQL Server 的组件. 由于我之前已经安装过了, 所以截图中显示的是 &quot;重新安装&quot;, 如果你电脑上没还有安装这个组件, 应该会显示 &quot;未安装&quot;.</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install6.png" alt="Oracle_Gateways_Install_6"></p>
-</li>
-<li><p>输入要连接的 Microsoft SQL Server 的信息, 包括服务器主机名, 实例名, 数据库名, 由于我之前查看 SQL Server 信息的时候发现我要连接的 SQL Server 数据库实例名为空, 所以图中填写实例名的地方空着.</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install7.png" alt="Oracle_Gateways_Install_7"></p>
-</li>
-<li><p>最后点击安装.</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install8.png" alt="Oracle_Gateways_Install_8"></p>
-</li>
-</ol>
-<h2 id="配置-Oracle-Database-和-Oracle-Gateways"><a href="#配置-Oracle-Database-和-Oracle-Gateways" class="headerlink" title="配置 Oracle Database 和 Oracle Gateways"></a>配置 Oracle Database 和 Oracle Gateways</h2><ol>
-<li><p>关闭数据库监听程序.</p>
-<p> Windows 服务中带有 <code>TNSListener</code> 的服务就是监听程序, 找到与待配置数据库对应的监听程序, 右键, 停止.</p>
-<p> [<strong>注</strong>] 修改 <code>监听程序</code> 和 <code>服务命名</code> 的配置文件之前, 一定要先关闭监听程序, 否则很容易导致 PL/SQL 连接数据库时报错: <code>ORA-12514: TNS: 监听程序当前无法识别连接描述符中请求的服务</code>, 甚至会导致数据库无法访问, 监听程序也无法启动, 启动监听程序时报错: <code>某些服务在未由其他服务或程序使用时将自动停止</code>, 这时就只能重启数据库了, (不说了, 说多了都是泪啊~ 😫), 为了避免这些乱七八糟的麻烦, 一开始就先把监听程序停止掉就好了.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Configure1.png" alt="Oracle_Configure_1"></p>
-</li>
-<li><p>修改 Gateways 的数据库连接配置, 配置文件路径:</p>
-<p> <code>...\product\11.2.0\dbhome_1\dg4msql\admin\initdg4msql.ora</code></p>
-<p> 这个文件告诉了 Gateways 具体要连接到哪个 SQL Server 数据库, 这个文件会使用在安装 Gateways 的时候填写的信息进行默认设置, 如果只需要连接一个 SQL Server 数据库, 默认设置就可以了, 不需要做任何改动, 当然也可以进行自定义, 下面是这个文件的默认设置.</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HS_FDS_CONNECT_INFO&#x3D;[192.168.10.9]&#x2F;&#x2F;htgl20180809</span><br><span class="line">HS_FDS_TRACE_LEVEL&#x3D;OFF</span><br><span class="line">HS_FDS_RECOVERY_ACCOUNT&#x3D;RECOVER</span><br><span class="line">HS_FDS_RECOVERY_PWD&#x3D;RECOVER</span><br></pre></td></tr></table></figure>
-
-<p> 这个文件重要配置的内容很少, 就只有异构数据库的连接信息.</p>
-<ul>
-<li><p><code>initdg4msql.ora</code> 文件的命名规则是: <code>initSID.ora</code>, Gateways 安装时默认的 SID 为 dg4msql, 所以文件的名字就是 initdg4msql.ora, 当需要连接多个 SQL Server 数据库的时候, 这里的 SID 自然就需要自定义了. 每一个要连接的 SQL Server 数据库都对应一个 initSID.ora 文件, SID 写一个通俗易懂的, 唯一的名称即可, 这个 SID 得记好, 后面还需要用到. 比如要连接两个 SQL Server 数据库 <code>htgl</code> 和 <code>cggl</code>, 那么就可以复制一份 initdg4msql.ora 文件, 并重命名为 <code>inithtgl.ora</code> 和 <code>initcggl.ora</code>, 分别进行配置即可.</p>
-</li>
-<li><p><code>HS_FDS_CONNECT_INFO</code> 的填写规则: <code>[SQL Server 服务器主机名]/SQL Server 实例名/SQL Server 数据库名</code>. 这个就是具体的 SQL Server 连接信息了.</p>
-</li>
-<li><p>这个文件夹中还有两个配置示例文件: <code>listener.ora.sample</code> 和 <code>tnsnames.ora.sample</code>, 这是用于 Database 配置时的示例文件, 用意是教会我们怎么修改 <code>监听程序</code> 和 <code>服务命名</code> 的配置, 不需要修改, 即使你修改了也不会生效, 因为文件的后缀是 <code>.sample</code>.</p>
-</li>
-</ul>
-</li>
-<li><p>修改 Oracle Database 的 <strong>监听程序</strong> 配置, 配置文件路径:</p>
-<p> <code>...\product\11.2.0\dbhome_1\NETWORK\ADMIN\listener.ora</code></p>
-<p> 在监听程序配置文件的 <code>SID_LIST_LISTENER</code> 中添加之前配置好的 Gateways SID, 下图中高亮的这段配置文本就是之前配置的 SID 为 dg4msql 的 Gateways, 其实这一段文本是从之前提到的模板文件 <code>listener.ora.sample</code> 中复制过来的.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Configure2.png" alt="Oracle_Configure_2"></p>
-<ul>
-<li><code>SID_NAME</code> 填写之前配置的 <code>initSID.ora</code> 文件使用的 SID 名.</li>
-<li><code>PROGRAM</code> 是 Gateways 所在的文件夹的名字, 可以看到目前 Gateways 就是安装到了 <code>dg4msql</code> 文件夹中, 所以不要修改这个值.</li>
-<li><code>ORACLE_HOME</code> 数据库软件的安装位置.</li>
-</ul>
-</li>
-<li><p>修改 Oracle Database 的 <strong>服务命名</strong> 配置, 配置文件路径:</p>
-<p> <code>...\product\11.2.0\dbhome_1\NETWORK\ADMIN\tnsnames.ora</code></p>
-<p> 在服务命名配置文件中添加之前创建的 dg4msql 服务. 高亮的这段配置文本就是从之前提到的模板文件 <code>tnsnames.ora.sample</code> 中复制过来的.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Configure3.png" alt="Oracle_Configure_3"></p>
-</li>
-<li><p>重启 Oracle 监听程序.</p>
-<p> 此时再将之前关闭的监听程序启动.</p>
-</li>
-</ol>
-<h2 id="创建数据库连接-DBLink"><a href="#创建数据库连接-DBLink" class="headerlink" title="创建数据库连接 DBLink"></a>创建数据库连接 DBLink</h2><p>使用下面的格式写一条语句创建 DBLink, 也可以使用 PL/SQL 进行可视化创建.</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">create database link 变量名(随意)</span></span><br><span class="line"><span class="comment">  connect to 用户名 identified by 用户密码</span></span><br><span class="line"><span class="comment">  using &#x27;透明网关标识&#x27;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> htgl</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> sa <span class="keyword">identified</span> <span class="keyword">by</span> sa2008</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;dg4msql&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="连接测试"><a href="#连接测试" class="headerlink" title="连接测试"></a>连接测试</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">--select &quot;字段名&quot; from &quot;SQL Server 中的表名&quot;@(DBLink变量名)</span></span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;rybh&quot;</span> <span class="keyword">from</span> <span class="string">&quot;ryb&quot;</span>@htgl;</span><br><span class="line"><span class="comment">--当需要多表连接查询时, 可以这样写</span></span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;zt&quot;</span> <span class="keyword">as</span> <span class="keyword">id</span>,</span><br><span class="line">       (<span class="keyword">select</span> <span class="string">&quot;xm&quot;</span> <span class="keyword">from</span> <span class="string">&quot;ryb&quot;</span>@htgl <span class="keyword">where</span> <span class="string">&quot;rybh&quot;</span> = <span class="string">&quot;htqxb&quot;</span>.<span class="string">&quot;rybh&quot;</span>@htgl) <span class="keyword">as</span> <span class="keyword">name</span></span><br><span class="line">  <span class="keyword">from</span> <span class="string">&quot;htqxb&quot;</span>@htgl</span><br><span class="line"> <span class="keyword">where</span> <span class="string">&quot;rybh&quot;</span> = <span class="string">&#x27;150007&#x27;</span>;</span><br><span class="line"><span class="comment">--另外异构数据库不支持 join 类查询.</span></span><br></pre></td></tr></table></figure>
-
-<p>[<strong>注</strong>] 使用 Oracle 访问 SQL Server 时, 你会发现总是会报这样一个错误: <code>***字段名无效!</code>. 这个错误是因为 Oracle 访问 SQL Server 时, 字段名要使用 <code>双引号</code> 括起来. (不要问我怎么知道的, 问就是不知道! 🙄) 表名最好也使用双引号括起来.</p>
-<h1 id="🦄多异构数据库的配置"><a href="#🦄多异构数据库的配置" class="headerlink" title="🦄多异构数据库的配置"></a>🦄多异构数据库的配置</h1><p>公司的项目现在又要求 Oracle 数据库必须能够访问 SQL Server 中的 <code>htgl20180809</code> 和 <code>cggl20180808</code> 这两个数据库, 之前提到过, 每一个要连接的异构数据库都对应一个 initSID.ora 文件, 唯一标识就是 SID.</p>
-<h2 id="修改-Gateways-的数据库连接配置"><a href="#修改-Gateways-的数据库连接配置" class="headerlink" title="修改 Gateways 的数据库连接配置"></a>修改 Gateways 的数据库连接配置</h2><p>建立两个 initSID.ora 文件, 起名为: <code>inithtgl.ora</code> 和 <code>initcggl.ora</code>, 对应的 SID 就是 <code>htgl</code> 和 <code>cggl</code>.</p>
-<p><img data-src="/images/oracle_gateways/Gateways_Multiple1.png" alt="Gateways_Multiple_1"></p>
-<p>这个是文件 inithtgl.ora 的内容, 连接 192.168.10.9 上的 htgl20180809 数据库.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HS_FDS_CONNECT_INFO&#x3D;[192.168.10.9]&#x2F;&#x2F;htgl20180809</span><br><span class="line">HS_FDS_TRACE_LEVEL&#x3D;OFF</span><br><span class="line">HS_FDS_RECOVERY_ACCOUNT&#x3D;RECOVER</span><br><span class="line">HS_FDS_RECOVERY_PWD&#x3D;RECOVER</span><br></pre></td></tr></table></figure>
-
-<p>这个是文件 initcggl.ora 的内容, 连接 192.168.10.9 上的 cggl20180808 数据库.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HS_FDS_CONNECT_INFO&#x3D;[192.168.10.9]&#x2F;&#x2F;cggl20180808</span><br><span class="line">HS_FDS_TRACE_LEVEL&#x3D;OFF</span><br><span class="line">HS_FDS_RECOVERY_ACCOUNT&#x3D;RECOVER</span><br><span class="line">HS_FDS_RECOVERY_PWD&#x3D;RECOVER</span><br></pre></td></tr></table></figure>
-
-<h2 id="修改-Oracle-Database-监听程序配置"><a href="#修改-Oracle-Database-监听程序配置" class="headerlink" title="修改 Oracle Database 监听程序配置"></a>修改 Oracle Database 监听程序配置</h2><p>监听程序的配置, 其实就是把之前配置好的 Gateways 的 SID 放到监听程序的 LIST 中, 反映到文件中就是在 <code>SID_LIST_LISTENER</code> 中添加 SID 设置.</p>
-<p><img data-src="/images/oracle_gateways/Gateways_Multiple2.png" alt="Gateways_Multiple_2"></p>
-<ul>
-<li><p><code>PROGRAM</code> 是 Gateways 的安装路径, Gateways 就是安装在 dg4msql 文件夹下的, 所以这个值不能变.</p>
-</li>
-<li><p><code>SID_NAME</code> 是 Gateways 的 SID 值.</p>
-</li>
-</ul>
-<h2 id="修改-Oracle-Database-服务命名配置"><a href="#修改-Oracle-Database-服务命名配置" class="headerlink" title="修改 Oracle Database 服务命名配置"></a>修改 Oracle Database 服务命名配置</h2><p>服务命名的配置顾名思义, 就是将配置好的 Gateways 服务在服务配置文件中列出来, 告诉 Oracle 数据库我们配置了 Gateways 服务, 不然 Oracle 数据库是不知道的.</p>
-<p><img data-src="/images/oracle_gateways/Gateways_Multiple3.png" alt="Gateways_Multiple_3"></p>
-<ul>
-<li><p>= 号前面的是服务的名称, 一般保持和 SID 的名称一致, <code>dg4msql/admin</code> 文件夹中的 <code>tnsnames.sample</code> 文件也是这样教我们的.</p>
-</li>
-<li><p><code>SID</code> 改成之前配置 Gateways 时使用的 SID.</p>
-</li>
-</ul>
-<h2 id="连接测试-1"><a href="#连接测试-1" class="headerlink" title="连接测试"></a>连接测试</h2><p>配置都做好之后, 建立 DBLink, 就可以访问 SQL Server 了.</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> htgl <span class="keyword">connect</span> <span class="keyword">to</span> sa <span class="keyword">identified</span> <span class="keyword">by</span> sa2008</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;htgl&#x27;</span>;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> cggl <span class="keyword">connect</span> <span class="keyword">to</span> sa <span class="keyword">identified</span> <span class="keyword">by</span> sa2008</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;cggl&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--drop database link htgl;</span></span><br><span class="line"><span class="comment">--drop database link cggl;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;khyh&quot;</span>, <span class="string">&quot;htbh&quot;</span>, <span class="string">&quot;htmc&quot;</span>, <span class="string">&quot;htje&quot;</span> <span class="keyword">from</span> <span class="string">&quot;cghtb&quot;</span>@htgl <span class="keyword">where</span> <span class="string">&quot;wpbh&quot;</span> <span class="keyword">like</span> <span class="string">&#x27;2018%&#x27;</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;wpbh&quot;</span>, <span class="string">&quot;wpmc&quot;</span>, <span class="string">&quot;shl&quot;</span>, <span class="string">&quot;dw&quot;</span> <span class="keyword">from</span> <span class="string">&quot;cggl_sqmxb&quot;</span>@cggl;</span><br></pre></td></tr></table></figure>
-
-<p>这是 htgl20180809 数据库的查询结果:</p>
-<p><img data-src="/images/oracle_gateways/Gateways_Multiple4.png" alt="Gateways_Multiple_4"></p>
-<p>这是 cggl20180808 数据库的查询结果:</p>
-<p><img data-src="/images/oracle_gateways/Gateways_Multiple5.png" alt="Gateways_Multiple_5"></p>
-<h1 id="Oracle-连接-Oracle"><a href="#Oracle-连接-Oracle" class="headerlink" title="Oracle 连接 Oracle"></a>Oracle 连接 Oracle</h1><p>这个就比较简单了, 既然不需要使用虚拟网关, 那么直接建立 <code>database link</code> 即可.</p>
-<p>[<strong>注</strong>] <font color='red'>两台电脑必须在用一个局域网中!</font></p>
-<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> DBLinkName</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> DatabaseUser <span class="keyword">identified</span> <span class="keyword">by</span> DatabasePassword</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;DatabaseSID&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th align="left">字段</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">DBLinkName</td>
-<td align="left">创建的 DBLink 的名字</td>
-</tr>
-<tr>
-<td align="left">DatabaseUser</td>
-<td align="left">待连接数据库的登录用户名</td>
-</tr>
-<tr>
-<td align="left">DatabasePassword</td>
-<td align="left">待连接数据库的登录密码</td>
-</tr>
-<tr>
-<td align="left">DatabaseSID</td>
-<td align="left">待链接数据库的服务名, 同时要写明 IP 地址. 如果是本地数据库, 可以不加 IP 地址</td>
-</tr>
-</tbody></table>
-<h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">--连接远程计算机数据库</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> DB_DZYH</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> dzyh <span class="keyword">identified</span> <span class="keyword">by</span> dzyh123</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;192.168.10.136/dzyhcs&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--连接本地计算机数据库</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> DB_DZYH</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> dzyh <span class="keyword">identified</span> <span class="keyword">by</span> dzyh123</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;dzyhcs&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<h1 id="🐬参考链接"><a href="#🐬参考链接" class="headerlink" title="🐬参考链接"></a>🐬参考链接</h1><ul>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Rhbmd4aW5nSUxvdmV5b3UvYXJ0aWNsZS9kZXRhaWxzLzgwNjc2NDM3">Oracle连接Sql Server (win32_11gR2_gateways)<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3pkYzUyNTU1NTUvYXJ0aWNsZS9kZXRhaWxzLzEyNTc1NzIz">Oracle11g+ 配置多个gateway 连接sqlserver<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ul>
-]]></content>
       <categories>
         <category>Oracle</category>
       </categories>
@@ -6765,10 +7441,10 @@ const dp_update = new DPlayer({
 <p>第二类是全局修改 Scene 窗口, 即任何时候 Scene 窗口上都会显示自定义的内容.</p>
 <h3 id="特定物体的-Scene-窗口自定义"><a href="#特定物体的-Scene-窗口自定义" class="headerlink" title="特定物体的 Scene 窗口自定义"></a>特定物体的 Scene 窗口自定义</h3><p>这一类的扩展代码编写方法和扩展 Inspector 面板时是一样的.</p>
 <p>需要使用特性 <code>CustomEditor(typeof())</code> 来修饰类, 同时继承 <code>Editor</code> 来绘制 UI.</p>
-<p>绘制 UI 的时候, 绘制用的代码必须放在 <code>Handles.BeginGUI()</code> 和 <code>Handles.EndGUI()</code> 之间.</p>
+<p>绘制 UI 的时候, 绘制用的代码放在 <code>OnSceneGUI()</code> 中, 并且必须放在 <code>Handles.BeginGUI()</code> 和 <code>Handles.EndGUI()</code> 之间.</p>
 <p><code>Handles.color</code> 可以修改绘制 UI 时的颜色.</p>
 <p>绘制 UI 时使用的 API 依旧是: <code>GUI</code>, <code>GUILayout</code>, <code>EditorGUI</code>, <code>EditorGUILayout</code> 等.</p>
-<h3 id="全局的-Scene-窗口自定义"><a href="#全局的-Scene-窗口自定义" class="headerlink" title="全局的 Scene 窗口自定义"></a>全局的 Scene 窗口自定义</h3><p>// TODO ....</p>
+<h3 id="全局的-Scene-窗口自定义"><a href="#全局的-Scene-窗口自定义" class="headerlink" title="全局的 Scene 窗口自定义"></a>全局的 Scene 窗口自定义</h3><p>常驻 UI 的绘制方法和依赖物体的 Scene UI 是一样的, 只是这个显示 UI 的方法的调用方式不一样了, 之前的是使用 <code>OnSceneGUI()</code> 方法, 而全部的 UI 是使用 <code>[InitializeOnLoadMethod]</code> 特性来调用自定义方法实现.</p>
 <h1 id="创建自定义窗口-EditorWindow"><a href="#创建自定义窗口-EditorWindow" class="headerlink" title="创建自定义窗口 (EditorWindow)"></a>创建自定义窗口 (EditorWindow)</h1><h2 id="定义窗口"><a href="#定义窗口" class="headerlink" title="定义窗口"></a>定义窗口</h2><p>继承自 <code>EditorWindow</code> 的类便是窗口本身.</p>
 <h2 id="打开窗口"><a href="#打开窗口" class="headerlink" title="打开窗口"></a>打开窗口</h2><p>使用继承自 EditorWindow 类中的 <code>GetWindow&lt;MyEditorWindowType&gt;();</code> 方法便可以打开特定的窗口, 返回打开后的窗口引用.</p>
 <h2 id="设置窗口的基本信息"><a href="#设置窗口的基本信息" class="headerlink" title="设置窗口的基本信息"></a>设置窗口的基本信息</h2><p>在使用 <code>GetWindow&lt;&gt;();</code> 之后获得的返回值中有一个 <code>titleContent</code> 可以设置窗口的名称, 图标, 气泡提示.</p>
@@ -6781,17 +7457,26 @@ const dp_update = new DPlayer({
 <p>之后将这个新建的风格作为参数, 绘制控件的时候传入即可.</p>
 <h1 id="绘制控件"><a href="#绘制控件" class="headerlink" title="绘制控件"></a>绘制控件</h1><p>这里可以绘制控件的 API 有: GUI, GUILayout, EditorGUI, EditorGUILayout, 可用于绘制 Inspector 面板, EditorWindow窗口等.</p>
 <h2 id="布局类"><a href="#布局类" class="headerlink" title="布局类"></a>布局类</h2><ul>
-<li><p>空白, 空行, 空格</p>
+<li><p>Space: 空白, 空行, 空格</p>
 <p> <code>EditorGUILayout.Space(10);</code></p>
 </li>
-<li><p>垂直布局</p>
-  <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">EditorGUILayout.BeginVertical();`</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">EditorGUILayout.EndVertical();`</span><br></pre></td></tr></table></figure>
+<li><p>FlexibleSpace: 自适应空格, 自动填充所处布局的全部剩余空间. 自适应空格大多和布局一起使用, 在水平布局中, 假设按照: <code>A, FlexibleSpace, B</code> 的顺序安排控件, 那么效果是: A 靠左, B 靠右, 中间空白会随着水平布局的变宽而变宽.</p>
+<p>  <code>GUILayout.FlexibleSpace();</code></p>
 </li>
-<li><p>水平布局</p>
-  <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">GUILayout.BeginHorizontal();`</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">GUILayout.EndHorizontal();`</span><br></pre></td></tr></table></figure>
+<li><p>BeginVertical, EndVertical: 垂直布局, 可以通过输入参数 <code>&quot;box&quot;</code> 让布局有一个灰色的背景.</p>
+  <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">EditorGUILayout.BeginVertical(<span class="string">&quot;box&quot;</span>);`</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">EditorGUILayout.EndVertical();`</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>自动布局区域</p>
+<li><p>BeginHorizontal, EndHorizontal: 水平布局, 可以通过输入参数 <code>&quot;box&quot;</code> 让布局有一个灰色的背景.</p>
+  <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">GUILayout.BeginHorizontal(<span class="string">&quot;box&quot;</span>);`</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">GUILayout.EndHorizontal();`</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>BeginArea, EndArea: 自动布局区域</p>
   <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">GUILayout.BeginArea(<span class="keyword">new</span> Rect(<span class="number">100</span>, <span class="number">300</span>, <span class="number">300</span>, <span class="number">100</span>));</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">GUILayout.EndArea();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Foldout: 折叠区域, 第一个参数为 bool 类型的参数, 表示是否折叠, 第三个参数是表示点击标题时是否可以展开, 默认是 false</p>
+  <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">foldoutTitle = <span class="keyword">new</span> GUIContent(<span class="string">&quot;测试折叠菜单&quot;</span>, <span class="string">&quot;气泡提示, 好无聊~&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (foldout = EditorGUILayout.Foldout(foldout, foldoutTitle, <span class="literal">true</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ScrollView: 附带滑动条的固定显示区域. 第一个参数是滑动条的位置, 是对滑动条滑动量的一个描述, 是一个 Vector2 类型, 分别表示横向和纵向两个滑动条, 每个轴保存的是滑动条的位置, 并不是百分比, 比如滑动区域的总高度为1000, 当纵向滑动条处于中间时, Vector2 的 Y 周值便是 500, 第二, 三个参数是布局选项, 设置滑动区域的显示大小. 滑动区域的实际大小由内容决定.</p>
+  <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(<span class="number">100</span>), GUILayout.Height(<span class="number">100</span>));</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -6820,7 +7505,7 @@ const dp_update = new DPlayer({
 <p>  <code>floatField = EditorGUILayout.FloatField(&quot;输入框名称&quot;, floatField);</code></p>
 </li>
 </ul>
-<h2 id="滑动条类"><a href="#滑动条类" class="headerlink" title="滑动条类"></a>滑动条类</h2><ul>
+<h2 id="滑动条类-Slider"><a href="#滑动条类-Slider" class="headerlink" title="滑动条类 (Slider)"></a>滑动条类 (Slider)</h2><ul>
 <li><p>Slider, 普通(浮点数)滑动条, 滑动时的数值为小数</p>
 <p>  <code>sliderValue = EditorGUILayout.Slider(&quot;滑动条名称&quot;, sliderValue, 0.3f, 30.3f);</code></p>
 </li>
@@ -6841,13 +7526,36 @@ const dp_update = new DPlayer({
 <li><p>EnumPopup, 枚举式弹出菜单, 与 Popup 的区别是不再使用索引, 而是使用枚举作为选择的标志. 前面强制类型转换的 <strong>PlayerType</strong> 就是枚举类型. 后面的 <strong>playerType</strong> 则是默认的选择项和当前的选择项, 当然这就是 <strong>PlayerType</strong> 类型的变量.</p>
 <p>  <code>playerType = (PlayerType)EditorGUILayout.EnumPopup(&quot;枚举式弹出菜单&quot;, playerType);</code></p>
 </li>
-<li><p>ObjectField, 物体选择框, 可选择游戏物体和预制件, <strong>go</strong> 是默认值以及当前的选择值.</p>
+</ul>
+<h2 id="资源选择框"><a href="#资源选择框" class="headerlink" title="资源选择框"></a>资源选择框</h2><ul>
+<li><p>ObjectField, 预制件选择框, 可选择资源中的预制件, <strong>go</strong> 是默认值以及当前的选择值.</p>
 <p>  <code>go = EditorGUILayout.ObjectField(&quot;物体名&quot;, go, typeof(GameObject), false) as GameObject;</code></p>
 </li>
 </ul>
-<h2 id="交互按钮类"><a href="#交互按钮类" class="headerlink" title="交互按钮类"></a>交互按钮类</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (GUILayout.Button(<span class="string">&quot;保存数据&quot;</span>, GUILayout.MaxWidth(<span class="number">80</span>)))</span><br><span class="line">&#123;</span><br><span class="line">    Debug.Log(<span class="string">&quot;保存数据成功!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="交互按钮"><a href="#交互按钮" class="headerlink" title="交互按钮"></a>交互按钮</h2><ul>
+<li><p>GUILayout.Button, 点击后返回 true</p>
+  <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (GUILayout.Button(<span class="string">&quot;保存数据&quot;</span>, GUILayout.MaxWidth(<span class="number">80</span>)))</span><br><span class="line">&#123;</span><br><span class="line">    Debug.Log(<span class="string">&quot;保存数据成功!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><h2 id="路径开头总结"><a href="#路径开头总结" class="headerlink" title="路径开头总结"></a>路径开头总结</h2><table>
+</li>
+</ul>
+<h2 id="勾选框"><a href="#勾选框" class="headerlink" title="勾选框"></a>勾选框</h2><ul>
+<li><p>Toggle, 第一个参数是显示的提示文本, 第二个选项时默认的勾选状态以及当前的勾选状态</p>
+  <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (toggleValue = EditorGUILayout.Toggle(<span class="string">&quot;多选控件显示的文本, 勾选后进行三维向量检测&quot;</span>, toggleValue))</span><br><span class="line">&#123;</span><br><span class="line">    myv3value = EditorGUILayout.Vector3Field(<span class="string">&quot;请输入一个三维向量&quot;</span>, myv3value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="进度条"><a href="#进度条" class="headerlink" title="进度条"></a>进度条</h2><p>进度条有两种, 第一种是附带了一个 &quot;取消&quot; 按钮的进度条, 这个是可以中途取消的, 另外一种就是没有取消按钮的进度条.</p>
+<h3 id="可中途取消的进度条"><a href="#可中途取消的进度条" class="headerlink" title="可中途取消的进度条"></a>可中途取消的进度条</h3><p><img data-src="progress_bar_cancel.png" alt="可取消的进度条"></p>
+<p>使用下方的 <code>DisplayCancelableProgressBar</code> 方法便可以生成一个带有取消按钮的进度条, 返回值为 bool 类型. 当点击 &quot;取消&quot; 按钮时, 返回值为 false, 否则返回值始终为 true, 即使第三个参数的数值已经超过了 1 (进度条数值溢出, 外观上不会溢出) 返回值也是 true. 需要注意的是: <font color='red'>取消按钮并不能删除当前显示的进度条, 这个按钮只能让 <code>DisplayCancelableProgressBar()</code> 方法返回 false, 需要取消进度条必须使用 <code>EditorUtility.ClearProgressBar();</code> 方法.</font></p>
+<p><code>EditorUtility.DisplayCancelableProgressBar(&quot;进度条窗口的标题&quot;, &quot;进度条下方的描述&quot;, 浮点型的进度条百分比(0-1))</code></p>
+<p>因此大多数在循环中展示进度条, 在一个将要处理<strong>大量数据</strong>的循环中加一个进度条, 这样每次循环的时候, 外部都会有一个进度值实时告诉用户进度, 用户就不容易以为设备卡住了.</p>
+<h3 id="不可中途取消的进度条"><a href="#不可中途取消的进度条" class="headerlink" title="不可中途取消的进度条"></a>不可中途取消的进度条</h3><p><img data-src="progress_bar.png" alt="不可取消的进度条"></p>
+<p>这个就更简单了, 使用 <code>DisplayProgressBar()</code> 方法便可以生成不可中途取消的进度条, 方法的返回值为 <code>void</code>, 因此不需要过多的处理.</p>
+<p><code>EditorUtility.DisplayProgressBar(&quot;进度条窗口的标题&quot;, &quot;进度条下方的描述&quot;, 浮点型的进度条百分比(0-1))</code></p>
+<p>[<strong>注</strong>] 这两种进度条都必须使用 <code>EditorUtility.ClearProgressBar();</code> 方法才能取消进度条的显示.</p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><h2 id="常用-API"><a href="#常用-API" class="headerlink" title="常用 API"></a>常用 API</h2><h3 id="EditorSceneManager-SaveCurrentModifiedScenesIfUserWantsTo"><a href="#EditorSceneManager-SaveCurrentModifiedScenesIfUserWantsTo" class="headerlink" title="EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();"></a>EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();</h3><p>如果用户当前修改了场景, 并且还没有对场景进行保存, 则会询问用户是否保存场景; 如果当前场景没有被修改, 则无事发生.</p>
+<p><img data-src="unity_editor_api_001.png" alt="unity_editor_api"></p>
+<h2 id="路径开头总结"><a href="#路径开头总结" class="headerlink" title="路径开头总结"></a>路径开头总结</h2><table>
 <thead>
 <tr>
 <th align="left">路径内容</th>
@@ -6886,6 +7594,24 @@ const dp_update = new DPlayer({
 <td align="left">设置特定组件就在 CONTEXT 后加特定组件, 如果要设置全部组件, 就加 Component</td>
 </tr>
 </tbody></table>
+<h2 id="如何高亮选中物体"><a href="#如何高亮选中物体" class="headerlink" title="如何高亮选中物体"></a>如何高亮选中物体</h2><h3 id="Hierarchy-面板"><a href="#Hierarchy-面板" class="headerlink" title="Hierarchy 面板"></a>Hierarchy 面板</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 搜索物体</span></span><br><span class="line">GameObject go = GameObject.Find(<span class="string">&quot;Main Camera&quot;</span>);</span><br><span class="line"><span class="comment">// 高亮物体, 同时将定位 Hierarchy 面板中高亮物体的位置</span></span><br><span class="line">EditorGUIUtility.PingObject(go);</span><br><span class="line"><span class="comment">// 选中物体, 显示 Inspector 面板 (目前 Unity 存在 Bug, 选中后直接变成 &quot;重命名&quot; 状态)</span></span><br><span class="line">Selection.activeGameObject = go;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Project-面板"><a href="#Project-面板" class="headerlink" title="Project 面板"></a>Project 面板</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 读取资源</span></span><br><span class="line">GameObject go = AssetDatabase.LoadAssetAtPath&lt;GameObject&gt;(<span class="string">&quot;Assets/Cube.prefab&quot;</span>);</span><br><span class="line"><span class="comment">// 高亮物体, 同时将定位 Project 面板中高亮物体的位置</span></span><br><span class="line">EditorGUIUtility.PingObject(go);</span><br><span class="line"><span class="comment">// 选中物体, 显示 Inspector 面板</span></span><br><span class="line">Selection.activeObject = go;</span><br></pre></td></tr></table></figure>
+
+<h2 id="EditorWindow-中变量的初始化"><a href="#EditorWindow-中变量的初始化" class="headerlink" title="EditorWindow 中变量的初始化"></a>EditorWindow 中变量的初始化</h2><p>窗口类中的变量通常是需要在 <code>OnGUI()</code> 方法中使用, 根据方法的生命周期来看, 在 <code>OnGUI()</code> 方法中使用的变量都是可以直接在 <code>OnEnable()</code> 方法中进行初始化的. 同时<font color='red'>由于这类变量通常需要保存数据到本地, 所以大多是使用文件中读取的数值进行初始化.</font></p>
+<p>另外需要注意的一个点是: 之前说过 <code>OnEnable()</code> 和 <code>OnFocus()</code> 是在 <code>GetWindow()</code> 方法返回之前执行的, 因此这两个方法不能用来对 <code>GetWindow()</code> 的返回值进行设置, 所以对窗口的外观设置任务就只能交给 <code>AfterGetWindow</code> 区域了, 或者直接独立出一个方法来进行窗口的外观设置.</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEditor;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyWindow</span> : <span class="title">EditorWindow</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">string</span> windowTitle;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// static 特性: 在编辑器模式下的静态变量一旦赋值, 除非 &quot;Unity 重新编译脚本&quot; 或者 &quot;Unity 退出&quot;, 否则变量的值一直保留, 不会重置.</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> MyWindow self;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> GUIContent windowTitleContent;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Open</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        self = GetWindow&lt;MyWindow&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对窗口初始化的任务就只能交给 AfterGetWindow 区域了.</span></span><br><span class="line">        self.titleContent = windowTitleContent;</span><br><span class="line">        self.minSize = <span class="keyword">new</span> Vector2(<span class="number">500f</span>, <span class="number">500f</span>);</span><br><span class="line">        self.maxSize = self.minSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnEnable</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">// OnEnable 中不能对 self 做任何操作, 因为此时 self 还是空值.</span></span><br><span class="line">        <span class="comment">// 虽然由于 static 的特性, 第一次设置会报错, 后面就不报错了😂</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对 OnGUI 中需要用到的变量初始化</span></span><br><span class="line">        windowTitle = <span class="string">&quot;This is a string inside a Scroll view!&quot;</span>;</span><br><span class="line">        windowTitleContent ??= <span class="keyword">new</span> GUIContent(<span class="string">&quot;测试窗口1&quot;</span>, <span class="string">&quot;气泡测试1&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnGUI</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        GUILayout.Label(windowTitle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
 ]]></content>
       <categories>
         <category>Unity</category>

@@ -32,12 +32,16 @@
 <meta property="og:site_name" content="二次元游宅客">
 <meta property="og:description" content="Unity 强大的自定义编辑器功能可以满足我们进行工业化生产的需求.">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/unity/progress_bar_cancel.png">
+<meta property="og:image" content="https://kuroha.vip/unity/progress_bar.png">
+<meta property="og:image" content="https://kuroha.vip/unity/unity_editor_api_001.png">
 <meta property="article:published_time" content="2021-03-23T06:20:19.000Z">
-<meta property="article:modified_time" content="2021-03-23T06:27:56.817Z">
+<meta property="article:modified_time" content="2021-05-11T15:12:08.700Z">
 <meta property="article:author" content="Kuroha">
 <meta property="article:tag" content="Unity">
 <meta property="article:tag" content="Editor">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/unity/progress_bar_cancel.png">
 
 
 <link rel="canonical" href="https://kuroha.vip/unity/unity_editor.html">
@@ -151,8 +155,8 @@
 <nav class="site-nav">
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">43</span></a></li>
-        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">20</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">47</span></a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
         <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a></li>
         <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
         <li class="menu-item menu-item-捉小猫"><a href="/catch_the_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫</a></li>
@@ -212,7 +216,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-Selection-%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">Unity Selection 类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-activeTransform"><span class="nav-number">1.1.</span> <span class="nav-text">Selection.activeTransform</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-activeGameObject"><span class="nav-number">1.2.</span> <span class="nav-text">Selection.activeGameObject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-activeObject"><span class="nav-number">1.3.</span> <span class="nav-text">Selection.activeObject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-transforms"><span class="nav-number">1.4.</span> <span class="nav-text">Selection.transforms</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-gameObjects"><span class="nav-number">1.5.</span> <span class="nav-text">Selection.gameObjects</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-objects"><span class="nav-number">1.6.</span> <span class="nav-text">Selection.objects</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-selectionChanged"><span class="nav-number">1.7.</span> <span class="nav-text">Selection.selectionChanged</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E7%89%B9%E6%80%A7-MenuItem-quot-A-B-quot-true-15"><span class="nav-number">2.</span> <span class="nav-text">C# 特性 [MenuItem(&quot;A&#x2F;B&quot;, true, 15)]</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MenuItem-%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E4%B8%BA%E8%8F%9C%E5%8D%95%E9%A1%B9%E7%9A%84%E8%B7%AF%E5%BE%84%E5%92%8C%E5%90%8D%E7%A7%B0"><span class="nav-number">2.1.</span> <span class="nav-text">MenuItem 的第一个参数为菜单项的路径和名称.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MenuItem-%E7%9A%84%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8F%82%E6%95%B0%E5%BA%94%E7%94%A8%E4%BA%8E%E8%BF%94%E5%9B%9E%E5%80%BC%E7%B1%BB%E5%9E%8B%E4%B8%BA-bool-%E7%9A%84%E8%8F%9C%E5%8D%95%E9%A1%B9"><span class="nav-number">2.2.</span> <span class="nav-text">MenuItem 的第二个参数应用于返回值类型为 bool 的菜单项.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MenuItem-%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%8F%82%E6%95%B0%E6%98%AF%E6%98%BE%E7%A4%BA%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">2.3.</span> <span class="nav-text">MenuItem 的第三个参数是显示优先级.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Project-%E8%A7%86%E5%9B%BE"><span class="nav-number">3.</span> <span class="nav-text">扩展 Project 视图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Project-%E8%A7%86%E5%9B%BE%E7%9A%84%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95"><span class="nav-number">3.1.</span> <span class="nav-text">扩展 Project 视图的右键菜单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Project-%E5%B8%83%E5%B1%80"><span class="nav-number">3.2.</span> <span class="nav-text">扩展 Project 布局</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Hierarchy-%E8%A7%86%E5%9B%BE"><span class="nav-number">4.</span> <span class="nav-text">扩展 Hierarchy 视图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Hierarchy-%E8%A7%86%E5%9B%BE%E7%9A%84%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95"><span class="nav-number">4.1.</span> <span class="nav-text">扩展 Hierarchy 视图的右键菜单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Hierarchy-%E5%B8%83%E5%B1%80"><span class="nav-number">4.2.</span> <span class="nav-text">扩展 Hierarchy 布局</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Inspector-%E8%A7%86%E5%9B%BE"><span class="nav-number">5.</span> <span class="nav-text">扩展 Inspector 视图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%8E%9F%E7%94%9F%E7%B1%BB%E7%BB%84%E4%BB%B6"><span class="nav-number">5.1.</span> <span class="nav-text">扩展原生类组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%BB%A7%E6%89%BF%E7%B1%BB%E7%BB%84%E4%BB%B6"><span class="nav-number">5.2.</span> <span class="nav-text">扩展继承类组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-Inspector-%E9%9D%A2%E6%9D%BF%E4%B8%BA%E5%8F%AA%E8%AF%BB"><span class="nav-number">5.3.</span> <span class="nav-text">设置 Inspector 面板为只读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%98%E5%88%B6-Inspector-%E9%9D%A2%E6%9D%BF%E6%97%B6%E8%AE%BE%E7%BD%AE%E5%8F%AA%E8%AF%BB"><span class="nav-number">5.3.1.</span> <span class="nav-text">绘制 Inspector 面板时设置只读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E8%84%9A%E6%9C%AC%E8%AE%BE%E7%BD%AE%E5%8F%AA%E8%AF%BB"><span class="nav-number">5.3.2.</span> <span class="nav-text">通过脚本设置只读</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Inspector-%E9%9D%A2%E6%9D%BF%E7%9A%84%E8%AE%BE%E7%BD%AE%E8%8F%9C%E5%8D%95"><span class="nav-number">5.4.</span> <span class="nav-text">扩展 Inspector 面板的设置菜单</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Scene-%E8%A7%86%E5%9B%BE"><span class="nav-number">6.</span> <span class="nav-text">扩展 Scene 视图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%8F%AF%E4%BA%A4%E4%BA%92%E7%9A%84%E8%BE%85%E5%8A%A9%E5%85%83%E7%B4%A0-Gizmos"><span class="nav-number">6.1.</span> <span class="nav-text">不可交互的辅助元素 Gizmos</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E4%BA%A4%E4%BA%92%E7%9A%84%E8%BE%85%E5%8A%A9%E5%85%83%E7%B4%A0-Handles-GUI"><span class="nav-number">6.2.</span> <span class="nav-text">可交互的辅助元素 Handles GUI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%AE%9A%E7%89%A9%E4%BD%93%E7%9A%84-Scene-%E7%AA%97%E5%8F%A3%E8%87%AA%E5%AE%9A%E4%B9%89"><span class="nav-number">6.2.1.</span> <span class="nav-text">特定物体的 Scene 窗口自定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E7%9A%84-Scene-%E7%AA%97%E5%8F%A3%E8%87%AA%E5%AE%9A%E4%B9%89"><span class="nav-number">6.2.2.</span> <span class="nav-text">全局的 Scene 窗口自定义</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E7%AA%97%E5%8F%A3-EditorWindow"><span class="nav-number">7.</span> <span class="nav-text">创建自定义窗口 (EditorWindow)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E7%AA%97%E5%8F%A3"><span class="nav-number">7.1.</span> <span class="nav-text">定义窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E7%AA%97%E5%8F%A3"><span class="nav-number">7.2.</span> <span class="nav-text">打开窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%AA%97%E5%8F%A3%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">7.3.</span> <span class="nav-text">设置窗口的基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E9%A3%8E%E6%A0%BC%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">7.4.</span> <span class="nav-text">改变风格的两种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%85%A8%E5%B1%80-GUI-%E9%A3%8E%E6%A0%BC"><span class="nav-number">7.4.1.</span> <span class="nav-text">使用全局 GUI 风格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%B1%80%E9%83%A8-GUI-%E9%A3%8E%E6%A0%BC"><span class="nav-number">7.4.2.</span> <span class="nav-text">使用局部 GUI 风格</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%98%E5%88%B6%E6%8E%A7%E4%BB%B6"><span class="nav-number">8.</span> <span class="nav-text">绘制控件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B1%80%E7%B1%BB"><span class="nav-number">8.1.</span> <span class="nav-text">布局类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%E7%94%A8%E6%A0%87%E7%AD%BE%E7%B1%BB"><span class="nav-number">8.2.</span> <span class="nav-text">提示用标签类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%A1%86%E7%B1%BB"><span class="nav-number">8.3.</span> <span class="nav-text">输入框类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E6%9D%A1%E7%B1%BB"><span class="nav-number">8.4.</span> <span class="nav-text">滑动条类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E9%80%89%E6%8B%A9%E7%B1%BB"><span class="nav-number">8.5.</span> <span class="nav-text">弹出菜单选择类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E4%BA%92%E6%8C%89%E9%92%AE%E7%B1%BB"><span class="nav-number">8.6.</span> <span class="nav-text">交互按钮类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%84%E5%BD%95"><span class="nav-number">9.</span> <span class="nav-text">附录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E5%BE%84%E5%BC%80%E5%A4%B4%E6%80%BB%E7%BB%93"><span class="nav-number">9.1.</span> <span class="nav-text">路径开头总结</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-Selection-%E7%B1%BB"><span class="nav-number">1.</span> <span class="nav-text">Unity Selection 类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-activeTransform"><span class="nav-number">1.1.</span> <span class="nav-text">Selection.activeTransform</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-activeGameObject"><span class="nav-number">1.2.</span> <span class="nav-text">Selection.activeGameObject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-activeObject"><span class="nav-number">1.3.</span> <span class="nav-text">Selection.activeObject</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-transforms"><span class="nav-number">1.4.</span> <span class="nav-text">Selection.transforms</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-gameObjects"><span class="nav-number">1.5.</span> <span class="nav-text">Selection.gameObjects</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-objects"><span class="nav-number">1.6.</span> <span class="nav-text">Selection.objects</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selection-selectionChanged"><span class="nav-number">1.7.</span> <span class="nav-text">Selection.selectionChanged</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E7%89%B9%E6%80%A7-MenuItem-quot-A-B-quot-true-15"><span class="nav-number">2.</span> <span class="nav-text">C# 特性 [MenuItem(&quot;A&#x2F;B&quot;, true, 15)]</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MenuItem-%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E4%B8%BA%E8%8F%9C%E5%8D%95%E9%A1%B9%E7%9A%84%E8%B7%AF%E5%BE%84%E5%92%8C%E5%90%8D%E7%A7%B0"><span class="nav-number">2.1.</span> <span class="nav-text">MenuItem 的第一个参数为菜单项的路径和名称.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MenuItem-%E7%9A%84%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8F%82%E6%95%B0%E5%BA%94%E7%94%A8%E4%BA%8E%E8%BF%94%E5%9B%9E%E5%80%BC%E7%B1%BB%E5%9E%8B%E4%B8%BA-bool-%E7%9A%84%E8%8F%9C%E5%8D%95%E9%A1%B9"><span class="nav-number">2.2.</span> <span class="nav-text">MenuItem 的第二个参数应用于返回值类型为 bool 的菜单项.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MenuItem-%E7%9A%84%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%8F%82%E6%95%B0%E6%98%AF%E6%98%BE%E7%A4%BA%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">2.3.</span> <span class="nav-text">MenuItem 的第三个参数是显示优先级.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Project-%E8%A7%86%E5%9B%BE"><span class="nav-number">3.</span> <span class="nav-text">扩展 Project 视图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Project-%E8%A7%86%E5%9B%BE%E7%9A%84%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95"><span class="nav-number">3.1.</span> <span class="nav-text">扩展 Project 视图的右键菜单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Project-%E5%B8%83%E5%B1%80"><span class="nav-number">3.2.</span> <span class="nav-text">扩展 Project 布局</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Hierarchy-%E8%A7%86%E5%9B%BE"><span class="nav-number">4.</span> <span class="nav-text">扩展 Hierarchy 视图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Hierarchy-%E8%A7%86%E5%9B%BE%E7%9A%84%E5%8F%B3%E9%94%AE%E8%8F%9C%E5%8D%95"><span class="nav-number">4.1.</span> <span class="nav-text">扩展 Hierarchy 视图的右键菜单</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Hierarchy-%E5%B8%83%E5%B1%80"><span class="nav-number">4.2.</span> <span class="nav-text">扩展 Hierarchy 布局</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Inspector-%E8%A7%86%E5%9B%BE"><span class="nav-number">5.</span> <span class="nav-text">扩展 Inspector 视图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%8E%9F%E7%94%9F%E7%B1%BB%E7%BB%84%E4%BB%B6"><span class="nav-number">5.1.</span> <span class="nav-text">扩展原生类组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%BB%A7%E6%89%BF%E7%B1%BB%E7%BB%84%E4%BB%B6"><span class="nav-number">5.2.</span> <span class="nav-text">扩展继承类组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-Inspector-%E9%9D%A2%E6%9D%BF%E4%B8%BA%E5%8F%AA%E8%AF%BB"><span class="nav-number">5.3.</span> <span class="nav-text">设置 Inspector 面板为只读</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%98%E5%88%B6-Inspector-%E9%9D%A2%E6%9D%BF%E6%97%B6%E8%AE%BE%E7%BD%AE%E5%8F%AA%E8%AF%BB"><span class="nav-number">5.3.1.</span> <span class="nav-text">绘制 Inspector 面板时设置只读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E8%84%9A%E6%9C%AC%E8%AE%BE%E7%BD%AE%E5%8F%AA%E8%AF%BB"><span class="nav-number">5.3.2.</span> <span class="nav-text">通过脚本设置只读</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Inspector-%E9%9D%A2%E6%9D%BF%E7%9A%84%E8%AE%BE%E7%BD%AE%E8%8F%9C%E5%8D%95"><span class="nav-number">5.4.</span> <span class="nav-text">扩展 Inspector 面板的设置菜单</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95-Scene-%E8%A7%86%E5%9B%BE"><span class="nav-number">6.</span> <span class="nav-text">扩展 Scene 视图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%8F%AF%E4%BA%A4%E4%BA%92%E7%9A%84%E8%BE%85%E5%8A%A9%E5%85%83%E7%B4%A0-Gizmos"><span class="nav-number">6.1.</span> <span class="nav-text">不可交互的辅助元素 Gizmos</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E4%BA%A4%E4%BA%92%E7%9A%84%E8%BE%85%E5%8A%A9%E5%85%83%E7%B4%A0-Handles-GUI"><span class="nav-number">6.2.</span> <span class="nav-text">可交互的辅助元素 Handles GUI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E5%AE%9A%E7%89%A9%E4%BD%93%E7%9A%84-Scene-%E7%AA%97%E5%8F%A3%E8%87%AA%E5%AE%9A%E4%B9%89"><span class="nav-number">6.2.1.</span> <span class="nav-text">特定物体的 Scene 窗口自定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E7%9A%84-Scene-%E7%AA%97%E5%8F%A3%E8%87%AA%E5%AE%9A%E4%B9%89"><span class="nav-number">6.2.2.</span> <span class="nav-text">全局的 Scene 窗口自定义</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E7%AA%97%E5%8F%A3-EditorWindow"><span class="nav-number">7.</span> <span class="nav-text">创建自定义窗口 (EditorWindow)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E7%AA%97%E5%8F%A3"><span class="nav-number">7.1.</span> <span class="nav-text">定义窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E7%AA%97%E5%8F%A3"><span class="nav-number">7.2.</span> <span class="nav-text">打开窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%AA%97%E5%8F%A3%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="nav-number">7.3.</span> <span class="nav-text">设置窗口的基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E5%8F%98%E9%A3%8E%E6%A0%BC%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">7.4.</span> <span class="nav-text">改变风格的两种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%85%A8%E5%B1%80-GUI-%E9%A3%8E%E6%A0%BC"><span class="nav-number">7.4.1.</span> <span class="nav-text">使用全局 GUI 风格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%B1%80%E9%83%A8-GUI-%E9%A3%8E%E6%A0%BC"><span class="nav-number">7.4.2.</span> <span class="nav-text">使用局部 GUI 风格</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%98%E5%88%B6%E6%8E%A7%E4%BB%B6"><span class="nav-number">8.</span> <span class="nav-text">绘制控件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%83%E5%B1%80%E7%B1%BB"><span class="nav-number">8.1.</span> <span class="nav-text">布局类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E7%A4%BA%E7%94%A8%E6%A0%87%E7%AD%BE%E7%B1%BB"><span class="nav-number">8.2.</span> <span class="nav-text">提示用标签类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E6%A1%86%E7%B1%BB"><span class="nav-number">8.3.</span> <span class="nav-text">输入框类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E6%9D%A1%E7%B1%BB-Slider"><span class="nav-number">8.4.</span> <span class="nav-text">滑动条类 (Slider)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%B9%E5%87%BA%E8%8F%9C%E5%8D%95%E9%80%89%E6%8B%A9%E7%B1%BB"><span class="nav-number">8.5.</span> <span class="nav-text">弹出菜单选择类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E9%80%89%E6%8B%A9%E6%A1%86"><span class="nav-number">8.6.</span> <span class="nav-text">资源选择框</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E4%BA%92%E6%8C%89%E9%92%AE"><span class="nav-number">8.7.</span> <span class="nav-text">交互按钮</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8B%BE%E9%80%89%E6%A1%86"><span class="nav-number">8.8.</span> <span class="nav-text">勾选框</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%BA%A6%E6%9D%A1"><span class="nav-number">8.9.</span> <span class="nav-text">进度条</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E4%B8%AD%E9%80%94%E5%8F%96%E6%B6%88%E7%9A%84%E8%BF%9B%E5%BA%A6%E6%9D%A1"><span class="nav-number">8.9.1.</span> <span class="nav-text">可中途取消的进度条</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%8F%AF%E4%B8%AD%E9%80%94%E5%8F%96%E6%B6%88%E7%9A%84%E8%BF%9B%E5%BA%A6%E6%9D%A1"><span class="nav-number">8.9.2.</span> <span class="nav-text">不可中途取消的进度条</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%84%E5%BD%95"><span class="nav-number">9.</span> <span class="nav-text">附录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8-API"><span class="nav-number">9.1.</span> <span class="nav-text">常用 API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#EditorSceneManager-SaveCurrentModifiedScenesIfUserWantsTo"><span class="nav-number">9.1.1.</span> <span class="nav-text">EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E5%BE%84%E5%BC%80%E5%A4%B4%E6%80%BB%E7%BB%93"><span class="nav-number">9.2.</span> <span class="nav-text">路径开头总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%AB%98%E4%BA%AE%E9%80%89%E4%B8%AD%E7%89%A9%E4%BD%93"><span class="nav-number">9.3.</span> <span class="nav-text">如何高亮选中物体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hierarchy-%E9%9D%A2%E6%9D%BF"><span class="nav-number">9.3.1.</span> <span class="nav-text">Hierarchy 面板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Project-%E9%9D%A2%E6%9D%BF"><span class="nav-number">9.3.2.</span> <span class="nav-text">Project 面板</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EditorWindow-%E4%B8%AD%E5%8F%98%E9%87%8F%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">9.4.</span> <span class="nav-text">EditorWindow 中变量的初始化</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -228,7 +232,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -241,7 +245,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -346,10 +350,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-03-23 14:20:19 / 修改时间：14:27:56" itemprop="dateCreated datePublished" datetime="2021-03-23T14:20:19+08:00">2021-03-23</time>
+      <time title="创建时间：2021-03-23 14:20:19" itemprop="dateCreated datePublished" datetime="2021-03-23T14:20:19+08:00">2021-03-23</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-11 23:12:08" itemprop="dateModified" datetime="2021-05-11T23:12:08+08:00">2021-05-11</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -368,14 +378,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>11k</span>
+      <span>15k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>10 分钟</span>
+      <span>14 分钟</span>
     </span>
 </div>
 
@@ -518,10 +528,10 @@
 <p>第二类是全局修改 Scene 窗口, 即任何时候 Scene 窗口上都会显示自定义的内容.</p>
 <h3 id="特定物体的-Scene-窗口自定义"><a href="#特定物体的-Scene-窗口自定义" class="headerlink" title="特定物体的 Scene 窗口自定义"></a>特定物体的 Scene 窗口自定义</h3><p>这一类的扩展代码编写方法和扩展 Inspector 面板时是一样的.</p>
 <p>需要使用特性 <code>CustomEditor(typeof())</code> 来修饰类, 同时继承 <code>Editor</code> 来绘制 UI.</p>
-<p>绘制 UI 的时候, 绘制用的代码必须放在 <code>Handles.BeginGUI()</code> 和 <code>Handles.EndGUI()</code> 之间.</p>
+<p>绘制 UI 的时候, 绘制用的代码放在 <code>OnSceneGUI()</code> 中, 并且必须放在 <code>Handles.BeginGUI()</code> 和 <code>Handles.EndGUI()</code> 之间.</p>
 <p><code>Handles.color</code> 可以修改绘制 UI 时的颜色.</p>
 <p>绘制 UI 时使用的 API 依旧是: <code>GUI</code>, <code>GUILayout</code>, <code>EditorGUI</code>, <code>EditorGUILayout</code> 等.</p>
-<h3 id="全局的-Scene-窗口自定义"><a href="#全局的-Scene-窗口自定义" class="headerlink" title="全局的 Scene 窗口自定义"></a>全局的 Scene 窗口自定义</h3><p>// TODO ....</p>
+<h3 id="全局的-Scene-窗口自定义"><a href="#全局的-Scene-窗口自定义" class="headerlink" title="全局的 Scene 窗口自定义"></a>全局的 Scene 窗口自定义</h3><p>常驻 UI 的绘制方法和依赖物体的 Scene UI 是一样的, 只是这个显示 UI 的方法的调用方式不一样了, 之前的是使用 <code>OnSceneGUI()</code> 方法, 而全部的 UI 是使用 <code>[InitializeOnLoadMethod]</code> 特性来调用自定义方法实现.</p>
 <h1 id="创建自定义窗口-EditorWindow"><a href="#创建自定义窗口-EditorWindow" class="headerlink" title="创建自定义窗口 (EditorWindow)"></a>创建自定义窗口 (EditorWindow)</h1><h2 id="定义窗口"><a href="#定义窗口" class="headerlink" title="定义窗口"></a>定义窗口</h2><p>继承自 <code>EditorWindow</code> 的类便是窗口本身.</p>
 <h2 id="打开窗口"><a href="#打开窗口" class="headerlink" title="打开窗口"></a>打开窗口</h2><p>使用继承自 EditorWindow 类中的 <code>GetWindow&lt;MyEditorWindowType&gt;();</code> 方法便可以打开特定的窗口, 返回打开后的窗口引用.</p>
 <h2 id="设置窗口的基本信息"><a href="#设置窗口的基本信息" class="headerlink" title="设置窗口的基本信息"></a>设置窗口的基本信息</h2><p>在使用 <code>GetWindow&lt;&gt;();</code> 之后获得的返回值中有一个 <code>titleContent</code> 可以设置窗口的名称, 图标, 气泡提示.</p>
@@ -534,17 +544,26 @@
 <p>之后将这个新建的风格作为参数, 绘制控件的时候传入即可.</p>
 <h1 id="绘制控件"><a href="#绘制控件" class="headerlink" title="绘制控件"></a>绘制控件</h1><p>这里可以绘制控件的 API 有: GUI, GUILayout, EditorGUI, EditorGUILayout, 可用于绘制 Inspector 面板, EditorWindow窗口等.</p>
 <h2 id="布局类"><a href="#布局类" class="headerlink" title="布局类"></a>布局类</h2><ul>
-<li><p>空白, 空行, 空格</p>
+<li><p>Space: 空白, 空行, 空格</p>
 <p> <code>EditorGUILayout.Space(10);</code></p>
 </li>
-<li><p>垂直布局</p>
-  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EditorGUILayout.BeginVertical();`</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">EditorGUILayout.EndVertical();`</span><br></pre></td></tr></table></figure>
+<li><p>FlexibleSpace: 自适应空格, 自动填充所处布局的全部剩余空间. 自适应空格大多和布局一起使用, 在水平布局中, 假设按照: <code>A, FlexibleSpace, B</code> 的顺序安排控件, 那么效果是: A 靠左, B 靠右, 中间空白会随着水平布局的变宽而变宽.</p>
+<p>  <code>GUILayout.FlexibleSpace();</code></p>
 </li>
-<li><p>水平布局</p>
-  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GUILayout.BeginHorizontal();`</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">GUILayout.EndHorizontal();`</span><br></pre></td></tr></table></figure>
+<li><p>BeginVertical, EndVertical: 垂直布局, 可以通过输入参数 <code>&quot;box&quot;</code> 让布局有一个灰色的背景.</p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EditorGUILayout.BeginVertical(<span class="string">&quot;box&quot;</span>);`</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">EditorGUILayout.EndVertical();`</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>自动布局区域</p>
+<li><p>BeginHorizontal, EndHorizontal: 水平布局, 可以通过输入参数 <code>&quot;box&quot;</code> 让布局有一个灰色的背景.</p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GUILayout.BeginHorizontal(<span class="string">&quot;box&quot;</span>);`</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">GUILayout.EndHorizontal();`</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>BeginArea, EndArea: 自动布局区域</p>
   <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GUILayout.BeginArea(<span class="keyword">new</span> Rect(<span class="number">100</span>, <span class="number">300</span>, <span class="number">300</span>, <span class="number">100</span>));</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">GUILayout.EndArea();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Foldout: 折叠区域, 第一个参数为 bool 类型的参数, 表示是否折叠, 第三个参数是表示点击标题时是否可以展开, 默认是 false</p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">foldoutTitle = <span class="keyword">new</span> GUIContent(<span class="string">&quot;测试折叠菜单&quot;</span>, <span class="string">&quot;气泡提示, 好无聊~&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (foldout = EditorGUILayout.Foldout(foldout, foldoutTitle, <span class="literal">true</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ScrollView: 附带滑动条的固定显示区域. 第一个参数是滑动条的位置, 是对滑动条滑动量的一个描述, 是一个 Vector2 类型, 分别表示横向和纵向两个滑动条, 每个轴保存的是滑动条的位置, 并不是百分比, 比如滑动区域的总高度为1000, 当纵向滑动条处于中间时, Vector2 的 Y 周值便是 500, 第二, 三个参数是布局选项, 设置滑动区域的显示大小. 滑动区域的实际大小由内容决定.</p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(<span class="number">100</span>), GUILayout.Height(<span class="number">100</span>));</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -573,7 +592,7 @@
 <p>  <code>floatField = EditorGUILayout.FloatField(&quot;输入框名称&quot;, floatField);</code></p>
 </li>
 </ul>
-<h2 id="滑动条类"><a href="#滑动条类" class="headerlink" title="滑动条类"></a>滑动条类</h2><ul>
+<h2 id="滑动条类-Slider"><a href="#滑动条类-Slider" class="headerlink" title="滑动条类 (Slider)"></a>滑动条类 (Slider)</h2><ul>
 <li><p>Slider, 普通(浮点数)滑动条, 滑动时的数值为小数</p>
 <p>  <code>sliderValue = EditorGUILayout.Slider(&quot;滑动条名称&quot;, sliderValue, 0.3f, 30.3f);</code></p>
 </li>
@@ -594,13 +613,36 @@
 <li><p>EnumPopup, 枚举式弹出菜单, 与 Popup 的区别是不再使用索引, 而是使用枚举作为选择的标志. 前面强制类型转换的 <strong>PlayerType</strong> 就是枚举类型. 后面的 <strong>playerType</strong> 则是默认的选择项和当前的选择项, 当然这就是 <strong>PlayerType</strong> 类型的变量.</p>
 <p>  <code>playerType = (PlayerType)EditorGUILayout.EnumPopup(&quot;枚举式弹出菜单&quot;, playerType);</code></p>
 </li>
-<li><p>ObjectField, 物体选择框, 可选择游戏物体和预制件, <strong>go</strong> 是默认值以及当前的选择值.</p>
+</ul>
+<h2 id="资源选择框"><a href="#资源选择框" class="headerlink" title="资源选择框"></a>资源选择框</h2><ul>
+<li><p>ObjectField, 预制件选择框, 可选择资源中的预制件, <strong>go</strong> 是默认值以及当前的选择值.</p>
 <p>  <code>go = EditorGUILayout.ObjectField(&quot;物体名&quot;, go, typeof(GameObject), false) as GameObject;</code></p>
 </li>
 </ul>
-<h2 id="交互按钮类"><a href="#交互按钮类" class="headerlink" title="交互按钮类"></a>交互按钮类</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (GUILayout.Button(<span class="string">&quot;保存数据&quot;</span>, GUILayout.MaxWidth(<span class="number">80</span>)))</span><br><span class="line">&#123;</span><br><span class="line">    Debug.Log(<span class="string">&quot;保存数据成功!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="交互按钮"><a href="#交互按钮" class="headerlink" title="交互按钮"></a>交互按钮</h2><ul>
+<li><p>GUILayout.Button, 点击后返回 true</p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (GUILayout.Button(<span class="string">&quot;保存数据&quot;</span>, GUILayout.MaxWidth(<span class="number">80</span>)))</span><br><span class="line">&#123;</span><br><span class="line">    Debug.Log(<span class="string">&quot;保存数据成功!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><h2 id="路径开头总结"><a href="#路径开头总结" class="headerlink" title="路径开头总结"></a>路径开头总结</h2><table>
+</li>
+</ul>
+<h2 id="勾选框"><a href="#勾选框" class="headerlink" title="勾选框"></a>勾选框</h2><ul>
+<li><p>Toggle, 第一个参数是显示的提示文本, 第二个选项时默认的勾选状态以及当前的勾选状态</p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (toggleValue = EditorGUILayout.Toggle(<span class="string">&quot;多选控件显示的文本, 勾选后进行三维向量检测&quot;</span>, toggleValue))</span><br><span class="line">&#123;</span><br><span class="line">    myv3value = EditorGUILayout.Vector3Field(<span class="string">&quot;请输入一个三维向量&quot;</span>, myv3value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="进度条"><a href="#进度条" class="headerlink" title="进度条"></a>进度条</h2><p>进度条有两种, 第一种是附带了一个 &quot;取消&quot; 按钮的进度条, 这个是可以中途取消的, 另外一种就是没有取消按钮的进度条.</p>
+<h3 id="可中途取消的进度条"><a href="#可中途取消的进度条" class="headerlink" title="可中途取消的进度条"></a>可中途取消的进度条</h3><p><img data-src="progress_bar_cancel.png" alt="可取消的进度条"></p>
+<p>使用下方的 <code>DisplayCancelableProgressBar</code> 方法便可以生成一个带有取消按钮的进度条, 返回值为 bool 类型. 当点击 &quot;取消&quot; 按钮时, 返回值为 false, 否则返回值始终为 true, 即使第三个参数的数值已经超过了 1 (进度条数值溢出, 外观上不会溢出) 返回值也是 true. 需要注意的是: <font color='red'>取消按钮并不能删除当前显示的进度条, 这个按钮只能让 <code>DisplayCancelableProgressBar()</code> 方法返回 false, 需要取消进度条必须使用 <code>EditorUtility.ClearProgressBar();</code> 方法.</font></p>
+<p><code>EditorUtility.DisplayCancelableProgressBar(&quot;进度条窗口的标题&quot;, &quot;进度条下方的描述&quot;, 浮点型的进度条百分比(0-1))</code></p>
+<p>因此大多数在循环中展示进度条, 在一个将要处理<strong>大量数据</strong>的循环中加一个进度条, 这样每次循环的时候, 外部都会有一个进度值实时告诉用户进度, 用户就不容易以为设备卡住了.</p>
+<h3 id="不可中途取消的进度条"><a href="#不可中途取消的进度条" class="headerlink" title="不可中途取消的进度条"></a>不可中途取消的进度条</h3><p><img data-src="progress_bar.png" alt="不可取消的进度条"></p>
+<p>这个就更简单了, 使用 <code>DisplayProgressBar()</code> 方法便可以生成不可中途取消的进度条, 方法的返回值为 <code>void</code>, 因此不需要过多的处理.</p>
+<p><code>EditorUtility.DisplayProgressBar(&quot;进度条窗口的标题&quot;, &quot;进度条下方的描述&quot;, 浮点型的进度条百分比(0-1))</code></p>
+<p>[<strong>注</strong>] 这两种进度条都必须使用 <code>EditorUtility.ClearProgressBar();</code> 方法才能取消进度条的显示.</p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><h2 id="常用-API"><a href="#常用-API" class="headerlink" title="常用 API"></a>常用 API</h2><h3 id="EditorSceneManager-SaveCurrentModifiedScenesIfUserWantsTo"><a href="#EditorSceneManager-SaveCurrentModifiedScenesIfUserWantsTo" class="headerlink" title="EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();"></a>EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();</h3><p>如果用户当前修改了场景, 并且还没有对场景进行保存, 则会询问用户是否保存场景; 如果当前场景没有被修改, 则无事发生.</p>
+<p><img data-src="unity_editor_api_001.png" alt="unity_editor_api"></p>
+<h2 id="路径开头总结"><a href="#路径开头总结" class="headerlink" title="路径开头总结"></a>路径开头总结</h2><table>
 <thead>
 <tr>
 <th align="left">路径内容</th>
@@ -639,6 +681,24 @@
 <td align="left">设置特定组件就在 CONTEXT 后加特定组件, 如果要设置全部组件, 就加 Component</td>
 </tr>
 </tbody></table>
+<h2 id="如何高亮选中物体"><a href="#如何高亮选中物体" class="headerlink" title="如何高亮选中物体"></a>如何高亮选中物体</h2><h3 id="Hierarchy-面板"><a href="#Hierarchy-面板" class="headerlink" title="Hierarchy 面板"></a>Hierarchy 面板</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 搜索物体</span></span><br><span class="line">GameObject go = GameObject.Find(<span class="string">&quot;Main Camera&quot;</span>);</span><br><span class="line"><span class="comment">// 高亮物体, 同时将定位 Hierarchy 面板中高亮物体的位置</span></span><br><span class="line">EditorGUIUtility.PingObject(go);</span><br><span class="line"><span class="comment">// 选中物体, 显示 Inspector 面板 (目前 Unity 存在 Bug, 选中后直接变成 &quot;重命名&quot; 状态)</span></span><br><span class="line">Selection.activeGameObject = go;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Project-面板"><a href="#Project-面板" class="headerlink" title="Project 面板"></a>Project 面板</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 读取资源</span></span><br><span class="line">GameObject go = AssetDatabase.LoadAssetAtPath&lt;GameObject&gt;(<span class="string">&quot;Assets/Cube.prefab&quot;</span>);</span><br><span class="line"><span class="comment">// 高亮物体, 同时将定位 Project 面板中高亮物体的位置</span></span><br><span class="line">EditorGUIUtility.PingObject(go);</span><br><span class="line"><span class="comment">// 选中物体, 显示 Inspector 面板</span></span><br><span class="line">Selection.activeObject = go;</span><br></pre></td></tr></table></figure>
+
+<h2 id="EditorWindow-中变量的初始化"><a href="#EditorWindow-中变量的初始化" class="headerlink" title="EditorWindow 中变量的初始化"></a>EditorWindow 中变量的初始化</h2><p>窗口类中的变量通常是需要在 <code>OnGUI()</code> 方法中使用, 根据方法的生命周期来看, 在 <code>OnGUI()</code> 方法中使用的变量都是可以直接在 <code>OnEnable()</code> 方法中进行初始化的. 同时<font color='red'>由于这类变量通常需要保存数据到本地, 所以大多是使用文件中读取的数值进行初始化.</font></p>
+<p>另外需要注意的一个点是: 之前说过 <code>OnEnable()</code> 和 <code>OnFocus()</code> 是在 <code>GetWindow()</code> 方法返回之前执行的, 因此这两个方法不能用来对 <code>GetWindow()</code> 的返回值进行设置, 所以对窗口的外观设置任务就只能交给 <code>AfterGetWindow</code> 区域了, 或者直接独立出一个方法来进行窗口的外观设置.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEditor;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyWindow</span> : <span class="title">EditorWindow</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">string</span> windowTitle;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// static 特性: 在编辑器模式下的静态变量一旦赋值, 除非 &quot;Unity 重新编译脚本&quot; 或者 &quot;Unity 退出&quot;, 否则变量的值一直保留, 不会重置.</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> MyWindow self;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> GUIContent windowTitleContent;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Open</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        self = GetWindow&lt;MyWindow&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对窗口初始化的任务就只能交给 AfterGetWindow 区域了.</span></span><br><span class="line">        self.titleContent = windowTitleContent;</span><br><span class="line">        self.minSize = <span class="keyword">new</span> Vector2(<span class="number">500f</span>, <span class="number">500f</span>);</span><br><span class="line">        self.maxSize = self.minSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnEnable</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">// OnEnable 中不能对 self 做任何操作, 因为此时 self 还是空值.</span></span><br><span class="line">        <span class="comment">// 虽然由于 static 的特性, 第一次设置会报错, 后面就不报错了😂</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对 OnGUI 中需要用到的变量初始化</span></span><br><span class="line">        windowTitle = <span class="string">&quot;This is a string inside a Scroll view!&quot;</span>;</span><br><span class="line">        windowTitleContent ??= <span class="keyword">new</span> GUIContent(<span class="string">&quot;测试窗口1&quot;</span>, <span class="string">&quot;气泡测试1&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnGUI</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        GUILayout.Label(windowTitle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
 
     </div>
 
@@ -734,11 +794,14 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/git/git_learn.html" rel="prev" title="学习 Git 以及相关软件的使用">
-                  <i class="fa fa-chevron-left"></i> 学习 Git 以及相关软件的使用
+                <a href="/unity/unity_animation.html" rel="prev" title="Unity 动画相关页面">
+                  <i class="fa fa-chevron-left"></i> Unity 动画相关页面
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/unity/unity_editorwindow_runorder.html" rel="next" title="EditorWindow 类中事件方法的执行顺序">
+                  EditorWindow 类中事件方法的执行顺序 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -793,14 +856,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">221k</span>
+    <span title="站点总字数">240k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:21</span>
+    <span title="站点阅读时长">3:38</span>
   </span>
 </div>
 
