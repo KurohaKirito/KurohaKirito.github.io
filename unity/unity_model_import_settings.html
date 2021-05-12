@@ -32,16 +32,16 @@
 <meta property="og:site_name" content="二次元游宅客">
 <meta property="og:description" content="搞清楚导入模型时的每一个选项, 为之后学习优化打好基础.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kuroha.vip/unity/SceneView.png">
-<meta property="og:image" content="https://kuroha.vip/unity/MeshesView.png">
-<meta property="og:image" content="https://kuroha.vip/unity/GeometryView.png">
-<meta property="og:image" content="https://kuroha.vip/unity/model_animation.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity_model/SceneView.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity_model/MeshesView.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity_model/GeometryView.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity_model/model_animation.png">
 <meta property="article:published_time" content="2021-03-17T08:17:00.000Z">
-<meta property="article:modified_time" content="2021-05-11T15:12:08.701Z">
+<meta property="article:modified_time" content="2021-05-12T00:02:56.856Z">
 <meta property="article:author" content="Kuroha">
 <meta property="article:tag" content="Unity">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kuroha.vip/unity/SceneView.png">
+<meta name="twitter:image" content="https://kuroha.vip/images/unity_model/SceneView.png">
 
 
 <link rel="canonical" href="https://kuroha.vip/unity/unity_model_import_settings.html">
@@ -358,7 +358,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-05-11 23:12:08" itemprop="dateModified" datetime="2021-05-11T23:12:08+08:00">2021-05-11</time>
+        <time title="修改时间：2021-05-12 08:02:56" itemprop="dateModified" datetime="2021-05-12T08:02:56+08:00">2021-05-12</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -401,7 +401,7 @@
 
 <p>Model Import Settings 页面有四个选项卡, 分别是: Model, Rig, Animation, Materials</p>
 <h1 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h1><p>Model 标签页主要是对模型进行设置, 共有三个方面的设置: Scene (场景), Meshes (网格), Geometry (几何)</p>
-<h2 id="Scene-设置"><a href="#Scene-设置" class="headerlink" title="Scene 设置"></a>Scene 设置</h2><p><img data-src="SceneView.png" alt="SceneView"></p>
+<h2 id="Scene-设置"><a href="#Scene-设置" class="headerlink" title="Scene 设置"></a>Scene 设置</h2><p><img data-src="/images/unity_model/SceneView.png" alt="SceneView"></p>
 <h3 id="Scale-Factor"><a href="#Scale-Factor" class="headerlink" title="Scale Factor"></a>Scale Factor</h3><p>如果原始文件的比例 (来自模型文件) 不符合项目中的预期比例, 可以通过修改此值, 设置模型在 Unity 中的全局比例.</p>
 <h3 id="Convert-Units"><a href="#Convert-Units" class="headerlink" title="Convert Units"></a>Convert Units</h3><p>启用此选项可将模型文件中定义的模型比例转换为 Unity 的比例.</p>
 <p>转换公式为: 1cm (file) ⇒ 0.01m (Unity)</p>
@@ -416,7 +416,7 @@
 <h3 id="Import-Lights"><a href="#Import-Lights" class="headerlink" title="Import Lights"></a>Import Lights</h3><p>灯光信息是否导入, 模型的灯光信息已经在 3D 软件中制作好了, 是否导入.</p>
 <h3 id="Preserve-Hierarchy"><a href="#Preserve-Hierarchy" class="headerlink" title="Preserve Hierarchy"></a>Preserve Hierarchy</h3><p>保留层次结构, 即使此模型只有一个根, 也要始终创建一个明确的预制根.</p>
 <p>通常, 导入模型的时候, Unity 会从模型中剥离所有空的根节点作为优化策略, 但是, 如果有多个 FBX 文件, 且它们具有相同层次结构的某些部分, 则可以使用此选项保留原始层次结构. 这样即使是多个文件构成的一个模型, 他们的层级结构也不会乱.</p>
-<h2 id="Meshes-设置"><a href="#Meshes-设置" class="headerlink" title="Meshes 设置"></a>Meshes 设置</h2><p><img data-src="MeshesView.png" alt="MeshesView"></p>
+<h2 id="Meshes-设置"><a href="#Meshes-设置" class="headerlink" title="Meshes 设置"></a>Meshes 设置</h2><p><img data-src="/images/unity_model/MeshesView.png" alt="MeshesView"></p>
 <h3 id="Mesh-Compression"><a href="#Mesh-Compression" class="headerlink" title="Mesh Compression"></a>Mesh Compression</h3><table>
 <thead>
 <tr>
@@ -495,7 +495,7 @@
 </tbody></table>
 <h3 id="Generate-Colliders"><a href="#Generate-Colliders" class="headerlink" title="Generate Colliders"></a>Generate Colliders</h3><p>是否自动生成网格碰撞器.</p>
 <p>用于为环境几何体快速生成碰撞网格, <strong>禁止用于移动几何体</strong>.</p>
-<h2 id="Geometry-设置"><a href="#Geometry-设置" class="headerlink" title="Geometry 设置"></a>Geometry 设置</h2><p><img data-src="GeometryView.png" alt="GeometryView"></p>
+<h2 id="Geometry-设置"><a href="#Geometry-设置" class="headerlink" title="Geometry 设置"></a>Geometry 设置</h2><p><img data-src="/images/unity_model/GeometryView.png" alt="GeometryView"></p>
 <h3 id="Keep-Quads"><a href="#Keep-Quads" class="headerlink" title="Keep Quads"></a>Keep Quads</h3><p>启用此属性可使 Unity 停止将包含四个顶点的多边形转换为三角形. </p>
 <p>四边形的曲面细分要比多边形的曲面细分效率更高.</p>
 <p>勾选此选项之后, 如果一个网格有四边形和三角形, 或者转换为三角形的 N 边形, 那么 Unity 会创建两个子网格来分离四边形和三角形. 一个子网格只包含三角形, 另一个只只包含四边形.</p>
@@ -568,7 +568,7 @@
 <h3 id="Humanoid"><a href="#Humanoid" class="headerlink" title="Humanoid"></a>Humanoid</h3><p>人形动画系统, 这个系统中的配置和 Generic 中的配置就只是多了一个 Configure… 按钮, 点击这个按钮会打开骨骼配置界面.</p>
 <p>// TODO... 骨骼配置界面</p>
 <h1 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h1><p>将模型中配置好的动画导入到 Unity 中, 形成 <strong>Animation Clips</strong> 动画文件, &quot;创建动画剪辑&quot; 这一步实质上就是定义动画段的起点和终点, 使它们尽可能匹配所需循环的第一帧和最后一帧, 之后在 <strong>Animator Controller</strong> 中就可以拖入这个动画文件进行动画的混合 (Blend Trees), 转换, 过渡等操作.</p>
-<p><img data-src="model_animation.png" alt="model_animation"></p>
+<p><img data-src="/images/unity_model/model_animation.png" alt="model_animation"></p>
 <h2 id="Import-Constraints"><a href="#Import-Constraints" class="headerlink" title="Import Constraints"></a>Import Constraints</h2><p>是否要将此模型资源的<strong>约束</strong>导入到 Unity 中.</p>
 <h2 id="Import-Animation"><a href="#Import-Animation" class="headerlink" title="Import Animation"></a>Import Animation</h2><p>是否要将此模型资源的<strong>动画</strong>导入到 Unity 中.</p>
 <h2 id="Bake-Animations"><a href="#Bake-Animations" class="headerlink" title="Bake Animations"></a>Bake Animations</h2><p>是否要通过反向动力学 (IK) 或模拟 (Simulation) 创建烘焙动画来推进运动关键帧.</p>

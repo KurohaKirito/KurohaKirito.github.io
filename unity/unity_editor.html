@@ -32,16 +32,16 @@
 <meta property="og:site_name" content="二次元游宅客">
 <meta property="og:description" content="Unity 强大的自定义编辑器功能可以满足我们进行工业化生产的需求.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kuroha.vip/unity/progress_bar_cancel.png">
-<meta property="og:image" content="https://kuroha.vip/unity/progress_bar.png">
-<meta property="og:image" content="https://kuroha.vip/unity/unity_editor_api_001.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity_editor/progress_bar_cancel.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity_editor/progress_bar.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity_editor/unity_editor_api_001.png">
 <meta property="article:published_time" content="2021-03-23T06:20:19.000Z">
-<meta property="article:modified_time" content="2021-05-11T15:12:08.700Z">
+<meta property="article:modified_time" content="2021-05-11T23:58:47.968Z">
 <meta property="article:author" content="Kuroha">
 <meta property="article:tag" content="Unity">
 <meta property="article:tag" content="Editor">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kuroha.vip/unity/progress_bar_cancel.png">
+<meta name="twitter:image" content="https://kuroha.vip/images/unity_editor/progress_bar_cancel.png">
 
 
 <link rel="canonical" href="https://kuroha.vip/unity/unity_editor.html">
@@ -358,7 +358,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-05-11 23:12:08" itemprop="dateModified" datetime="2021-05-11T23:12:08+08:00">2021-05-11</time>
+        <time title="修改时间：2021-05-12 07:58:47" itemprop="dateModified" datetime="2021-05-12T07:58:47+08:00">2021-05-12</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -632,16 +632,16 @@
 </li>
 </ul>
 <h2 id="进度条"><a href="#进度条" class="headerlink" title="进度条"></a>进度条</h2><p>进度条有两种, 第一种是附带了一个 &quot;取消&quot; 按钮的进度条, 这个是可以中途取消的, 另外一种就是没有取消按钮的进度条.</p>
-<h3 id="可中途取消的进度条"><a href="#可中途取消的进度条" class="headerlink" title="可中途取消的进度条"></a>可中途取消的进度条</h3><p><img data-src="progress_bar_cancel.png" alt="可取消的进度条"></p>
+<h3 id="可中途取消的进度条"><a href="#可中途取消的进度条" class="headerlink" title="可中途取消的进度条"></a>可中途取消的进度条</h3><p><img data-src="/images/unity_editor/progress_bar_cancel.png" alt="可取消的进度条"></p>
 <p>使用下方的 <code>DisplayCancelableProgressBar</code> 方法便可以生成一个带有取消按钮的进度条, 返回值为 bool 类型. 当点击 &quot;取消&quot; 按钮时, 返回值为 false, 否则返回值始终为 true, 即使第三个参数的数值已经超过了 1 (进度条数值溢出, 外观上不会溢出) 返回值也是 true. 需要注意的是: <font color='red'>取消按钮并不能删除当前显示的进度条, 这个按钮只能让 <code>DisplayCancelableProgressBar()</code> 方法返回 false, 需要取消进度条必须使用 <code>EditorUtility.ClearProgressBar();</code> 方法.</font></p>
 <p><code>EditorUtility.DisplayCancelableProgressBar(&quot;进度条窗口的标题&quot;, &quot;进度条下方的描述&quot;, 浮点型的进度条百分比(0-1))</code></p>
 <p>因此大多数在循环中展示进度条, 在一个将要处理<strong>大量数据</strong>的循环中加一个进度条, 这样每次循环的时候, 外部都会有一个进度值实时告诉用户进度, 用户就不容易以为设备卡住了.</p>
-<h3 id="不可中途取消的进度条"><a href="#不可中途取消的进度条" class="headerlink" title="不可中途取消的进度条"></a>不可中途取消的进度条</h3><p><img data-src="progress_bar.png" alt="不可取消的进度条"></p>
+<h3 id="不可中途取消的进度条"><a href="#不可中途取消的进度条" class="headerlink" title="不可中途取消的进度条"></a>不可中途取消的进度条</h3><p><img data-src="/images/unity_editor/progress_bar.png" alt="不可取消的进度条"></p>
 <p>这个就更简单了, 使用 <code>DisplayProgressBar()</code> 方法便可以生成不可中途取消的进度条, 方法的返回值为 <code>void</code>, 因此不需要过多的处理.</p>
 <p><code>EditorUtility.DisplayProgressBar(&quot;进度条窗口的标题&quot;, &quot;进度条下方的描述&quot;, 浮点型的进度条百分比(0-1))</code></p>
 <p>[<strong>注</strong>] 这两种进度条都必须使用 <code>EditorUtility.ClearProgressBar();</code> 方法才能取消进度条的显示.</p>
 <h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><h2 id="常用-API"><a href="#常用-API" class="headerlink" title="常用 API"></a>常用 API</h2><h3 id="EditorSceneManager-SaveCurrentModifiedScenesIfUserWantsTo"><a href="#EditorSceneManager-SaveCurrentModifiedScenesIfUserWantsTo" class="headerlink" title="EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();"></a>EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();</h3><p>如果用户当前修改了场景, 并且还没有对场景进行保存, 则会询问用户是否保存场景; 如果当前场景没有被修改, 则无事发生.</p>
-<p><img data-src="unity_editor_api_001.png" alt="unity_editor_api"></p>
+<p><img data-src="/images/unity_editor/unity_editor_api_001.png" alt="unity_editor_api"></p>
 <h2 id="路径开头总结"><a href="#路径开头总结" class="headerlink" title="路径开头总结"></a>路径开头总结</h2><table>
 <thead>
 <tr>
@@ -688,17 +688,6 @@
 <h2 id="EditorWindow-中变量的初始化"><a href="#EditorWindow-中变量的初始化" class="headerlink" title="EditorWindow 中变量的初始化"></a>EditorWindow 中变量的初始化</h2><p>窗口类中的变量通常是需要在 <code>OnGUI()</code> 方法中使用, 根据方法的生命周期来看, 在 <code>OnGUI()</code> 方法中使用的变量都是可以直接在 <code>OnEnable()</code> 方法中进行初始化的. 同时<font color='red'>由于这类变量通常需要保存数据到本地, 所以大多是使用文件中读取的数值进行初始化.</font></p>
 <p>另外需要注意的一个点是: 之前说过 <code>OnEnable()</code> 和 <code>OnFocus()</code> 是在 <code>GetWindow()</code> 方法返回之前执行的, 因此这两个方法不能用来对 <code>GetWindow()</code> 的返回值进行设置, 所以对窗口的外观设置任务就只能交给 <code>AfterGetWindow</code> 区域了, 或者直接独立出一个方法来进行窗口的外观设置.</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEditor;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyWindow</span> : <span class="title">EditorWindow</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">string</span> windowTitle;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// static 特性: 在编辑器模式下的静态变量一旦赋值, 除非 &quot;Unity 重新编译脚本&quot; 或者 &quot;Unity 退出&quot;, 否则变量的值一直保留, 不会重置.</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> MyWindow self;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> GUIContent windowTitleContent;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Open</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        self = GetWindow&lt;MyWindow&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对窗口初始化的任务就只能交给 AfterGetWindow 区域了.</span></span><br><span class="line">        self.titleContent = windowTitleContent;</span><br><span class="line">        self.minSize = <span class="keyword">new</span> Vector2(<span class="number">500f</span>, <span class="number">500f</span>);</span><br><span class="line">        self.maxSize = self.minSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnEnable</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">// OnEnable 中不能对 self 做任何操作, 因为此时 self 还是空值.</span></span><br><span class="line">        <span class="comment">// 虽然由于 static 的特性, 第一次设置会报错, 后面就不报错了😂</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对 OnGUI 中需要用到的变量初始化</span></span><br><span class="line">        windowTitle = <span class="string">&quot;This is a string inside a Scroll view!&quot;</span>;</span><br><span class="line">        windowTitleContent ??= <span class="keyword">new</span> GUIContent(<span class="string">&quot;测试窗口1&quot;</span>, <span class="string">&quot;气泡测试1&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnGUI</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        GUILayout.Label(windowTitle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
 
     </div>
 

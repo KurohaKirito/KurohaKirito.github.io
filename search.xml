@@ -315,37 +315,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用 csharp 时遇到的一些问题</title>
-    <url>/csharp/csharp_experience.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="如何从字典中删除符合要求的特定值"><a href="#如何从字典中删除符合要求的特定值" class="headerlink" title="如何从字典中删除符合要求的特定值"></a>如何从字典中删除符合要求的特定值</h1><p>由于使用 <code>foreach</code> 遍历的过程中, 被遍历的集合必须保持不变, 因此直接遍历原字典并对原字典进行移除的方法行不通. 使用 foreach 要解决的问题就是让被遍历的集合保持不变, 因此用原字典数据的一个 Copy 即可.</p>
-<h2 id="字典扩展"><a href="#字典扩展" class="headerlink" title="字典扩展"></a>字典扩展</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 字典扩展</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">DictionaryExt</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 移除字典中所有符合特定规则的数据</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;typeparam name=&quot;K&quot;&gt;</span>键的数据类型<span class="doctag">&lt;/typeparam&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;typeparam name=&quot;V&quot;&gt;</span>值的数据类型<span class="doctag">&lt;/typeparam&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;dict&quot;&gt;</span>字典<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;predicate&quot;&gt;</span>规则<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">RemoveAll</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt;(<span class="params"><span class="keyword">this</span> IDictionary&lt;K, V&gt; dict, Func&lt;K, V, <span class="keyword">bool</span>&gt; predicate</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> key <span class="keyword">in</span> dict.Keys.ToArray().Where(key =&gt; predicate(key, dict[key])))</span><br><span class="line">        &#123;</span><br><span class="line">            dict.Remove(key);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><p>将字典所有的键转换为数组.</p>
-</li>
-<li><p>将键和值作为参数发送给规则方法进行判断.</p>
-</li>
-<li><p>挑选出符合规则的键.</p>
-</li>
-<li><p>从字典中移除这些键值对.</p>
-</li>
-</ol>
-<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt; dictionary = <span class="keyword">new</span> Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt;();</span><br><span class="line">        dictionary.Add(<span class="string">&quot;1&quot;</span>, <span class="number">1</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;2&quot;</span>, <span class="number">2</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;3&quot;</span>, <span class="number">3</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;4&quot;</span>, <span class="number">4</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;5&quot;</span>, <span class="number">1</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;6&quot;</span>, <span class="number">2</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;7&quot;</span>, <span class="number">3</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;8&quot;</span>, <span class="number">4</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;9&quot;</span>, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 可以这样进行调用</span></span><br><span class="line">        DictionaryExt.RemoveAll(dictionary, (key, <span class="keyword">value</span>) =&gt; <span class="keyword">value</span> &lt; <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> item <span class="keyword">in</span> dictionary)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.Write(item.Key + <span class="string">&quot;, &quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Console.ReadKey();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9zdGFja29vbS5jb20vcXVlc3Rpb24vMmhUZ3kvJUU0JUJEJUJGJUU3JTk0JUE4TGlucSVFNCVCQiU4RSVFNSVBRCU5NyVFNSU4NSVCOEMtJUU0JUI4JUFEJUU1JTg4JUEwJUU5JTk5JUE0JUU3JTg5JUI5JUU1JUFFJTlBJUU1JTgwJUJD">使用Linq从字典C＃中删除特定值<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-]]></content>
-      <categories>
-        <category>CSharp</category>
-      </categories>
-      <tags>
-        <tag>CSharp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>csharp 垃圾回收</title>
     <url>/csharp/csharp_garbagecollect.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -410,6 +379,37 @@
 </li>
 <li><p><span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8xMTYwNDgy">.Net中Finalize()和Dispose()有什么区别?<i class="fa fa-external-link-alt"></i></span></p>
 </li>
+</ul>
+]]></content>
+      <categories>
+        <category>CSharp</category>
+      </categories>
+      <tags>
+        <tag>CSharp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用 csharp 时遇到的一些问题</title>
+    <url>/csharp/csharp_experience.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="如何从字典中删除符合要求的特定值"><a href="#如何从字典中删除符合要求的特定值" class="headerlink" title="如何从字典中删除符合要求的特定值"></a>如何从字典中删除符合要求的特定值</h1><p>由于使用 <code>foreach</code> 遍历的过程中, 被遍历的集合必须保持不变, 因此直接遍历原字典并对原字典进行移除的方法行不通. 使用 foreach 要解决的问题就是让被遍历的集合保持不变, 因此用原字典数据的一个 Copy 即可.</p>
+<h2 id="字典扩展"><a href="#字典扩展" class="headerlink" title="字典扩展"></a>字典扩展</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 字典扩展</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">DictionaryExt</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 移除字典中所有符合特定规则的数据</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;typeparam name=&quot;K&quot;&gt;</span>键的数据类型<span class="doctag">&lt;/typeparam&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;typeparam name=&quot;V&quot;&gt;</span>值的数据类型<span class="doctag">&lt;/typeparam&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;dict&quot;&gt;</span>字典<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;predicate&quot;&gt;</span>规则<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">RemoveAll</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt;(<span class="params"><span class="keyword">this</span> IDictionary&lt;K, V&gt; dict, Func&lt;K, V, <span class="keyword">bool</span>&gt; predicate</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> key <span class="keyword">in</span> dict.Keys.ToArray().Where(key =&gt; predicate(key, dict[key])))</span><br><span class="line">        &#123;</span><br><span class="line">            dict.Remove(key);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>将字典所有的键转换为数组.</p>
+</li>
+<li><p>将键和值作为参数发送给规则方法进行判断.</p>
+</li>
+<li><p>挑选出符合规则的键.</p>
+</li>
+<li><p>从字典中移除这些键值对.</p>
+</li>
+</ol>
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt; dictionary = <span class="keyword">new</span> Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt;();</span><br><span class="line">        dictionary.Add(<span class="string">&quot;1&quot;</span>, <span class="number">1</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;2&quot;</span>, <span class="number">2</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;3&quot;</span>, <span class="number">3</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;4&quot;</span>, <span class="number">4</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;5&quot;</span>, <span class="number">1</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;6&quot;</span>, <span class="number">2</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;7&quot;</span>, <span class="number">3</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;8&quot;</span>, <span class="number">4</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;9&quot;</span>, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 可以这样进行调用</span></span><br><span class="line">        DictionaryExt.RemoveAll(dictionary, (key, <span class="keyword">value</span>) =&gt; <span class="keyword">value</span> &lt; <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> item <span class="keyword">in</span> dictionary)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.Write(item.Key + <span class="string">&quot;, &quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Console.ReadKey();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9zdGFja29vbS5jb20vcXVlc3Rpb24vMmhUZ3kvJUU0JUJEJUJGJUU3JTk0JUE4TGlucSVFNCVCQiU4RSVFNSVBRCU5NyVFNSU4NSVCOEMtJUU0JUI4JUFEJUU1JTg4JUEwJUU5JTk5JUE0JUU3JTg5JUI5JUU1JUFFJTlBJUU1JTgwJUJD">使用Linq从字典C＃中删除特定值<i class="fa fa-external-link-alt"></i></span></li>
 </ul>
 ]]></content>
       <categories>
@@ -3009,7 +3009,7 @@
 <p>Unity 中动画的最小单位是 &quot;动画剪辑 (Animation Clip)&quot;, 这是最小的一个动画单位, 里面包含了对游戏物体的 &quot;位置&quot;, &quot;旋转&quot;, &quot;缩放&quot;, &quot;颜色&quot; 等等很多属性的变化规则. 但是这些动画剪辑并不能直接应用到游戏物体上, 而是需要先在一个叫做 &quot;Animation Controller&quot; 的系统中对这些动画进行设置才行, 包括动画的播放条件, 动画之间的转换规则, 还可以使用遮罩来设置动画的生效范围等.</p>
 <p>使用 &quot;Animation Controller&quot; 将多个动画剪辑设置好规则之后, 就可以将这个 &quot;Animation Controller&quot; 应用到游戏物体上了, Unity 有一个叫做 &quot;Animator&quot; 的游戏组件可以使用并解析 &quot;Animation Controller&quot;.</p>
 <p>这样一个动画从导入或创建直到最后控制游戏物体的动作的整个流程就完成了.</p>
-<p><img data-src="Mecanim.png" alt="Mecanim"></p>
+<p><img data-src="/images/unity_anime/Mecanim.png" alt="Mecanim"></p>
 <ol>
 <li>Project 中的动画放置到 Animation Controller 中</li>
 <li>在 Animation Controller 中混合动画生成一个 Animation Controller 文件</li>
@@ -3019,11 +3019,11 @@
 <h1 id="Animation-Clip-的来源"><a href="#Animation-Clip-的来源" class="headerlink" title="Animation Clip 的来源"></a>Animation Clip 的来源</h1><p>Unity 支持从外部源导入动画, 并允许在编辑器中使用 Animation 窗口从头开始创建动画剪辑.</p>
 <h2 id="Model-Animation-Clip-Import"><a href="#Model-Animation-Clip-Import" class="headerlink" title="Model Animation Clip Import"></a>Model Animation Clip Import</h2><p>要将模型动画导入到 Unity 中, 需要在模型导入页面的 Animation 选项卡中对动画进行帧数剪辑以及循环帧调整, 具体见另一篇模型导入的博客. <a href="https://kuroha.vip/unity_model_import_settings.html">跳转</a></p>
 <h2 id="Record-Animation-Clip"><a href="#Record-Animation-Clip" class="headerlink" title="Record Animation Clip"></a>Record Animation Clip</h2><p>在 Unity 的 Animation 窗口中还可以创建和编辑动画剪辑.</p>
-<p><img data-src="AnimationWindow.png" alt="AnimationWindow"></p>
+<p><img data-src="/images/unity_anime/AnimationWindow.png" alt="AnimationWindow"></p>
 <p>左侧最下方的 &quot;Dopesheet&quot; 是关键帧查看模式, &quot;Curves&quot; 是曲线查看模式. 录制动画时关注点是关键帧, 所以使用关键帧模式, 但是调整动画时, 必须使用曲线模式, 因为 Unity 默认使用平滑插值曲线, 但是有些时候我们会希望使用线性动画曲, 因此必须打开曲线模式查看关键帧之间的过渡方式.</p>
 <p>选中想要查看的动画属性, 之后按下 <kbd>F</kbd> 键可以将右侧的视图缩放到适合观察这几个属性的缩放级别, 便于观察.</p>
 <p>按下 <kbd>A</kbd> 键则可以快速将右侧的视图缩放至查看全部动画属性的缩放级别.</p>
-<p><img data-src="AnimationWindowRecord.png" alt="AnimationWindowRecord"></p>
+<p><img data-src="/images/unity_anime/AnimationWindowRecord.png" alt="AnimationWindowRecord"></p>
 <p>Preview: 启用时 Scene 窗口中会实时预览动画的样子, 关闭后 Scene 不会进行实时预览.</p>
 <p>第二个按钮是: 录制模式 [注] 如果打开录制模式, 那么预览模式也会始终打开.</p>
 <p>右侧时间线的标题颜色, 在预览模式下是<font color='blue'>蓝色</font>的, 在录制模式下是<font color='red'>红色</font>的.</p>
@@ -3061,11 +3061,11 @@
 </tbody></table>
 <h2 id="Animation-Events"><a href="#Animation-Events" class="headerlink" title="Animation Events"></a>Animation Events</h2><p>时间线区域可以给动画添加动画事件, 动画的事件函数还可以接收一个参数, 这个参数可以是: <code>float</code>, <code>string</code>, <code>int</code>, <code>object</code>, <code>AnimationEvent</code> 类型, 其中 AnimationEvent 类型可以将动画的很多信息一次性全部传给动画事件函数.</p>
 <h1 id="Animation-Controller"><a href="#Animation-Controller" class="headerlink" title="Animation Controller"></a>Animation Controller</h1><p>Animation Controller 使用一种 &quot;状态机&quot; 的方式来管理所有的动画剪辑, 通过打开 Animator 窗口便可以看到图形化的状态机.</p>
-<p><img data-src="AnimatorWindow.png" alt="AnimatorWindow"></p>
+<p><img data-src="/images/unity_anime/AnimatorWindow.png" alt="AnimatorWindow"></p>
 <ul>
 <li>Entry: 进入状态机的入口, 会连接一个初始的动画剪辑, 默认的动画剪辑为橙色, 过度线也是橙色. 另外 Entry 也可以使用普通的过渡条件过渡到其他的动画类型.</li>
 </ul>
-<p><img data-src="AnimatorWindowEntry.png" alt="AnimatorWindowEntry"></p>
+<p><img data-src="/images/unity_anime/AnimatorWindowEntry.png" alt="AnimatorWindowEntry"></p>
 <ul>
 <li><p>Any State, 任意状态, 是一个始终存在的特殊状态. 当某个状态 &quot;无论当前是什么状态, 只要满足要求均可以跳转过去&quot; 的时候, 使用 Any State 将十分方便. 另外 <font color='red'>Unity 不允许将 Any State 作为退出过渡动画</font>.</p>
 </li>
@@ -3074,8 +3074,27 @@
 </ul>
 <h2 id="Sub-State-Machine"><a href="#Sub-State-Machine" class="headerlink" title="Sub-State Machine"></a>Sub-State Machine</h2><p>[<strong>常用</strong>] Sub-State Machine, 译为: 子状态机, 可以理解为就是动画剪辑在状态机中的一个文件夹, 当动画剪辑特别多的时候, 可以用来很方便的整理和规划所有的动画剪辑.</p>
 <h2 id="Blend-Tree"><a href="#Blend-Tree" class="headerlink" title="Blend Tree"></a>Blend Tree</h2><p>动画混合树.</p>
-<p>// TODO...</p>
-<h2 id="过渡条件"><a href="#过渡条件" class="headerlink" title="过渡条件"></a>过渡条件</h2><p>// TODO...</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO...</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="过渡条件"><a href="#过渡条件" class="headerlink" title="过渡条件"></a>过渡条件</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO...</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
 <h2 id="Animation-Clip-单个动画剪辑"><a href="#Animation-Clip-单个动画剪辑" class="headerlink" title="Animation Clip 单个动画剪辑"></a>Animation Clip 单个动画剪辑</h2><h3 id="Solo-和-Mute-功能"><a href="#Solo-和-Mute-功能" class="headerlink" title="Solo 和 Mute 功能"></a>Solo 和 Mute 功能</h3><p>这个功能主要应用于动画测试. 测试的时候一般需要控制变量, 每次测试都是测试特定的一条动画转换, 因此需要其他的动画切换此时就非常碍事了. 可以使用 <code>Solo</code> 仅启用勾选了 Solo 的动画过渡, 剩余的全部禁用.</p>
 <p>而有时候需要仅禁用一个动画转换, 其他的全部都要启用, 测试就可以使用 <code>Mute</code> 只禁用掉勾选了 Mute 的动画过渡, 剩余的全部启用.</p>
 <p>Unity 允许 Solo 和 Mute 同时勾选, 但是为了方便理解, <font color='red'><strong>禁止 1 条动画过渡同时勾选 Solo 和 Mute</strong></font>, 同时在使用这个功能时, 只允许同时使用其中一种, <font color='red'><strong>禁止两种同时使用</strong></font>.</p>
@@ -3109,7 +3128,7 @@
 <td align="left">动画剔除模式, <strong>Always Animate</strong>: 始终进行动画化; <strong>Cull Update Transforms</strong>: 剔除 Transform 的更新, 未显示时禁用 Transform 的重定向, IK和写入; <strong>Cull Completely</strong>: 完全剔除, 未显示时完全禁用动画</td>
 </tr>
 </tbody></table>
-<h1 id="Timeline"><a href="#Timeline" class="headerlink" title="Timeline"></a>Timeline</h1><p>// TODO...</p>
+<h1 id="Timeline"><a href="#Timeline" class="headerlink" title="Timeline"></a>Timeline</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO...</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Unity</category>
@@ -3249,9 +3268,9 @@
 
 <h1 id="实验代码"><a href="#实验代码" class="headerlink" title="实验代码:"></a>实验代码:</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEditor;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyWindow</span> : <span class="title">EditorWindow</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnEnable = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnInspectorUpdate = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnHierarchyChange = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnProjectChange = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnGUI = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnFocus = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnSelectionChange = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnLostFocus = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnDisable = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">bool</span> bool_OnDestroy = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Open</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Debug.Log(<span class="string">&quot;打开窗口&quot;</span>);</span><br><span class="line">        Debug.Log(<span class="string">&quot;BeforeOpen&quot;</span>);</span><br><span class="line"></span><br><span class="line">        GetWindow&lt;MyWindow&gt;();</span><br><span class="line"></span><br><span class="line">        Debug.Log(<span class="string">&quot;AfterOpen&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnEnable</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnEnable)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnEnable = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnEnable&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnInspectorUpdate</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnInspectorUpdate)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnInspectorUpdate = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnInspectorUpdate&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnHierarchyChange</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnHierarchyChange)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnHierarchyChange = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnHierarchyChange&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnProjectChange</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnProjectChange)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnProjectChange = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnProjectChange&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnGUI</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnGUI)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnGUI = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnGUI&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnFocus</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnFocus)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnFocus = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnFocus&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnSelectionChange</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnSelectionChange)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnSelectionChange = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnSelectionChange&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnLostFocus</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnLostFocus)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnLostFocus = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;---------------------------------------------------------------------------------------------------------------------&quot;</span>);</span><br><span class="line">            Debug.Log(<span class="string">&quot;关闭窗口&quot;</span>);</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnLostFocus&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnDisable</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnDisable)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnDisable = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnDisable&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnDestroy</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">if</span> (bool_OnDestroy)</span><br><span class="line">        &#123;</span><br><span class="line">            bool_OnDestroy = <span class="literal">false</span>;</span><br><span class="line">            Debug.Log(<span class="string">&quot;OnDestroy&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h1 id="实验输出"><a href="#实验输出" class="headerlink" title="实验输出"></a>实验输出</h1><p><img data-src="EditorWindowRunTime.png" alt="EditorWindowRunTime"></p>
+<h1 id="实验输出"><a href="#实验输出" class="headerlink" title="实验输出"></a>实验输出</h1><p><img data-src="/images/%5Cunity_editorwindow/EditorWindowRunTime.png" alt="EditorWindowRunTime"></p>
 <h1 id="实验结论"><a href="#实验结论" class="headerlink" title="实验结论"></a>实验结论</h1><p>下图中有一个点需要特别注意, <code>OnEnable()</code> 和 <code>OnFocus()</code> 是在 <code>GetWindow()</code> 方法返回之前执行的. 因此 <font color='red'><strong><code>OnEnable()</code> 和 <code>OnFocus()</code> 中不能对 <code>GetWindow()</code> 的返回值做任何操作</strong></font>, 因为此时的返回值还是空值.</p>
-<p><img data-src="EditorWindowRunTimeUML.png" alt="EditorWindowRunTimeUML"></p>
+<p><img data-src="/images/%5Cunity_editorwindow/EditorWindowRunTimeUML.png" alt="EditorWindowRunTimeUML"></p>
 <p>另外的三个 Change() 类事件方法:</p>
 <ul>
 <li><p>OnHierarchyChange()</p>
@@ -3440,7 +3459,7 @@
 
 <p>Model Import Settings 页面有四个选项卡, 分别是: Model, Rig, Animation, Materials</p>
 <h1 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h1><p>Model 标签页主要是对模型进行设置, 共有三个方面的设置: Scene (场景), Meshes (网格), Geometry (几何)</p>
-<h2 id="Scene-设置"><a href="#Scene-设置" class="headerlink" title="Scene 设置"></a>Scene 设置</h2><p><img data-src="SceneView.png" alt="SceneView"></p>
+<h2 id="Scene-设置"><a href="#Scene-设置" class="headerlink" title="Scene 设置"></a>Scene 设置</h2><p><img data-src="/images/unity_model/SceneView.png" alt="SceneView"></p>
 <h3 id="Scale-Factor"><a href="#Scale-Factor" class="headerlink" title="Scale Factor"></a>Scale Factor</h3><p>如果原始文件的比例 (来自模型文件) 不符合项目中的预期比例, 可以通过修改此值, 设置模型在 Unity 中的全局比例.</p>
 <h3 id="Convert-Units"><a href="#Convert-Units" class="headerlink" title="Convert Units"></a>Convert Units</h3><p>启用此选项可将模型文件中定义的模型比例转换为 Unity 的比例.</p>
 <p>转换公式为: 1cm (file) ⇒ 0.01m (Unity)</p>
@@ -3455,7 +3474,7 @@
 <h3 id="Import-Lights"><a href="#Import-Lights" class="headerlink" title="Import Lights"></a>Import Lights</h3><p>灯光信息是否导入, 模型的灯光信息已经在 3D 软件中制作好了, 是否导入.</p>
 <h3 id="Preserve-Hierarchy"><a href="#Preserve-Hierarchy" class="headerlink" title="Preserve Hierarchy"></a>Preserve Hierarchy</h3><p>保留层次结构, 即使此模型只有一个根, 也要始终创建一个明确的预制根.</p>
 <p>通常, 导入模型的时候, Unity 会从模型中剥离所有空的根节点作为优化策略, 但是, 如果有多个 FBX 文件, 且它们具有相同层次结构的某些部分, 则可以使用此选项保留原始层次结构. 这样即使是多个文件构成的一个模型, 他们的层级结构也不会乱.</p>
-<h2 id="Meshes-设置"><a href="#Meshes-设置" class="headerlink" title="Meshes 设置"></a>Meshes 设置</h2><p><img data-src="MeshesView.png" alt="MeshesView"></p>
+<h2 id="Meshes-设置"><a href="#Meshes-设置" class="headerlink" title="Meshes 设置"></a>Meshes 设置</h2><p><img data-src="/images/unity_model/MeshesView.png" alt="MeshesView"></p>
 <h3 id="Mesh-Compression"><a href="#Mesh-Compression" class="headerlink" title="Mesh Compression"></a>Mesh Compression</h3><table>
 <thead>
 <tr>
@@ -3534,7 +3553,7 @@
 </tbody></table>
 <h3 id="Generate-Colliders"><a href="#Generate-Colliders" class="headerlink" title="Generate Colliders"></a>Generate Colliders</h3><p>是否自动生成网格碰撞器.</p>
 <p>用于为环境几何体快速生成碰撞网格, <strong>禁止用于移动几何体</strong>.</p>
-<h2 id="Geometry-设置"><a href="#Geometry-设置" class="headerlink" title="Geometry 设置"></a>Geometry 设置</h2><p><img data-src="GeometryView.png" alt="GeometryView"></p>
+<h2 id="Geometry-设置"><a href="#Geometry-设置" class="headerlink" title="Geometry 设置"></a>Geometry 设置</h2><p><img data-src="/images/unity_model/GeometryView.png" alt="GeometryView"></p>
 <h3 id="Keep-Quads"><a href="#Keep-Quads" class="headerlink" title="Keep Quads"></a>Keep Quads</h3><p>启用此属性可使 Unity 停止将包含四个顶点的多边形转换为三角形. </p>
 <p>四边形的曲面细分要比多边形的曲面细分效率更高.</p>
 <p>勾选此选项之后, 如果一个网格有四边形和三角形, 或者转换为三角形的 N 边形, 那么 Unity 会创建两个子网格来分离四边形和三角形. 一个子网格只包含三角形, 另一个只只包含四边形.</p>
@@ -3607,7 +3626,7 @@
 <h3 id="Humanoid"><a href="#Humanoid" class="headerlink" title="Humanoid"></a>Humanoid</h3><p>人形动画系统, 这个系统中的配置和 Generic 中的配置就只是多了一个 Configure… 按钮, 点击这个按钮会打开骨骼配置界面.</p>
 <p>// TODO... 骨骼配置界面</p>
 <h1 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h1><p>将模型中配置好的动画导入到 Unity 中, 形成 <strong>Animation Clips</strong> 动画文件, &quot;创建动画剪辑&quot; 这一步实质上就是定义动画段的起点和终点, 使它们尽可能匹配所需循环的第一帧和最后一帧, 之后在 <strong>Animator Controller</strong> 中就可以拖入这个动画文件进行动画的混合 (Blend Trees), 转换, 过渡等操作.</p>
-<p><img data-src="model_animation.png" alt="model_animation"></p>
+<p><img data-src="/images/unity_model/model_animation.png" alt="model_animation"></p>
 <h2 id="Import-Constraints"><a href="#Import-Constraints" class="headerlink" title="Import Constraints"></a>Import Constraints</h2><p>是否要将此模型资源的<strong>约束</strong>导入到 Unity 中.</p>
 <h2 id="Import-Animation"><a href="#Import-Animation" class="headerlink" title="Import Animation"></a>Import Animation</h2><p>是否要将此模型资源的<strong>动画</strong>导入到 Unity 中.</p>
 <h2 id="Bake-Animations"><a href="#Bake-Animations" class="headerlink" title="Bake Animations"></a>Bake Animations</h2><p>是否要通过反向动力学 (IK) 或模拟 (Simulation) 创建烘焙动画来推进运动关键帧.</p>
@@ -3942,7 +3961,7 @@
     <url>/unity/unity_texture_import_settings.html</url>
     <content><![CDATA[<a id="more"></a>
 
-<p><img data-src="default.png" alt="default"></p>
+<p><img data-src="/images/unity_texture/default.png" alt="default"></p>
 <h1 id="Texture-Type"><a href="#Texture-Type" class="headerlink" title="Texture Type"></a>Texture Type</h1><p>图片的导入类型, 不同的类型适用于不同的应用场景, 也会有不同的设置属性.</p>
 <table>
 <thead>
@@ -7545,16 +7564,16 @@ const dp_update = new DPlayer({
 </li>
 </ul>
 <h2 id="进度条"><a href="#进度条" class="headerlink" title="进度条"></a>进度条</h2><p>进度条有两种, 第一种是附带了一个 &quot;取消&quot; 按钮的进度条, 这个是可以中途取消的, 另外一种就是没有取消按钮的进度条.</p>
-<h3 id="可中途取消的进度条"><a href="#可中途取消的进度条" class="headerlink" title="可中途取消的进度条"></a>可中途取消的进度条</h3><p><img data-src="progress_bar_cancel.png" alt="可取消的进度条"></p>
+<h3 id="可中途取消的进度条"><a href="#可中途取消的进度条" class="headerlink" title="可中途取消的进度条"></a>可中途取消的进度条</h3><p><img data-src="/images/unity_editor/progress_bar_cancel.png" alt="可取消的进度条"></p>
 <p>使用下方的 <code>DisplayCancelableProgressBar</code> 方法便可以生成一个带有取消按钮的进度条, 返回值为 bool 类型. 当点击 &quot;取消&quot; 按钮时, 返回值为 false, 否则返回值始终为 true, 即使第三个参数的数值已经超过了 1 (进度条数值溢出, 外观上不会溢出) 返回值也是 true. 需要注意的是: <font color='red'>取消按钮并不能删除当前显示的进度条, 这个按钮只能让 <code>DisplayCancelableProgressBar()</code> 方法返回 false, 需要取消进度条必须使用 <code>EditorUtility.ClearProgressBar();</code> 方法.</font></p>
 <p><code>EditorUtility.DisplayCancelableProgressBar(&quot;进度条窗口的标题&quot;, &quot;进度条下方的描述&quot;, 浮点型的进度条百分比(0-1))</code></p>
 <p>因此大多数在循环中展示进度条, 在一个将要处理<strong>大量数据</strong>的循环中加一个进度条, 这样每次循环的时候, 外部都会有一个进度值实时告诉用户进度, 用户就不容易以为设备卡住了.</p>
-<h3 id="不可中途取消的进度条"><a href="#不可中途取消的进度条" class="headerlink" title="不可中途取消的进度条"></a>不可中途取消的进度条</h3><p><img data-src="progress_bar.png" alt="不可取消的进度条"></p>
+<h3 id="不可中途取消的进度条"><a href="#不可中途取消的进度条" class="headerlink" title="不可中途取消的进度条"></a>不可中途取消的进度条</h3><p><img data-src="/images/unity_editor/progress_bar.png" alt="不可取消的进度条"></p>
 <p>这个就更简单了, 使用 <code>DisplayProgressBar()</code> 方法便可以生成不可中途取消的进度条, 方法的返回值为 <code>void</code>, 因此不需要过多的处理.</p>
 <p><code>EditorUtility.DisplayProgressBar(&quot;进度条窗口的标题&quot;, &quot;进度条下方的描述&quot;, 浮点型的进度条百分比(0-1))</code></p>
 <p>[<strong>注</strong>] 这两种进度条都必须使用 <code>EditorUtility.ClearProgressBar();</code> 方法才能取消进度条的显示.</p>
 <h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><h2 id="常用-API"><a href="#常用-API" class="headerlink" title="常用 API"></a>常用 API</h2><h3 id="EditorSceneManager-SaveCurrentModifiedScenesIfUserWantsTo"><a href="#EditorSceneManager-SaveCurrentModifiedScenesIfUserWantsTo" class="headerlink" title="EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();"></a>EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();</h3><p>如果用户当前修改了场景, 并且还没有对场景进行保存, 则会询问用户是否保存场景; 如果当前场景没有被修改, 则无事发生.</p>
-<p><img data-src="unity_editor_api_001.png" alt="unity_editor_api"></p>
+<p><img data-src="/images/unity_editor/unity_editor_api_001.png" alt="unity_editor_api"></p>
 <h2 id="路径开头总结"><a href="#路径开头总结" class="headerlink" title="路径开头总结"></a>路径开头总结</h2><table>
 <thead>
 <tr>
@@ -7601,17 +7620,6 @@ const dp_update = new DPlayer({
 <h2 id="EditorWindow-中变量的初始化"><a href="#EditorWindow-中变量的初始化" class="headerlink" title="EditorWindow 中变量的初始化"></a>EditorWindow 中变量的初始化</h2><p>窗口类中的变量通常是需要在 <code>OnGUI()</code> 方法中使用, 根据方法的生命周期来看, 在 <code>OnGUI()</code> 方法中使用的变量都是可以直接在 <code>OnEnable()</code> 方法中进行初始化的. 同时<font color='red'>由于这类变量通常需要保存数据到本地, 所以大多是使用文件中读取的数值进行初始化.</font></p>
 <p>另外需要注意的一个点是: 之前说过 <code>OnEnable()</code> 和 <code>OnFocus()</code> 是在 <code>GetWindow()</code> 方法返回之前执行的, 因此这两个方法不能用来对 <code>GetWindow()</code> 的返回值进行设置, 所以对窗口的外观设置任务就只能交给 <code>AfterGetWindow</code> 区域了, 或者直接独立出一个方法来进行窗口的外观设置.</p>
 <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEditor;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyWindow</span> : <span class="title">EditorWindow</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">string</span> windowTitle;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// static 特性: 在编辑器模式下的静态变量一旦赋值, 除非 &quot;Unity 重新编译脚本&quot; 或者 &quot;Unity 退出&quot;, 否则变量的值一直保留, 不会重置.</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> MyWindow self;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> GUIContent windowTitleContent;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Open</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        self = GetWindow&lt;MyWindow&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对窗口初始化的任务就只能交给 AfterGetWindow 区域了.</span></span><br><span class="line">        self.titleContent = windowTitleContent;</span><br><span class="line">        self.minSize = <span class="keyword">new</span> Vector2(<span class="number">500f</span>, <span class="number">500f</span>);</span><br><span class="line">        self.maxSize = self.minSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnEnable</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="comment">// OnEnable 中不能对 self 做任何操作, 因为此时 self 还是空值.</span></span><br><span class="line">        <span class="comment">// 虽然由于 static 的特性, 第一次设置会报错, 后面就不报错了😂</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 对 OnGUI 中需要用到的变量初始化</span></span><br><span class="line">        windowTitle = <span class="string">&quot;This is a string inside a Scroll view!&quot;</span>;</span><br><span class="line">        windowTitleContent ??= <span class="keyword">new</span> GUIContent(<span class="string">&quot;测试窗口1&quot;</span>, <span class="string">&quot;气泡测试1&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">OnGUI</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        GUILayout.Label(windowTitle);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
 ]]></content>
       <categories>
         <category>Unity</category>
