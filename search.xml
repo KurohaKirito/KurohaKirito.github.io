@@ -82,11 +82,11 @@
       </tags>
   </entry>
   <entry>
-    <title>电脑使用技巧及常见问题</title>
+    <title>Windows 常见问题</title>
     <url>/computer/computer_issues.html</url>
     <content><![CDATA[<a id="more"></a>
 
-<h1 id="拿到一台新的电脑如何查看硬盘是机械的还是固态的呢"><a href="#拿到一台新的电脑如何查看硬盘是机械的还是固态的呢" class="headerlink" title="拿到一台新的电脑如何查看硬盘是机械的还是固态的呢?"></a>拿到一台新的电脑如何查看硬盘是机械的还是固态的呢?</h1><p>在 PowerShell 中使用命令: <code>Get-PhysicalDisk</code>, 其中 HDD 表示为传统机械硬盘, SSD 为固态硬盘.</p>
+<h1 id="拿到一台新的电脑如何查看硬盘是机械的还是固态的呢"><a href="#拿到一台新的电脑如何查看硬盘是机械的还是固态的呢" class="headerlink" title="拿到一台新的电脑如何查看硬盘是机械的还是固态的呢?"></a>拿到一台新的电脑如何查看硬盘是机械的还是固态的呢?</h1><p>在 PowerShell 中使用命令: <code>Get-PhysicalDisk</code>, 查看其中的 Media Type 列, HDD 表示为传统机械硬盘, SSD 为固态硬盘.</p>
 <h1 id="PowerShell-出现-quot-因为在此系统中禁止执行脚本-quot-的解决方法"><a href="#PowerShell-出现-quot-因为在此系统中禁止执行脚本-quot-的解决方法" class="headerlink" title="PowerShell 出现 &quot;因为在此系统中禁止执行脚本&quot; 的解决方法"></a>PowerShell 出现 &quot;因为在此系统中禁止执行脚本&quot; 的解决方法</h1><p>新装的系统在 Powershell 直接执行 hexo 命令的时候可能会出现这种情况: <code>****, 因为在此系统中禁止执行脚本. 有关详细信息, 请参阅 &quot;get-help about_signing&quot;</code>. 这是由于脚本的签名不符合 Windows PowerShell 的执行策略导致的, 我们要做的就是修改 Windows PowerShell 的脚本执行策略. Windows PowerShell 提供了六种执行策略: <code>Restricted</code>, <code>AllSigned</code>, <code>RemoteSigned</code>, <code>Unrestricted</code>, <code>Bypass</code>, <code>Undefined</code>.</p>
 <ul>
 <li>Restricted: 可以执行单个的命令, 但是不能执行脚本.</li>
@@ -129,8 +129,8 @@
 <p><code>Set-ExecutionPolicy &quot;RemoteSigned&quot; -Scope Process</code></p>
 <p>它会询问是否要更改执行策略? 键入 <code>y</code> 确认即可.</p>
 <p>更多详细信息请参考博客: <span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vc3BhcmtkZXYvcC83NDYwNTE4Lmh0bWw=">sparkdev<i class="fa fa-external-link-alt"></i></span></p>
-<h1 id="「打开方式」中残留已卸载的应用程序"><a href="#「打开方式」中残留已卸载的应用程序" class="headerlink" title="「打开方式」中残留已卸载的应用程序"></a>「打开方式」中残留已卸载的应用程序</h1><p>注册表里面 HKEY_CLASSES_ROOT 目录中, 删除对应程序名称的文件夹即可.</p>
-<h1 id="文件-程序的图标显示不正确或丢失"><a href="#文件-程序的图标显示不正确或丢失" class="headerlink" title="文件, 程序的图标显示不正确或丢失"></a>文件, 程序的图标显示不正确或丢失</h1><p>Win R 打开 &#39;运行&#39;, 然后输入 <code>%localappdata%</code>, 删掉里面的 &#39;IconCache.db&#39; 文件, 重启 &#39;资源管理器&#39;. 注意, IconCache.db 是隐藏文件哦~</p>
+<h1 id="39-打开方式-39-中残留已卸载的应用程序"><a href="#39-打开方式-39-中残留已卸载的应用程序" class="headerlink" title="&#39;打开方式&#39;中残留已卸载的应用程序"></a>&#39;打开方式&#39;中残留已卸载的应用程序</h1><p>注册表里面 HKEY_CLASSES_ROOT 目录中, 删除对应程序名称的文件夹即可.</p>
+<h1 id="文件或者程序的图标显示不正确或丢失"><a href="#文件或者程序的图标显示不正确或丢失" class="headerlink" title="文件或者程序的图标显示不正确或丢失"></a>文件或者程序的图标显示不正确或丢失</h1><p><kbd>Win</kbd> + <kbd>R</kbd>, 输入 <code>%localappdata%</code>, 删掉里面的 &#39;IconCache.db&#39; 文件, 重启 &#39;资源管理器&#39;. 注意, IconCache.db 是隐藏文件哦~</p>
 <h1 id="资源管理器没有启动"><a href="#资源管理器没有启动" class="headerlink" title="资源管理器没有启动"></a>资源管理器没有启动</h1><p>资源管理器没有启动, 表现为没有桌面, 没有任务栏, 这样就无法通过鼠标操作电脑, 只能通过键盘操作.</p>
 <p>解决办法有两种:</p>
 <ol>
@@ -141,7 +141,6 @@
 </ol>
 <h1 id="chm-文件打开后无法显示内容"><a href="#chm-文件打开后无法显示内容" class="headerlink" title=".chm 文件打开后无法显示内容"></a>.chm 文件打开后无法显示内容</h1><p>从网上下载的离线技术文档很多都是 .chm 后缀, 打开后不显示内容是因为文件被锁定了.</p>
 <p>右键-&gt;属性-&gt;在「解除锁定」前面打勾-&gt;应用-&gt;确定</p>
-<h1 id="如何彻底卸载掉-QQ-搜狗-360-百度-等「安全」软件"><a href="#如何彻底卸载掉-QQ-搜狗-360-百度-等「安全」软件" class="headerlink" title="如何彻底卸载掉 QQ, 搜狗, 360, 百度 等「安全」软件"></a>如何彻底卸载掉 QQ, 搜狗, 360, 百度 等「安全」软件</h1><p>解决办法: 不安装这些软件.</p>
 <h1 id="使用-DOS-命令合并多个-TS-流文件「-ts文件」"><a href="#使用-DOS-命令合并多个-TS-流文件「-ts文件」" class="headerlink" title="使用 DOS 命令合并多个 TS 流文件「.ts文件」"></a>使用 DOS 命令合并多个 TS 流文件「.ts文件」</h1><p><code>copy/b 待合并文件绝对目录 新文件的绝对目录</code> 「<strong>路径中不能存在空格</strong>」</p>
 <ul>
 <li><p>示例: <code>copy/b  E:\temps\*.ts  E:\temps\new.ts</code></p>
@@ -155,7 +154,6 @@
 <li><p>如果用合成软件来合并, 请注意软件说明, 有些软件会在合并过程中进行重编码, 可能会导致视频文件的质量下降.</p>
 </li>
 </ul>
-<h1 id="Windows-10-开启-CPU-虚拟化"><a href="#Windows-10-开启-CPU-虚拟化" class="headerlink" title="Windows 10 开启 CPU 虚拟化"></a>Windows 10 开启 CPU 虚拟化</h1><p>Win I -&gt; 更新和安全 -&gt; 恢复 -&gt; 高级启动 -&gt; 疑难解答 -&gt; UEFI 固件设置 -&gt; 开启 CPU 虚拟化</p>
 <h1 id="U-盘在经过-Win-10-安装工具处理之后-容量变小了"><a href="#U-盘在经过-Win-10-安装工具处理之后-容量变小了" class="headerlink" title="U 盘在经过 Win 10 安装工具处理之后, 容量变小了"></a>U 盘在经过 Win 10 安装工具处理之后, 容量变小了</h1><ul>
 <li>以管理员运行命令窗口 (cmd, powershell, Terminal), 输入 <code>diskpart</code>.</li>
 <li>之后输入 <code>list disk</code> (可以看到磁盘 0, 磁盘 1等, 注意列出的 U 盘的编号).</li>
@@ -163,8 +161,6 @@
 <li>输入命令: <code>clean</code>  (完全清除该磁盘).</li>
 <li>此时 U 盘在 Windows 电脑磁盘管理中就是一个完整且没有建分区的磁盘, 新建分区即可完全恢复.</li>
 </ul>
-<h1 id="系统时不时自动打开浏览器-跳转到-MSN-页面"><a href="#系统时不时自动打开浏览器-跳转到-MSN-页面" class="headerlink" title="系统时不时自动打开浏览器, 跳转到 MSN 页面"></a>系统时不时自动打开浏览器, 跳转到 MSN 页面</h1><p>解决方法: 关闭 Windows 网络连接状态指示器的活动测试. (重装系统后, 也没有关闭这个功能, 为啥现在就不弹出了呢? 🤣)</p>
-<p>详见此页面: <span class="exturl" data-url="aHR0cHM6Ly9nZXRhZG14LmNvbS8/Q2F0ZWdvcnk9V2luZG93c18xMF8yMDE2JlBvbGljeT1NaWNyb3NvZnQuUG9saWNpZXMuSW50ZXJuZXRDb21tdW5pY2F0aW9uTWFuYWdlbWVudDo6Tm9BY3RpdmVQcm9iZSZMYW5ndWFnZT16aC1jbg==">关闭 Windows 网络连接状态指示器的活动测试<i class="fa fa-external-link-alt"></i></span></p>
 <h1 id="Windows-系统中-System-System64-和-Syswow64-文件夹的区别"><a href="#Windows-系统中-System-System64-和-Syswow64-文件夹的区别" class="headerlink" title="Windows 系统中 System, System64 和 Syswow64 文件夹的区别"></a>Windows 系统中 System, System64 和 Syswow64 文件夹的区别</h1><ul>
 <li><p>*32 位的 Windows 操作系统可以同时运行 32 位和 16 位代码, 而 64 位 Windows 操作系统可以直接运行 64 位代码, 同时通过使用 WoW64 (Windows on Windows 64) 也能运行 32 位代码.</p>
 </li>
@@ -203,7 +199,7 @@
 <li><p>使用第三方的文本对比软件对比即可. 推荐使用 <code>Diffinity</code>, 官网: <span class="exturl" data-url="aHR0cHM6Ly93d3cudHJ1ZWh1bWFuZGVzaWduLnNlL3NfZGlmZmluaXR5LnBocA==">Diffinity<i class="fa fa-external-link-alt"></i></span></p>
 </li>
 </ol>
-<h1 id="Excel-中数字最后几位总是-0-无法修改"><a href="#Excel-中数字最后几位总是-0-无法修改" class="headerlink" title="Excel 中数字最后几位总是 0, 无法修改!"></a>Excel 中数字最后几位总是 0, 无法修改!</h1><ol>
+<h1 id="Excel-中数字最后几位总是-0-无法修改"><a href="#Excel-中数字最后几位总是-0-无法修改" class="headerlink" title="Excel 中数字最后几位总是 0, 无法修改"></a>Excel 中数字最后几位总是 0, 无法修改</h1><ol>
 <li><p>出现这个问题的原因是: Excepl 对数字只保留前 15 位为有效数字, 后面的数字就只保存为 0 了.</p>
 </li>
 <li><p>解决方案: 在数字最前面加一个单引号: <code>&#39;</code>. 如: <code>&#39;827389791635671528358</code>.</p>
@@ -315,27 +311,361 @@
       </tags>
   </entry>
   <entry>
-    <title>使用 csharp 时遇到的一些问题</title>
-    <url>/csharp/csharp_experience.html</url>
+    <title>委托(一) 委托的基本用法</title>
+    <url>/csharp/csharp_delegate_01.html</url>
     <content><![CDATA[<a id="more"></a>
 
-<h1 id="如何从字典中删除符合要求的特定值"><a href="#如何从字典中删除符合要求的特定值" class="headerlink" title="如何从字典中删除符合要求的特定值"></a>如何从字典中删除符合要求的特定值</h1><p>由于使用 <code>foreach</code> 遍历的过程中, 被遍历的集合必须保持不变, 因此直接遍历原字典并对原字典进行移除的方法行不通. 使用 foreach 要解决的问题就是让被遍历的集合保持不变, 因此用原字典数据的一个 Copy 即可.</p>
-<h2 id="字典扩展"><a href="#字典扩展" class="headerlink" title="字典扩展"></a>字典扩展</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 字典扩展</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">DictionaryExt</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 移除字典中所有符合特定规则的数据</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;typeparam name=&quot;K&quot;&gt;</span>键的数据类型<span class="doctag">&lt;/typeparam&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;typeparam name=&quot;V&quot;&gt;</span>值的数据类型<span class="doctag">&lt;/typeparam&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;dict&quot;&gt;</span>字典<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;predicate&quot;&gt;</span>规则<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">RemoveAll</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt;(<span class="params"><span class="keyword">this</span> IDictionary&lt;K, V&gt; dict, Func&lt;K, V, <span class="keyword">bool</span>&gt; predicate</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> key <span class="keyword">in</span> dict.Keys.ToArray().Where(key =&gt; predicate(key, dict[key])))</span><br><span class="line">        &#123;</span><br><span class="line">            dict.Remove(key);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><p>将字典所有的键转换为数组.</p>
+<h1 id="本文重点"><a href="#本文重点" class="headerlink" title="本文重点"></a>本文重点</h1><ol>
+<li><p>delegate 和 Delegate 的区别</p>
 </li>
-<li><p>将键和值作为参数发送给规则方法进行判断.</p>
+<li><p>定义委托</p>
 </li>
-<li><p>挑选出符合规则的键.</p>
+<li><p>实例化委托</p>
 </li>
-<li><p>从字典中移除这些键值对.</p>
+<li><p>Action 和 Func</p>
+</li>
+<li><p>委托的基本用法</p>
 </li>
 </ol>
-<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt; dictionary = <span class="keyword">new</span> Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt;();</span><br><span class="line">        dictionary.Add(<span class="string">&quot;1&quot;</span>, <span class="number">1</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;2&quot;</span>, <span class="number">2</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;3&quot;</span>, <span class="number">3</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;4&quot;</span>, <span class="number">4</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;5&quot;</span>, <span class="number">1</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;6&quot;</span>, <span class="number">2</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;7&quot;</span>, <span class="number">3</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;8&quot;</span>, <span class="number">4</span>);</span><br><span class="line">        dictionary.Add(<span class="string">&quot;9&quot;</span>, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 可以这样进行调用</span></span><br><span class="line">        DictionaryExt.RemoveAll(dictionary, (key, <span class="keyword">value</span>) =&gt; <span class="keyword">value</span> &lt; <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> item <span class="keyword">in</span> dictionary)</span><br><span class="line">        &#123;</span><br><span class="line">            Console.Write(item.Key + <span class="string">&quot;, &quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Console.ReadKey();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="delegate"><a href="#delegate" class="headerlink" title="delegate"></a>delegate</h1><p><code>delegate</code> 是一个类型关键字, 和它类似的还有: <code>class</code>, <code>interface</code>, <code>enum</code> 等等. 这类关键字都是用来定义的, 而不是实例化的. 枚举类型使用 <code>enum</code> 进行定义, 委托类型使用 <code>delegate</code> 进行定义. 因此 <font color='red'><strong>delegate 不是类! 它只是一个类型关键字! 用来定义类型的.</strong></font></p>
+<h1 id="System-String-string-和-System-Delegate-delegate"><a href="#System-String-string-和-System-Delegate-delegate" class="headerlink" title="System.String - string 和 System.Delegate - delegate"></a>System.String - string 和 System.Delegate - delegate</h1><p>System.String 是 .Net 框架中的一个类, .Net 框架中包含多种编程语言, 其中 C# 语言中给 System.String 起了一个别名 string, 因此 <code>string str</code> 和 <code>System.String str</code> 是没有区别的, <code>string</code> 就是一个类, <code>string str</code> 这一个代码不是在定义类型, 而是在实例化对象. 但是 <code>delegate</code> 和 <code>System.Delegate</code> 的关系就不是这样了. <code>System.Delegate</code> 是一个类, 而 <code>delegate</code> 则是一个 <code>类型关键字</code>, 它是用来定义委托的, 就像 <code>class</code> 定义类, <code>struct</code> 定义结构体, <code>enum</code> 定义枚举一样, 这些关键字是同一个级次的, 但他们都不是类.</p>
+<p>如下图, String, string, Delegate 都可以调用类中的静态方法, 这是因为他们都是类, 但是 delegate 则不可以, 因为它仅仅只是一个类型关键字.</p>
+<p><img data-src="/images/csharp/delegate/delegate_01.png" alt="delegate"></p>
+<h1 id="🦄如何定义一个委托类型"><a href="#🦄如何定义一个委托类型" class="headerlink" title="🦄如何定义一个委托类型"></a>🦄如何定义一个委托类型</h1><ol>
+<li>使用 delegate 关键字</li>
+<li>指明待委托方法的两个特征: <code>1. 返回值 2. 参数</code></li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//定义委托类型, 返回值为: int, 参数为: (int, int)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">delegate</span> <span class="keyword">int</span> <span class="title">MyDelegate</span> (<span class="params"><span class="keyword">int</span> a, <span class="keyword">int</span> b</span>)</span>;</span><br></pre></td></tr></table></figure>
 
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9zdGFja29vbS5jb20vcXVlc3Rpb24vMmhUZ3kvJUU0JUJEJUJGJUU3JTk0JUE4TGlucSVFNCVCQiU4RSVFNSVBRCU5NyVFNSU4NSVCOEMtJUU0JUI4JUFEJUU1JTg4JUEwJUU5JTk5JUE0JUU3JTg5JUI5JUU1JUFFJTlBJUU1JTgwJUJD">使用Linq从字典C＃中删除特定值<i class="fa fa-external-link-alt"></i></span></li>
+<p>[<strong>注</strong>] 其实 csharp 中已经有定义好的通用委托类型了, 基本无需自己定义委托类型.</p>
+<h1 id="🐬如何实例化出一个委托实例"><a href="#🐬如何实例化出一个委托实例" class="headerlink" title="🐬如何实例化出一个委托实例"></a>🐬如何实例化出一个委托实例</h1><p>实例化委托就是使用之前定义好的委托类型实例化出一个委托对象, 也叫做委托实例. 委托的实例化语法和类的实例化语法相同.</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 实例化一个 MyDelegate 类型的委托对象, 此时还没有初始化</span></span><br><span class="line">MyDelegate myDelegate;</span><br></pre></td></tr></table></figure>
+
+<p>[<strong>注</strong>] 实例化委托时通常不再使用自己定义的委托类型, 而是使用 csharp 中已经定义好的通用委托类型 Action&lt;&gt; 和 Func&lt;&gt;.</p>
+<h1 id="🌴如何初始化一个委托实例"><a href="#🌴如何初始化一个委托实例" class="headerlink" title="🌴如何初始化一个委托实例"></a>🌴如何初始化一个委托实例</h1><ul>
+<li><p>方法 1: 使用 new 关键字初始化. 待委托方法作为参数传入.</p>
+</li>
+<li><p>方法 2: 直接使用符合特征的方法赋值.</p>
+</li>
+</ul>
+<p>[<strong>注</strong>] 待委托方法如果不是静态方法, 则必须是实例方法. 不能将未实例化的方法作为参数传入委托或对委托赋值.</p>
+<h1 id="如何调用委托"><a href="#如何调用委托" class="headerlink" title="如何调用委托"></a>如何调用委托</h1><ul>
+<li>方式 1: 调用委托和调用方法在代码写法上一致.</li>
+<li>方式 2: 调用 Invoke() 方法.</li>
+</ul>
+<h1 id="委托基本用法示例-非静态"><a href="#委托基本用法示例-非静态" class="headerlink" title="委托基本用法示例 (非静态)"></a>委托基本用法示例 (非静态)</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CSharp 起别名的语法规则, 在 namespace 外部书写时必须写全部路径</span></span><br><span class="line"><span class="comment">// using Package = System.Collections.Generic.Dictionary&lt;string, int&gt;;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">MyDelegateTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// CSharp 起别名的语法规则, 在 namespace 内部书写的时候可以嵌套引用 namespace 外的 using</span></span><br><span class="line">    <span class="keyword">using</span> Package = Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义一个委托类, 指明待委托方法的特征: 1. 返回值 (string) 2. 参数 (string, int, Package)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">delegate</span> <span class="keyword">string</span> <span class="title">DelegateBuy</span>(<span class="params"><span class="keyword">string</span> itemName, <span class="keyword">int</span> num, Package package</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="comment">// 实例化 玩家包裹</span></span><br><span class="line">            Package package = <span class="keyword">new</span> Package();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 实例化 委托</span></span><br><span class="line">            <span class="comment">// 委托初始化时可以直接赋值, 也可以使用 new 关键字</span></span><br><span class="line">            <span class="comment">// 当 &quot;待委托方法&quot; 是非静态方法时, 只能传递待委托方法的实例作为参数, 因此这里必须实例化 Program, 并写 &quot;program.Buy&quot;, 不能只写 &quot;Buy&quot;.</span></span><br><span class="line">            Program program = <span class="keyword">new</span> Program();</span><br><span class="line">            DelegateBuy delegateBuy = program.Buy;</span><br><span class="line">            DelegateBuy delegateBuy2 = <span class="keyword">new</span> DelegateBuy(program.Buy);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 调用委托的写法和调用方法的写法一致</span></span><br><span class="line">            Console.WriteLine(delegateBuy(<span class="string">&quot;体力药水&quot;</span>, <span class="number">10</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy(<span class="string">&quot;体力药水&quot;</span>, <span class="number">25</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy2(<span class="string">&quot;魔力药水&quot;</span>, <span class="number">10</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy2(<span class="string">&quot;魔力药水&quot;</span>, <span class="number">5</span>, package));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 暂停</span></span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 待委托的方法</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;itemName&quot;&gt;</span>物品名称<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;num&quot;&gt;</span>物品数量<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;package&quot;&gt;</span>玩家包裹<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">Buy</span>(<span class="params"><span class="keyword">string</span> itemName, <span class="keyword">int</span> num, Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt; package</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">string</span> str;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (package.ContainsKey(itemName))</span><br><span class="line">            &#123;</span><br><span class="line">                package[itemName] += num;</span><br><span class="line">                str = <span class="keyword">string</span>.Format(<span class="string">&quot;您又购买了&#123;0&#125;个&#123;1&#125;!&quot;</span>, num, itemName);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                package.Add(itemName, num);</span><br><span class="line">                str = <span class="keyword">string</span>.Format(<span class="string">&quot;您购买了&#123;0&#125;个&#123;1&#125;!&quot;</span>, num, itemName);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="委托基本用法示例-静态"><a href="#委托基本用法示例-静态" class="headerlink" title="委托基本用法示例 (静态)"></a>委托基本用法示例 (静态)</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CSharp 起别名的语法规则, 在 namespace 外部书写时必须写全部路径</span></span><br><span class="line"><span class="comment">// using Package = System.Collections.Generic.Dictionary&lt;string, int&gt;;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">MyDelegateTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// CSharp 起别名的语法规则, 在 namespace 内部书写的时候可以嵌套引用 namespace 外的 using</span></span><br><span class="line">    <span class="keyword">using</span> Package = Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义一个委托类, 指明待委托方法的特征: 1. 返回值 (string) 2. 参数 (string, int, Package)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">delegate</span> <span class="keyword">string</span> <span class="title">DelegateBuy</span>(<span class="params"><span class="keyword">string</span> itemName, <span class="keyword">int</span> num, Package package</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="comment">// 实例化 玩家包裹</span></span><br><span class="line">            Package package = <span class="keyword">new</span> Package();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 实例化 委托</span></span><br><span class="line">            <span class="comment">// 当 &quot;待委托方法&quot; 是静态方法时, 可以直接将静态方法作为参数传递.</span></span><br><span class="line">            DelegateBuy delegateBuy = Program.Buy;</span><br><span class="line">            DelegateBuy delegateBuy2 = <span class="keyword">new</span> DelegateBuy(Program.Buy);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 调用委托的写法和调用方法的写法一致</span></span><br><span class="line">            Console.WriteLine(delegateBuy(<span class="string">&quot;体力药水&quot;</span>, <span class="number">10</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy(<span class="string">&quot;体力药水&quot;</span>, <span class="number">25</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy2(<span class="string">&quot;魔力药水&quot;</span>, <span class="number">10</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy2(<span class="string">&quot;魔力药水&quot;</span>, <span class="number">5</span>, package));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 暂停</span></span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 待委托的方法</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;itemName&quot;&gt;</span>物品名称<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;num&quot;&gt;</span>物品数量<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;package&quot;&gt;</span>玩家包裹<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">string</span> <span class="title">Buy</span>(<span class="params"><span class="keyword">string</span> itemName, <span class="keyword">int</span> num, Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt; package</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">string</span> str;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (package.ContainsKey(itemName))</span><br><span class="line">            &#123;</span><br><span class="line">                package[itemName] += num;</span><br><span class="line">                str = <span class="keyword">string</span>.Format(<span class="string">&quot;您又购买了&#123;0&#125;个&#123;1&#125;!&quot;</span>, num, itemName);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                package.Add(itemName, num);</span><br><span class="line">                str = <span class="keyword">string</span>.Format(<span class="string">&quot;您购买了&#123;0&#125;个&#123;1&#125;!&quot;</span>, num, itemName);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Action-和-Func"><a href="#Action-和-Func" class="headerlink" title="Action 和 Func"></a>Action 和 Func</h1><p>在实例化委托的时候, 不仅仅可以使用自己定义的委托, 还可以使用 csharp 中已经定义好的两个泛型委托: <strong><code>Action&lt;&gt;</code></strong> 和 <strong><code>Func&lt;&gt;</code></strong> 来实例化 (强烈建议使用).</p>
+<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><p><strong>Action&lt;&gt;</strong> 待委托的方法都是没有返回值的方法, 参数使用泛型进行指定.</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Action a; <span class="comment">// 实例化出一个待委托方法特征为没有返回值, 没有参数的委托实例 a</span></span><br><span class="line">Action&lt;<span class="keyword">string</span>&gt; b; <span class="comment">// 实例化出一个待委托方法特征为没有返回值, 有一个 string 类型参数的委托实例 b</span></span><br><span class="line">Action&lt;<span class="keyword">string</span>, <span class="keyword">int</span>[]&gt; c; <span class="comment">// 实例化出一个待委托方法特征为没有返回值, 具有一个 string, 一个 int 数组参数的委托实例 c</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Func"><a href="#Func" class="headerlink" title="Func"></a>Func</h2><p><strong>Func&lt;&gt;</strong> 待委托的方法都是具有返回值的方法. 使用泛型来指定参数和返回值. 其中泛型中的最后一个类型为返回值的类型.</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Func&lt;<span class="keyword">string</span>&gt; a; <span class="comment">// 实例化出一个待委托方法特征为没有参数, 返回值类型为 string 的委托实例 a</span></span><br><span class="line">Func&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt; b; <span class="comment">// 实例化出一个待委托方法特征为有一个 string 类型的参数, 返回值为 int 类型的委托实例 b</span></span><br><span class="line">Func&lt;<span class="keyword">int</span>, <span class="keyword">string</span>, <span class="keyword">int</span>[]&gt; c; <span class="comment">// 实例化出一个待委托方法特征为有两个 类型分别为 int 和 string 类型的参数, 返回值为 int 数组类型的委托实例 c</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li><p>delegate 和 Delegate 的区别:</p>
+<p> Delegate 是类, delegate 是关键字.</p>
+</li>
+<li><p>定义委托</p>
+<p> 不再自定义委托, 使用 Action&lt;&gt; 和 Func&lt;&gt;.</p>
+</li>
+<li><p>实例化委托</p>
+<p> 使用泛型指明待委托方法的特征.</p>
+</li>
+<li><p>Action 和 Func</p>
+<p> Action&lt;&gt; 指明无返回值, Func&lt;&gt; 最后一个泛型类型指明返回值.</p>
+</li>
+<li><p>委托的基本用法</p>
+<p> 可以通过委托来调用方法.</p>
+</li>
+</ol>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8xMzMxNTkw">理解委托类型<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+      <categories>
+        <category>CSharp</category>
+      </categories>
+      <tags>
+        <tag>CSharp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>委托(二) 委托与 &quot;回调和回调函数&quot;</title>
+    <url>/csharp/csharp_delegate_02.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="回调与回调函数"><a href="#回调与回调函数" class="headerlink" title="回调与回调函数"></a>回调与回调函数</h1><p>我也不太清楚为什么会出来一个 &quot;<font color='red'>回调函数</font>&quot; 的概念, 回调函数不就是一个参数吗?</p>
+<blockquote>
+<p>将方法 A 作为 方法 B 的一个参数传入到方法 B 中, 那么方法 A 就是方法 B 的回调函数.</p>
+</blockquote>
+<p>可以这样理解:</p>
+<ol>
+<li><p>&quot;回调&quot; 是一种技术: <font color='red'>将方法作为参数传入另一个方法!</font> 在各大编程语言, 脚本语言中都有实现这门技术!</p>
+</li>
+<li><p>&quot;回调函数&quot; 就是作为参数的方法!</p>
+</li>
+</ol>
+<p>强调: <strong>回调是一项技术! 回调函数是一个参数!</strong></p>
+<h1 id="quot-回调-quot-的用途"><a href="#quot-回调-quot-的用途" class="headerlink" title="&quot;回调&quot; 的用途"></a>&quot;回调&quot; 的用途</h1><ol>
+<li><p>因为 A 是作为参数传入 B 的, 那么在 B 中就可以编写很多的判断逻辑来准确控制 A 的执行时机, 当然用 retuan 返回执行标志, 通过执行标志来控制 A 的执行也是可以的, 但是这样不是还得对执行标志进行一次判断吗? 当然这个没什么影响, 但是万一这个执行标志无法返回呢, 对吧?</p>
+</li>
+<li><p>如果 B 中需要处理很复杂的数据, 而且这个数据很难使用 return 返回, 甚至可能根本无法使用 return, 但是 A 又必须要用到这个数据, 此时就可以利用 &quot;回调&quot; 这项技术了, 将 A 传入 B, 在 B 的内部执行 A, 这样 A 就可以获取到需要的数据了.</p>
+</li>
+<li><p>假设方法 B 可以随机获得一种食材, 食材有多种多样烹饪方法, 可以红烧, 可以清蒸, 可以煎炸, 此时就可以给 B 添加一个 &quot;回调函数&quot; 参数, 这个参数就是烹饪方法 A, 那么在执行方法 B 获取食材的同时就可以将烹饪方法 A 一并传入, 这样一道菜就直接做好了! 而且只要传入不同的 A 就可以做出不同的菜, 甚至在 B 里面还可以写判断方法, 控制某些食材只能用某些特定的烹饪方法!</p>
+</li>
+</ol>
+<p>总结: &quot;回调&quot; 可以做菜~!</p>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><p>csharp 中由于方法无法作为参数进行传递, 所以想要在 csharp 中实现 &quot;回调&quot; 需要使用委托来实现, 下面是一个简单的示例.</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">namespace_CallBackTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">CallBackTest</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 随机器</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">readonly</span> Random random = <span class="keyword">new</span> Random();</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            CallBackTest callBackTest = <span class="keyword">new</span> CallBackTest();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 获取食材的同时将烹饪方法作为参数传入, 实现内部调用 -- 这就是 &quot;回调&quot; !</span></span><br><span class="line">            <span class="comment">// 含义为: 先获取食材, 之后使用参数内的烹饪方式对食材进行处理, 得到烹饪后的食物.</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook2);<span class="comment">//清蒸</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook3);<span class="comment">//煎炸</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line"></span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 获取食材</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;cook&quot;&gt;</span>烹饪方法<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GetIngredients</span>(<span class="params">Action&lt;<span class="keyword">string</span>&gt; cook</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">string</span> str_ingredient = <span class="keyword">string</span>.Empty;</span><br><span class="line">            <span class="keyword">int</span> int_ingredient = random.Next(<span class="number">1</span>, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (int_ingredient &gt; <span class="number">75</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                str_ingredient = <span class="string">&quot;大棒肉(&quot;</span> + int_ingredient + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(int_ingredient &gt; <span class="number">25</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                str_ingredient = <span class="string">&quot;鲈鱼(&quot;</span> + int_ingredient + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (int_ingredient == <span class="number">25</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                str_ingredient = <span class="string">&quot;杂烩兔肉块(&quot;</span> + int_ingredient + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">string</span>.IsNullOrEmpty(str_ingredient))</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;白忙了一天, 没有获得任何食材(&quot;</span> + int_ingredient + <span class="string">&quot;) !&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                cook(str_ingredient);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 烧烤</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;ingredient&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Cook1</span>(<span class="params"><span class="keyword">string</span> ingredient</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;获得了 &lt;烧烤&quot;</span> + ingredient + <span class="string">&quot;&gt; !&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 清蒸</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;ingredient&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Cook2</span>(<span class="params"><span class="keyword">string</span> ingredient</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;获得了 &lt;清蒸&quot;</span> + ingredient + <span class="string">&quot;&gt; !&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 煎炸</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;ingredient&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Cook3</span>(<span class="params"><span class="keyword">string</span> ingredient</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;获得了 &lt;炸&quot;</span> + ingredient + <span class="string">&quot;&gt; !&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzE5ODAxMTMx">回调函数（callback）是什么？<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL3EvMTAxMDAwMDAwNDE0OTEzMQ==">js的回调函数一般都用来做什么<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>CSharp</category>
+      </categories>
+      <tags>
+        <tag>CSharp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>委托(三) 委托的初始化</title>
+    <url>/csharp/csharp_delegate_03.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="初始化委托对象"><a href="#初始化委托对象" class="headerlink" title="初始化委托对象"></a>初始化委托对象</h1><p>先定义一个委托类型, 然后使用定义的委托类型实例化一个委托对象.</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 定义一个委托类型</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">delegate</span> <span class="keyword">string</span> <span class="title">MyDelegate</span>(<span class="params"><span class="keyword">int</span> a, <span class="keyword">int</span> b</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实例化一个 MyDelegate 类型的委托对象, 此时还没有初始化</span></span><br><span class="line">MyDelegate myDelegate;</span><br></pre></td></tr></table></figure>
+
+<p><code>MyDelegate myDelegate</code> 只是实例化出了一个空的委托对象, 没有内容, 必须对其初始化. 委托的初始化方式经历了几种变化:</p>
+<blockquote>
+<p>C# 1.0 中, 使用 &quot;在代码中其他位置定义函数&quot; 的方法, <strong>显式</strong>初始化委托.</p>
+<p>C# 2.0 引入了 <strong>匿名方法</strong> 的概念, 以一种可在委托调用中执行的 &quot;未命名内联语句块&quot; 的方式来初始化委托.</p>
+<p>C# 3.0 引入了 <strong>Lambda 表达式</strong> 或者 <strong>Lambda 语句块</strong>, 这是另一种匿名方法的书写形式, 但更具表现力并且更简练.</p>
+<p>通常, 面向 .NET Framework 3.5 或更高版本的应用程序应使用 Lambda (λ) 表达式或 Lambda 语句块来初始化委托.</p>
+</blockquote>
+<ol>
+<li>第一种: [C# 1.0] 写法上和初始化类一样, 使用 New 关键字.</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 初始化 myDelegate 委托</span></span><br><span class="line">myDelegate = <span class="keyword">new</span> MyDelegate(program.Add);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>第二种: [C# 1.0] 写法上和初始化值类型一样, 直接赋值.</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 初始化 myDelegate (直接赋值)</span></span><br><span class="line">myDelegate = program.Add;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>第三种: [C# 2.0] 使用匿名方法的原始写法进行初始化</li>
+</ol>
+<p>匿名方法同样是使用 delegate 关键字定义 (强烈建议不再使用匿名方法, 了解即可, 转而使用 Lambda 表达式或 Lambda 语句块), 返回值无需特别指明, 只需使用 return 来指明返回值及其类型即可, 匿名方法参数的指明方式和普通方法的指明方式一致, 但是必须和委托定义时声明的方法签名吻合.</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">myDelegate = <span class="keyword">delegate</span> (<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> (a + b).ToString();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>第四种: [C# 3.0] 使用匿名方法的简化写法--Lambda 表达式或 Lambda 语句块进行初始化 (强烈建议使用!)</li>
+</ol>
+<p>Lambda 表达式和 Lambda 语句块也是委托初始化的一种手段, 它比匿名方法更为简洁, 而且不会混淆 (谁让委托类型的定义和匿名方法的定义使用同样的关键字的, 唉... 乱套了吧... 我瞎说的~~), 总之正如微软文档说的一样, 学习使用 lambda 表达式吧, 为什么呢? 因为如果你不会的话, 连别人的程序都看不懂啊😥</p>
+<h1 id="Lambda"><a href="#Lambda" class="headerlink" title="Lambda"></a>Lambda</h1><ol>
+<li><p>Lambda 的特征符号是: <code>=&gt;</code>. =&gt; 符号的左边是参数, 使用小括号 ( ) 括起来, 右侧是语句或表达式, 当右侧是语句时, 必须使用大括号 { } 括起来, 当右侧是表达式时, 则不能带有大括号, 且表达式只能有一句.</p>
+</li>
+<li><p>Lambda 中右侧是语句时, 使用 return 语句来指明返回值及其类型, 返回值的类型必须符合委托的要求.</p>
+ <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Func&lt;<span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">int</span>&gt; funA = (<span class="keyword">int</span> x, <span class="keyword">int</span> y) =&gt; &#123; <span class="keyword">return</span> x + y; &#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Lambda 中参数的类型可以注明, 如上面的例子, 也可以省略, 如下面的例子.</p>
+ <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Func&lt;<span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">int</span>&gt; funB = (x, y) =&gt; &#123; <span class="keyword">return</span> x * y; &#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Lambda 中的参数, 当且仅当只有一个时, 小括号可以省略.</p>
+ <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Func&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; funC = x =&gt; &#123; <span class="keyword">return</span> x * <span class="number">2</span>; &#125;; <span class="comment">// 当且仅当只有一个时, 小括号可以省略.</span></span><br><span class="line"></span><br><span class="line">Func&lt;<span class="keyword">float</span>&gt; funD = () =&gt; &#123; <span class="keyword">return</span> <span class="number">3.1415926f</span>; &#125;; <span class="comment">// 零个参数时, 小括号不可以省略.</span></span><br><span class="line"></span><br><span class="line">Func&lt;<span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">int</span>&gt; funE = (x, y, z) =&gt; &#123; <span class="keyword">return</span> x * <span class="number">2</span> + y * <span class="number">3</span> + z * <span class="number">4</span>; &#125;; <span class="comment">// 两个及以上参数时, 小括号不可以省略.</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Lambda 中右侧是表达式时, 大括号必须去掉, 并且此时 <font color='red'><strong>return 也必须省略</strong></font>, 因为 return 是语句, 不是表达式.</p>
+ <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Func&lt;<span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">int</span>&gt; funF = (x, y) =&gt; x * y; <span class="comment">// 大括号和 return 必须同时存在, 或同时去掉.</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>大括号存在时, 大括号中只能写 <font color='red'><strong>语句</strong></font>. 此时称为: <strong>Lambda 语句块</strong>. 或者说当书写语句时, 必须用 <font color='red'><strong>语句块符号 { }</strong></font> 括起来.</p>
+</li>
+<li><p>大括号不存在时, 则只能写 <font color='red'><strong>表达式</strong></font>, 并且 <font color='red'><strong>表达式只能写一句</strong></font> . 此时称为: <strong>Lambda 表达式</strong>.</p>
+ <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">myDelegate = (a, b) =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> (a + b).ToString();</span><br><span class="line">&#125;; <span class="comment">// Lambda 语句块</span></span><br><span class="line"></span><br><span class="line">Action action = () =&gt; Console.WriteLine(<span class="string">&quot;action&quot;</span>); <span class="comment">// Lambda 表达式</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h1 id="多播委托"><a href="#多播委托" class="headerlink" title="多播委托"></a>多播委托</h1><p>前面讲了委托的四种初始化方式全部都是使用了 <strong><code>=</code></strong> 运算符, 其实委托还可以通过 <strong><code>+= -=</code></strong> 运算符进行注册和取消注册, 而且可以实现多播委托.</p>
+<ul>
+<li><p>多播委托: <font color='red'><strong>一个委托实例一次性委托多个实例方法, 调用委托时会依次调用所有被委托的方法</strong></font>.</p>
+</li>
+<li><p><font color='red'><strong>委托不仅仅可以 (取消) 注册方法, 也可以 (取消) 注册委托</strong></font>!</p>
+</li>
+</ul>
+<p>下表是 <strong><code>+</code></strong> 和 <strong><code>-</code></strong> 的运算规则:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Expression</th>
+<th align="left">Result</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">null + d1</td>
+<td align="left">d1</td>
+</tr>
+<tr>
+<td align="left">d1 + null</td>
+<td align="left">d1</td>
+</tr>
+<tr>
+<td align="left">d1 + d2</td>
+<td align="left">[d1, d2]</td>
+</tr>
+<tr>
+<td align="left">d1 + [d2, d3]</td>
+<td align="left">[d1, d2, d3]</td>
+</tr>
+<tr>
+<td align="left">[d1, d2] + [d2, d3]</td>
+<td align="left">[d1, d2, d2, d3]</td>
+</tr>
+<tr>
+<td align="left">[d1, d2] - d1</td>
+<td align="left">d2</td>
+</tr>
+<tr>
+<td align="left">[d1, d2] - d2</td>
+<td align="left">d1</td>
+</tr>
+<tr>
+<td align="left">[d1, d2, d1] - d1</td>
+<td align="left">[d1, d2]</td>
+</tr>
+<tr>
+<td align="left">[d1, d2, d3] - [d1, d2]</td>
+<td align="left">d3</td>
+</tr>
+<tr>
+<td align="left">[d1, d2, d3] - [d2, d1]</td>
+<td align="left">[d1, d2, d3]</td>
+</tr>
+<tr>
+<td align="left">[d1, d2, d3, d1, d2] - [d1, d2]</td>
+<td align="left">[d1, d2, d3]</td>
+</tr>
+<tr>
+<td align="left">[d1, d2] - [d1, d2]</td>
+<td align="left">null</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>CSharp</category>
+      </categories>
+      <tags>
+        <tag>CSharp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>委托(四) &quot;委托与事件的区别&quot; 以及 &quot;观察者模式&quot;</title>
+    <url>/csharp/csharp_delegate_04.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="🌴前言"><a href="#🌴前言" class="headerlink" title="🌴前言"></a>🌴前言</h1><p>最开始知道委托和事件是在 SiKi 的 C# 课程上(很抱歉, 大学就只上了 C 语言课, Java 课听了一节...😅), 由于之前没有接触过类似的语法, 又或是学习单片机的时候 C 语言语法在脑海中根深蒂固了 , 听课时就像是在听天书, 再加上之后也没有使用过这方面的语法, 基本全忘记了. 之前一段时间简单的了解了一下委托和事件, 然后网上都是用 &quot;观察者模式&quot; 去讲的...然而文章中连观察者都没有仔细去讲...所以这样更晕了好嘛...😑 于是自己抽时间多看了几篇文章, 做一下总结. 先说一下观察者模式吧, 毕竟委托和事件的区别用观察者去讲真的十分合适!</p>
+<h1 id="🍁声明"><a href="#🍁声明" class="headerlink" title="🍁声明"></a>🍁声明</h1><p>阅读下文需要对 &quot;委托&quot; 有基本了解, 如果未达到此基本要求, 请先打怪升级, 达到要求后再来挑战本副本! 推荐练级副本:</p>
+<ol>
+<li><p><a href="https://kuroha.vip/csharp/delegate_01.html">委托(一) 委托的基本用法</a></p>
+</li>
+<li><p><a href="https://kuroha.vip/csharp/delegate_02.html">委托(二) 委托与回调和回调函数</a></p>
+</li>
+<li><p><a href="https://kuroha.vip/csharp/delegate_03.html">委托(三) 委托的初始化</a></p>
+</li>
+</ol>
+<h1 id="👀观察者模式"><a href="#👀观察者模式" class="headerlink" title="👀观察者模式"></a>👀观察者模式</h1><h2 id="quot-模式-quot-是什么"><a href="#quot-模式-quot-是什么" class="headerlink" title="&quot;模式&quot; 是什么?"></a>&quot;模式&quot; 是什么?</h2><ul>
+<li>&quot;模式&quot; 这个东西和之前所学的大部分东西都不是一回事, &quot;模式&quot; 是一种套路, 对, 你没有听错, 套路, 或者说模板! 它是走在我们前面的那些码神们常年编写代码所总结出来的一种在特定场合下特别好用的代码模板. 就像是英语作文模板指导我们以怎样的结构去写英语作文一样, &quot;模式&quot; 是指导我们以一种怎样的结构去编写代码, 以达到减小编程时工作量以及减小日后维护成本的效果.</li>
+</ul>
+<h2 id="观察者模式的内容是什么"><a href="#观察者模式的内容是什么" class="headerlink" title="观察者模式的内容是什么?"></a>观察者模式的内容是什么?</h2><ol>
+<li><p>需要描述的是一种 &quot;一对多&quot; 的依赖关系!</p>
+</li>
+<li><p>当 &quot;一&quot; 的一方状态发生改变时, &quot;多&quot; 的一方中的全部成员都能够收到通知!</p>
+</li>
+<li><p>&quot;多&quot; 的一方收到通知后, 全部的成员都会自动进行更新操作, 而非被动!</p>
+</li>
+</ol>
+<p>这就是 &quot;观察者模式&quot; 了, &quot;一&quot; 的一方叫做 &quot;被观察者&quot;, &quot;多&quot; 的一方叫做 &quot;观察者&quot;, 也叫做: &quot;发布-订阅模型&quot;, 这时分别叫做 &quot;发布器&quot; 和 &quot;订阅器&quot;.</p>
+<ul>
+<li>Q: 为什么没有代码?</li>
+<li>A: 因为模式只是一种套路, 一种模板, 一种思想, 自然是没有代码的! 只要代码是按照这个模板去编写的, 就可以说使用了 &quot;观察者模式&quot;.</li>
+</ul>
+<h2 id="观察者模式的代码实现"><a href="#观察者模式的代码实现" class="headerlink" title="观察者模式的代码实现"></a>观察者模式的代码实现</h2><p>接下来就是代码实现环节了, 一共写了 3 种 <strong><code>链表, 委托, 事件</code></strong> 代码实现, 都是使用的 csharp 语言.</p>
+<p>Q: 需要记忆的代码是哪个呢?</p>
+<p>A: 没有! 对, 就是没有! 真正要记忆的是前面 <strong>观察者模式的内容是什么</strong> 中所提到的 3 点. 看完代码后可不要本末倒置了哦!</p>
+<p>下面代码实现的场景就是当被观察者使用 &quot;发令枪&quot; 开枪时, 观察者们全部开跑~</p>
+<h3 id="链表实现"><a href="#链表实现" class="headerlink" title="链表实现"></a>链表实现</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Exercise</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 被观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Publisher_List</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 保存所有的观察者对象</span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">readonly</span> <span class="title">List</span>&lt;<span class="title">Subscriber_List</span>&gt; subscriberList</span> = <span class="keyword">new</span> List&lt;Subscriber_List&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 进入赛道</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">EnterGame</span>(<span class="params">Subscriber_List subscriber</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            subscriberList.Add(subscriber);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发令枪</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartingGun</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;预备~ . . . 砰! \n&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 遍历所有的观察者 (这一步就是在通知每一个观察者)</span></span><br><span class="line">            <span class="keyword">foreach</span> (Subscriber_List t <span class="keyword">in</span> subscriberList)</span><br><span class="line">            &#123;</span><br><span class="line">                t.Run(); <span class="comment">// 自动更新</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Subscriber_List</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 运动员姓名</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="keyword">string</span> name;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 初始化</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Subscriber_List</span>(<span class="params">Publisher_List publisher, <span class="keyword">string</span> name</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            publisher.EnterGame(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 开跑</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Run</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(name + <span class="string">&quot; 开跑啦~ \n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Program_List</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Publisher_List publisherList = <span class="keyword">new</span> Publisher_List();</span><br><span class="line">            <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">            <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">            publisherList.StartingGun();</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 程序输出:</span></span><br><span class="line">预备~ . . . 砰!</span><br><span class="line"></span><br><span class="line">艾莉 开跑啦~</span><br><span class="line"></span><br><span class="line">克里斯 开跑啦~</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>上面就是一个最简单的观察者模式, 使用链表实现.</p>
+<table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left">实现方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1. 一对多</td>
+<td align="left">被观察者只有一个实例, 使用链表保存所有的观察者实例</td>
+</tr>
+<tr>
+<td align="left">2. 全部通知</td>
+<td align="left">在方法中遍历所有的观察者, 每一个都进行特定的操作</td>
+</tr>
+<tr>
+<td align="left">3. 自动更新</td>
+<td align="left">在 &quot;被观察者&quot; 中调用 &quot;观察者&quot; 的方法, 对外界隐藏调用逻辑</td>
+</tr>
+</tbody></table>
+<p>再来看一下 Main 方法:</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Publisher_List publisherList = <span class="keyword">new</span> Publisher_List();</span><br><span class="line">    <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">    <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">    publisherList.StartingGun();</span><br><span class="line">    Console.ReadKey();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时对外界的 Main 方法而言, 我仅仅开了一下 &quot;发令枪&quot;, 艾莉和克里斯中的 Run 方法就 <font color='red'><strong>自动</strong></font> 被调用了. 如果不这么写, Main 方法就必须先调用发令枪方法, 然后再调用艾莉和克里斯的 Run 方法.</p>
+<h3 id="委托实现"><a href="#委托实现" class="headerlink" title="委托实现"></a>委托实现</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Exercise</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Publisher publisher = <span class="keyword">new</span> Publisher();</span><br><span class="line">            <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">            <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 发令枪</span></span><br><span class="line">            publisher.StartingGun();</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 被观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Publisher</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 委托, 保存所有的观察者</span></span><br><span class="line">        <span class="keyword">public</span> Action PublisherDelegate;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发令枪</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartingGun</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;预备~ . . . 砰! \n&quot;</span>);</span><br><span class="line">            PublisherDelegate?.Invoke(); <span class="comment">// 判断 PublisherDelegate 是否是空, 如果不是空, 则调用里面的 Invoke 方法.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Subscriber</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 运动员姓名</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="keyword">string</span> name;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 构造器</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;publisher&quot;&gt;</span>发布器<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;name&quot;&gt;</span>订阅器名称<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Subscriber</span>(<span class="params">Publisher publisher, <span class="keyword">string</span> name</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            publisher.PublisherDelegate += Run; <span class="comment">// 自动注册</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 开跑</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Run</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(name + <span class="string">&quot; 开跑啦~ \n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 程序输出:</span></span><br><span class="line">预备~ . . . 砰!</span><br><span class="line"></span><br><span class="line">艾莉 开跑啦~</span><br><span class="line"></span><br><span class="line">克里斯 开跑啦~</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用委托实现观察者模式与使用链表时的不同"><a href="#使用委托实现观察者模式与使用链表时的不同" class="headerlink" title="使用委托实现观察者模式与使用链表时的不同"></a>使用委托实现观察者模式与使用链表时的不同</h4><ol>
+<li><p>不再使用链表保存所有的观察者, 而是使用委托的多播特性进行保存.</p>
+</li>
+<li><p>通知所有观察者的步骤不再使用遍历, 而是使用委托的多播特性进行逐个通知.</p>
+</li>
+<li><p>注册观察者时不再使用链表的 Add() 方法, 而是使用委托的 <strong>+=</strong> 和 <strong>-=</strong>.</p>
+</li>
+</ol>
+<p>直接使用委托实现观察者模式有几个不安要素:</p>
+<ol>
+<li><p>如果被观察者 Publisher 中的委托是 public 修饰, 那么外部便可以直接访问, 此时如果外部代码中使用了 <strong>=</strong> 进行委托的注册, 那么委托中已有的注册将被全部清空, 这种隐患是十分恐怖的.</p>
+</li>
+<li><p>如果被观察者 Publisher 中的委托是 public 修饰, 那么外部便可以直接调用此委托, 此时观察者们便无法收到任何通知, 这个隐患同样是致命的.</p>
+</li>
+</ol>
+<p>使用事件实现观察者模式便解决了上面两个致命隐患.</p>
+<h3 id="事件实现"><a href="#事件实现" class="headerlink" title="事件实现"></a>事件实现</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Exercise</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Publisher publisher = <span class="keyword">new</span> Publisher();</span><br><span class="line">            Subscriber subscriberA = <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">            Subscriber subscriberB = <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 发令枪</span></span><br><span class="line">            publisher.StartingGun();</span><br><span class="line">            Console.ReadKey();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 对事件直接赋值 (不允许)</span></span><br><span class="line">            publisher.PublisherEvent = subscriberA.Run;</span><br><span class="line">            <span class="comment">// 对委托直接赋值 (允许)</span></span><br><span class="line">            publisher.PublisherDelegate = subscriberA.Run;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 外部直接调用事件 (不允许)</span></span><br><span class="line">            publisher.PublisherEvent();</span><br><span class="line">            <span class="comment">// 外部直接调用委托 (允许)</span></span><br><span class="line">            publisher.PublisherDelegate();</span><br><span class="line"></span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 被观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Publisher</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 事件, 保存所有的观察者</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">event</span> Action PublisherEvent;</span><br><span class="line">        <span class="keyword">public</span> Action PublisherDelegate;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发令枪</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartingGun</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;预备~ . . . 砰! \n&quot;</span>);</span><br><span class="line">            PublisherEvent?.Invoke(); <span class="comment">// 判断 PublisherEvent 是否是空, 如果不是空, 则调用里面的 Invoke 方法.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Subscriber</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 运动员姓名</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="keyword">string</span> name;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 构造器</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;publisher&quot;&gt;</span>发布器<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;name&quot;&gt;</span>订阅器名称<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Subscriber</span>(<span class="params">Publisher publisher, <span class="keyword">string</span> name</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            publisher.PublisherEvent += Run; <span class="comment">// 自动注册</span></span><br><span class="line">            publisher.PublisherEvent = Run;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 开跑</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Run</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(name + <span class="string">&quot; 开跑啦~ \n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码直接粘贴到 VS 中其实是报错的, 其中第 18 行, 第 23 行以及第 65 行会报错! 报错信息是一样的:</p>
+<p><code>CS0070  事件 &quot;Publisher.PublisherEvent&quot; 只能出现在 += 或 -= 的左边(从类型 &quot;Publisher&quot; 中使用时除外)</code></p>
+<p>从这里也就可以得出结论, 委托和事件的不同.</p>
+<h1 id="🍀委托和事件的异同"><a href="#🍀委托和事件的异同" class="headerlink" title="🍀委托和事件的异同"></a>🍀委托和事件的异同</h1><ol>
+<li><p>一个使用 public 修饰的委托实例, 在声明类的外部可以直接调用. 而事件即使修饰为 public, 也仅能在声明类内部调用, 外部调用时编译器会直接报错, 发现隐患.</p>
+</li>
+<li><p>委托可以使用 = 进行赋值, 但是事件不可以, 无论任何时候, 事件都仅能使用 += 和 -= 进行注册, 使用 = 时编译器会直接报错, 发现隐患.</p>
+</li>
+<li><p>除此以外, 委托和事件一致.</p>
+</li>
+</ol>
+<h1 id="🌈参考链接"><a href="#🌈参考链接" class="headerlink" title="🌈参考链接"></a>🌈参考链接</h1><ul>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cucnVub29iLmNvbS9kZXNpZ24tcGF0dGVybi9vYnNlcnZlci1wYXR0ZXJuLmh0bWw=">菜鸟教程 - 观察者模式<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9kZXNpZ24tcGF0dGVybnMucmVhZHRoZWRvY3MuaW8vemhfQ04vbGF0ZXN0L2JlaGF2aW9yYWxfcGF0dGVybnMvb2JzZXJ2ZXIuaHRtbA==">Graphic Design Patterns - 观察者模式<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20va2tsbGRvZy9hcmNoaXZlLzIwMTIvMDEvMTcvMjMyNDIyOC5odG1s">C# 委托与事件区别简单总结<i class="fa fa-external-link-alt"></i></span></p>
+</li>
 </ul>
 ]]></content>
       <categories>
@@ -420,7 +750,7 @@
       </tags>
   </entry>
   <entry>
-    <title>csharp 中一些琐碎的知识</title>
+    <title>csharp 语法糖</title>
     <url>/csharp/csharp_others.html</url>
     <content><![CDATA[<a id="more"></a>
 
@@ -630,373 +960,8 @@
       </tags>
   </entry>
   <entry>
-    <title>委托(一) 委托的基本用法</title>
-    <url>/csharp/delegate_01.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="本文重点"><a href="#本文重点" class="headerlink" title="本文重点"></a>本文重点</h1><ol>
-<li><p>delegate 和 Delegate 的区别</p>
-</li>
-<li><p>定义委托</p>
-</li>
-<li><p>实例化委托</p>
-</li>
-<li><p>Action 和 Func</p>
-</li>
-<li><p>委托的基本用法</p>
-</li>
-</ol>
-<h1 id="delegate"><a href="#delegate" class="headerlink" title="delegate"></a>delegate</h1><p><code>delegate</code> 是一个类型关键字, 和它类似的还有: <code>class</code>, <code>interface</code>, <code>enum</code> 等等. 这类关键字都是用来定义的, 而不是实例化的. 枚举类型使用 <code>enum</code> 进行定义, 委托类型使用 <code>delegate</code> 进行定义. 因此 <font color='red'><strong>delegate 不是类! 它只是一个类型关键字! 用来定义类型的.</strong></font></p>
-<h1 id="System-String-string-和-System-Delegate-delegate"><a href="#System-String-string-和-System-Delegate-delegate" class="headerlink" title="System.String - string 和 System.Delegate - delegate"></a>System.String - string 和 System.Delegate - delegate</h1><p>System.String 是 .Net 框架中的一个类, .Net 框架中包含多种编程语言, 其中 C# 语言中给 System.String 起了一个别名 string, 因此 <code>string str</code> 和 <code>System.String str</code> 是没有区别的, <code>string</code> 就是一个类, <code>string str</code> 这一个代码不是在定义类型, 而是在实例化对象. 但是 <code>delegate</code> 和 <code>System.Delegate</code> 的关系就不是这样了. <code>System.Delegate</code> 是一个类, 而 <code>delegate</code> 则是一个 <code>类型关键字</code>, 它是用来定义委托的, 就像 <code>class</code> 定义类, <code>struct</code> 定义结构体, <code>enum</code> 定义枚举一样, 这些关键字是同一个级次的, 但他们都不是类.</p>
-<p>如下图, String, string, Delegate 都可以调用类中的静态方法, 这是因为他们都是类, 但是 delegate 则不可以, 因为它仅仅只是一个类型关键字.</p>
-<p><img data-src="/images/csharp/delegate/delegate_01.png" alt="delegate"></p>
-<h1 id="🦄如何定义一个委托类型"><a href="#🦄如何定义一个委托类型" class="headerlink" title="🦄如何定义一个委托类型"></a>🦄如何定义一个委托类型</h1><ol>
-<li>使用 delegate 关键字</li>
-<li>指明待委托方法的两个特征: <code>1. 返回值 2. 参数</code></li>
-</ol>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//定义委托类型, 返回值为: int, 参数为: (int, int)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">delegate</span> <span class="keyword">int</span> <span class="title">MyDelegate</span> (<span class="params"><span class="keyword">int</span> a, <span class="keyword">int</span> b</span>)</span>;</span><br></pre></td></tr></table></figure>
-
-<p>[<strong>注</strong>] 其实 csharp 中已经有定义好的通用委托类型了, 基本无需自己定义委托类型.</p>
-<h1 id="🐬如何实例化出一个委托实例"><a href="#🐬如何实例化出一个委托实例" class="headerlink" title="🐬如何实例化出一个委托实例"></a>🐬如何实例化出一个委托实例</h1><p>实例化委托就是使用之前定义好的委托类型实例化出一个委托对象, 也叫做委托实例. 委托的实例化语法和类的实例化语法相同.</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 实例化一个 MyDelegate 类型的委托对象, 此时还没有初始化</span></span><br><span class="line">MyDelegate myDelegate;</span><br></pre></td></tr></table></figure>
-
-<p>[<strong>注</strong>] 实例化委托时通常不再使用自己定义的委托类型, 而是使用 csharp 中已经定义好的通用委托类型 Action&lt;&gt; 和 Func&lt;&gt;.</p>
-<h1 id="🌴如何初始化一个委托实例"><a href="#🌴如何初始化一个委托实例" class="headerlink" title="🌴如何初始化一个委托实例"></a>🌴如何初始化一个委托实例</h1><ul>
-<li><p>方法 1: 使用 new 关键字初始化. 待委托方法作为参数传入.</p>
-</li>
-<li><p>方法 2: 直接使用符合特征的方法赋值.</p>
-</li>
-</ul>
-<p>[<strong>注</strong>] 待委托方法如果不是静态方法, 则必须是实例方法. 不能将未实例化的方法作为参数传入委托或对委托赋值.</p>
-<h1 id="如何调用委托"><a href="#如何调用委托" class="headerlink" title="如何调用委托"></a>如何调用委托</h1><ul>
-<li>方式 1: 调用委托和调用方法在代码写法上一致.</li>
-<li>方式 2: 调用 Invoke() 方法.</li>
-</ul>
-<h1 id="委托基本用法示例-非静态"><a href="#委托基本用法示例-非静态" class="headerlink" title="委托基本用法示例 (非静态)"></a>委托基本用法示例 (非静态)</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CSharp 起别名的语法规则, 在 namespace 外部书写时必须写全部路径</span></span><br><span class="line"><span class="comment">// using Package = System.Collections.Generic.Dictionary&lt;string, int&gt;;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">MyDelegateTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// CSharp 起别名的语法规则, 在 namespace 内部书写的时候可以嵌套引用 namespace 外的 using</span></span><br><span class="line">    <span class="keyword">using</span> Package = Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义一个委托类, 指明待委托方法的特征: 1. 返回值 (string) 2. 参数 (string, int, Package)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">delegate</span> <span class="keyword">string</span> <span class="title">DelegateBuy</span>(<span class="params"><span class="keyword">string</span> itemName, <span class="keyword">int</span> num, Package package</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="comment">// 实例化 玩家包裹</span></span><br><span class="line">            Package package = <span class="keyword">new</span> Package();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 实例化 委托</span></span><br><span class="line">            <span class="comment">// 委托初始化时可以直接赋值, 也可以使用 new 关键字</span></span><br><span class="line">            <span class="comment">// 当 &quot;待委托方法&quot; 是非静态方法时, 只能传递待委托方法的实例作为参数, 因此这里必须实例化 Program, 并写 &quot;program.Buy&quot;, 不能只写 &quot;Buy&quot;.</span></span><br><span class="line">            Program program = <span class="keyword">new</span> Program();</span><br><span class="line">            DelegateBuy delegateBuy = program.Buy;</span><br><span class="line">            DelegateBuy delegateBuy2 = <span class="keyword">new</span> DelegateBuy(program.Buy);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 调用委托的写法和调用方法的写法一致</span></span><br><span class="line">            Console.WriteLine(delegateBuy(<span class="string">&quot;体力药水&quot;</span>, <span class="number">10</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy(<span class="string">&quot;体力药水&quot;</span>, <span class="number">25</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy2(<span class="string">&quot;魔力药水&quot;</span>, <span class="number">10</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy2(<span class="string">&quot;魔力药水&quot;</span>, <span class="number">5</span>, package));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 暂停</span></span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 待委托的方法</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;itemName&quot;&gt;</span>物品名称<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;num&quot;&gt;</span>物品数量<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;package&quot;&gt;</span>玩家包裹<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">Buy</span>(<span class="params"><span class="keyword">string</span> itemName, <span class="keyword">int</span> num, Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt; package</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">string</span> str;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (package.ContainsKey(itemName))</span><br><span class="line">            &#123;</span><br><span class="line">                package[itemName] += num;</span><br><span class="line">                str = <span class="keyword">string</span>.Format(<span class="string">&quot;您又购买了&#123;0&#125;个&#123;1&#125;!&quot;</span>, num, itemName);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                package.Add(itemName, num);</span><br><span class="line">                str = <span class="keyword">string</span>.Format(<span class="string">&quot;您购买了&#123;0&#125;个&#123;1&#125;!&quot;</span>, num, itemName);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="委托基本用法示例-静态"><a href="#委托基本用法示例-静态" class="headerlink" title="委托基本用法示例 (静态)"></a>委托基本用法示例 (静态)</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CSharp 起别名的语法规则, 在 namespace 外部书写时必须写全部路径</span></span><br><span class="line"><span class="comment">// using Package = System.Collections.Generic.Dictionary&lt;string, int&gt;;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">MyDelegateTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// CSharp 起别名的语法规则, 在 namespace 内部书写的时候可以嵌套引用 namespace 外的 using</span></span><br><span class="line">    <span class="keyword">using</span> Package = Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义一个委托类, 指明待委托方法的特征: 1. 返回值 (string) 2. 参数 (string, int, Package)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">delegate</span> <span class="keyword">string</span> <span class="title">DelegateBuy</span>(<span class="params"><span class="keyword">string</span> itemName, <span class="keyword">int</span> num, Package package</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="comment">// 实例化 玩家包裹</span></span><br><span class="line">            Package package = <span class="keyword">new</span> Package();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 实例化 委托</span></span><br><span class="line">            <span class="comment">// 当 &quot;待委托方法&quot; 是静态方法时, 可以直接将静态方法作为参数传递.</span></span><br><span class="line">            DelegateBuy delegateBuy = Program.Buy;</span><br><span class="line">            DelegateBuy delegateBuy2 = <span class="keyword">new</span> DelegateBuy(Program.Buy);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 调用委托的写法和调用方法的写法一致</span></span><br><span class="line">            Console.WriteLine(delegateBuy(<span class="string">&quot;体力药水&quot;</span>, <span class="number">10</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy(<span class="string">&quot;体力药水&quot;</span>, <span class="number">25</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy2(<span class="string">&quot;魔力药水&quot;</span>, <span class="number">10</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy2(<span class="string">&quot;魔力药水&quot;</span>, <span class="number">5</span>, package));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 暂停</span></span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 待委托的方法</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;itemName&quot;&gt;</span>物品名称<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;num&quot;&gt;</span>物品数量<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;package&quot;&gt;</span>玩家包裹<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">string</span> <span class="title">Buy</span>(<span class="params"><span class="keyword">string</span> itemName, <span class="keyword">int</span> num, Dictionary&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt; package</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">string</span> str;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (package.ContainsKey(itemName))</span><br><span class="line">            &#123;</span><br><span class="line">                package[itemName] += num;</span><br><span class="line">                str = <span class="keyword">string</span>.Format(<span class="string">&quot;您又购买了&#123;0&#125;个&#123;1&#125;!&quot;</span>, num, itemName);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                package.Add(itemName, num);</span><br><span class="line">                str = <span class="keyword">string</span>.Format(<span class="string">&quot;您购买了&#123;0&#125;个&#123;1&#125;!&quot;</span>, num, itemName);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="Action-和-Func"><a href="#Action-和-Func" class="headerlink" title="Action 和 Func"></a>Action 和 Func</h1><p>在实例化委托的时候, 不仅仅可以使用自己定义的委托, 还可以使用 csharp 中已经定义好的两个泛型委托: <strong><code>Action&lt;&gt;</code></strong> 和 <strong><code>Func&lt;&gt;</code></strong> 来实例化 (强烈建议使用).</p>
-<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><p><strong>Action&lt;&gt;</strong> 待委托的方法都是没有返回值的方法, 参数使用泛型进行指定.</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Action a; <span class="comment">// 实例化出一个待委托方法特征为没有返回值, 没有参数的委托实例 a</span></span><br><span class="line">Action&lt;<span class="keyword">string</span>&gt; b; <span class="comment">// 实例化出一个待委托方法特征为没有返回值, 有一个 string 类型参数的委托实例 b</span></span><br><span class="line">Action&lt;<span class="keyword">string</span>, <span class="keyword">int</span>[]&gt; c; <span class="comment">// 实例化出一个待委托方法特征为没有返回值, 具有一个 string, 一个 int 数组参数的委托实例 c</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Func"><a href="#Func" class="headerlink" title="Func"></a>Func</h2><p><strong>Func&lt;&gt;</strong> 待委托的方法都是具有返回值的方法. 使用泛型来指定参数和返回值. 其中泛型中的最后一个类型为返回值的类型.</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Func&lt;<span class="keyword">string</span>&gt; a; <span class="comment">// 实例化出一个待委托方法特征为没有参数, 返回值类型为 string 的委托实例 a</span></span><br><span class="line">Func&lt;<span class="keyword">string</span>, <span class="keyword">int</span>&gt; b; <span class="comment">// 实例化出一个待委托方法特征为有一个 string 类型的参数, 返回值为 int 类型的委托实例 b</span></span><br><span class="line">Func&lt;<span class="keyword">int</span>, <span class="keyword">string</span>, <span class="keyword">int</span>[]&gt; c; <span class="comment">// 实例化出一个待委托方法特征为有两个 类型分别为 int 和 string 类型的参数, 返回值为 int 数组类型的委托实例 c</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
-<li><p>delegate 和 Delegate 的区别:</p>
-<p> Delegate 是类, delegate 是关键字.</p>
-</li>
-<li><p>定义委托</p>
-<p> 不再自定义委托, 使用 Action&lt;&gt; 和 Func&lt;&gt;.</p>
-</li>
-<li><p>实例化委托</p>
-<p> 使用泛型指明待委托方法的特征.</p>
-</li>
-<li><p>Action 和 Func</p>
-<p> Action&lt;&gt; 指明无返回值, Func&lt;&gt; 最后一个泛型类型指明返回值.</p>
-</li>
-<li><p>委托的基本用法</p>
-<p> 可以通过委托来调用方法.</p>
-</li>
-</ol>
-<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8xMzMxNTkw">理解委托类型<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-      <categories>
-        <category>CSharp</category>
-      </categories>
-      <tags>
-        <tag>CSharp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>委托(二) 委托与 &quot;回调和回调函数&quot;</title>
-    <url>/csharp/delegate_02.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="回调与回调函数"><a href="#回调与回调函数" class="headerlink" title="回调与回调函数"></a>回调与回调函数</h1><p>我也不太清楚为什么会出来一个 &quot;<font color='red'>回调函数</font>&quot; 的概念, 回调函数不就是一个参数吗?</p>
-<blockquote>
-<p>将方法 A 作为 方法 B 的一个参数传入到方法 B 中, 那么方法 A 就是方法 B 的回调函数.</p>
-</blockquote>
-<p>可以这样理解:</p>
-<ol>
-<li><p>&quot;回调&quot; 是一种技术: <font color='red'>将方法作为参数传入另一个方法!</font> 在各大编程语言, 脚本语言中都有实现这门技术!</p>
-</li>
-<li><p>&quot;回调函数&quot; 就是作为参数的方法!</p>
-</li>
-</ol>
-<p>强调: <strong>回调是一项技术! 回调函数是一个参数!</strong></p>
-<h1 id="quot-回调-quot-的用途"><a href="#quot-回调-quot-的用途" class="headerlink" title="&quot;回调&quot; 的用途"></a>&quot;回调&quot; 的用途</h1><ol>
-<li><p>因为 A 是作为参数传入 B 的, 那么在 B 中就可以编写很多的判断逻辑来准确控制 A 的执行时机, 当然用 retuan 返回执行标志, 通过执行标志来控制 A 的执行也是可以的, 但是这样不是还得对执行标志进行一次判断吗? 当然这个没什么影响, 但是万一这个执行标志无法返回呢, 对吧?</p>
-</li>
-<li><p>如果 B 中需要处理很复杂的数据, 而且这个数据很难使用 return 返回, 甚至可能根本无法使用 return, 但是 A 又必须要用到这个数据, 此时就可以利用 &quot;回调&quot; 这项技术了, 将 A 传入 B, 在 B 的内部执行 A, 这样 A 就可以获取到需要的数据了.</p>
-</li>
-<li><p>假设方法 B 可以随机获得一种食材, 食材有多种多样烹饪方法, 可以红烧, 可以清蒸, 可以煎炸, 此时就可以给 B 添加一个 &quot;回调函数&quot; 参数, 这个参数就是烹饪方法 A, 那么在执行方法 B 获取食材的同时就可以将烹饪方法 A 一并传入, 这样一道菜就直接做好了! 而且只要传入不同的 A 就可以做出不同的菜, 甚至在 B 里面还可以写判断方法, 控制某些食材只能用某些特定的烹饪方法!</p>
-</li>
-</ol>
-<p>总结: &quot;回调&quot; 可以做菜~!</p>
-<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><p>csharp 中由于方法无法作为参数进行传递, 所以想要在 csharp 中实现 &quot;回调&quot; 需要使用委托来实现, 下面是一个简单的示例.</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">namespace_CallBackTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">CallBackTest</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 随机器</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">readonly</span> Random random = <span class="keyword">new</span> Random();</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            CallBackTest callBackTest = <span class="keyword">new</span> CallBackTest();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 获取食材的同时将烹饪方法作为参数传入, 实现内部调用 -- 这就是 &quot;回调&quot; !</span></span><br><span class="line">            <span class="comment">// 含义为: 先获取食材, 之后使用参数内的烹饪方式对食材进行处理, 得到烹饪后的食物.</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook2);<span class="comment">//清蒸</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook3);<span class="comment">//煎炸</span></span><br><span class="line">            callBackTest.GetIngredients(callBackTest.Cook1);<span class="comment">//烧烤</span></span><br><span class="line"></span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 获取食材</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;cook&quot;&gt;</span>烹饪方法<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">GetIngredients</span>(<span class="params">Action&lt;<span class="keyword">string</span>&gt; cook</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">string</span> str_ingredient = <span class="keyword">string</span>.Empty;</span><br><span class="line">            <span class="keyword">int</span> int_ingredient = random.Next(<span class="number">1</span>, <span class="number">100</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (int_ingredient &gt; <span class="number">75</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                str_ingredient = <span class="string">&quot;大棒肉(&quot;</span> + int_ingredient + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(int_ingredient &gt; <span class="number">25</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                str_ingredient = <span class="string">&quot;鲈鱼(&quot;</span> + int_ingredient + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (int_ingredient == <span class="number">25</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                str_ingredient = <span class="string">&quot;杂烩兔肉块(&quot;</span> + int_ingredient + <span class="string">&quot;)&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">string</span>.IsNullOrEmpty(str_ingredient))</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(<span class="string">&quot;白忙了一天, 没有获得任何食材(&quot;</span> + int_ingredient + <span class="string">&quot;) !&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                cook(str_ingredient);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 烧烤</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;ingredient&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Cook1</span>(<span class="params"><span class="keyword">string</span> ingredient</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;获得了 &lt;烧烤&quot;</span> + ingredient + <span class="string">&quot;&gt; !&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 清蒸</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;ingredient&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Cook2</span>(<span class="params"><span class="keyword">string</span> ingredient</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;获得了 &lt;清蒸&quot;</span> + ingredient + <span class="string">&quot;&gt; !&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 煎炸</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;ingredient&quot;&gt;</span><span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Cook3</span>(<span class="params"><span class="keyword">string</span> ingredient</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;获得了 &lt;炸&quot;</span> + ingredient + <span class="string">&quot;&gt; !&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzE5ODAxMTMx">回调函数（callback）是什么？<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9zZWdtZW50ZmF1bHQuY29tL3EvMTAxMDAwMDAwNDE0OTEzMQ==">js的回调函数一般都用来做什么<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>CSharp</category>
-      </categories>
-      <tags>
-        <tag>CSharp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>委托(三) 委托的初始化</title>
-    <url>/csharp/delegate_03.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="初始化委托对象"><a href="#初始化委托对象" class="headerlink" title="初始化委托对象"></a>初始化委托对象</h1><p>先定义一个委托类型, 然后使用定义的委托类型实例化一个委托对象.</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 定义一个委托类型</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">delegate</span> <span class="keyword">string</span> <span class="title">MyDelegate</span>(<span class="params"><span class="keyword">int</span> a, <span class="keyword">int</span> b</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实例化一个 MyDelegate 类型的委托对象, 此时还没有初始化</span></span><br><span class="line">MyDelegate myDelegate;</span><br></pre></td></tr></table></figure>
-
-<p><code>MyDelegate myDelegate</code> 只是实例化出了一个空的委托对象, 没有内容, 必须对其初始化. 委托的初始化方式经历了几种变化:</p>
-<blockquote>
-<p>C# 1.0 中, 使用 &quot;在代码中其他位置定义函数&quot; 的方法, <strong>显式</strong>初始化委托.</p>
-<p>C# 2.0 引入了 <strong>匿名方法</strong> 的概念, 以一种可在委托调用中执行的 &quot;未命名内联语句块&quot; 的方式来初始化委托.</p>
-<p>C# 3.0 引入了 <strong>Lambda 表达式</strong> 或者 <strong>Lambda 语句块</strong>, 这是另一种匿名方法的书写形式, 但更具表现力并且更简练.</p>
-<p>通常, 面向 .NET Framework 3.5 或更高版本的应用程序应使用 Lambda (λ) 表达式或 Lambda 语句块来初始化委托.</p>
-</blockquote>
-<ol>
-<li>第一种: [C# 1.0] 写法上和初始化类一样, 使用 New 关键字.</li>
-</ol>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 初始化 myDelegate 委托</span></span><br><span class="line">myDelegate = <span class="keyword">new</span> MyDelegate(program.Add);</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>第二种: [C# 1.0] 写法上和初始化值类型一样, 直接赋值.</li>
-</ol>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 初始化 myDelegate (直接赋值)</span></span><br><span class="line">myDelegate = program.Add;</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>第三种: [C# 2.0] 使用匿名方法的原始写法进行初始化</li>
-</ol>
-<p>匿名方法同样是使用 delegate 关键字定义 (强烈建议不再使用匿名方法, 了解即可, 转而使用 Lambda 表达式或 Lambda 语句块), 返回值无需特别指明, 只需使用 return 来指明返回值及其类型即可, 匿名方法参数的指明方式和普通方法的指明方式一致, 但是必须和委托定义时声明的方法签名吻合.</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">myDelegate = <span class="keyword">delegate</span> (<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> (a + b).ToString();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>第四种: [C# 3.0] 使用匿名方法的简化写法--Lambda 表达式或 Lambda 语句块进行初始化 (强烈建议使用!)</li>
-</ol>
-<p>Lambda 表达式和 Lambda 语句块也是委托初始化的一种手段, 它比匿名方法更为简洁, 而且不会混淆 (谁让委托类型的定义和匿名方法的定义使用同样的关键字的, 唉... 乱套了吧... 我瞎说的~~), 总之正如微软文档说的一样, 学习使用 lambda 表达式吧, 为什么呢? 因为如果你不会的话, 连别人的程序都看不懂啊😥</p>
-<h1 id="Lambda"><a href="#Lambda" class="headerlink" title="Lambda"></a>Lambda</h1><ol>
-<li><p>Lambda 的特征符号是: <code>=&gt;</code>. =&gt; 符号的左边是参数, 使用小括号 ( ) 括起来, 右侧是语句或表达式, 当右侧是语句时, 必须使用大括号 { } 括起来, 当右侧是表达式时, 则不能带有大括号, 且表达式只能有一句.</p>
-</li>
-<li><p>Lambda 中右侧是语句时, 使用 return 语句来指明返回值及其类型, 返回值的类型必须符合委托的要求.</p>
- <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Func&lt;<span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">int</span>&gt; funA = (<span class="keyword">int</span> x, <span class="keyword">int</span> y) =&gt; &#123; <span class="keyword">return</span> x + y; &#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Lambda 中参数的类型可以注明, 如上面的例子, 也可以省略, 如下面的例子.</p>
- <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Func&lt;<span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">int</span>&gt; funB = (x, y) =&gt; &#123; <span class="keyword">return</span> x * y; &#125;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Lambda 中的参数, 当且仅当只有一个时, 小括号可以省略.</p>
- <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Func&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; funC = x =&gt; &#123; <span class="keyword">return</span> x * <span class="number">2</span>; &#125;; <span class="comment">// 当且仅当只有一个时, 小括号可以省略.</span></span><br><span class="line"></span><br><span class="line">Func&lt;<span class="keyword">float</span>&gt; funD = () =&gt; &#123; <span class="keyword">return</span> <span class="number">3.1415926f</span>; &#125;; <span class="comment">// 零个参数时, 小括号不可以省略.</span></span><br><span class="line"></span><br><span class="line">Func&lt;<span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">int</span>&gt; funE = (x, y, z) =&gt; &#123; <span class="keyword">return</span> x * <span class="number">2</span> + y * <span class="number">3</span> + z * <span class="number">4</span>; &#125;; <span class="comment">// 两个及以上参数时, 小括号不可以省略.</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Lambda 中右侧是表达式时, 大括号必须去掉, 并且此时 <font color='red'><strong>return 也必须省略</strong></font>, 因为 return 是语句, 不是表达式.</p>
- <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">Func&lt;<span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">int</span>&gt; funF = (x, y) =&gt; x * y; <span class="comment">// 大括号和 return 必须同时存在, 或同时去掉.</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>大括号存在时, 大括号中只能写 <font color='red'><strong>语句</strong></font>. 此时称为: <strong>Lambda 语句块</strong>. 或者说当书写语句时, 必须用 <font color='red'><strong>语句块符号 { }</strong></font> 括起来.</p>
-</li>
-<li><p>大括号不存在时, 则只能写 <font color='red'><strong>表达式</strong></font>, 并且 <font color='red'><strong>表达式只能写一句</strong></font> . 此时称为: <strong>Lambda 表达式</strong>.</p>
- <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">myDelegate = (a, b) =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> (a + b).ToString();</span><br><span class="line">&#125;; <span class="comment">// Lambda 语句块</span></span><br><span class="line"></span><br><span class="line">Action action = () =&gt; Console.WriteLine(<span class="string">&quot;action&quot;</span>); <span class="comment">// Lambda 表达式</span></span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h1 id="多播委托"><a href="#多播委托" class="headerlink" title="多播委托"></a>多播委托</h1><p>前面讲了委托的四种初始化方式全部都是使用了 <strong><code>=</code></strong> 运算符, 其实委托还可以通过 <strong><code>+= -=</code></strong> 运算符进行注册和取消注册, 而且可以实现多播委托.</p>
-<ul>
-<li><p>多播委托: <font color='red'><strong>一个委托实例一次性委托多个实例方法, 调用委托时会依次调用所有被委托的方法</strong></font>.</p>
-</li>
-<li><p><font color='red'><strong>委托不仅仅可以 (取消) 注册方法, 也可以 (取消) 注册委托</strong></font>!</p>
-</li>
-</ul>
-<p>下表是 <strong><code>+</code></strong> 和 <strong><code>-</code></strong> 的运算规则:</p>
-<table>
-<thead>
-<tr>
-<th align="left">Expression</th>
-<th align="left">Result</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">null + d1</td>
-<td align="left">d1</td>
-</tr>
-<tr>
-<td align="left">d1 + null</td>
-<td align="left">d1</td>
-</tr>
-<tr>
-<td align="left">d1 + d2</td>
-<td align="left">[d1, d2]</td>
-</tr>
-<tr>
-<td align="left">d1 + [d2, d3]</td>
-<td align="left">[d1, d2, d3]</td>
-</tr>
-<tr>
-<td align="left">[d1, d2] + [d2, d3]</td>
-<td align="left">[d1, d2, d2, d3]</td>
-</tr>
-<tr>
-<td align="left">[d1, d2] - d1</td>
-<td align="left">d2</td>
-</tr>
-<tr>
-<td align="left">[d1, d2] - d2</td>
-<td align="left">d1</td>
-</tr>
-<tr>
-<td align="left">[d1, d2, d1] - d1</td>
-<td align="left">[d1, d2]</td>
-</tr>
-<tr>
-<td align="left">[d1, d2, d3] - [d1, d2]</td>
-<td align="left">d3</td>
-</tr>
-<tr>
-<td align="left">[d1, d2, d3] - [d2, d1]</td>
-<td align="left">[d1, d2, d3]</td>
-</tr>
-<tr>
-<td align="left">[d1, d2, d3, d1, d2] - [d1, d2]</td>
-<td align="left">[d1, d2, d3]</td>
-</tr>
-<tr>
-<td align="left">[d1, d2] - [d1, d2]</td>
-<td align="left">null</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>CSharp</category>
-      </categories>
-      <tags>
-        <tag>CSharp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>委托(四) &quot;委托与事件的区别&quot; 以及 &quot;观察者模式&quot;</title>
-    <url>/csharp/delegate_04.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="🌴前言"><a href="#🌴前言" class="headerlink" title="🌴前言"></a>🌴前言</h1><p>最开始知道委托和事件是在 SiKi 的 C# 课程上(很抱歉, 大学就只上了 C 语言课, Java 课听了一节...😅), 由于之前没有接触过类似的语法, 又或是学习单片机的时候 C 语言语法在脑海中根深蒂固了 , 听课时就像是在听天书, 再加上之后也没有使用过这方面的语法, 基本全忘记了. 之前一段时间简单的了解了一下委托和事件, 然后网上都是用 &quot;观察者模式&quot; 去讲的...然而文章中连观察者都没有仔细去讲...所以这样更晕了好嘛...😑 于是自己抽时间多看了几篇文章, 做一下总结. 先说一下观察者模式吧, 毕竟委托和事件的区别用观察者去讲真的十分合适!</p>
-<h1 id="🍁声明"><a href="#🍁声明" class="headerlink" title="🍁声明"></a>🍁声明</h1><p>阅读下文需要对 &quot;委托&quot; 有基本了解, 如果未达到此基本要求, 请先打怪升级, 达到要求后再来挑战本副本! 推荐练级副本:</p>
-<ol>
-<li><p><a href="https://kuroha.vip/csharp/delegate_01.html">委托(一) 委托的基本用法</a></p>
-</li>
-<li><p><a href="https://kuroha.vip/csharp/delegate_02.html">委托(二) 委托与回调和回调函数</a></p>
-</li>
-<li><p><a href="https://kuroha.vip/csharp/delegate_03.html">委托(三) 委托的初始化</a></p>
-</li>
-</ol>
-<h1 id="👀观察者模式"><a href="#👀观察者模式" class="headerlink" title="👀观察者模式"></a>👀观察者模式</h1><h2 id="quot-模式-quot-是什么"><a href="#quot-模式-quot-是什么" class="headerlink" title="&quot;模式&quot; 是什么?"></a>&quot;模式&quot; 是什么?</h2><ul>
-<li>&quot;模式&quot; 这个东西和之前所学的大部分东西都不是一回事, &quot;模式&quot; 是一种套路, 对, 你没有听错, 套路, 或者说模板! 它是走在我们前面的那些码神们常年编写代码所总结出来的一种在特定场合下特别好用的代码模板. 就像是英语作文模板指导我们以怎样的结构去写英语作文一样, &quot;模式&quot; 是指导我们以一种怎样的结构去编写代码, 以达到减小编程时工作量以及减小日后维护成本的效果.</li>
-</ul>
-<h2 id="观察者模式的内容是什么"><a href="#观察者模式的内容是什么" class="headerlink" title="观察者模式的内容是什么?"></a>观察者模式的内容是什么?</h2><ol>
-<li><p>需要描述的是一种 &quot;一对多&quot; 的依赖关系!</p>
-</li>
-<li><p>当 &quot;一&quot; 的一方状态发生改变时, &quot;多&quot; 的一方中的全部成员都能够收到通知!</p>
-</li>
-<li><p>&quot;多&quot; 的一方收到通知后, 全部的成员都会自动进行更新操作, 而非被动!</p>
-</li>
-</ol>
-<p>这就是 &quot;观察者模式&quot; 了, &quot;一&quot; 的一方叫做 &quot;被观察者&quot;, &quot;多&quot; 的一方叫做 &quot;观察者&quot;, 也叫做: &quot;发布-订阅模型&quot;, 这时分别叫做 &quot;发布器&quot; 和 &quot;订阅器&quot;.</p>
-<ul>
-<li>Q: 为什么没有代码?</li>
-<li>A: 因为模式只是一种套路, 一种模板, 一种思想, 自然是没有代码的! 只要代码是按照这个模板去编写的, 就可以说使用了 &quot;观察者模式&quot;.</li>
-</ul>
-<h2 id="观察者模式的代码实现"><a href="#观察者模式的代码实现" class="headerlink" title="观察者模式的代码实现"></a>观察者模式的代码实现</h2><p>接下来就是代码实现环节了, 一共写了 3 种 <strong><code>链表, 委托, 事件</code></strong> 代码实现, 都是使用的 csharp 语言.</p>
-<p>Q: 需要记忆的代码是哪个呢?</p>
-<p>A: 没有! 对, 就是没有! 真正要记忆的是前面 <strong>观察者模式的内容是什么</strong> 中所提到的 3 点. 看完代码后可不要本末倒置了哦!</p>
-<p>下面代码实现的场景就是当被观察者使用 &quot;发令枪&quot; 开枪时, 观察者们全部开跑~</p>
-<h3 id="链表实现"><a href="#链表实现" class="headerlink" title="链表实现"></a>链表实现</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Exercise</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 被观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Publisher_List</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 保存所有的观察者对象</span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">readonly</span> <span class="title">List</span>&lt;<span class="title">Subscriber_List</span>&gt; subscriberList</span> = <span class="keyword">new</span> List&lt;Subscriber_List&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 进入赛道</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">EnterGame</span>(<span class="params">Subscriber_List subscriber</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            subscriberList.Add(subscriber);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发令枪</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartingGun</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;预备~ . . . 砰! \n&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 遍历所有的观察者 (这一步就是在通知每一个观察者)</span></span><br><span class="line">            <span class="keyword">foreach</span> (Subscriber_List t <span class="keyword">in</span> subscriberList)</span><br><span class="line">            &#123;</span><br><span class="line">                t.Run(); <span class="comment">// 自动更新</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Subscriber_List</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 运动员姓名</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="keyword">string</span> name;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 初始化</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Subscriber_List</span>(<span class="params">Publisher_List publisher, <span class="keyword">string</span> name</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            publisher.EnterGame(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 开跑</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Run</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(name + <span class="string">&quot; 开跑啦~ \n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Program_List</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Publisher_List publisherList = <span class="keyword">new</span> Publisher_List();</span><br><span class="line">            <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">            <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">            publisherList.StartingGun();</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 程序输出:</span></span><br><span class="line">预备~ . . . 砰!</span><br><span class="line"></span><br><span class="line">艾莉 开跑啦~</span><br><span class="line"></span><br><span class="line">克里斯 开跑啦~</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>上面就是一个最简单的观察者模式, 使用链表实现.</p>
-<table>
-<thead>
-<tr>
-<th align="left">特性</th>
-<th align="left">实现方式</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">1. 一对多</td>
-<td align="left">被观察者只有一个实例, 使用链表保存所有的观察者实例</td>
-</tr>
-<tr>
-<td align="left">2. 全部通知</td>
-<td align="left">在方法中遍历所有的观察者, 每一个都进行特定的操作</td>
-</tr>
-<tr>
-<td align="left">3. 自动更新</td>
-<td align="left">在 &quot;被观察者&quot; 中调用 &quot;观察者&quot; 的方法, 对外界隐藏调用逻辑</td>
-</tr>
-</tbody></table>
-<p>再来看一下 Main 方法:</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Publisher_List publisherList = <span class="keyword">new</span> Publisher_List();</span><br><span class="line">    <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">    <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">    publisherList.StartingGun();</span><br><span class="line">    Console.ReadKey();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>此时对外界的 Main 方法而言, 我仅仅开了一下 &quot;发令枪&quot;, 艾莉和克里斯中的 Run 方法就 <font color='red'><strong>自动</strong></font> 被调用了. 如果不这么写, Main 方法就必须先调用发令枪方法, 然后再调用艾莉和克里斯的 Run 方法.</p>
-<h3 id="委托实现"><a href="#委托实现" class="headerlink" title="委托实现"></a>委托实现</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Exercise</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Publisher publisher = <span class="keyword">new</span> Publisher();</span><br><span class="line">            <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">            <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 发令枪</span></span><br><span class="line">            publisher.StartingGun();</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 被观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Publisher</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 委托, 保存所有的观察者</span></span><br><span class="line">        <span class="keyword">public</span> Action PublisherDelegate;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发令枪</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartingGun</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;预备~ . . . 砰! \n&quot;</span>);</span><br><span class="line">            PublisherDelegate?.Invoke(); <span class="comment">// 判断 PublisherDelegate 是否是空, 如果不是空, 则调用里面的 Invoke 方法.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Subscriber</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 运动员姓名</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="keyword">string</span> name;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 构造器</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;publisher&quot;&gt;</span>发布器<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;name&quot;&gt;</span>订阅器名称<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Subscriber</span>(<span class="params">Publisher publisher, <span class="keyword">string</span> name</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            publisher.PublisherDelegate += Run; <span class="comment">// 自动注册</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 开跑</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Run</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(name + <span class="string">&quot; 开跑啦~ \n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 程序输出:</span></span><br><span class="line">预备~ . . . 砰!</span><br><span class="line"></span><br><span class="line">艾莉 开跑啦~</span><br><span class="line"></span><br><span class="line">克里斯 开跑啦~</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="使用委托实现观察者模式与使用链表时的不同"><a href="#使用委托实现观察者模式与使用链表时的不同" class="headerlink" title="使用委托实现观察者模式与使用链表时的不同"></a>使用委托实现观察者模式与使用链表时的不同</h4><ol>
-<li><p>不再使用链表保存所有的观察者, 而是使用委托的多播特性进行保存.</p>
-</li>
-<li><p>通知所有观察者的步骤不再使用遍历, 而是使用委托的多播特性进行逐个通知.</p>
-</li>
-<li><p>注册观察者时不再使用链表的 Add() 方法, 而是使用委托的 <strong>+=</strong> 和 <strong>-=</strong>.</p>
-</li>
-</ol>
-<p>直接使用委托实现观察者模式有几个不安要素:</p>
-<ol>
-<li><p>如果被观察者 Publisher 中的委托是 public 修饰, 那么外部便可以直接访问, 此时如果外部代码中使用了 <strong>=</strong> 进行委托的注册, 那么委托中已有的注册将被全部清空, 这种隐患是十分恐怖的.</p>
-</li>
-<li><p>如果被观察者 Publisher 中的委托是 public 修饰, 那么外部便可以直接调用此委托, 此时观察者们便无法收到任何通知, 这个隐患同样是致命的.</p>
-</li>
-</ol>
-<p>使用事件实现观察者模式便解决了上面两个致命隐患.</p>
-<h3 id="事件实现"><a href="#事件实现" class="headerlink" title="事件实现"></a>事件实现</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Exercise</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Publisher publisher = <span class="keyword">new</span> Publisher();</span><br><span class="line">            Subscriber subscriberA = <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">            Subscriber subscriberB = <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 发令枪</span></span><br><span class="line">            publisher.StartingGun();</span><br><span class="line">            Console.ReadKey();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 对事件直接赋值 (不允许)</span></span><br><span class="line">            publisher.PublisherEvent = subscriberA.Run;</span><br><span class="line">            <span class="comment">// 对委托直接赋值 (允许)</span></span><br><span class="line">            publisher.PublisherDelegate = subscriberA.Run;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 外部直接调用事件 (不允许)</span></span><br><span class="line">            publisher.PublisherEvent();</span><br><span class="line">            <span class="comment">// 外部直接调用委托 (允许)</span></span><br><span class="line">            publisher.PublisherDelegate();</span><br><span class="line"></span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 被观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Publisher</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 事件, 保存所有的观察者</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">event</span> Action PublisherEvent;</span><br><span class="line">        <span class="keyword">public</span> Action PublisherDelegate;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发令枪</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartingGun</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;预备~ . . . 砰! \n&quot;</span>);</span><br><span class="line">            PublisherEvent?.Invoke(); <span class="comment">// 判断 PublisherEvent 是否是空, 如果不是空, 则调用里面的 Invoke 方法.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Subscriber</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 运动员姓名</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="keyword">string</span> name;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 构造器</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;publisher&quot;&gt;</span>发布器<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;name&quot;&gt;</span>订阅器名称<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Subscriber</span>(<span class="params">Publisher publisher, <span class="keyword">string</span> name</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            publisher.PublisherEvent += Run; <span class="comment">// 自动注册</span></span><br><span class="line">            publisher.PublisherEvent = Run;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 开跑</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Run</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(name + <span class="string">&quot; 开跑啦~ \n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面的代码直接粘贴到 VS 中其实是报错的, 其中第 18 行, 第 23 行以及第 65 行会报错! 报错信息是一样的:</p>
-<p><code>CS0070  事件 &quot;Publisher.PublisherEvent&quot; 只能出现在 += 或 -= 的左边(从类型 &quot;Publisher&quot; 中使用时除外)</code></p>
-<p>从这里也就可以得出结论, 委托和事件的不同.</p>
-<h1 id="🍀委托和事件的异同"><a href="#🍀委托和事件的异同" class="headerlink" title="🍀委托和事件的异同"></a>🍀委托和事件的异同</h1><ol>
-<li><p>一个使用 public 修饰的委托实例, 在声明类的外部可以直接调用. 而事件即使修饰为 public, 也仅能在声明类内部调用, 外部调用时编译器会直接报错, 发现隐患.</p>
-</li>
-<li><p>委托可以使用 = 进行赋值, 但是事件不可以, 无论任何时候, 事件都仅能使用 += 和 -= 进行注册, 使用 = 时编译器会直接报错, 发现隐患.</p>
-</li>
-<li><p>除此以外, 委托和事件一致.</p>
-</li>
-</ol>
-<h1 id="🌈参考链接"><a href="#🌈参考链接" class="headerlink" title="🌈参考链接"></a>🌈参考链接</h1><ul>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cucnVub29iLmNvbS9kZXNpZ24tcGF0dGVybi9vYnNlcnZlci1wYXR0ZXJuLmh0bWw=">菜鸟教程 - 观察者模式<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9kZXNpZ24tcGF0dGVybnMucmVhZHRoZWRvY3MuaW8vemhfQ04vbGF0ZXN0L2JlaGF2aW9yYWxfcGF0dGVybnMvb2JzZXJ2ZXIuaHRtbA==">Graphic Design Patterns - 观察者模式<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20va2tsbGRvZy9hcmNoaXZlLzIwMTIvMDEvMTcvMjMyNDIyOC5odG1s">C# 委托与事件区别简单总结<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>CSharp</category>
-      </categories>
-      <tags>
-        <tag>CSharp</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>存储类型和传递方式</title>
-    <url>/csharp/parameter.html</url>
+    <url>/csharp/csharp_parameter.html</url>
     <content><![CDATA[<a id="more"></a>
 
 <h1 id="变量的存储类型"><a href="#变量的存储类型" class="headerlink" title="变量的存储类型"></a>变量的存储类型</h1><p>csharp 中的存储类型有两种, &quot;值存储&quot; 和 &quot;引用存储&quot;.</p>
@@ -1512,6 +1477,30 @@
       </tags>
   </entry>
   <entry>
+    <title>日记系列--2021年06月</title>
+    <url>/diary/2021-06.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="2021-年-6-月-1-日"><a href="#2021-年-6-月-1-日" class="headerlink" title="2021 年 6 月 1 日"></a>2021 年 6 月 1 日</h1><p>六一儿童节啦, 距离上一次写日记也已经过去了整整一年, 这一年还真是发生了太多事情啊.</p>
+<p>第一件事是我离职了, 目前在厦门真有趣工作了, 这里给我的体验就是两个字: 天堂! 超整洁的办公环境, 超享受的茶水间, 超级大佬的同事, 果然游戏开发最棒! 大体总结一下这段时间的经历吧.</p>
+<h2 id="离职和就职的巧合"><a href="#离职和就职的巧合" class="headerlink" title="离职和就职的巧合"></a>离职和就职的巧合</h2><p>2020 年 1 月 14 号的时候, 由于之前请假去面试, 经理直接找我面谈了, 就直说赶紧走, 这不留你... 我也是见识到了, 你没价值了, 真的是说赶你走就赶你走啊... 我当时还在纠结这可咋整, 下一份工作还没着落呢, 唉... 渐渐地恐慌感都上来了.</p>
+<p>还好幸运女神是站在我这边的, 上午刚谈完话, 中午真有趣就来消息了, 说是我可以去厦门啦... 哈哈, 这真的是戏剧的一幕啊... 中午饭都没吃, 直接和 HR 谈好需要准备的东西, 然后回去和经理说: 我现在就走... 经理反而好像还有点急了: 这么着急? 我: 对, 很着急, 现在就想走. (哈哈, 你不是让我走嘛, 那我现在就走, 马上就走, 你就自己继续在国子那个破公司里面继续发霉吧, 活该, 哈哈!!) 看着他哪个样子, 是真的开心啊!</p>
+<h2 id="飞往厦门"><a href="#飞往厦门" class="headerlink" title="飞往厦门"></a>飞往厦门</h2><p>之后就是正常的准备了, 拍照, 体检, 买机票, 上飞机. (我还是第一次坐飞机呢), 那天王健还请假来送我, 真的感动, 也不知道下一次什么时候能在见面.</p>
+<h2 id="入住酒店-遇到-MHR"><a href="#入住酒店-遇到-MHR" class="headerlink" title="入住酒店, 遇到 MHR"></a>入住酒店, 遇到 MHR</h2><p>飞机降落后, 去到 HR 指定的酒店里放下行李. 话说这酒店也太豪华了吧, 说真的, 说是 5 星级的我想都不过分. 图片都在谷歌相册里面, 想看在里面还能找到. 之后找房子住, 在豆瓣上遇到了毛寒睿, 又叫孟浩然, 哈哈. 我情人节的时候还向她告白了, 可惜被拒绝了, ≧ ﹏ ≦, 目前还是普通联系着, 算是一个网络好友吧, 可以分享生活中的一些趣事, 反正我也没有其他人可以分享. 后来就是她转租, 我续租, 就这样住在了莲花国际.</p>
+<h2 id="正式入职工作"><a href="#正式入职工作" class="headerlink" title="正式入职工作"></a>正式入职工作</h2><p>之后正式入职, 办理入职手续, 总之只能用惊艳来形容, 我真的是来对公司了, 幸福啊. 过年的时候公司每人发了一台 Switch, Switch 啊, 梦寐以求的游戏机, 2300 多软妹币呢! 后来还举办了 2 次烤肉和 1 次剧本杀, 剧本杀好开心啊, 我可是雾山云雨的大师兄啊, 哈哈!</p>
+<h2 id="饥荒与搬家"><a href="#饥荒与搬家" class="headerlink" title="饥荒与搬家"></a>饥荒与搬家</h2><p>中间一段时间和同事们迷上了饥荒游戏, 一起在饥荒的世界中探险, 那段时光真的快乐, 每次都不知不觉玩到凌晨, 也正是这个原因, 后来决意要搬到一个离公司近的地方. 后来就是搬到了 D03, 和同事王珲一起住, 期间买了好多新家具, 总之很不错, 除了冰箱买亏了, 其他的都超满意!</p>
+<h2 id="俄罗斯方块"><a href="#俄罗斯方块" class="headerlink" title="俄罗斯方块"></a>俄罗斯方块</h2><p>最近打算做一个能上架商店的游戏, 于是就拿最简单的俄罗斯方块尝试一下, 目前已经做了个差不多, 有时间把最后的高亮预判实现一下, 整理一下代码, 上传到谷歌商店试试.</p>
+<h2 id="六一儿童节"><a href="#六一儿童节" class="headerlink" title="六一儿童节"></a>六一儿童节</h2><p>在之后就是今天了, 公司还举办了挺大的一个活动, 我抽了一支扭蛋, 宝可梦系列的, 具体是只啥宠物就不知道了...不过还蛮可爱的.</p>
+<p>说实话本来是想把一些照片贴过来的, 不过一想到照片那么大, 还是算了吧, 得找个时间把博客好好清理清理了. 就先写到这里吧, 以后的事情以后再说.</p>
+]]></content>
+      <categories>
+        <category>Diary</category>
+      </categories>
+      <tags>
+        <tag>Diary</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>游戏笔记</title>
     <url>/game/game_note.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -1523,9 +1512,8 @@
 </li>
 </ul>
 <h1 id="游戏王"><a href="#游戏王" class="headerlink" title="游戏王"></a>游戏王</h1><ul>
-<li>网盘: <span class="exturl" data-url="aHR0cDovL3lnb2NvcmUueXMxNjguY29tLw==">娱乐力量全开<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-<ul>
+<li><p>网盘: <span class="exturl" data-url="aHR0cDovL3lnb2NvcmUueXMxNjguY29tLw==">娱乐力量全开<i class="fa fa-external-link-alt"></i></span></p>
+</li>
 <li><p>服务器: <span class="exturl" data-url="aHR0cHM6Ly95Z28yMzMuY29tLw==">223<i class="fa fa-external-link-alt"></i></span></p>
 </li>
 <li><p>开源: <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xsbHlhc3ZpZWwvWUdPUHJvVW5pdHlfVjI=">YGOPro2<i class="fa fa-external-link-alt"></i></span></p>
@@ -1755,7 +1743,7 @@
       </tags>
   </entry>
   <entry>
-    <title>如何购买一款好的路由器</title>
+    <title>如何购买一款理想的路由器</title>
     <url>/lifetips/how_to_buy_a_router.html</url>
     <content><![CDATA[<a id="more"></a>
 
@@ -2004,7 +1992,7 @@
       </tags>
   </entry>
   <entry>
-    <title>如何使用 MPV 播放器</title>
+    <title>入门 MPV 播放器</title>
     <url>/lifetips/how_to_use_mpv_player.html</url>
     <content><![CDATA[<a id="more"></a>
 
@@ -2301,7 +2289,7 @@
       </tags>
   </entry>
   <entry>
-    <title>学习社会保险制度</title>
+    <title>社会保险制度</title>
     <url>/lifetips/social_insurance.html</url>
     <content><![CDATA[<a id="more"></a>
 
@@ -3001,7 +2989,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Unity 动画相关页面</title>
+    <title>Unity 动画系统</title>
     <url>/unity/unity_animation.html</url>
     <content><![CDATA[<a id="more"></a>
 
@@ -3453,7 +3441,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Unity 导入模型设置页面</title>
+    <title>Unity 模型导入设置页面</title>
     <url>/unity/unity_model_import_settings.html</url>
     <content><![CDATA[<a id="more"></a>
 
@@ -3624,7 +3612,8 @@
 <p>Optimize Game Object 在 Avatar 和 Animator 组件中删除和存储所导入角色的游戏对象变换层级视图. 如果启用此选项, 角色的 SkinnedMeshRenderer 将使用 Unity 动画系统的内部骨架, 因此可提高动画角色的性能.</p>
 <p>Extra Transforms to Expose 指定已启用 Optimize Game Object 时, 希望 Unity 忽略的 Transform.</p>
 <h3 id="Humanoid"><a href="#Humanoid" class="headerlink" title="Humanoid"></a>Humanoid</h3><p>人形动画系统, 这个系统中的配置和 Generic 中的配置就只是多了一个 Configure… 按钮, 点击这个按钮会打开骨骼配置界面.</p>
-<p>// TODO... 骨骼配置界面</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO... 骨骼配置界面</span></span><br></pre></td></tr></table></figure>
+
 <h1 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h1><p>将模型中配置好的动画导入到 Unity 中, 形成 <strong>Animation Clips</strong> 动画文件, &quot;创建动画剪辑&quot; 这一步实质上就是定义动画段的起点和终点, 使它们尽可能匹配所需循环的第一帧和最后一帧, 之后在 <strong>Animator Controller</strong> 中就可以拖入这个动画文件进行动画的混合 (Blend Trees), 转换, 过渡等操作.</p>
 <p><img data-src="/images/unity_model/model_animation.png" alt="model_animation"></p>
 <h2 id="Import-Constraints"><a href="#Import-Constraints" class="headerlink" title="Import Constraints"></a>Import Constraints</h2><p>是否要将此模型资源的<strong>约束</strong>导入到 Unity 中.</p>
@@ -3681,7 +3670,29 @@
 <h2 id="Events"><a href="#Events" class="headerlink" title="Events"></a>Events</h2><p>设置动画事件.</p>
 <h2 id="Mask"><a href="#Mask" class="headerlink" title="Mask"></a>Mask</h2><p>设置动画遮罩.</p>
 <h2 id="Motion"><a href="#Motion" class="headerlink" title="Motion"></a>Motion</h2><p>设置根运动节点.</p>
-<h1 id="Materials"><a href="#Materials" class="headerlink" title="Materials"></a>Materials</h1><p>// TODO...</p>
+<h1 id="Materials"><a href="#Materials" class="headerlink" title="Materials"></a>Materials</h1><p><img data-src="/images/unity_model/MaterialsView.png" alt="Materials"></p>
+<h2 id="Material-Creation-Mode"><a href="#Material-Creation-Mode" class="headerlink" title="Material Creation Mode"></a>Material Creation Mode</h2><p>定义希望 Unity 如何为模型生成或导入材质.</p>
+<ul>
+<li><p>None</p>
+<p>  不使用此模型中嵌入的任何材质, 而是使用 Unity 的默认漫射材质.</p>
+</li>
+<li><p>Standard</p>
+<p>  使用默认规则来生成材质.</p>
+</li>
+<li><p>Import via MaterialDescription</p>
+<p>  使用 FBX 文件中嵌入的材质描述来生成材质, 即可以自定义导入规则. 另外此方法可提供更准确的结果, 支持更广泛的材质类型.</p>
+</li>
+</ul>
+<h2 id="sRGB-Albedo-Colors"><a href="#sRGB-Albedo-Colors" class="headerlink" title="sRGB Albedo Colors"></a>sRGB Albedo Colors</h2><p>启用此选项可在伽马空间中使用反照率颜色. 对于使用线性颜色空间的项目, 需要禁用此选项.</p>
+<h2 id="Location"><a href="#Location" class="headerlink" title="Location"></a>Location</h2><p>定义如何访问材质和纹理.</p>
+<ul>
+<li><p>Use Embedded Materials</p>
+<p>  将导入的材质保持在导入的资源中.</p>
+</li>
+<li><p>Use External Materials (Legacy)</p>
+<p>  将导入的材质提取为外部资源.</p>
+</li>
+</ul>
 ]]></content>
       <categories>
         <category>Unity</category>
@@ -3957,7 +3968,7 @@
       </tags>
   </entry>
   <entry>
-    <title>Unity 导入图片设置页面</title>
+    <title>Unity 图片导入设置</title>
     <url>/unity/unity_texture_import_settings.html</url>
     <content><![CDATA[<a id="more"></a>
 
@@ -4017,26 +4028,30 @@
 <tr>
 <th align="left">选项</th>
 <th align="left">解释</th>
+<th align="left">用途</th>
 </tr>
 </thead>
 <tbody><tr>
 <td align="left">2D</td>
-<td align="left">所有纹理的最常见设置. 将图像文件定义为 2D 纹理. 用于将纹理映射到 3D 网格, GUI 以及其他 Project 元素</td>
+<td align="left">所有纹理的最常见设置. 将图像文件定义为 2D 纹理.</td>
+<td align="left">用于将纹理映射到 3D 网格, GUI 以及其他元素</td>
 </tr>
 <tr>
 <td align="left">Cube</td>
-<td align="left">将图像文件定义为立方体贴图. 可以将其应用于天空盒子等.</td>
+<td align="left">将图像文件定义为立方体贴图.</td>
+<td align="left">可以将其应用于天空盒子等.</td>
 </tr>
 <tr>
 <td align="left">2D Array</td>
-<td align="left">将图像文件定义为 2D 阵列纹理. 通常用作某些渲染的优化.</td>
+<td align="left">将图像文件定义为 2D 阵列纹理.</td>
+<td align="left">通常用作某些渲染的优化.</td>
 </tr>
 <tr>
 <td align="left">3D</td>
-<td align="left">将图像文件定义为 3D 纹理. 一些渲染技术使用 3D 纹理来表示体积.</td>
+<td align="left">将图像文件定义为 3D 纹理.</td>
+<td align="left">一些渲染技术使用 3D 纹理来表示体积.</td>
 </tr>
 </tbody></table>
-<p>// 展开细分 TODO ....</p>
 <h1 id="sRGB-Color-Texture"><a href="#sRGB-Color-Texture" class="headerlink" title="sRGB (Color Texture)"></a>sRGB (Color Texture)</h1><p>启用此属性, 可以指定图片文件存储在伽马 (γ) 空间中. 相对为线性空间. 默认勾选.</p>
 <h1 id="Alpha-Source"><a href="#Alpha-Source" class="headerlink" title="Alpha Source"></a>Alpha Source</h1><p>定义如何生成图片的 Alpha 通道.</p>
 <table>
@@ -4303,7 +4318,7 @@
   </entry>
   <entry>
     <title>CSharp 迭代器</title>
-    <url>/csharp/ienumerator.html</url>
+    <url>/csharp/csharp_ienumerator.html</url>
     <content><![CDATA[<a id="more"></a>
 
 <h1 id="🌴前言"><a href="#🌴前言" class="headerlink" title="🌴前言"></a>🌴前言</h1><p>在之前的 csharp 学习过程中学习了索引器, 这样我自定义类中的数据也就可以使用方括号的形式进行访问啦, 同时我还看到了一个 &quot;迭代器&quot; 的词汇, 这是啥东西啊? 网上一查, 标志性词汇是 &quot;IEnumerable&quot; 和 &quot;IEnumerator&quot;...这个我熟悉啊, Unity 的协程 &#39;Coroutines&#39; 技术中也使用到了这个词汇, 那赶紧看看其中的知识吧.</p>
@@ -4445,11 +4460,11 @@
       </tags>
   </entry>
   <entry>
-    <title>学习 Git 以及相关软件的使用</title>
+    <title>Git 和 Fork</title>
     <url>/git/git_learn.html</url>
     <content><![CDATA[<a id="more"></a>
 
-<p>首先推荐一个 Git 的学习网站, 以游戏的方式来学习 Git. <span class="exturl" data-url="aHR0cHM6Ly9sZWFybmdpdGJyYW5jaGluZy5qcy5vcmcvP2xvY2FsZT16aF9DTg==">点我<i class="fa fa-external-link-alt"></i></span></p>
+<p>推荐一个 Git 的学习网站, 以游戏的方式来学习 Git. <span class="exturl" data-url="aHR0cHM6Ly9sZWFybmdpdGJyYW5jaGluZy5qcy5vcmcvP2xvY2FsZT16aF9DTg==">点我<i class="fa fa-external-link-alt"></i></span></p>
 <h1 id="用户信息-Windows"><a href="#用户信息-Windows" class="headerlink" title="用户信息 (Windows)"></a>用户信息 (Windows)</h1><p>Windows 系统的用户文件夹下有一个 <strong>.gitconfig</strong> 文件, 这个文件中存储了 git 的全局设置, 包括提交时的用户名以及邮件地址, 还可以设置一些 git 长命令的别名, 用于简化操作.</p>
 <p>Git 版本库中每一个 commit 节点都有一个提交者, 这个提交者<strong>默认</strong>就是用户文件夹下 <strong>.gitconfig</strong> 文件中配置的用户名和邮件地址. 但是如果不同的仓库需要不同的提交者怎么办呢?</p>
 <p>Git 版本库在所使用的提交者信息有 3 个层级, 分别是: <strong>仓库级 local</strong>, <strong>全局级 global</strong>, <strong>系统级 system</strong>.</p>
@@ -7474,7 +7489,7 @@ const dp_update = new DPlayer({
 <figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">GUIStyle guiStyleTitle = <span class="keyword">new</span> GUIStyle</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 粗体</span></span><br><span class="line">    fontStyle = FontStyle.Bold,</span><br><span class="line">    <span class="comment">// 24 号</span></span><br><span class="line">    fontSize = <span class="number">24</span>,</span><br><span class="line">    <span class="comment">// 居中</span></span><br><span class="line">    alignment = TextAnchor.MiddleCenter</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>之后将这个新建的风格作为参数, 绘制控件的时候传入即可.</p>
-<h1 id="绘制控件"><a href="#绘制控件" class="headerlink" title="绘制控件"></a>绘制控件</h1><p>这里可以绘制控件的 API 有: GUI, GUILayout, EditorGUI, EditorGUILayout, 可用于绘制 Inspector 面板, EditorWindow窗口等.</p>
+<h1 id="绘制控件"><a href="#绘制控件" class="headerlink" title="绘制控件"></a>绘制控件</h1><p>这里可以绘制控件的 API 有: GUI, GUILayout, EditorGUI, EditorGUILayout, 可用于绘制 Inspector 面板, EditorWindow 窗口等.</p>
 <h2 id="布局类"><a href="#布局类" class="headerlink" title="布局类"></a>布局类</h2><ul>
 <li><p>Space: 空白, 空行, 空格</p>
 <p> <code>EditorGUILayout.Space(10);</code></p>

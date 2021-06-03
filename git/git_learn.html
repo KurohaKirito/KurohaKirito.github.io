@@ -25,12 +25,12 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="作为一名程序员, Git 这种分布式版本管理工具真的是太好用了, 必须学会!">
+<meta name="description" content="Git 确实能满足版本管理时各种奇葩的要求😂">
 <meta property="og:type" content="article">
-<meta property="og:title" content="学习 Git 以及相关软件的使用">
+<meta property="og:title" content="Git 和 Fork">
 <meta property="og:url" content="https://kuroha.vip/git/git_learn.html">
 <meta property="og:site_name" content="二次元游宅客">
-<meta property="og:description" content="作为一名程序员, Git 这种分布式版本管理工具真的是太好用了, 必须学会!">
+<meta property="og:description" content="Git 确实能满足版本管理时各种奇葩的要求😂">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kuroha.vip/images/git_learn/file-struct.png">
 <meta property="og:image" content="https://kuroha.vip/images/git_learn/account-1.png">
@@ -45,7 +45,7 @@
 <meta property="og:image" content="https://kuroha.vip/images/git_learn/git-squash-1.png">
 <meta property="og:image" content="https://kuroha.vip/images/git_learn/reset-commit-1.png">
 <meta property="article:published_time" content="2021-03-02T07:13:22.000Z">
-<meta property="article:modified_time" content="2021-03-02T12:41:35.870Z">
+<meta property="article:modified_time" content="2021-06-03T02:11:32.766Z">
 <meta property="article:author" content="Kuroha">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
@@ -84,7 +84,7 @@
 
     <link rel="stylesheet" href="../js/galmenu/css/GalMenu.css">
 
-<title>学习 Git 以及相关软件的使用 | 二次元游宅客</title>
+<title>Git 和 Fork | 二次元游宅客</title>
   
 
 
@@ -348,7 +348,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          学习 Git 以及相关软件的使用
+          Git 和 Fork
         </h1>
 
         <div class="post-meta-container">
@@ -358,10 +358,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-03-02 15:13:22 / 修改时间：20:41:35" itemprop="dateCreated datePublished" datetime="2021-03-02T15:13:22+08:00">2021-03-02</time>
+      <time title="创建时间：2021-03-02 15:13:22" itemprop="dateCreated datePublished" datetime="2021-03-02T15:13:22+08:00">2021-03-02</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-06-03 10:11:32" itemprop="dateModified" datetime="2021-06-03T10:11:32+08:00">2021-06-03</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -391,7 +397,7 @@
     </span>
 </div>
 
-            <div class="post-description">作为一名程序员, Git 这种分布式版本管理工具真的是太好用了, 必须学会!</div>
+            <div class="post-description">Git 确实能满足版本管理时各种奇葩的要求😂</div>
         </div>
       </header>
 
@@ -401,7 +407,7 @@
     <div class="post-body" itemprop="articleBody">
         <a id="more"></a>
 
-<p>首先推荐一个 Git 的学习网站, 以游戏的方式来学习 Git. <span class="exturl" data-url="aHR0cHM6Ly9sZWFybmdpdGJyYW5jaGluZy5qcy5vcmcvP2xvY2FsZT16aF9DTg==">点我<i class="fa fa-external-link-alt"></i></span></p>
+<p>推荐一个 Git 的学习网站, 以游戏的方式来学习 Git. <span class="exturl" data-url="aHR0cHM6Ly9sZWFybmdpdGJyYW5jaGluZy5qcy5vcmcvP2xvY2FsZT16aF9DTg==">点我<i class="fa fa-external-link-alt"></i></span></p>
 <h1 id="用户信息-Windows"><a href="#用户信息-Windows" class="headerlink" title="用户信息 (Windows)"></a>用户信息 (Windows)</h1><p>Windows 系统的用户文件夹下有一个 <strong>.gitconfig</strong> 文件, 这个文件中存储了 git 的全局设置, 包括提交时的用户名以及邮件地址, 还可以设置一些 git 长命令的别名, 用于简化操作.</p>
 <p>Git 版本库中每一个 commit 节点都有一个提交者, 这个提交者<strong>默认</strong>就是用户文件夹下 <strong>.gitconfig</strong> 文件中配置的用户名和邮件地址. 但是如果不同的仓库需要不同的提交者怎么办呢?</p>
 <p>Git 版本库在所使用的提交者信息有 3 个层级, 分别是: <strong>仓库级 local</strong>, <strong>全局级 global</strong>, <strong>系统级 system</strong>.</p>
@@ -603,7 +609,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://kuroha.vip/git/git_learn.html" title="学习 Git 以及相关软件的使用">https://kuroha.vip/git/git_learn.html</a>
+      <a href="https://kuroha.vip/git/git_learn.html" title="Git 和 Fork">https://kuroha.vip/git/git_learn.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -671,8 +677,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/unity/unity_texture_import_settings.html" rel="next" title="Unity 导入图片设置页面">
-                  Unity 导入图片设置页面 <i class="fa fa-chevron-right"></i>
+                <a href="/unity/unity_texture_import_settings.html" rel="next" title="Unity 图片导入设置">
+                  Unity 图片导入设置 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -728,7 +734,7 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">240k</span>
+    <span title="站点总字数">239k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">

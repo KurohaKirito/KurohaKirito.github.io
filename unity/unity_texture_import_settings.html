@@ -27,14 +27,14 @@
   </script>
 <meta name="description" content="搞清楚导入图片时的每一个选项, 为之后学习优化打好基础.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Unity 导入图片设置页面">
+<meta property="og:title" content="Unity 图片导入设置">
 <meta property="og:url" content="https://kuroha.vip/unity/unity_texture_import_settings.html">
 <meta property="og:site_name" content="二次元游宅客">
 <meta property="og:description" content="搞清楚导入图片时的每一个选项, 为之后学习优化打好基础.">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kuroha.vip/images/unity_texture/default.png">
 <meta property="article:published_time" content="2021-03-17T08:17:00.000Z">
-<meta property="article:modified_time" content="2021-05-12T00:05:04.472Z">
+<meta property="article:modified_time" content="2021-06-03T02:11:32.770Z">
 <meta property="article:author" content="Kuroha">
 <meta property="article:tag" content="Unity">
 <meta name="twitter:card" content="summary">
@@ -73,7 +73,7 @@
 
     <link rel="stylesheet" href="../js/galmenu/css/GalMenu.css">
 
-<title>Unity 导入图片设置页面 | 二次元游宅客</title>
+<title>Unity 图片导入设置 | 二次元游宅客</title>
   
 
 
@@ -337,7 +337,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Unity 导入图片设置页面
+          Unity 图片导入设置
         </h1>
 
         <div class="post-meta-container">
@@ -355,7 +355,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-05-12 08:05:04" itemprop="dateModified" datetime="2021-05-12T08:05:04+08:00">2021-05-12</time>
+        <time title="修改时间：2021-06-03 10:11:32" itemprop="dateModified" datetime="2021-06-03T10:11:32+08:00">2021-06-03</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -452,26 +452,30 @@
 <tr>
 <th align="left">选项</th>
 <th align="left">解释</th>
+<th align="left">用途</th>
 </tr>
 </thead>
 <tbody><tr>
 <td align="left">2D</td>
-<td align="left">所有纹理的最常见设置. 将图像文件定义为 2D 纹理. 用于将纹理映射到 3D 网格, GUI 以及其他 Project 元素</td>
+<td align="left">所有纹理的最常见设置. 将图像文件定义为 2D 纹理.</td>
+<td align="left">用于将纹理映射到 3D 网格, GUI 以及其他元素</td>
 </tr>
 <tr>
 <td align="left">Cube</td>
-<td align="left">将图像文件定义为立方体贴图. 可以将其应用于天空盒子等.</td>
+<td align="left">将图像文件定义为立方体贴图.</td>
+<td align="left">可以将其应用于天空盒子等.</td>
 </tr>
 <tr>
 <td align="left">2D Array</td>
-<td align="left">将图像文件定义为 2D 阵列纹理. 通常用作某些渲染的优化.</td>
+<td align="left">将图像文件定义为 2D 阵列纹理.</td>
+<td align="left">通常用作某些渲染的优化.</td>
 </tr>
 <tr>
 <td align="left">3D</td>
-<td align="left">将图像文件定义为 3D 纹理. 一些渲染技术使用 3D 纹理来表示体积.</td>
+<td align="left">将图像文件定义为 3D 纹理.</td>
+<td align="left">一些渲染技术使用 3D 纹理来表示体积.</td>
 </tr>
 </tbody></table>
-<p>// 展开细分 TODO ....</p>
 <h1 id="sRGB-Color-Texture"><a href="#sRGB-Color-Texture" class="headerlink" title="sRGB (Color Texture)"></a>sRGB (Color Texture)</h1><p>启用此属性, 可以指定图片文件存储在伽马 (γ) 空间中. 相对为线性空间. 默认勾选.</p>
 <h1 id="Alpha-Source"><a href="#Alpha-Source" class="headerlink" title="Alpha Source"></a>Alpha Source</h1><p>定义如何生成图片的 Alpha 通道.</p>
 <table>
@@ -698,7 +702,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://kuroha.vip/unity/unity_texture_import_settings.html" title="Unity 导入图片设置页面">https://kuroha.vip/unity/unity_texture_import_settings.html</a>
+      <a href="https://kuroha.vip/unity/unity_texture_import_settings.html" title="Unity 图片导入设置">https://kuroha.vip/unity/unity_texture_import_settings.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -761,13 +765,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/git/git_learn.html" rel="prev" title="学习 Git 以及相关软件的使用">
-                  <i class="fa fa-chevron-left"></i> 学习 Git 以及相关软件的使用
+                <a href="/git/git_learn.html" rel="prev" title="Git 和 Fork">
+                  <i class="fa fa-chevron-left"></i> Git 和 Fork
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/unity/unity_model_import_settings.html" rel="next" title="Unity 导入模型设置页面">
-                  Unity 导入模型设置页面 <i class="fa fa-chevron-right"></i>
+                <a href="/unity/unity_model_import_settings.html" rel="next" title="Unity 模型导入设置页面">
+                  Unity 模型导入设置页面 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -823,7 +827,7 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">240k</span>
+    <span title="站点总字数">239k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
