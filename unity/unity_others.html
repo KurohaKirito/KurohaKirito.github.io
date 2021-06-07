@@ -34,7 +34,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kuroha.vip/images/closure/closure.png">
 <meta property="article:published_time" content="2020-12-11T15:11:30.000Z">
-<meta property="article:modified_time" content="2021-03-16T02:40:07.572Z">
+<meta property="article:modified_time" content="2021-06-07T10:49:04.012Z">
 <meta property="article:author" content="Kuroha">
 <meta property="article:tag" content="Unity">
 <meta name="twitter:card" content="summary">
@@ -152,7 +152,7 @@
 <nav class="site-nav">
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
-        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">47</span></a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">48</span></a></li>
         <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">21</span></a></li>
         <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a></li>
         <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
@@ -213,7 +213,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%89%E9%92%AE%E7%9A%84%E5%A4%96%E8%A7%82%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">按钮的外观事件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AD%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%97%AD%E5%8C%85"><span class="nav-number">2.1.</span> <span class="nav-text">什么是闭包?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%94%E6%A1%88%E8%A7%A3%E6%9E%90"><span class="nav-number">2.2.</span> <span class="nav-text">答案解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%A0%E6%AD%A3"><span class="nav-number">2.3.</span> <span class="nav-text">纠正</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E5%91%BD%E5%90%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E5%8F%98%E9%87%8F%E6%97%B6%E5%A6%82%E6%9E%9C%E4%BF%9D%E6%8C%81%E5%BC%95%E7%94%A8%E4%B8%8D%E4%B8%A2%E5%A4%B1"><span class="nav-number">3.</span> <span class="nav-text">重命名序列化的变量时如果保持引用不丢失?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E7%9A%84%E8%84%9A%E6%9C%AC%E7%BC%96%E8%AF%91%E8%A7%84%E5%88%99"><span class="nav-number">4.</span> <span class="nav-text">Unity 的脚本编译规则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E7%BC%96%E8%BE%91%E8%A7%84%E5%88%99"><span class="nav-number">4.1.</span> <span class="nav-text">脚本编辑规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E7%BC%96%E8%AF%91%E9%A1%BA%E5%BA%8F"><span class="nav-number">4.2.</span> <span class="nav-text">脚本编译顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%84%E7%9B%AE%E5%BD%95%E8%84%9A%E6%9C%AC%E6%9C%80%E7%BB%88%E6%89%80%E5%9C%A8%E7%9A%84-dll"><span class="nav-number">4.3.</span> <span class="nav-text">各目录脚本最终所在的 dll</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A7%BB%E9%99%A4%E5%AD%97%E5%85%B8%E4%B8%AD%E6%89%80%E6%9C%89%E7%AC%A6%E5%90%88%E7%89%B9%E5%AE%9A%E8%A7%84%E5%88%99%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">1.</span> <span class="nav-text">移除字典中所有符合特定规则的数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%A8%E8%84%9A%E6%9C%AC%E4%B8%AD%E6%B8%85%E7%A9%BA-Console-%E7%AA%97%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">在脚本中清空 Console 窗口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%89%E9%92%AE%E7%82%B9%E5%87%BB%E5%90%8E%E6%8C%81%E7%BB%AD%E9%AB%98%E4%BA%AE"><span class="nav-number">3.</span> <span class="nav-text">按钮点击后持续高亮</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AD%E5%8C%85"><span class="nav-number">4.</span> <span class="nav-text">闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%97%AD%E5%8C%85"><span class="nav-number">4.1.</span> <span class="nav-text">什么是闭包?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%94%E6%A1%88%E8%A7%A3%E6%9E%90"><span class="nav-number">4.2.</span> <span class="nav-text">答案解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%A0%E6%AD%A3"><span class="nav-number">4.3.</span> <span class="nav-text">纠正</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E5%91%BD%E5%90%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E5%8F%98%E9%87%8F%E6%97%B6%E5%A6%82%E6%9E%9C%E4%BF%9D%E6%8C%81%E5%BC%95%E7%94%A8%E4%B8%8D%E4%B8%A2%E5%A4%B1"><span class="nav-number">5.</span> <span class="nav-text">重命名序列化的变量时如果保持引用不丢失?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E7%9A%84%E8%84%9A%E6%9C%AC%E7%BC%96%E8%AF%91%E8%A7%84%E5%88%99"><span class="nav-number">6.</span> <span class="nav-text">Unity 的脚本编译规则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E7%BC%96%E8%BE%91%E8%A7%84%E5%88%99"><span class="nav-number">6.1.</span> <span class="nav-text">脚本编辑规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E7%BC%96%E8%AF%91%E9%A1%BA%E5%BA%8F"><span class="nav-number">6.2.</span> <span class="nav-text">脚本编译顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%84%E7%9B%AE%E5%BD%95%E8%84%9A%E6%9C%AC%E6%9C%80%E7%BB%88%E6%89%80%E5%9C%A8%E7%9A%84-dll"><span class="nav-number">6.3.</span> <span class="nav-text">各目录脚本最终所在的 dll</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E6%8E%A7%E5%88%B6-Unity-%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%9A%82%E5%81%9C%E4%B8%8E%E9%80%80%E5%87%BA"><span class="nav-number">7.</span> <span class="nav-text">脚本控制 Unity 编辑器的暂停与退出</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -229,7 +229,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -355,7 +355,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-16 10:40:07" itemprop="dateModified" datetime="2021-03-16T10:40:07+08:00">2021-03-16</time>
+        <time title="修改时间：2021-06-07 18:49:04" itemprop="dateModified" datetime="2021-06-07T18:49:04+08:00">2021-06-07</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -375,14 +375,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.4k</span>
+      <span>4.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -396,7 +396,15 @@
     <div class="post-body" itemprop="articleBody">
         <a id="more"></a>
 
-<h1 id="按钮的外观事件"><a href="#按钮的外观事件" class="headerlink" title="按钮的外观事件"></a>按钮的外观事件</h1><p>Unity 中按钮的外观可以设置为图片切换模式, 这种模式下有一个高亮状态, 当鼠标悬浮在按钮上时, 按钮就会处于高亮状态, 但是我发现默认设置下, 按钮点击之后, 按钮的高亮状态就无法触发了, 除非按下另一个按钮. 查阅资料发现是 &quot;导航&quot; 的问题, 设置为 <code>none</code> 就可以了.</p>
+<h1 id="移除字典中所有符合特定规则的数据"><a href="#移除字典中所有符合特定规则的数据" class="headerlink" title="移除字典中所有符合特定规则的数据"></a>移除字典中所有符合特定规则的数据</h1><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 字典工具类</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">DictionaryUtility</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 移除字典中所有符合特定规则的数据</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;typeparam name=&quot;K&quot;&gt;</span>键类型<span class="doctag">&lt;/typeparam&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;typeparam name=&quot;V&quot;&gt;</span>值类型<span class="doctag">&lt;/typeparam&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;dictionary&quot;&gt;</span>待处理字典<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;predicate&quot;&gt;</span>规则<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">RemoveAll</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt;(<span class="params">IDictionary&lt;K, V&gt; dictionary, Func&lt;K, V, <span class="keyword">bool</span>&gt; predicate</span>)</span></span><br><span class="line"><span class="function"></span>    &#123;</span><br><span class="line">        <span class="keyword">var</span> keys = <span class="keyword">new</span> List&lt;K&gt;();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> key <span class="keyword">in</span> dictionary.Keys)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (predicate(key, dictionary[key]))</span><br><span class="line">            &#123;</span><br><span class="line">                keys.Add(key);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> key <span class="keyword">in</span> keys)</span><br><span class="line">        &#123;</span><br><span class="line">            dictionary.Remove(key);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="在脚本中清空-Console-窗口"><a href="#在脚本中清空-Console-窗口" class="headerlink" title="在脚本中清空 Console 窗口"></a>在脚本中清空 Console 窗口</h1><p>在想要清空控制台的位置调用下面的方法即可清空控制台.</p>
+<p>[注] <font color='red'>此方法在安卓平台下无法通过编译!</font></p>
+<p>使用 Conditional 区分平台调用, #if 区分平台编译.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> Clear Console Window</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">[<span class="meta">System.Diagnostics.Conditional(<span class="meta-string">&quot;UNITY_EDITOR&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">ClearConsole</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">if</span> UNITY_EDITOR</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> assembly = System.Reflection.Assembly.GetAssembly(<span class="keyword">typeof</span>(SceneView));</span><br><span class="line">    <span class="keyword">var</span> logEntries = assembly.GetType(<span class="string">&quot;UnityEditor.LogEntries&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> clearConsoleMethod = logEntries.GetMethod(<span class="string">&quot;Clear&quot;</span>);</span><br><span class="line">    clearConsoleMethod?.Invoke(<span class="keyword">new</span> <span class="keyword">object</span>(), <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="按钮点击后持续高亮"><a href="#按钮点击后持续高亮" class="headerlink" title="按钮点击后持续高亮"></a>按钮点击后持续高亮</h1><p>Unity 中按钮的外观可以设置为图片切换模式, 这种模式下有一个高亮状态, 当鼠标悬浮在按钮上时, 按钮就会处于高亮状态, 但是我发现默认设置下, 按钮点击之后, 按钮的高亮状态就无法触发了, 除非按下另一个按钮.</p>
+<p>查阅资料发现是 &quot;导航&quot; 的问题, 设置为 <code>none</code> 就可以了.</p>
 <p>在 Button 控件中有一个 <code>Navigation</code> 属性, 设置为 <code>none</code> 即可解决问题.</p>
 <h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p>之前在学习委托事件的时候了解了一下闭包, 没想到后来在游戏制作中就犯了一个闭包的错误.</p>
 <p>使用的是 Unity 引擎, 先看一个 Start 方法:</p>
@@ -438,6 +446,11 @@
 <li>其他非 Editor 目录脚本编译进 Assembly-CSharp.dll</li>
 <li>其他 Editor 目录脚本编译进 Assembly-CSharp-Editor.dll</li>
 </ul>
+<h1 id="脚本控制-Unity-编辑器的暂停与退出"><a href="#脚本控制-Unity-编辑器的暂停与退出" class="headerlink" title="脚本控制 Unity 编辑器的暂停与退出"></a>脚本控制 Unity 编辑器的暂停与退出</h1><p>退出功能:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> UNITY_EDITOR</span></span><br><span class="line">    UnityEditor.EditorApplication.isPlaying = <span class="literal">false</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    Application.Quit();</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>暂停功能:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UnityEditor.EditorApplication.isPaused = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -594,14 +607,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">239k</span>
+    <span title="站点总字数">248k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">3:38</span>
+    <span title="站点阅读时长">3:45</span>
   </span>
 </div>
 
