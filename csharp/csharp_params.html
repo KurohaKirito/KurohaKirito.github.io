@@ -25,29 +25,21 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
-<meta name="description" content="私はみやざきたくまだ! !">
+<meta name="description" content="csharp 中参数也是有很多种的.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="日记系列--2020年03月">
-<meta property="og:url" content="https://kuroha.vip/diary/2020_03.html">
+<meta property="og:title" content="CSharp 中形形色色的参数">
+<meta property="og:url" content="https://kuroha.vip/csharp/csharp_params.html">
 <meta property="og:site_name" content="二次元游宅客">
-<meta property="og:description" content="私はみやざきたくまだ! !">
+<meta property="og:description" content="csharp 中参数也是有很多种的.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kuroha.vip/images/diary/2020_03/UnLucky_1.jpg">
-<meta property="og:image" content="https://kuroha.vip/images/diary/2020_03/UnLucky_2.jpg">
-<meta property="og:image" content="https://kuroha.vip/images/diary/2020_03/UnLucky_3.jpg">
-<meta property="og:image" content="https://kuroha.vip/images/diary/2020_03/UnLucky_4.jpg">
-<meta property="og:image" content="https://kuroha.vip/images/diary/2020_03/UnLucky_5.jpg">
-<meta property="og:image" content="https://kuroha.vip/images/diary/2020_03/UnLucky_6.jpg">
-<meta property="og:image" content="https://kuroha.vip/images/diary/2020_03/UnLucky_7.jpg">
-<meta property="article:published_time" content="2020-03-01T13:00:00.000Z">
-<meta property="article:modified_time" content="2021-05-11T15:12:08.675Z">
+<meta property="article:published_time" content="2021-06-08T07:30:39.000Z">
+<meta property="article:modified_time" content="2021-06-08T07:45:04.884Z">
 <meta property="article:author" content="Kuroha">
-<meta property="article:tag" content="Diary">
+<meta property="article:tag" content="CSharp">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kuroha.vip/images/diary/2020_03/UnLucky_1.jpg">
 
 
-<link rel="canonical" href="https://kuroha.vip/diary/2020_03.html">
+<link rel="canonical" href="https://kuroha.vip/csharp/csharp_params.html">
 
 
 <script class="page-configurations">
@@ -62,11 +54,11 @@
 
     <script>
         (function () {
-            if ('KiritoAsuna.com') {
+            if ('') {
                 var str = prompt('😈 私密日记, 查看请输入密码!');
                 if (str == "" || str == null) {
                     history.back();
-                } else if (str !== 'KiritoAsuna.com') {
+                } else if (str !== '') {
                     alert('😥 这个密码好像不太对, 再试试...');
                     history.back();
                 }
@@ -79,7 +71,7 @@
 
     <link rel="stylesheet" href="../js/galmenu/css/GalMenu.css">
 
-<title>日记系列--2020年03月 | 二次元游宅客</title>
+<title>CSharp 中形形色色的参数 | 二次元游宅客</title>
   
 
 
@@ -219,7 +211,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2020-%E5%B9%B4-03-%E6%9C%88-03-%E5%8F%B7"><span class="nav-number">1.</span> <span class="nav-text">2020 年 03 月 03 号</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%B1%82%E7%94%9F%E5%88%9B%E9%80%A0%E5%9E%8B%E6%B2%99%E7%9B%92%E7%BD%91%E6%B8%B8-Rogalia-%E7%9A%84%E6%80%9D%E8%80%83"><span class="nav-number">1.1.</span> <span class="nav-text">对求生创造型沙盒网游 Rogalia 的思考</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E8%AE%BE%E7%AB%8B%E5%8D%95%E8%81%8C%E4%B8%9A%E7%9A%84%E7%BB%9D%E5%AF%B9%E9%99%90%E5%88%B6"><span class="nav-number">1.1.1.</span> <span class="nav-text">1 设立单职业的绝对限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%9D%9C%E7%BB%9D%E6%B8%B8%E6%88%8F%E5%B7%A5%E4%BD%9C%E5%AE%A4"><span class="nav-number">1.1.2.</span> <span class="nav-text">2 杜绝游戏工作室</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-%E5%8F%96%E6%B6%88%E5%85%85%E5%80%BC%E6%B8%A0%E9%81%93"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">2.1 取消充值渠道</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-%E8%B4%A6%E5%8F%B7%E4%BA%BA%E8%BA%AB%E7%BB%91%E5%AE%9A"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">2.2 账号人身绑定</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2020-%E5%B9%B4-03-%E6%9C%88-04-%E5%8F%B7"><span class="nav-number">2.</span> <span class="nav-text">2020 年 03 月 04 号</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E8%BF%91%E6%B8%B8%E6%88%8F%E7%9A%84%E6%88%AA%E5%9B%BE-%E9%9D%9E%E9%85%8B"><span class="nav-number">2.1.</span> <span class="nav-text">最近游戏的截图, 非酋</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2020-%E5%B9%B4-03-%E6%9C%88-05-%E5%8F%B7"><span class="nav-number">3.</span> <span class="nav-text">2020 年 03 月 05 号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2020-%E5%B9%B4-03-%E6%9C%88-06-%E5%8F%B7"><span class="nav-number">4.</span> <span class="nav-text">2020 年 03 月 06 号</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2020-%E5%B9%B4-03-%E6%9C%88-07-%E5%8F%B7"><span class="nav-number">5.</span> <span class="nav-text">2020 年 03 月 07 号</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%87%AA%E5%B7%B1-quot-%E5%96%9C%E6%AC%A2%E5%A5%B3%E7%94%9F%E7%95%99%E9%95%BF%E5%8F%91-quot-%E8%BF%99%E4%B8%AA%E8%87%AA%E7%A7%81%E6%83%B3%E6%B3%95%E7%9A%84%E6%80%9D%E8%80%83"><span class="nav-number">5.1.</span> <span class="nav-text">对自己 &quot;喜欢女生留长发&quot; 这个自私想法的思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%87%AA%E5%B7%B1%E6%9B%BE%E7%BB%8F%E7%9B%B2%E7%9B%AE%E7%9B%B8%E4%BF%A1%E4%B8%AD%E5%9B%BD%E4%B8%8D%E5%A5%BD%E8%A8%80%E8%AE%BA%E7%9A%84%E6%A3%80%E8%AE%A8"><span class="nav-number">5.2.</span> <span class="nav-text">对自己曾经盲目相信中国不好言论的检讨</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E6%9E%84%E6%80%9D"><span class="nav-number">6.</span> <span class="nav-text">游戏构思</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BF%85%E9%80%89%E5%8F%82-%E4%B8%8E-%E5%8F%AF%E9%80%89%E5%8F%82-%E4%B8%8E-%E4%B8%8D%E5%AE%9A%E5%8F%82"><span class="nav-number">1.</span> <span class="nav-text">必选参 与 可选参 与 不定参</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%85%E9%80%89%E5%8F%82"><span class="nav-number">1.1.</span> <span class="nav-text">必选参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E9%80%89%E5%8F%82"><span class="nav-number">1.2.</span> <span class="nav-text">可选参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%AE%9A%E5%8F%82"><span class="nav-number">1.3.</span> <span class="nav-text">不定参</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E9%80%89%E5%8F%82-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">可选参:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%AE%9A%E5%8F%82-1"><span class="nav-number">1.4.2.</span> <span class="nav-text">不定参</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E9%A1%BA%E5%BA%8F"><span class="nav-number">1.4.3.</span> <span class="nav-text">参数顺序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#this-%E4%BF%AE%E9%A5%B0%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">this 修饰的参数</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -330,7 +322,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/diary/2020_03.html">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/csharp/csharp_params.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar/avatar.gif">
@@ -343,7 +335,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          日记系列--2020年03月
+          CSharp 中形形色色的参数
         </h1>
 
         <div class="post-meta-container">
@@ -353,23 +345,17 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2020-03-01 21:00:00" itemprop="dateCreated datePublished" datetime="2020-03-01T21:00:00+08:00">2020-03-01</time>
+      <time title="创建时间：2021-06-08 15:30:39 / 修改时间：15:45:04" itemprop="dateCreated datePublished" datetime="2021-06-08T15:30:39+08:00">2021-06-08</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-05-11 23:12:08" itemprop="dateModified" datetime="2021-05-11T23:12:08+08:00">2021-05-11</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Diary/" itemprop="url" rel="index"><span itemprop="name">Diary</span></a>
+          <a href="/categories/CSharp/" itemprop="url" rel="index"><span itemprop="name">CSharp</span></a>
         </span>
     </span>
 
@@ -381,7 +367,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.8k</span>
+      <span>2.8k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -392,7 +378,7 @@
     </span>
 </div>
 
-            <div class="post-description">私はみやざきたくまだ! !</div>
+            <div class="post-description">csharp 中参数也是有很多种的.</div>
         </div>
       </header>
 
@@ -402,63 +388,64 @@
     <div class="post-body" itemprop="articleBody">
         <a id="more"></a>
 
-<h1 id="2020-年-03-月-03-号"><a href="#2020-年-03-月-03-号" class="headerlink" title="2020 年 03 月 03 号"></a>2020 年 03 月 03 号</h1><h2 id="对求生创造型沙盒网游-Rogalia-的思考"><a href="#对求生创造型沙盒网游-Rogalia-的思考" class="headerlink" title="对求生创造型沙盒网游 Rogalia 的思考"></a>对求生创造型沙盒网游 Rogalia 的思考</h2><p>Rugolia 的设计十分巧妙, 实现了慢速升级, 将 &quot;等级系统&quot; 和 &quot;熟练度系统&quot; 隐形结合在了一起, 看似是等级系统, 实则等级是在营养系统的牵制之下的, 摄入营养并吸收可以提升人物等级上限, 一开始人物的等级上限是很低的, 大概只有 10 级, 摄入营养之后可以提升这个上限, 然后这时候再去训练技能, 技能的等级才能真正提升, 那么只要不断地提升营养不就可以快速快速提升等级上限并且快速升级了吗? 但是巧妙的是营养是必须在饥饿的时候才能摄入的, 而且饥饿度是需要时间去降低的, 而这个时间就是真正的现实世界时间, 于是升级速度就这样被强制拉慢了. 就是说在这个世界中氪金是无法变强的, 这个世界的强度只和现实世界中的时间付出有关.</p>
-<p>Rohulia 中的家园系统也设计得十分有意思, 它将所有玩家的家园放到一张地图中, 这样就具有了竞争元素, 只有快速发展的人才能赚取更多的土地, 发展慢的玩家得到的土地自然就少, 而且土地总数就是那些, 所以前线玩家和其他玩家的差距就会慢慢地越拉越大. 所以说这在玩家少的时候算是一个不错的选择, 但是一旦玩家数量上升, 玩家之间地竞争力度也会不可避免地快速上升, 一旦玩家之间出现摩擦将是很难处理的. 因此对于 Rugalia 的家园系统如果让我来做, 基本形式一样, 只是我会选择将共有一张地图改为每人一张地图. 就像是之前玩过的 &quot;QQ三国&quot; 那样, 每个人的地图都是一样的, 资源也是一样的, 这样也算是公平, 就是尽量将玩家与玩家之间的竞争改为玩家与怪物之间的竞争.将玩家之间的竞争改为合作, 尽量去减少玩家之间会发生的摩擦.</p>
-<p>但是有一个地方我觉得这个游戏设计的不好, 就是职业系统. 说白了这个游戏的职业系统完全就是摆设, 职业唯一的区别就是初始技能的等级不同. 剑士的 &quot;剑士&quot; 技能初始就是 10 级, 其他技能是 5 级. 同样的道理, 厨师的 &quot;烹饪&quot; 技能初始就是 10 级, 其他技能 5 级. 但是既然所有的技能都可以升级, 升级速度也都是一致的, 自然玩家都会追求全面发展, 而且游戏的嵌套机制导致玩家不升级其他的技能也根本不可能升级他的主技能, 所有的技能都是紧紧联系在一起的. 这样就导致玩家之间的 &quot;合作&quot; 也成为了摆设. 这样 &quot;竞争&quot; 就会凸显, 游戏世界的矛盾也会变得尖锐. 那么如何减少竞争, 凸显合作呢?</p>
-<h3 id="1-设立单职业的绝对限制"><a href="#1-设立单职业的绝对限制" class="headerlink" title="1 设立单职业的绝对限制"></a>1 设立单职业的绝对限制</h3><p>比如: 你是一个剑士, 那么你的战斗技能升级比例可能是 1.2, 但是你的铁匠技能升级比例可能只有 0.8, 烹饪技能比例甚至可能只有 0.4, 同样, 作为一个铁匠, 可能升级的比例就是: 战斗 0.6, 铁匠 1.2, 烹饪 0.6, 那么厨师就可能是: 战斗 0.4, 铁匠 0.4, 烹饪 1.6 ! 这样单靠一人之力, 是绝对不可能快速变强的, 而只能靠团队. 每个职业都是必须的. 甚至在一个奇幻世界里, 厨师比剑士还要有价值.</p>
-<h3 id="2-杜绝游戏工作室"><a href="#2-杜绝游戏工作室" class="headerlink" title="2 杜绝游戏工作室"></a>2 杜绝游戏工作室</h3><p>上面说到, 游戏要鼓励玩家们的合作, 来共同对抗AI, 但是有些人(没错, 就是说的你, 游戏工作室!)他们就很聪明, 他们通过使用脚本外挂的形式, 一个人操控大量的账号, 这些账号一天便可以产出大量的初级材料, 导致游戏运营一段时间之后, 内部材料就会数量过剩, 通货膨胀, 以平民玩家的那点产出根本不够看的, 所以非战斗职业的玩家很快就会离开游戏, 游戏的经济体系会完全崩溃, 游戏内容也会变得机械化. 这样的话, 我们前面说的 &quot;单职业限制&quot; 就完全成为摆设了. 那些产出类的职业都成了工作室, 只剩下了战斗类职业是玩家, 这时候这个游戏就基本凉凉了. &quot;游戏工作室&quot; 这个东西简直是 MMORPG 杀手! 不把游戏工作室排除, MMORPG 永无出头之日.那么如何排除游戏工作室这个毒瘤呢?</p>
-<h4 id="2-1-取消充值渠道"><a href="#2-1-取消充值渠道" class="headerlink" title="2.1 取消充值渠道"></a>2.1 取消充值渠道</h4><p>一个方法是游戏中不再照顾 &quot;氪金&quot; 玩家的情绪, 也就是说关闭所有的充值渠道, 也就是关闭 &quot;现实世界&quot; 和 &quot;游戏世界&quot; 的连接. 让玩家体会到无论你在现实世界遭受了多么不公平的待遇, 在游戏世界中都是平等的, 只要付出时间, 都可以成为强者. 现实世界中每个人从出生开始就是不公平的, 但是游戏世界不一样, 虽然有职业之间的区别, 但是所有人都是这样的. 职业和职业之间是完全一致的. 这样就能吸引大量的平民玩家.</p>
-<h4 id="2-2-账号人身绑定"><a href="#2-2-账号人身绑定" class="headerlink" title="2.2 账号人身绑定"></a>2.2 账号人身绑定</h4><p>另一个方法就是每人只能有一个账号. 现在大部分游戏使用 &quot;身份证号&quot; 来杜绝工作室, 但是其实还是有很多方法获取身份证号的, 再加上其他国家的人呢? 所以我这里想到的是 &quot;人脸识别&quot; 加 &quot;指纹检测&quot;. 借助人脸识别来杜绝账号的重复. 我就不信工作室的人还能为了获取大量账号去整容? ! 因为随着 &quot;人脸识别&quot; 技术的进步, 现在使用照片一类的方法已经糊弄不过去了. 即使他们想到各种办法突破 &quot;人脸识别&quot;, 还有 &quot;指纹识别&quot;, 这样制作账号的成本就太高了, 谁也不会去做赔本的买卖. 再加上充值渠道已经取消了, 就算开工作室, 也赚不到钱.</p>
-<h1 id="2020-年-03-月-04-号"><a href="#2020-年-03-月-04-号" class="headerlink" title="2020 年 03 月 04 号"></a>2020 年 03 月 04 号</h1><h2 id="最近游戏的截图-非酋"><a href="#最近游戏的截图-非酋" class="headerlink" title="最近游戏的截图, 非酋"></a>最近游戏的截图, 非酋</h2><p>之前不是玩了一段时间的 &quot;游戏王&quot; 嘛, 当时稍微截取了几张图.</p>
-<p>最开始迷上的是 &quot;蛇神姐姐&quot;, 这无视一切卡片效果的无敌抗性, 什么三幻神! 渣渣!</p>
-<p>幻想台词: &quot;毒蛇王被破坏的瞬间, 发动陷阱卡, &quot;蛇神降临&quot;! 当毒蛇王在场上被效果破坏时, 可以从手牌或者卡组中将一只毒蛇神特殊召唤! 统御一切的神啊, 向世人展现您那高贵的身姿吧! 降临吧! 毒蛇神 <strong>·</strong> 维诺米纳迦! &quot;.</p>
-<p>太帅了! 太强了! 4500 的面板攻击力! 哈哈, NPC 们, 你们再用 &quot;光之护封剑&quot; 啊! 你们再用 &quot;强夺&quot; 啊! 你们再用 &quot;收缩&quot; 啊! 哈哈, 没用了吧, 无敌的感觉真爽! (游戏中的 NPC 是不会使用 &quot;技能抽取&quot; 等可以对抗蛇神姐姐的卡的. 😂)</p>
-<blockquote>
-<p>看对面即使场上有 &quot;光之护封剑&quot; 又怎样?</p>
-<p>蛇姐: &quot;光之护封剑&quot; 是什么卡? 我咋没听说过呢?</p>
-<p><img data-src="/images/diary/2020_03/UnLucky_1.jpg" alt="降临吧! 毒蛇神 · 维诺米纳迦"></p>
-</blockquote>
-<blockquote>
-<p>这是蛇神姐姐的效果介绍:</p>
-<p><img data-src="/images/diary/2020_03/UnLucky_2.jpg" alt="毒蛇神介绍"></p>
-<p>当时玩的是 游戏王卡片力量2, 卡池很小, 没在小黑屋的特殊胜利卡确实不多.</p>
-</blockquote>
-<p>后面我又迷上了 &quot;艾克佐迪亚&quot;, 那种 &quot;不战而胜&quot; 的感觉也是爽啊!</p>
-<blockquote>
-<p>第一局上来就遇到了 &quot;区域破坏&quot; 卡组, 我的四个怪兽区域都无法使用了, 但是我又不召唤怪兽, 你又能把我怎么样呢 ? ? (略略略~)</p>
-<p><img data-src="/images/diary/2020_03/UnLucky_3.jpg" alt="艾克佐迪亚"></p>
-</blockquote>
-<p>不过依然是无法逃脱 &quot;非酋&quot; 的命运!</p>
-<blockquote>
-<p>卡组中就剩两张卡了, 但是我就是没有集齐五张卡... 我的天...😣</p>
-<p><img data-src="/images/diary/2020_03/UnLucky_4.jpg" alt="艾克佐迪亚"></p>
-</blockquote>
-<p>这次脸更黑 ! !</p>
-<blockquote>
-<p>卡组还剩 6 张卡, 然后我才上手一张 ! ! 这还玩啥啊 ...</p>
-<p><img data-src="/images/diary/2020_03/UnLucky_5.jpg" alt="艾克佐迪亚"></p>
-<p>我还就不信了! !</p>
-<p><strong>俺のターン, ドロー ! !</strong></p>
-<p><img data-src="/images/diary/2020_03/UnLucky_6.jpg" alt="艾克佐迪亚"></p>
-<p>我 TM ... 我的脸真的是黑到极限了 ! !</p>
-<p>嘛, 还好最后还是赢了... 放一张 &quot;黑暗大法师 - 艾克佐迪亚&quot; 吧. (可惜蛇神姐姐没有 3D 建模...蛇神王倒是有建模...)</p>
-<p><img data-src="/images/diary/2020_03/UnLucky_7.jpg" alt="艾克佐迪亚"></p>
-</blockquote>
-<h1 id="2020-年-03-月-05-号"><a href="#2020-年-03-月-05-号" class="headerlink" title="2020 年 03 月 05 号"></a>2020 年 03 月 05 号</h1><p>计划已经连续执行了好几天了, 晚上的活动安排已经进入了正轨: (洗漱, 洗脚, 健身, 制作游戏), 早晨的日语学习也已经找到了合适的学习材料, 也步入了正轨.</p>
-<p>中午的时间, 之前是用来午睡的, 现在也用来刷 LeetCode 了, 总之呢, 自己的业余生活算是回归正轨了.</p>
-<p>不过呢, 今晚上发生了一件不可思议的事情, 不知道会对我接下来的生活产生什么影响. 那就是 &quot;欢欢&quot; 居然找我了, 虽然只是询问我一道数学题该怎么做, 但是我压抑不住啊, 太开心啦, 哇哦! 她是我初恋啊! 我的天! 我不是做梦吧! 😂</p>
-<h1 id="2020-年-03-月-06-号"><a href="#2020-年-03-月-06-号" class="headerlink" title="2020 年 03 月 06 号"></a>2020 年 03 月 06 号</h1><p>第十周周五了, 😅 时间过得也太快了吧!! 一年的五分之一已经过去了...</p>
-<h1 id="2020-年-03-月-07-号"><a href="#2020-年-03-月-07-号" class="headerlink" title="2020 年 03 月 07 号"></a>2020 年 03 月 07 号</h1><h2 id="对自己-quot-喜欢女生留长发-quot-这个自私想法的思考"><a href="#对自己-quot-喜欢女生留长发-quot-这个自私想法的思考" class="headerlink" title="对自己 &quot;喜欢女生留长发&quot; 这个自私想法的思考"></a>对自己 &quot;喜欢女生留长发&quot; 这个自私想法的思考</h2><p>提问: 未来的我哟, 你最爱的人是谁?</p>
-<p>你还能秒答 &quot;Asuna&quot; 吗? 恐怕现在的你已经有真正喜欢的人了吧, 我这里说的 Asuna 不是真正的 Asuna 哦, 而是那位大学同学, 记得当时自己说过: 你留长发多好! 我喜欢长发女生. 现在回想起来, 我还真是个相当恶劣的变态呢, 而且还相当的自私, 原来女生留长发有那么多不便利的地方, 原谅我想得太单纯了😂</p>
-<h2 id="对自己曾经盲目相信中国不好言论的检讨"><a href="#对自己曾经盲目相信中国不好言论的检讨" class="headerlink" title="对自己曾经盲目相信中国不好言论的检讨"></a>对自己曾经盲目相信中国不好言论的检讨</h2><p>基于这次流感, 我也认识到了之前的我把中国的缺点无限放大了, 导致自己心中生出了很多对中国的厌恶之情. 厌恶空气差, 厌恶人素质差, 厌恶教育制度差, 但是其实我根本不知道日本的空气, 日本的素质, 日本的教育等等, 全部都是自己臆想出来的罢了. 做人一定要实事求是啊!</p>
-<h1 id="游戏构思"><a href="#游戏构思" class="headerlink" title="游戏构思"></a>游戏构思</h1><ul>
-<li>玩家是一个学校顶尖学生.</li>
-<li>来到了一个新世界, 但是这个世界中的人们的文明程度较低, 处于奴隶制社会.</li>
-<li>最开始是一个农场游戏, 玩家制作食物器材武器等换取报酬, 但是全部会被压榨干净, 如果不想办法逃离这里, 只会死亡.</li>
-<li>之后玩家觉醒, 要改变这个世界, 对应游戏标题: 改变世界.</li>
-<li>之后变为 RPG 剧情向游戏, 增加伙伴, 宠物, 妖精, 得到武器, 铠甲, 攻下属于自己的两三个城市.</li>
-<li>之后变为三国志类型的战略游戏, 攻城略地, 拼头脑战.</li>
-</ul>
+<h1 id="必选参-与-可选参-与-不定参"><a href="#必选参-与-可选参-与-不定参" class="headerlink" title="必选参 与 可选参 与 不定参"></a>必选参 与 可选参 与 不定参</h1><p>CSharp 中参数有必选参, 可选参和不定参, 用以实现更加灵活的方法调用.</p>
+<h2 id="必选参"><a href="#必选参" class="headerlink" title="必选参"></a>必选参</h2><p>通常用的方法传参就是必选参. 只要方法有参数, 调用这个方法时就必须传参.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Test</span>(<span class="params"><span class="keyword">string</span> str</span>)</span>&#123;</span><br><span class="line">    Debug.Log(str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="可选参"><a href="#可选参" class="headerlink" title="可选参"></a>可选参</h2><p>可选参对外表现为: 当外部调用方法时, 参数可以传也可以不传~ 哈哈, 任不任性?</p>
+<p>那可选参是怎么编写的呢? <font color='red'>可选参就是给参数一个默认值</font>, 此时参数就变成了可选参. 可选参也是有语法限制的, <font color='red'>可选参必须放到所有必选参的后面, 不定参不属于必选参</font>.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Test</span>(<span class="params"><span class="keyword">string</span> str, <span class="keyword">string</span> star = <span class="string">&quot;default value&quot;</span></span>)</span>&#123;</span><br><span class="line">    Debug.Log(str + star);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用具有可选参的方法时, 可以直接和正常的方法一样进行传参, 打算使用默认值的可选参可以直接省略.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用方法</span></span><br><span class="line">Test(<span class="string">&quot;abc&quot;</span>);</span><br><span class="line">Test(<span class="string">&quot;abc&quot;</span>, <span class="string">&quot;def&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>但是这里有一个问题, 可选参的语法规则只限制了可选参必须在必选参的后面, 但是并没有限制可选参的数量, 如果有好多可选参, 而我想要只传递特定的参数的时候, 怎么办呢?</p>
+<p>比如下面的方法我想使用 star1 的默认值, star2 我想改为 &quot;, 你早就没了&quot;, 咋传参呢?</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Test</span>(<span class="params"><span class="keyword">string</span> str, <span class="keyword">string</span> star1 = <span class="string">&quot;我没带腰带&quot;</span>, <span class="keyword">string</span> star2 = <span class="string">&quot;star2&quot;</span></span>)</span> &#123;</span><br><span class="line">    Debug.Log(str + star1 + star2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时就得使用可选参的另一种调用方式: <code>参数名: 参数值</code>.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Test(<span class="string">&quot;要不是因为&quot;</span>, star2: <span class="string">&quot;, 你早就没了&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="不定参"><a href="#不定参" class="headerlink" title="不定参"></a>不定参</h2><p>编写程序的时候, 有时会有这样的场景: 我需要写一个工具方法用来处理各种数据, 数据使用参数的形式传入方法, 但是问题在于每次我要传入的数据的数量都是不一致的, 这次可能传入 4 个, 下次可能需要 5 个, 甚至有时需要 10 个也说不定, 那这可咋办呢?</p>
+<p>在没有不定参之前, 只能使用数组来传输, 参数为一个数组, 传入数据的时候先将数据整合为一个数组, 然后整体传入, 但是如果我就是想逐个传入呢? 就像 <code>string.Format(&quot;&#123;0&#125;, &#123;1&#125;, &#123;2&#125;&quot;, &quot;AAA&quot;, &quot;BBB&quot;, &quot;CCC&quot;);</code> 一样, 后面的参数数量不确定, 并且传入的时候是逐个传入的.</p>
+<p>此时就需要语法糖-不定参啦! 不定参的对外表现就是可以传入<font color='red'>同类型</font>的数据任意多个, 数量是不确定的, 传入的时候参数也是允许逐个传入的.</p>
+<p>不定参使用 <code>params</code> 关键字和 <code>数组</code> 实现. 切记必须是 <font color='red'>数组</font> 类型.</p>
+<p>即从外部看来, 参数传入时是逐个传入的, 但是实际在传入之后会被整合为一个数组进行处理, 这也就是为什么数量可以不确定, 但类型必须是同类型的原因.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不定参方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">UseParams</span>(<span class="params"><span class="keyword">params</span> <span class="keyword">string</span>[] stars</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> star <span class="keyword">in</span> stars) &#123;</span><br><span class="line">        Debug.Log(star);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用 (同类型, 数量不定, 可以逐个传入, 可以整体作为数组传入)</span></span><br><span class="line">UseParams();</span><br><span class="line">UseParams(<span class="string">&quot;AAA&quot;</span>);</span><br><span class="line">UseParams(<span class="string">&quot;AAA&quot;</span>, <span class="string">&quot;BBB&quot;</span>);</span><br><span class="line">UseParams(<span class="string">&quot;AAA&quot;</span>, <span class="string">&quot;BBB&quot;</span>, <span class="string">&quot;CCC&quot;</span>);</span><br><span class="line">UseParams(<span class="keyword">new</span>[]&#123;<span class="string">&quot;AAA&quot;</span>, <span class="string">&quot;BBB&quot;</span>, <span class="string">&quot;CCC&quot;</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>另外不定参也有语法要求, 不定参作为参数时, 必须放置在整个参数列表的最后.</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><h3 id="可选参-1"><a href="#可选参-1" class="headerlink" title="可选参:"></a>可选参:</h3><ol>
+<li>参数具有默认值.</li>
+<li>传参时可传可不传.</li>
+<li>可同时定义多个可选参.</li>
+<li>可以使用 &quot;参数名: 参数值&quot; 进行指定参数传值.</li>
+</ol>
+<h3 id="不定参-1"><a href="#不定参-1" class="headerlink" title="不定参"></a>不定参</h3><ol>
+<li>参数必须同类型.</li>
+<li>参数数量不确定, 且允许逐个传入.</li>
+<li>1 个参数列表中不定参最多只能有 1 个.</li>
+<li>使用 params 和 [] 实现. (是否仅此一种待考究, 目前暂时认为唯一方式)</li>
+</ol>
+<h3 id="参数顺序"><a href="#参数顺序" class="headerlink" title="参数顺序"></a>参数顺序</h3><p><font color='red'><strong>( 必选参, 可选参, 不定参 )</strong></font></p>
+<h1 id="this-修饰的参数"><a href="#this-修饰的参数" class="headerlink" title="this 修饰的参数"></a>this 修饰的参数</h1><p>无论是带有默认值的可选参还是使用 params 关键字的不定参, 它们的本质还是为了方法的参数服务的, 但是还有一种是使用了 this 关键字进行修饰的参数.</p>
+<p>使用 this 修饰更多的是为了类而服务, 目的是为了对类进行方法扩展.</p>
+<p>目前理解为: 使用 this 来实现 <font color='red'>扩展方法</font>, 对特定的<font color='red'><strong>非静态类</strong></font>进行行为补充. 切记是非静态类.</p>
+<p>比如有一个非静态类已经封装好了, 我们无法去修改类文件, 那么此时想要对其增加行为的话就可以使用这个语法.</p>
+<p>下面是一个 Student 类, 这个类文件已经无法查看与修改.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 简易类, 举例用</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Student</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> name;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时在另一个地方使用这个类的一个实例, 需要增加一个特定的功能, 就可以这样写:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先为这个 Student 添加想要的功能</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">NewAction</span>(<span class="params"><span class="keyword">this</span> Student student, <span class="keyword">string</span> str</span>)</span> &#123;</span><br><span class="line">    Debug.Log(<span class="string">$&quot;<span class="subst">&#123;student.name&#125;</span> : <span class="subst">&#123;student.id&#125;</span>, <span class="subst">&#123;str&#125;</span>&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 之后就可以使用类的实例直接调用</span></span><br><span class="line"><span class="keyword">var</span> student = <span class="keyword">new</span> Student &#123;name = <span class="string">&quot;Kuroha&quot;</span>, id = <span class="string">&quot;0001&quot;</span>&#125;;</span><br><span class="line">student.NewAction(<span class="string">&quot;就是我啦!&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>此语法还可以对 CSharp 原始类型进行扩展, 比如 <code>int</code>, <code>string</code> 等. 扩展方法也是具有语法限制的, 都放在总结里面了.</p>
+<ol>
+<li>使用 this 可以实现特定类型的方法扩展.</li>
+<li>this 修饰的参数并不需要主动传参, 这个参数的值就是调用时类实例的值.</li>
+<li>扩展方法只能在<font color='red'>非嵌套, 非泛型的静态类</font>内部才能定义.</li>
+<li>扩展方法必须是静态方法. (毕竟在静态类中嘛)</li>
+<li>调用时必须使用<font color='red'>实例</font>进行调用. (虽然定义的时候是一个静态方法)</li>
+<li>this 修饰的参数必须位于参数列表的<font color='red'>第 1 个</font>! (正好和 params 相反)</li>
+</ol>
 
     </div>
 
@@ -490,7 +477,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://kuroha.vip/diary/2020_03.html" title="日记系列--2020年03月">https://kuroha.vip/diary/2020_03.html</a>
+      <a href="https://kuroha.vip/csharp/csharp_params.html" title="CSharp 中形形色色的参数">https://kuroha.vip/csharp/csharp_params.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -546,21 +533,18 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/Diary/" rel="tag"><i class="fa fa-tag"></i> Diary</a>
+              <a href="/tags/CSharp/" rel="tag"><i class="fa fa-tag"></i> CSharp</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/diary/2020_02.html" rel="prev" title="日记系列--2020年02月">
-                  <i class="fa fa-chevron-left"></i> 日记系列--2020年02月
+                <a href="/unity/unity_redundant_texture_references_cleaner.html" rel="prev" title="Unity 材质的冗余贴图引用清除器">
+                  <i class="fa fa-chevron-left"></i> Unity 材质的冗余贴图引用清除器
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/computer/computer_char_code.html" rel="next" title="理解计算机中的字符编码">
-                  理解计算机中的字符编码 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
