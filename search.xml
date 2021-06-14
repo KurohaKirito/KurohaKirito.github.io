@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>理解计算机中的字符编码</title>
+    <url>/computer/computer_char_code.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天再一次体会到了 <strong>基础知识不扎实会带来无数的问题与困扰</strong> 这句话是多么地真实 ! ! 事情起因是我想巩固一下 SQL 知识, 于是用 SQL Developer 工具开始写 SQL, 但是当我用 SQL Developer 打开一个之前在 PL/SQL 上编辑的 SQL 文件的时候, 里面所有的中文全部乱码了 ! ! 我就知道我必须要解决 <code>编码</code> 这个困扰我许久的问题了. 于是上网搜索资料, 最后总结如下, 我使用了编码的发展顺序来组织文章结构 ( 大概, 或许, 应该, 差不多是这么个发展顺序吧, 哈哈 ! ), OK, 我们开始.</p>
+<h1 id="字符集-和-编码规则"><a href="#字符集-和-编码规则" class="headerlink" title="字符集 和 编码规则"></a>字符集 和 编码规则</h1><p>这两个概念必须在最开始就要点出, 这也是这篇文章的重心所在. 字符集和编码规则是完全不同的两种事物:</p>
+<p><strong>字符集</strong>: 为每一个字符分配一个唯一的 ID.</p>
+<p><strong>编码规则</strong>: 定义如何将之前定义的 ID 转换为计算机中的字节序列的一整套规则.</p>
+<p>这里不需要特别明白, 只需要知道有这样一个区别即可, 后面根据实例来理解它们会更容易.</p>
+<h1 id="计算机基础"><a href="#计算机基础" class="headerlink" title="计算机基础"></a>计算机基础</h1><p>在计算机内部, 所有信息最终都是一个二进制值. 每一个二进制位 (bit) 有 0 和 1 两种状态, 因此八个二进制位就可以组合出 256 种状态, 这被称为一个字节 (byte). 也就是说, 从 <code>0X00</code> 到 <code>0XFF</code> 的一个字节一共可以用来表示 256 种不同的状态, 如果让每一个状态对应一个符号, 就是 256 个符号.</p>
+<h1 id="ASCII"><a href="#ASCII" class="headerlink" title="ASCII"></a>ASCII</h1><p>于是美国就率先制定了一套字符编码, 来解决英语字符与二进制位之间的关系, 并做了统一规定. 这被称为 <code>ASCII</code>, 即 <code>美国信息交换标准代码</code>, 一直沿用至今.</p>
+<p>由于 <code>ASCII</code> 提出的时候, 字符集和编码规则这两个概念尚未区分, 于是 <code>ASCII</code> 既表示字符集又表示编码规则. 不过为了好理解, 我们这里来一波强行解释! 上图!</p>
+<p><img data-src="/images/computer_char_code/ascii.png" alt="ASCII"></p>
+<h2 id="ASCII-字符集"><a href="#ASCII-字符集" class="headerlink" title="ASCII 字符集"></a>ASCII 字符集</h2><p>上图中的 <code>Bin</code> 和 <code>缩写/字符</code> 这两列就是字符集, 一共规定了 128 个字符以及这 128 个字符的 ID.</p>
+<p>字符集就只是负责这个工作, 即给每个要表示的字符分配一个 ID, 至于这个 ID 在计算机中怎么表示, 是用 1 个字节还是 2 个字节还是可变长度字节是不需要字符集去考虑的. 即使是仅仅只有 128 个字符的 ASCII 字符集, 我在电脑中就喜欢用 2 个字节表示, 我硬盘空间有的是, 我就喜欢 1 个字节表示字符, 另 1 个字节在旁边站岗, 谁又管的着呢? 虽然这很蠢!</p>
+<h2 id="ASCII-编码规则"><a href="#ASCII-编码规则" class="headerlink" title="ASCII 编码规则"></a>ASCII 编码规则</h2><ul>
+<li>① 每个字符都使用 1 个字节表示.</li>
+<li>② 这个字节的首位始终为 0.</li>
+</ul>
+<p>ASCII 字符集经过编码规则的限制之后, 在计算机中就表示为了: 0000.0000 到 0111.1111.</p>
+<p>这样应该就有点明白字符集和编码规则的区别了吧. 其实当时那个年代 <code>字符集</code> 和 <code>编码规则</code> 这两个概念还没有明确建立, 因为没必要区分开, 默认情况下, 字符集所定义的 ID 的二进制形式就直接是编码规则, 但是随着时代的发展, 明确建立这两个概念就很有必要了. 比如后来提出的 Unicode 字符集, 在 2020 年 3 月的 <code>ISO/IEC 10646:2020</code> 版本中, 总共有 143924 个字符, 其中部分字符会占用 4 个字节, 总不能还是使用 <code>字符集所定义的 ID 的二进制形式就直接是编码规则</code> 这种简单的对应了吧, 因为这样的话所有的字符都要用 4 个字节, 原来只需 1 个字节的英文字母现在需要 4 个字节, 原来只需要 2 个字节的汉字现在也需要 4 个字节, 而且 Unicode 编码还在不断地补充进化, 所以这样实在是太浪费空间了! 我还要用硬盘存放珍贵的电影资源呢! 更大的影响是在网络传输方面, 原本只需传输 1 MB 的数据量, 现在却要传输 4 MB, 这太浪费资源了!</p>
+<p>[注] ASCII 是后面一切编码的基础, 因此即使字符编码不断发展, 发展后的它们也都会考虑到和 ASCII 的兼容性, 因此你会看到后面的编码都会做出一些相应的措施来兼容 ASCII.</p>
+<h1 id="扩展版-ASCII"><a href="#扩展版-ASCII" class="headerlink" title="扩展版 ASCII"></a>扩展版 ASCII</h1><p>随着计算机的普及, 计算机进入了欧洲国家, 但是 ASCII 中不包含其他语言的字符啊! 像希腊字母, 罗马字母等. 那么这些欧洲国家就很难受啊! 正好 ASCII 只使用了 1 个字节的后 7 位, 于是, 一些欧洲国家就决定, 利用 ASCII 编码规则中闲置的最高位编入新的符号 ( 你美国人不是才用了半个字节吗, 那好, 剩下的半个字节由我们来定义 ). 这样一来, 这些欧洲国家使用的编码体系, 就可以表示 256 个字符, 我们称之为 <code>扩展版 ASCII</code>.</p>
+<h2 id="扩展版-ASCII-字符集"><a href="#扩展版-ASCII-字符集" class="headerlink" title="扩展版 ASCII 字符集"></a>扩展版 ASCII 字符集</h2><p>扩展版 ASCII 字符集规定了 256 个字符. 其中 128 个字符直接沿用了 ASCII, 以达到兼容的目的, 剩下的 128 个字符是欧洲国家自己定义的字符. 当然由于每个国家语言不同, 对于这 128 个字符, 不同的国家自然有不同的定义, 那么肯定也会有它们独特的称呼, 但本质上它们都属于扩展版 ASCII 字符集🤣. (是不是感觉开始出现了混乱的味道? 嗯哼~) 但是不管怎样, 所有这些扩展版 ASCII 字符集中, 0 ~ 127 表示的符号是一样的, 不一样的只是 128 ~ 255 这些字符.</p>
+<h2 id="扩展版-ASCII-编码规则"><a href="#扩展版-ASCII-编码规则" class="headerlink" title="扩展版 ASCII 编码规则"></a>扩展版 ASCII 编码规则</h2><ul>
+<li>① 每个字符使用 1 个字节表示.</li>
+</ul>
+<p>于是扩展版 ASCII  字符集经过编码规则的限制之后, 在计算机中就表示为了: 0000.0000 到 1111.1111. ASCII 和扩展版 ASCII 两者之间互不冲突, 相安无事.</p>
+<p>从扩展版 ASCII 开始, 这种命名就具有了表示一个大类的意味, 在这个大类下, 具体会细分成很多字符集, 比如, 意大利有意大利的扩展版 ASCII, 法国有法国的扩展版 ASCII, 瑞士有瑞士的扩展版 ASCII. 其中最优秀的字符集扩展方案是 <code>ISO 8859-1</code>, 通常称之为 <code>Latin-1</code>, Latin-1 利用 128 ~ 255 这 128 个二进制数, 包括了足够的附加字符集来涵盖基本的西欧语言, 同时在 0 ~ 127 的范围内兼容 ASCII 编码规则.</p>
+<h1 id="ANSI"><a href="#ANSI" class="headerlink" title="ANSI"></a>ANSI</h1><p>之后, 计算机进入了亚洲国家, 亚洲国家使用的符号就更多了, 其中我国的汉字就接近十万个! 常用字也有四千多个. 由于前面的 ASCII 和扩展版 ASCII 的单字节字符集只能表示 256 种符号, 这对于我们博大精深的汉语来说是肯定不够的, 于是单字节不行, 就必须使用多字节. 于是就诞生了一系列的多字节字符集, 其中一类就叫做 <code>ANSI 字符集</code>.</p>
+<p>ANSI 字符集是从 0X0000 定义到 0XFFFF, 理论上来说, 只要全部的字符都使用 2 个字节表示, 就可以包含 65536 个字符 (但是实际的编码规则不会这么简单直接), 这对于任何单个国家的字符需求来说, 都能基本满足了.</p>
+<p>ANSI 字符集定义了要表示的字符以及对应的 ID, 但是并不意味着将这些字符编到计算机中的时候会遵守 <code>字符集所定义的 ID 的二进制形式就直接是编码规则</code> 的游戏规则. 就比如后面会提到的 <code>GB 2312</code> 字符集使用的 <code>EUC-CN</code> 编码规则, 半角字符只占 1 个字节, 汉字和全角字符才会占用 2 个字节 (是不是已经开始有点晕了😵).</p>
+<p>[注] 网络上有人说 ANSI 字符集是 ASCII 字符集 的扩展, 我想他应该是把我前面所提到的 ASCII 字符集和 ASCII 扩展字符集都统称为了 ASCII 字符集, 于是得出了他的这个结论. 我认为我的说法和他的说法没有绝对的谁对谁错, 只是不同的两种理解. 在现在这个信息交流如此便利的时代, 我也希望大家在非原则问题上不要过于较真. 不过本文中一直采用的是我自己的看法, 即 ASCII 字符集和 ASCII 扩展字符集不统称为 ASCII 字符集. 接下来让我们回到正题.</p>
+<h2 id="ANSI-字符集"><a href="#ANSI-字符集" class="headerlink" title="ANSI 字符集"></a>ANSI 字符集</h2><p>ANSI 字符集中包含的字符具体是什么不好说, 因为不同国家的 ANSI 字符集包含的字符是不一样的, 和当时的 ASCII 扩展字符集的发展轨迹相同, 对于 ANSI 字符集, 不同的亚洲国家同样设计了他们各自的字符集 (这里我终于搜索到这些细分的 ANSI 字符集所对应的名字了 😂), 比如日本的 ANSI 字符集叫做 <code>JIS X 0208</code>, 韩国的叫做 <code>KS X 1001</code>, 我国的 ANSI 字符集叫做 <code>GB 2312</code>, 释义为: <strong><code>信息处理交换用汉字编码字符集基本集</code></strong>. 下面简单说一下 GB 2312 中所规定的字符集内容.</p>
+<p>GB 2312 共收录 6763 个汉字, 其中一级汉字 3755 个, 二级汉字 3008 个, 同时收录了包括拉丁字母, 希腊字母, 日文平假名及片假名字母, 俄语西里尔字母在内的 682 个字符.</p>
+<p>GB 2312 的出现, 基本满足了汉字的计算机处理需要, 它所收录的汉字已经覆盖中国大陆 99.75% 的使用频率.</p>
+<h2 id="ANSI-编码规则"><a href="#ANSI-编码规则" class="headerlink" title="ANSI 编码规则"></a>ANSI 编码规则</h2><ul>
+<li>① 不同的 ANSI 字符集会规定其独特的编码规则.</li>
+</ul>
+<p>这个还真的都不一样, 但是也都是有基准的. 比如我国的 GB 2312 字符集使用的 ANSI 编码规则叫做 <code>EUC-CN</code>, 日本的 JIS X 0208 字符集在 Windows 上使用的 ANSI 编码规则叫做 <code>EUC-JP</code>, 韩国的 KS X 1001 字符集使用的 ANSI 编码规则叫做 <code>EUC-KR</code>. 这些编码规则都是 <code>EUC</code> 类的编码规则.</p>
+<p>是不是头都大了? 😂 只要知道不同的 <code>ANSI 字符集</code> 会采用一些不同的编码规则即可.</p>
+<p>总结一下, <code>ANSI</code> 是一类字符集的统称, 不同的国家有其自己的 ANSI 字符集, 不同的字符集也会对应不同的编码规则, 同样编码规则也都有各自的名称.</p>
+<p>有人可能会问, 后面不是会出现 Unicode 这种全球统一的字符集吗, 那为什么还要继续使用和发展 ASNI 这种国家之间无法兼容的字符集呢? 这个问题呢我后面会解答.</p>
+<h1 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h1><p>ASNI 出现之后, 各个国家的字符需求基本都解决了, 但是因为每个国家制定了他们各自的字符集和对应的编码方案, 所以各个国家之间的字符集不通用, 于是制定一套全球统一编码的呼声越加强烈! 最后 <code>ISO</code> 即 <code>国际标准化组织</code> 实在看不下去了, 为了解决不同国家 ANSI 的冲突问题, ISO 就制定了一套全球统一编码, 即 <code>Unicode</code>.</p>
+<p><code>Unicode</code> 时代的时候, 字符集和编码规则就已经很明确了, Unicode 仅仅只是一种字符集. 其中定义了全世界所有符号的唯一标识 ID, 并且一直在不断地修订. 2020 年 3 月的 <code>ISO/IEC 10646:2020</code> 标准中, 已经包含了 143924 个字符.</p>
+<p>如果使用简单的 <code>字符集所定义的 ID 的二进制形式就直接是编码规则</code> 的方法来存储 Unicode 字符集, 将会造成极大的浪费, 于是为了解决 Unicode 这个庞大字符集的存储和网络传输问题, 对应 Unicode 字符集的编码规则就出现了. 其中最常用的就是 <code>UTF-8</code> 编码规则了. 其他的编码规则还有 <code>UTF-16 BE</code>, (Big-Endian 大端序) <code>UTF-16 LE</code> (Little-Endian 小端序), <code>UTF-32</code>, <code>UTF-7</code>, <code>Punycode</code>, <code>CESU-8</code>, <code>SCSU</code>, <code>GB18030</code> 等等.</p>
+<p>对于之前说的为什么还要继续使用 ANSI 字符集的原因是, Unicode 下的各种编码规则, 对于常用汉字, 基本上都是占用 3 个字节, 生僻汉字可能占用到 6 个字节. 对于 <code>GB2312</code> 和 <code>GBK</code> 来讲, UTF-8 无疑造成了浪费, 所以, UTF-8 可以说是对英文友好, 但对中文不友好的一种编码方式. 所以在中文界,  GB2312 与 GBK 依旧有自己的市场. 但是按照目前的趋势来看, 硬盘都是白菜价, 电脑性能也已经足够无视这点性能的消耗了. 所以推荐所有的网页使用统一编码: UTF-8.</p>
+<p>其中关于 UTF-8, GB18030 内部的具体编码规则就不展开说了 (其实我也不会, 哈哈), 有兴趣的可以自己搜索资料, 维基百科就是一个比较好的选择.</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>美国人为了表示日常用的字符, 制定了 ASCII.</li>
+<li>欧洲人为了表示日常用的字符, 扩充了 ASCII.</li>
+<li>中国人为了表示常用简体汉字, 制定了 GB2312.</li>
+<li>中国人为了表示生僻汉字和繁体字, 扩充 GB2312 为 GBK.</li>
+<li>ISO 为了统一全世界的字符, 制定了 Unicode.</li>
+<li>国际上为了方便 Unicode 的传输和存储, 制定了 UTF-8.</li>
+</ul>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><p><span class="exturl" data-url="aHR0cDovL3d3dy5ydWFueWlmZW5nLmNvbS9ibG9nLzIwMDcvMTAvYXNjaWlfdW5pY29kZV9hbmRfdXRmLTguaHRtbA==">字符编码笔记: ASCII, Unicode 和 UTF-8<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cDovL3d3dy5xaWFueGluZ3poZW0uY29tL3Bvc3QtMTQ5OS5odG1s">网页编码就是那点事<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIzMzc0MDc4L2Fuc3dlci8yNDM4NTk2Mw==">Unicode 和 UTF-8 有什么区别<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIxODg3MjQ2L2Fuc3dlci8xOTYzMTIzNQ==">字符集和编码方式的区别<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTQ2NzIzMS9hcnRpY2xlL2RldGFpbHMvODY1NTA4NTQ=">ASCII 码和 ANSI 码的区别<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uaW0vcG9zdC81YjA4OWM1YjUxODgyNTM4YzAyZjAzZWI=">从 ASCII 到 UTF-8 字符集到底是什么<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzU3NDYxNjE0L2Fuc3dlci8yNzQ2MzQ3MjA=">ASCII 码  和 Unicode 码是什么关系<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Computer</category>
+      </categories>
+      <tags>
+        <tag>计算机基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Windows 常见问题</title>
     <url>/computer/computer_issues.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -307,87 +388,6 @@
       </categories>
       <tags>
         <tag>CSharp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>理解计算机中的字符编码</title>
-    <url>/computer/computer_char_code.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>今天再一次体会到了 <strong>基础知识不扎实会带来无数的问题与困扰</strong> 这句话是多么地真实 ! ! 事情起因是我想巩固一下 SQL 知识, 于是用 SQL Developer 工具开始写 SQL, 但是当我用 SQL Developer 打开一个之前在 PL/SQL 上编辑的 SQL 文件的时候, 里面所有的中文全部乱码了 ! ! 我就知道我必须要解决 <code>编码</code> 这个困扰我许久的问题了. 于是上网搜索资料, 最后总结如下, 我使用了编码的发展顺序来组织文章结构 ( 大概, 或许, 应该, 差不多是这么个发展顺序吧, 哈哈 ! ), OK, 我们开始.</p>
-<h1 id="字符集-和-编码规则"><a href="#字符集-和-编码规则" class="headerlink" title="字符集 和 编码规则"></a>字符集 和 编码规则</h1><p>这两个概念必须在最开始就要点出, 这也是这篇文章的重心所在. 字符集和编码规则是完全不同的两种事物:</p>
-<p><strong>字符集</strong>: 为每一个字符分配一个唯一的 ID.</p>
-<p><strong>编码规则</strong>: 定义如何将之前定义的 ID 转换为计算机中的字节序列的一整套规则.</p>
-<p>这里不需要特别明白, 只需要知道有这样一个区别即可, 后面根据实例来理解它们会更容易.</p>
-<h1 id="计算机基础"><a href="#计算机基础" class="headerlink" title="计算机基础"></a>计算机基础</h1><p>在计算机内部, 所有信息最终都是一个二进制值. 每一个二进制位 (bit) 有 0 和 1 两种状态, 因此八个二进制位就可以组合出 256 种状态, 这被称为一个字节 (byte). 也就是说, 从 <code>0X00</code> 到 <code>0XFF</code> 的一个字节一共可以用来表示 256 种不同的状态, 如果让每一个状态对应一个符号, 就是 256 个符号.</p>
-<h1 id="ASCII"><a href="#ASCII" class="headerlink" title="ASCII"></a>ASCII</h1><p>于是美国就率先制定了一套字符编码, 来解决英语字符与二进制位之间的关系, 并做了统一规定. 这被称为 <code>ASCII</code>, 即 <code>美国信息交换标准代码</code>, 一直沿用至今.</p>
-<p>由于 <code>ASCII</code> 提出的时候, 字符集和编码规则这两个概念尚未区分, 于是 <code>ASCII</code> 既表示字符集又表示编码规则. 不过为了好理解, 我们这里来一波强行解释! 上图!</p>
-<p><img data-src="/images/computer_char_code/ascii.png" alt="ASCII"></p>
-<h2 id="ASCII-字符集"><a href="#ASCII-字符集" class="headerlink" title="ASCII 字符集"></a>ASCII 字符集</h2><p>上图中的 <code>Bin</code> 和 <code>缩写/字符</code> 这两列就是字符集, 一共规定了 128 个字符以及这 128 个字符的 ID.</p>
-<p>字符集就只是负责这个工作, 即给每个要表示的字符分配一个 ID, 至于这个 ID 在计算机中怎么表示, 是用 1 个字节还是 2 个字节还是可变长度字节是不需要字符集去考虑的. 即使是仅仅只有 128 个字符的 ASCII 字符集, 我在电脑中就喜欢用 2 个字节表示, 我硬盘空间有的是, 我就喜欢 1 个字节表示字符, 另 1 个字节在旁边站岗, 谁又管的着呢? 虽然这很蠢!</p>
-<h2 id="ASCII-编码规则"><a href="#ASCII-编码规则" class="headerlink" title="ASCII 编码规则"></a>ASCII 编码规则</h2><ul>
-<li>① 每个字符都使用 1 个字节表示.</li>
-<li>② 这个字节的首位始终为 0.</li>
-</ul>
-<p>ASCII 字符集经过编码规则的限制之后, 在计算机中就表示为了: 0000.0000 到 0111.1111.</p>
-<p>这样应该就有点明白字符集和编码规则的区别了吧. 其实当时那个年代 <code>字符集</code> 和 <code>编码规则</code> 这两个概念还没有明确建立, 因为没必要区分开, 默认情况下, 字符集所定义的 ID 的二进制形式就直接是编码规则, 但是随着时代的发展, 明确建立这两个概念就很有必要了. 比如后来提出的 Unicode 字符集, 在 2020 年 3 月的 <code>ISO/IEC 10646:2020</code> 版本中, 总共有 143924 个字符, 其中部分字符会占用 4 个字节, 总不能还是使用 <code>字符集所定义的 ID 的二进制形式就直接是编码规则</code> 这种简单的对应了吧, 因为这样的话所有的字符都要用 4 个字节, 原来只需 1 个字节的英文字母现在需要 4 个字节, 原来只需要 2 个字节的汉字现在也需要 4 个字节, 而且 Unicode 编码还在不断地补充进化, 所以这样实在是太浪费空间了! 我还要用硬盘存放珍贵的电影资源呢! 更大的影响是在网络传输方面, 原本只需传输 1 MB 的数据量, 现在却要传输 4 MB, 这太浪费资源了!</p>
-<p>[注] ASCII 是后面一切编码的基础, 因此即使字符编码不断发展, 发展后的它们也都会考虑到和 ASCII 的兼容性, 因此你会看到后面的编码都会做出一些相应的措施来兼容 ASCII.</p>
-<h1 id="扩展版-ASCII"><a href="#扩展版-ASCII" class="headerlink" title="扩展版 ASCII"></a>扩展版 ASCII</h1><p>随着计算机的普及, 计算机进入了欧洲国家, 但是 ASCII 中不包含其他语言的字符啊! 像希腊字母, 罗马字母等. 那么这些欧洲国家就很难受啊! 正好 ASCII 只使用了 1 个字节的后 7 位, 于是, 一些欧洲国家就决定, 利用 ASCII 编码规则中闲置的最高位编入新的符号 ( 你美国人不是才用了半个字节吗, 那好, 剩下的半个字节由我们来定义 ). 这样一来, 这些欧洲国家使用的编码体系, 就可以表示 256 个字符, 我们称之为 <code>扩展版 ASCII</code>.</p>
-<h2 id="扩展版-ASCII-字符集"><a href="#扩展版-ASCII-字符集" class="headerlink" title="扩展版 ASCII 字符集"></a>扩展版 ASCII 字符集</h2><p>扩展版 ASCII 字符集规定了 256 个字符. 其中 128 个字符直接沿用了 ASCII, 以达到兼容的目的, 剩下的 128 个字符是欧洲国家自己定义的字符. 当然由于每个国家语言不同, 对于这 128 个字符, 不同的国家自然有不同的定义, 那么肯定也会有它们独特的称呼, 但本质上它们都属于扩展版 ASCII 字符集🤣. (是不是感觉开始出现了混乱的味道? 嗯哼~) 但是不管怎样, 所有这些扩展版 ASCII 字符集中, 0 ~ 127 表示的符号是一样的, 不一样的只是 128 ~ 255 这些字符.</p>
-<h2 id="扩展版-ASCII-编码规则"><a href="#扩展版-ASCII-编码规则" class="headerlink" title="扩展版 ASCII 编码规则"></a>扩展版 ASCII 编码规则</h2><ul>
-<li>① 每个字符使用 1 个字节表示.</li>
-</ul>
-<p>于是扩展版 ASCII  字符集经过编码规则的限制之后, 在计算机中就表示为了: 0000.0000 到 1111.1111. ASCII 和扩展版 ASCII 两者之间互不冲突, 相安无事.</p>
-<p>从扩展版 ASCII 开始, 这种命名就具有了表示一个大类的意味, 在这个大类下, 具体会细分成很多字符集, 比如, 意大利有意大利的扩展版 ASCII, 法国有法国的扩展版 ASCII, 瑞士有瑞士的扩展版 ASCII. 其中最优秀的字符集扩展方案是 <code>ISO 8859-1</code>, 通常称之为 <code>Latin-1</code>, Latin-1 利用 128 ~ 255 这 128 个二进制数, 包括了足够的附加字符集来涵盖基本的西欧语言, 同时在 0 ~ 127 的范围内兼容 ASCII 编码规则.</p>
-<h1 id="ANSI"><a href="#ANSI" class="headerlink" title="ANSI"></a>ANSI</h1><p>之后, 计算机进入了亚洲国家, 亚洲国家使用的符号就更多了, 其中我国的汉字就接近十万个! 常用字也有四千多个. 由于前面的 ASCII 和扩展版 ASCII 的单字节字符集只能表示 256 种符号, 这对于我们博大精深的汉语来说是肯定不够的, 于是单字节不行, 就必须使用多字节. 于是就诞生了一系列的多字节字符集, 其中一类就叫做 <code>ANSI 字符集</code>.</p>
-<p>ANSI 字符集是从 0X0000 定义到 0XFFFF, 理论上来说, 只要全部的字符都使用 2 个字节表示, 就可以包含 65536 个字符 (但是实际的编码规则不会这么简单直接), 这对于任何单个国家的字符需求来说, 都能基本满足了.</p>
-<p>ANSI 字符集定义了要表示的字符以及对应的 ID, 但是并不意味着将这些字符编到计算机中的时候会遵守 <code>字符集所定义的 ID 的二进制形式就直接是编码规则</code> 的游戏规则. 就比如后面会提到的 <code>GB 2312</code> 字符集使用的 <code>EUC-CN</code> 编码规则, 半角字符只占 1 个字节, 汉字和全角字符才会占用 2 个字节 (是不是已经开始有点晕了😵).</p>
-<p>[注] 网络上有人说 ANSI 字符集是 ASCII 字符集 的扩展, 我想他应该是把我前面所提到的 ASCII 字符集和 ASCII 扩展字符集都统称为了 ASCII 字符集, 于是得出了他的这个结论. 我认为我的说法和他的说法没有绝对的谁对谁错, 只是不同的两种理解. 在现在这个信息交流如此便利的时代, 我也希望大家在非原则问题上不要过于较真. 不过本文中一直采用的是我自己的看法, 即 ASCII 字符集和 ASCII 扩展字符集不统称为 ASCII 字符集. 接下来让我们回到正题.</p>
-<h2 id="ANSI-字符集"><a href="#ANSI-字符集" class="headerlink" title="ANSI 字符集"></a>ANSI 字符集</h2><p>ANSI 字符集中包含的字符具体是什么不好说, 因为不同国家的 ANSI 字符集包含的字符是不一样的, 和当时的 ASCII 扩展字符集的发展轨迹相同, 对于 ANSI 字符集, 不同的亚洲国家同样设计了他们各自的字符集 (这里我终于搜索到这些细分的 ANSI 字符集所对应的名字了 😂), 比如日本的 ANSI 字符集叫做 <code>JIS X 0208</code>, 韩国的叫做 <code>KS X 1001</code>, 我国的 ANSI 字符集叫做 <code>GB 2312</code>, 释义为: <strong><code>信息处理交换用汉字编码字符集基本集</code></strong>. 下面简单说一下 GB 2312 中所规定的字符集内容.</p>
-<p>GB 2312 共收录 6763 个汉字, 其中一级汉字 3755 个, 二级汉字 3008 个, 同时收录了包括拉丁字母, 希腊字母, 日文平假名及片假名字母, 俄语西里尔字母在内的 682 个字符.</p>
-<p>GB 2312 的出现, 基本满足了汉字的计算机处理需要, 它所收录的汉字已经覆盖中国大陆 99.75% 的使用频率.</p>
-<h2 id="ANSI-编码规则"><a href="#ANSI-编码规则" class="headerlink" title="ANSI 编码规则"></a>ANSI 编码规则</h2><ul>
-<li>① 不同的 ANSI 字符集会规定其独特的编码规则.</li>
-</ul>
-<p>这个还真的都不一样, 但是也都是有基准的. 比如我国的 GB 2312 字符集使用的 ANSI 编码规则叫做 <code>EUC-CN</code>, 日本的 JIS X 0208 字符集在 Windows 上使用的 ANSI 编码规则叫做 <code>EUC-JP</code>, 韩国的 KS X 1001 字符集使用的 ANSI 编码规则叫做 <code>EUC-KR</code>. 这些编码规则都是 <code>EUC</code> 类的编码规则.</p>
-<p>是不是头都大了? 😂 只要知道不同的 <code>ANSI 字符集</code> 会采用一些不同的编码规则即可.</p>
-<p>总结一下, <code>ANSI</code> 是一类字符集的统称, 不同的国家有其自己的 ANSI 字符集, 不同的字符集也会对应不同的编码规则, 同样编码规则也都有各自的名称.</p>
-<p>有人可能会问, 后面不是会出现 Unicode 这种全球统一的字符集吗, 那为什么还要继续使用和发展 ASNI 这种国家之间无法兼容的字符集呢? 这个问题呢我后面会解答.</p>
-<h1 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h1><p>ASNI 出现之后, 各个国家的字符需求基本都解决了, 但是因为每个国家制定了他们各自的字符集和对应的编码方案, 所以各个国家之间的字符集不通用, 于是制定一套全球统一编码的呼声越加强烈! 最后 <code>ISO</code> 即 <code>国际标准化组织</code> 实在看不下去了, 为了解决不同国家 ANSI 的冲突问题, ISO 就制定了一套全球统一编码, 即 <code>Unicode</code>.</p>
-<p><code>Unicode</code> 时代的时候, 字符集和编码规则就已经很明确了, Unicode 仅仅只是一种字符集. 其中定义了全世界所有符号的唯一标识 ID, 并且一直在不断地修订. 2020 年 3 月的 <code>ISO/IEC 10646:2020</code> 标准中, 已经包含了 143924 个字符.</p>
-<p>如果使用简单的 <code>字符集所定义的 ID 的二进制形式就直接是编码规则</code> 的方法来存储 Unicode 字符集, 将会造成极大的浪费, 于是为了解决 Unicode 这个庞大字符集的存储和网络传输问题, 对应 Unicode 字符集的编码规则就出现了. 其中最常用的就是 <code>UTF-8</code> 编码规则了. 其他的编码规则还有 <code>UTF-16 BE</code>, (Big-Endian 大端序) <code>UTF-16 LE</code> (Little-Endian 小端序), <code>UTF-32</code>, <code>UTF-7</code>, <code>Punycode</code>, <code>CESU-8</code>, <code>SCSU</code>, <code>GB18030</code> 等等.</p>
-<p>对于之前说的为什么还要继续使用 ANSI 字符集的原因是, Unicode 下的各种编码规则, 对于常用汉字, 基本上都是占用 3 个字节, 生僻汉字可能占用到 6 个字节. 对于 <code>GB2312</code> 和 <code>GBK</code> 来讲, UTF-8 无疑造成了浪费, 所以, UTF-8 可以说是对英文友好, 但对中文不友好的一种编码方式. 所以在中文界,  GB2312 与 GBK 依旧有自己的市场. 但是按照目前的趋势来看, 硬盘都是白菜价, 电脑性能也已经足够无视这点性能的消耗了. 所以推荐所有的网页使用统一编码: UTF-8.</p>
-<p>其中关于 UTF-8, GB18030 内部的具体编码规则就不展开说了 (其实我也不会, 哈哈), 有兴趣的可以自己搜索资料, 维基百科就是一个比较好的选择.</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
-<li>美国人为了表示日常用的字符, 制定了 ASCII.</li>
-<li>欧洲人为了表示日常用的字符, 扩充了 ASCII.</li>
-<li>中国人为了表示常用简体汉字, 制定了 GB2312.</li>
-<li>中国人为了表示生僻汉字和繁体字, 扩充 GB2312 为 GBK.</li>
-<li>ISO 为了统一全世界的字符, 制定了 Unicode.</li>
-<li>国际上为了方便 Unicode 的传输和存储, 制定了 UTF-8.</li>
-</ul>
-<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
-<li><p><span class="exturl" data-url="aHR0cDovL3d3dy5ydWFueWlmZW5nLmNvbS9ibG9nLzIwMDcvMTAvYXNjaWlfdW5pY29kZV9hbmRfdXRmLTguaHRtbA==">字符编码笔记: ASCII, Unicode 和 UTF-8<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cDovL3d3dy5xaWFueGluZ3poZW0uY29tL3Bvc3QtMTQ5OS5odG1s">网页编码就是那点事<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIzMzc0MDc4L2Fuc3dlci8yNDM4NTk2Mw==">Unicode 和 UTF-8 有什么区别<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzIxODg3MjQ2L2Fuc3dlci8xOTYzMTIzNQ==">字符集和编码方式的区别<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTQ2NzIzMS9hcnRpY2xlL2RldGFpbHMvODY1NTA4NTQ=">ASCII 码和 ANSI 码的区别<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9qdWVqaW4uaW0vcG9zdC81YjA4OWM1YjUxODgyNTM4YzAyZjAzZWI=">从 ASCII 到 UTF-8 字符集到底是什么<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuemhpaHUuY29tL3F1ZXN0aW9uLzU3NDYxNjE0L2Fuc3dlci8yNzQ2MzQ3MjA=">ASCII 码  和 Unicode 码是什么关系<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Computer</category>
-      </categories>
-      <tags>
-        <tag>计算机基础</tag>
       </tags>
   </entry>
   <entry>
@@ -1505,37 +1505,6 @@
       </tags>
   </entry>
   <entry>
-    <title>日记系列--2020年07月</title>
-    <url>/diary/2020_07.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="2020-年-07-月-31-号"><a href="#2020-年-07-月-31-号" class="headerlink" title="2020 年 07 月 31 号"></a>2020 年 07 月 31 号</h1><p>哈哈, 月底了写一下七月的总结吧. 要不顺便起个 90 年日漫式的标题?</p>
-<h1 id="第一集-毕业危险了"><a href="#第一集-毕业危险了" class="headerlink" title="第一集 毕业危险了!"></a>第一集 毕业危险了!</h1><p>刚到七月我就收到了一个及其震撼人心的消息, 我毕不了业了! 是的, 你没听错, 不是我毕业了, 是我毕不了业了! 我学分差两分导致不能毕业, 只能拿到结业证... 当 16 级班长告诉我这个消息的时候, 我当时整个人处于懵逼的状态: 啥, 不能毕业? 谁啊? 我吗? 怎么可能, 你在开玩笑吧, 你是不是打错电话了?</p>
-<p>过了 1 分钟: 我 TM 真的不能毕业了? 真的是我啊! 不可能啊, 我休学之前就只剩一个毕业设计了啊, 而我这次毕业设计又很顺利地通过了, 你告诉我不能毕业, 你是在逗我吗? 今天不是愚人节啊!</p>
-<p>只听 16 级班长缓缓地说: 学长, 是这样的, 16 级培养方案和 15 级的不一样, 多了两门课, 分别叫做: <code>大学生就业与创业指导2-1</code> 和 <code>大学生就业与创业指导2-2</code>, 这两门课是在学长你 <font color='red'><strong>休学期间</strong></font> 开课的, 所以缺这两门课的学分...</p>
-<p>我 ... 我 TM ... 我是真的忍不住了, 我在心里已经开始骂人了, 这 TM 是人干的事? 学校脑子是落家里了吧! 不过这是和 16 级班长也没关系, 谢谢人家通知我就只好挂电话了.</p>
-<p>第一件事, 发呆... 第二件事, 继续发呆... 我当时已经懵了... 不久卢阳老师来电话了, 这是我大学辅导员, 对我特好, 特感谢她, 就和我聊起了这事, 说她正在积极地帮我处理此事, 让我也去联系一下教务处, 问问教务处的意见, 我当时啥法子没有, 老师既然有主意, 那自然得照办啊.</p>
-<p>接下来就打电话给教科办的田老师 (很抱歉, 至今为止不知道这位老师的全名, 总之也很感谢田老师), 田老师一开始是严厉拒绝的, 按她后来的说辞是她不知道我家里的情况以及我休学的原因, 以为我是因为不想学习或者是其他一些消极的理由而休学的, 所以坚决不处理此事, 我 TM ... 这和我休学的理由有毛关系啊... 这 TM 不全是学校的责任吗? 这是和我有半毛钱关系吗? 后来的一次通话中和我说什么上次是因为她不清楚我的情况, 还说我怎么不早和她说我家里的情况, 我 TM ... 念在她也帮了我不少的份上就不计较了, 果然在这个世界卖惨还是有人买账的! 其实我并没有卖惨, 我家庭情况确实如此, 再加上这主意还是陆老师帮我想到的, 我在这些事情上脑子不咋灵光...</p>
-<p>虽然经过了辅导员和田老师的努力, 但是依然没有任何的进展, 于是我直接找系主任张德学老师了, 果然系主任说话就是好使, 一下子副院长, 院长都知道这事了, 中间拖了大概有 3 周, 3 周啊, 21 天啊, 我都不知道这 21 天我是怎么过来的, 这也是后面患急性支气管炎的一个诱因.</p>
-<p>中间打电话问卢阳老师, 卢老师都有一点想要放弃的想法了, 我也是一样, 渐渐地整个人没有了任何生机, 浑身乏力, 没想到生活中的琐事会对我的心境影响这么大, 整个人基本废了... 还好张德学老师一直告诉我肯定有办法的, 而且卢阳老师和田老师的观点都是这事情的责任在我, 我也不知道他们怎么想的, 但是我也不能直说呀对吧!</p>
-<p>后来卢阳老师又想到计算一下如果用 15 级的培养方案, 看一下我是不是能够毕业, 但是戏剧性的一幕出现了, 我当时交毕业实习报告的时候是 3 月份, 然后我 4 月份休学了, 休学通知都下来了, 我就安心在医院照顾我爸爸了, 但是毕业实习的分数上传是在 5 月 25 号, 此时我已经不在学校的管理系统中了, 就是我已经录不了分数了... 我 TM ... 这咋整, 对了, 今年我也写实习报告了呀, 就算是疫情, 我也是在 2 月份就回济南上班了, 写个实习报告那还不是手到擒来嘛... 然后戏剧性的一幕又双出现了... 16 级的培养方案的确是多出来 2 分, 但是培养方案的总分和 15 级的是一样的, 原因是 16 级的 <code>毕业实习</code> 课程不再计算学分了, 因为疫情嘛, 很多人没法实习啊, 所以这门课无效了... 我 TM ... 学校, 我真 TM 谢谢你啊!!!</p>
-<p>就这样, 在经历了无数次碰壁之后, 我已经彻底绝望了...</p>
-<p>但是! 但是! 但是! 张德学老师不是这么认为的, 他认为这事我一点责任没有, 这事情完全是学校的锅, 学校一没通知我选课, 二没通知我上课, 三科还是在我休学期间开课, 就算让我选也选不了, 所以就让我放下心来, 这是学校肯定会处理好的. 实在不行, 就让我向前几年的一位学长学习一下, 从外界给教务处那么 &quot;一点点&quot; 压力, 有些时候吧, 你不给他点压力, 他就不认真干活啊! 对把, 具体, 你懂的!</p>
-<p>我去 ... 这老师懂我呀! 为啥学校里这样的老师那么少呢! 于是在我和主任的多次积极的联系和要求下, 学校也慢慢地重视起来了, 这次是经过了大概一周的时间, 毕业证学位证到手了!</p>
-<p>最后我想应该是学校里各位老师们都付出了很大努力把, 虽然我只知道卢老师, 田老师, 张主任等人, 但是真心感谢, 当卢老师告诉我学校批准我毕业的时候, 那真的是感动啊... 再次感谢各位老师的帮助.</p>
-<h1 id="第二集-舒适圈"><a href="#第二集-舒适圈" class="headerlink" title="第二集 舒适圈?"></a>第二集 舒适圈?</h1><p>我发现自己正处在舒适圈中不想出去, 已经很久没有尝试自己不会的东西了, 基本一直在吃老本, 编写程序时也只用自己熟练的知识去实现, 没有尝试去使用自己了解但不是很熟练的新知识新技术, 总觉得这样不行, 而且自己明明都已经立誓要成为一名游戏开发者了, 却还是荒废了自己大量的时间去刷动漫, 做一些没有任何意义的事情...</p>
-<p>不行, 我得开始规划自己的时间了, 对自己目标没有用的事情坚决不再做了, 刷什么魔塔, 刷什么动漫, 什么想这想那的, 都不如静下心来看本书, 钻研钻研技术.</p>
-<p>最近有段时间迷上了魔塔, 虽然自己玩了好久, 但是始终得不到要领, 于是就开始看魔塔的一个基础理论, 叫做 &quot;蓝宝石转化理论&quot;, 先不说我理解了多少这个理论, 但是从这次经历我深刻的理解了看书真的是成长的捷径, 研究事物背后的理论才能成为学神, 所以我打算从现在开始利用闲余时间开始看书, 就看各种与游戏开发相关的书籍, 也开始尝试写技术类博客, 博客的内容是写下自己的想法, 而不是记笔记, 记笔记不应该使用博客, 而是使用大脑, 还有就是书籍不要怕脏, 有什么想法就直接写在书上, 书都买了, 为什么不用呢? 当初为什么没有选择借书, 不就是因为借的书不能随手记笔记嘛.</p>
-<p>那么就先写到这吧, 希望未来的自己回过头来看自己这篇日记的时候能真正的成为一名学神.</p>
-]]></content>
-      <categories>
-        <category>Diary</category>
-      </categories>
-      <tags>
-        <tag>Diary</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>日记系列--2020年06月</title>
     <url>/diary/2020_06.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -1559,21 +1528,28 @@
       </tags>
   </entry>
   <entry>
-    <title>日记系列--2021年06月</title>
-    <url>/diary/2021-06.html</url>
+    <title>日记系列--2020年07月</title>
+    <url>/diary/2020_07.html</url>
     <content><![CDATA[<a id="more"></a>
 
-<h1 id="2021-年-6-月-1-日"><a href="#2021-年-6-月-1-日" class="headerlink" title="2021 年 6 月 1 日"></a>2021 年 6 月 1 日</h1><p>六一儿童节啦, 距离上一次写日记也已经过去了整整一年, 这一年还真是发生了太多事情啊.</p>
-<p>第一件事是我离职了, 目前在厦门真有趣工作了, 这里给我的体验就是两个字: 天堂! 超整洁的办公环境, 超享受的茶水间, 超级大佬的同事, 果然游戏开发最棒! 大体总结一下这段时间的经历吧.</p>
-<h2 id="离职和就职的巧合"><a href="#离职和就职的巧合" class="headerlink" title="离职和就职的巧合"></a>离职和就职的巧合</h2><p>2020 年 1 月 14 号的时候, 由于之前请假去面试, 经理直接找我面谈了, 就直说赶紧走, 这不留你... 我也是见识到了, 你没价值了, 真的是说赶你走就赶你走啊... 我当时还在纠结这可咋整, 下一份工作还没着落呢, 唉... 渐渐地恐慌感都上来了.</p>
-<p>还好幸运女神是站在我这边的, 上午刚谈完话, 中午真有趣就来消息了, 说是我可以去厦门啦... 哈哈, 这真的是戏剧的一幕啊... 中午饭都没吃, 直接和 HR 谈好需要准备的东西, 然后回去和经理说: 我现在就走... 经理反而好像还有点急了: 这么着急? 我: 对, 很着急, 现在就想走. (哈哈, 你不是让我走嘛, 那我现在就走, 马上就走, 你就自己继续在国子那个破公司里面继续发霉吧, 活该, 哈哈!!) 看着他哪个样子, 是真的开心啊!</p>
-<h2 id="飞往厦门"><a href="#飞往厦门" class="headerlink" title="飞往厦门"></a>飞往厦门</h2><p>之后就是正常的准备了, 拍照, 体检, 买机票, 上飞机. (我还是第一次坐飞机呢), 那天王健还请假来送我, 真的感动, 也不知道下一次什么时候能在见面.</p>
-<h2 id="入住酒店-遇到-MHR"><a href="#入住酒店-遇到-MHR" class="headerlink" title="入住酒店, 遇到 MHR"></a>入住酒店, 遇到 MHR</h2><p>飞机降落后, 去到 HR 指定的酒店里放下行李. 话说这酒店也太豪华了吧, 说真的, 说是 5 星级的我想都不过分. 图片都在谷歌相册里面, 想看在里面还能找到. 之后找房子住, 在豆瓣上遇到了毛寒睿, 又叫孟浩然, 哈哈. 我情人节的时候还向她告白了, 可惜被拒绝了, ≧ ﹏ ≦, 目前还是普通联系着, 算是一个网络好友吧, 可以分享生活中的一些趣事, 反正我也没有其他人可以分享. 后来就是她转租, 我续租, 就这样住在了莲花国际.</p>
-<h2 id="正式入职工作"><a href="#正式入职工作" class="headerlink" title="正式入职工作"></a>正式入职工作</h2><p>之后正式入职, 办理入职手续, 总之只能用惊艳来形容, 我真的是来对公司了, 幸福啊. 过年的时候公司每人发了一台 Switch, Switch 啊, 梦寐以求的游戏机, 2300 多软妹币呢! 后来还举办了 2 次烤肉和 1 次剧本杀, 剧本杀好开心啊, 我可是雾山云雨的大师兄啊, 哈哈!</p>
-<h2 id="饥荒与搬家"><a href="#饥荒与搬家" class="headerlink" title="饥荒与搬家"></a>饥荒与搬家</h2><p>中间一段时间和同事们迷上了饥荒游戏, 一起在饥荒的世界中探险, 那段时光真的快乐, 每次都不知不觉玩到凌晨, 也正是这个原因, 后来决意要搬到一个离公司近的地方. 后来就是搬到了 D03, 和同事王珲一起住, 期间买了好多新家具, 总之很不错, 除了冰箱买亏了, 其他的都超满意!</p>
-<h2 id="俄罗斯方块"><a href="#俄罗斯方块" class="headerlink" title="俄罗斯方块"></a>俄罗斯方块</h2><p>最近打算做一个能上架商店的游戏, 于是就拿最简单的俄罗斯方块尝试一下, 目前已经做了个差不多, 有时间把最后的高亮预判实现一下, 整理一下代码, 上传到谷歌商店试试.</p>
-<h2 id="六一儿童节"><a href="#六一儿童节" class="headerlink" title="六一儿童节"></a>六一儿童节</h2><p>在之后就是今天了, 公司还举办了挺大的一个活动, 我抽了一支扭蛋, 宝可梦系列的, 具体是只啥宠物就不知道了...不过还蛮可爱的.</p>
-<p>说实话本来是想把一些照片贴过来的, 不过一想到照片那么大, 还是算了吧, 得找个时间把博客好好清理清理了. 就先写到这里吧, 以后的事情以后再说.</p>
+<h1 id="2020-年-07-月-31-号"><a href="#2020-年-07-月-31-号" class="headerlink" title="2020 年 07 月 31 号"></a>2020 年 07 月 31 号</h1><p>哈哈, 月底了写一下七月的总结吧. 要不顺便起个 90 年日漫式的标题?</p>
+<h1 id="第一集-毕业危险了"><a href="#第一集-毕业危险了" class="headerlink" title="第一集 毕业危险了!"></a>第一集 毕业危险了!</h1><p>刚到七月我就收到了一个及其震撼人心的消息, 我毕不了业了! 是的, 你没听错, 不是我毕业了, 是我毕不了业了! 我学分差两分导致不能毕业, 只能拿到结业证... 当 16 级班长告诉我这个消息的时候, 我当时整个人处于懵逼的状态: 啥, 不能毕业? 谁啊? 我吗? 怎么可能, 你在开玩笑吧, 你是不是打错电话了?</p>
+<p>过了 1 分钟: 我 TM 真的不能毕业了? 真的是我啊! 不可能啊, 我休学之前就只剩一个毕业设计了啊, 而我这次毕业设计又很顺利地通过了, 你告诉我不能毕业, 你是在逗我吗? 今天不是愚人节啊!</p>
+<p>只听 16 级班长缓缓地说: 学长, 是这样的, 16 级培养方案和 15 级的不一样, 多了两门课, 分别叫做: <code>大学生就业与创业指导2-1</code> 和 <code>大学生就业与创业指导2-2</code>, 这两门课是在学长你 <font color='red'><strong>休学期间</strong></font> 开课的, 所以缺这两门课的学分...</p>
+<p>我 ... 我 TM ... 我是真的忍不住了, 我在心里已经开始骂人了, 这 TM 是人干的事? 学校脑子是落家里了吧! 不过这是和 16 级班长也没关系, 谢谢人家通知我就只好挂电话了.</p>
+<p>第一件事, 发呆... 第二件事, 继续发呆... 我当时已经懵了... 不久卢阳老师来电话了, 这是我大学辅导员, 对我特好, 特感谢她, 就和我聊起了这事, 说她正在积极地帮我处理此事, 让我也去联系一下教务处, 问问教务处的意见, 我当时啥法子没有, 老师既然有主意, 那自然得照办啊.</p>
+<p>接下来就打电话给教科办的田老师 (很抱歉, 至今为止不知道这位老师的全名, 总之也很感谢田老师), 田老师一开始是严厉拒绝的, 按她后来的说辞是她不知道我家里的情况以及我休学的原因, 以为我是因为不想学习或者是其他一些消极的理由而休学的, 所以坚决不处理此事, 我 TM ... 这和我休学的理由有毛关系啊... 这 TM 不全是学校的责任吗? 这是和我有半毛钱关系吗? 后来的一次通话中和我说什么上次是因为她不清楚我的情况, 还说我怎么不早和她说我家里的情况, 我 TM ... 念在她也帮了我不少的份上就不计较了, 果然在这个世界卖惨还是有人买账的! 其实我并没有卖惨, 我家庭情况确实如此, 再加上这主意还是陆老师帮我想到的, 我在这些事情上脑子不咋灵光...</p>
+<p>虽然经过了辅导员和田老师的努力, 但是依然没有任何的进展, 于是我直接找系主任张德学老师了, 果然系主任说话就是好使, 一下子副院长, 院长都知道这事了, 中间拖了大概有 3 周, 3 周啊, 21 天啊, 我都不知道这 21 天我是怎么过来的, 这也是后面患急性支气管炎的一个诱因.</p>
+<p>中间打电话问卢阳老师, 卢老师都有一点想要放弃的想法了, 我也是一样, 渐渐地整个人没有了任何生机, 浑身乏力, 没想到生活中的琐事会对我的心境影响这么大, 整个人基本废了... 还好张德学老师一直告诉我肯定有办法的, 而且卢阳老师和田老师的观点都是这事情的责任在我, 我也不知道他们怎么想的, 但是我也不能直说呀对吧!</p>
+<p>后来卢阳老师又想到计算一下如果用 15 级的培养方案, 看一下我是不是能够毕业, 但是戏剧性的一幕出现了, 我当时交毕业实习报告的时候是 3 月份, 然后我 4 月份休学了, 休学通知都下来了, 我就安心在医院照顾我爸爸了, 但是毕业实习的分数上传是在 5 月 25 号, 此时我已经不在学校的管理系统中了, 就是我已经录不了分数了... 我 TM ... 这咋整, 对了, 今年我也写实习报告了呀, 就算是疫情, 我也是在 2 月份就回济南上班了, 写个实习报告那还不是手到擒来嘛... 然后戏剧性的一幕又双出现了... 16 级的培养方案的确是多出来 2 分, 但是培养方案的总分和 15 级的是一样的, 原因是 16 级的 <code>毕业实习</code> 课程不再计算学分了, 因为疫情嘛, 很多人没法实习啊, 所以这门课无效了... 我 TM ... 学校, 我真 TM 谢谢你啊!!!</p>
+<p>就这样, 在经历了无数次碰壁之后, 我已经彻底绝望了...</p>
+<p>但是! 但是! 但是! 张德学老师不是这么认为的, 他认为这事我一点责任没有, 这事情完全是学校的锅, 学校一没通知我选课, 二没通知我上课, 三科还是在我休学期间开课, 就算让我选也选不了, 所以就让我放下心来, 这是学校肯定会处理好的. 实在不行, 就让我向前几年的一位学长学习一下, 从外界给教务处那么 &quot;一点点&quot; 压力, 有些时候吧, 你不给他点压力, 他就不认真干活啊! 对把, 具体, 你懂的!</p>
+<p>我去 ... 这老师懂我呀! 为啥学校里这样的老师那么少呢! 于是在我和主任的多次积极的联系和要求下, 学校也慢慢地重视起来了, 这次是经过了大概一周的时间, 毕业证学位证到手了!</p>
+<p>最后我想应该是学校里各位老师们都付出了很大努力把, 虽然我只知道卢老师, 田老师, 张主任等人, 但是真心感谢, 当卢老师告诉我学校批准我毕业的时候, 那真的是感动啊... 再次感谢各位老师的帮助.</p>
+<h1 id="第二集-舒适圈"><a href="#第二集-舒适圈" class="headerlink" title="第二集 舒适圈?"></a>第二集 舒适圈?</h1><p>我发现自己正处在舒适圈中不想出去, 已经很久没有尝试自己不会的东西了, 基本一直在吃老本, 编写程序时也只用自己熟练的知识去实现, 没有尝试去使用自己了解但不是很熟练的新知识新技术, 总觉得这样不行, 而且自己明明都已经立誓要成为一名游戏开发者了, 却还是荒废了自己大量的时间去刷动漫, 做一些没有任何意义的事情...</p>
+<p>不行, 我得开始规划自己的时间了, 对自己目标没有用的事情坚决不再做了, 刷什么魔塔, 刷什么动漫, 什么想这想那的, 都不如静下心来看本书, 钻研钻研技术.</p>
+<p>最近有段时间迷上了魔塔, 虽然自己玩了好久, 但是始终得不到要领, 于是就开始看魔塔的一个基础理论, 叫做 &quot;蓝宝石转化理论&quot;, 先不说我理解了多少这个理论, 但是从这次经历我深刻的理解了看书真的是成长的捷径, 研究事物背后的理论才能成为学神, 所以我打算从现在开始利用闲余时间开始看书, 就看各种与游戏开发相关的书籍, 也开始尝试写技术类博客, 博客的内容是写下自己的想法, 而不是记笔记, 记笔记不应该使用博客, 而是使用大脑, 还有就是书籍不要怕脏, 有什么想法就直接写在书上, 书都买了, 为什么不用呢? 当初为什么没有选择借书, 不就是因为借的书不能随手记笔记嘛.</p>
+<p>那么就先写到这吧, 希望未来的自己回过头来看自己这篇日记的时候能真正的成为一名学神.</p>
 ]]></content>
       <categories>
         <category>Diary</category>
@@ -1644,6 +1620,30 @@
       </categories>
       <tags>
         <tag>Game</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>日记系列--2021年06月</title>
+    <url>/diary/2021-06.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="2021-年-6-月-1-日"><a href="#2021-年-6-月-1-日" class="headerlink" title="2021 年 6 月 1 日"></a>2021 年 6 月 1 日</h1><p>六一儿童节啦, 距离上一次写日记也已经过去了整整一年, 这一年还真是发生了太多事情啊.</p>
+<p>第一件事是我离职了, 目前在厦门真有趣工作了, 这里给我的体验就是两个字: 天堂! 超整洁的办公环境, 超享受的茶水间, 超级大佬的同事, 果然游戏开发最棒! 大体总结一下这段时间的经历吧.</p>
+<h2 id="离职和就职的巧合"><a href="#离职和就职的巧合" class="headerlink" title="离职和就职的巧合"></a>离职和就职的巧合</h2><p>2020 年 1 月 14 号的时候, 由于之前请假去面试, 经理直接找我面谈了, 就直说赶紧走, 这不留你... 我也是见识到了, 你没价值了, 真的是说赶你走就赶你走啊... 我当时还在纠结这可咋整, 下一份工作还没着落呢, 唉... 渐渐地恐慌感都上来了.</p>
+<p>还好幸运女神是站在我这边的, 上午刚谈完话, 中午真有趣就来消息了, 说是我可以去厦门啦... 哈哈, 这真的是戏剧的一幕啊... 中午饭都没吃, 直接和 HR 谈好需要准备的东西, 然后回去和经理说: 我现在就走... 经理反而好像还有点急了: 这么着急? 我: 对, 很着急, 现在就想走. (哈哈, 你不是让我走嘛, 那我现在就走, 马上就走, 你就自己继续在国子那个破公司里面继续发霉吧, 活该, 哈哈!!) 看着他哪个样子, 是真的开心啊!</p>
+<h2 id="飞往厦门"><a href="#飞往厦门" class="headerlink" title="飞往厦门"></a>飞往厦门</h2><p>之后就是正常的准备了, 拍照, 体检, 买机票, 上飞机. (我还是第一次坐飞机呢), 那天王健还请假来送我, 真的感动, 也不知道下一次什么时候能在见面.</p>
+<h2 id="入住酒店-遇到-MHR"><a href="#入住酒店-遇到-MHR" class="headerlink" title="入住酒店, 遇到 MHR"></a>入住酒店, 遇到 MHR</h2><p>飞机降落后, 去到 HR 指定的酒店里放下行李. 话说这酒店也太豪华了吧, 说真的, 说是 5 星级的我想都不过分. 图片都在谷歌相册里面, 想看在里面还能找到. 之后找房子住, 在豆瓣上遇到了毛寒睿, 又叫孟浩然, 哈哈. 我情人节的时候还向她告白了, 可惜被拒绝了, ≧ ﹏ ≦, 目前还是普通联系着, 算是一个网络好友吧, 可以分享生活中的一些趣事, 反正我也没有其他人可以分享. 后来就是她转租, 我续租, 就这样住在了莲花国际.</p>
+<h2 id="正式入职工作"><a href="#正式入职工作" class="headerlink" title="正式入职工作"></a>正式入职工作</h2><p>之后正式入职, 办理入职手续, 总之只能用惊艳来形容, 我真的是来对公司了, 幸福啊. 过年的时候公司每人发了一台 Switch, Switch 啊, 梦寐以求的游戏机, 2300 多软妹币呢! 后来还举办了 2 次烤肉和 1 次剧本杀, 剧本杀好开心啊, 我可是雾山云雨的大师兄啊, 哈哈!</p>
+<h2 id="饥荒与搬家"><a href="#饥荒与搬家" class="headerlink" title="饥荒与搬家"></a>饥荒与搬家</h2><p>中间一段时间和同事们迷上了饥荒游戏, 一起在饥荒的世界中探险, 那段时光真的快乐, 每次都不知不觉玩到凌晨, 也正是这个原因, 后来决意要搬到一个离公司近的地方. 后来就是搬到了 D03, 和同事王珲一起住, 期间买了好多新家具, 总之很不错, 除了冰箱买亏了, 其他的都超满意!</p>
+<h2 id="俄罗斯方块"><a href="#俄罗斯方块" class="headerlink" title="俄罗斯方块"></a>俄罗斯方块</h2><p>最近打算做一个能上架商店的游戏, 于是就拿最简单的俄罗斯方块尝试一下, 目前已经做了个差不多, 有时间把最后的高亮预判实现一下, 整理一下代码, 上传到谷歌商店试试.</p>
+<h2 id="六一儿童节"><a href="#六一儿童节" class="headerlink" title="六一儿童节"></a>六一儿童节</h2><p>在之后就是今天了, 公司还举办了挺大的一个活动, 我抽了一支扭蛋, 宝可梦系列的, 具体是只啥宠物就不知道了...不过还蛮可爱的.</p>
+<p>说实话本来是想把一些照片贴过来的, 不过一想到照片那么大, 还是算了吧, 得找个时间把博客好好清理清理了. 就先写到这里吧, 以后的事情以后再说.</p>
+]]></content>
+      <categories>
+        <category>Diary</category>
+      </categories>
+      <tags>
+        <tag>Diary</tag>
       </tags>
   </entry>
   <entry>
@@ -2773,6 +2773,143 @@
       </tags>
   </entry>
   <entry>
+    <title>Unity 动画系统</title>
+    <url>/unity/unity_animation.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="Mecanim-简介"><a href="#Mecanim-简介" class="headerlink" title="Mecanim 简介"></a>Mecanim 简介</h1><p>Unity 的动画系统英文名为: Mecanim, 是一个丰富而复杂的系统. 它支持从模型中直接导入的动画 (Model Import Settings), 也支持直接在 Unity 中创建的或录制的动画.</p>
+<p>Unity 中动画的最小单位是 &quot;动画剪辑 (Animation Clip)&quot;, 这是最小的一个动画单位, 里面包含了对游戏物体的 &quot;位置&quot;, &quot;旋转&quot;, &quot;缩放&quot;, &quot;颜色&quot; 等等很多属性的变化规则. 但是这些动画剪辑并不能直接应用到游戏物体上, 而是需要先在一个叫做 &quot;Animation Controller&quot; 的系统中对这些动画进行设置才行, 包括动画的播放条件, 动画之间的转换规则, 还可以使用遮罩来设置动画的生效范围等.</p>
+<p>使用 &quot;Animation Controller&quot; 将多个动画剪辑设置好规则之后, 就可以将这个 &quot;Animation Controller&quot; 应用到游戏物体上了, Unity 有一个叫做 &quot;Animator&quot; 的游戏组件可以使用并解析 &quot;Animation Controller&quot;.</p>
+<p>这样一个动画从导入或创建直到最后控制游戏物体的动作的整个流程就完成了.</p>
+<p><img data-src="/images/unity_anime/Mecanim.png" alt="Mecanim"></p>
+<ol>
+<li>Project 中的动画放置到 Animation Controller 中</li>
+<li>在 Animation Controller 中混合动画生成一个 Animation Controller 文件</li>
+<li>人物骨骼文件加骨骼遮罩文件生成 Avatar 文件</li>
+<li>Animator 组件引用前面的 Animation Controller 文件和 Avatar 文件.</li>
+</ol>
+<h1 id="Animation-Clip-的来源"><a href="#Animation-Clip-的来源" class="headerlink" title="Animation Clip 的来源"></a>Animation Clip 的来源</h1><p>Unity 支持从外部源导入动画, 并允许在编辑器中使用 Animation 窗口从头开始创建动画剪辑.</p>
+<h2 id="Model-Animation-Clip-Import"><a href="#Model-Animation-Clip-Import" class="headerlink" title="Model Animation Clip Import"></a>Model Animation Clip Import</h2><p>要将模型动画导入到 Unity 中, 需要在模型导入页面的 Animation 选项卡中对动画进行帧数剪辑以及循环帧调整, 具体见另一篇模型导入的博客. <a href="https://kuroha.vip/unity_model_import_settings.html">跳转</a></p>
+<h2 id="Record-Animation-Clip"><a href="#Record-Animation-Clip" class="headerlink" title="Record Animation Clip"></a>Record Animation Clip</h2><p>在 Unity 的 Animation 窗口中还可以创建和编辑动画剪辑.</p>
+<p><img data-src="/images/unity_anime/AnimationWindow.png" alt="AnimationWindow"></p>
+<p>左侧最下方的 &quot;Dopesheet&quot; 是关键帧查看模式, &quot;Curves&quot; 是曲线查看模式. 录制动画时关注点是关键帧, 所以使用关键帧模式, 但是调整动画时, 必须使用曲线模式, 因为 Unity 默认使用平滑插值曲线, 但是有些时候我们会希望使用线性动画曲, 因此必须打开曲线模式查看关键帧之间的过渡方式.</p>
+<p>选中想要查看的动画属性, 之后按下 <kbd>F</kbd> 键可以将右侧的视图缩放到适合观察这几个属性的缩放级别, 便于观察.</p>
+<p>按下 <kbd>A</kbd> 键则可以快速将右侧的视图缩放至查看全部动画属性的缩放级别.</p>
+<p><img data-src="/images/unity_anime/AnimationWindowRecord.png" alt="AnimationWindowRecord"></p>
+<p>Preview: 启用时 Scene 窗口中会实时预览动画的样子, 关闭后 Scene 不会进行实时预览.</p>
+<p>第二个按钮是: 录制模式 [注] 如果打开录制模式, 那么预览模式也会始终打开.</p>
+<p>右侧时间线的标题颜色, 在预览模式下是<font color='blue'>蓝色</font>的, 在录制模式下是<font color='red'>红色</font>的.</p>
+<p>后面的按钮分别是:</p>
+<ul>
+<li>将播放的开头移到动画的开头.</li>
+<li>将播放的开头移到动画的上一个关键帧.</li>
+<li>将播放的开头移到动画的下一个关键帧.</li>
+<li>将播放的开头移到动画的结尾.</li>
+</ul>
+<p>还可使用以下键盘快捷键来控制动画播放开头:</p>
+<table>
+<thead>
+<tr>
+<th align="left">快捷键</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><kbd>,</kbd></td>
+<td align="left">跳到上一帧</td>
+</tr>
+<tr>
+<td align="left"><kbd>.</kbd></td>
+<td align="left">跳到下一帧</td>
+</tr>
+<tr>
+<td align="left"><kbd>Alt</kbd> + <kbd>,</kbd></td>
+<td align="left">跳到上一个关键帧</td>
+</tr>
+<tr>
+<td align="left"><kbd>Alt</kbd> + <kbd>.</kbd></td>
+<td align="left">跳到下一个关键帧</td>
+</tr>
+</tbody></table>
+<h2 id="Animation-Events"><a href="#Animation-Events" class="headerlink" title="Animation Events"></a>Animation Events</h2><p>时间线区域可以给动画添加动画事件, 动画的事件函数还可以接收一个参数, 这个参数可以是: <code>float</code>, <code>string</code>, <code>int</code>, <code>object</code>, <code>AnimationEvent</code> 类型, 其中 AnimationEvent 类型可以将动画的很多信息一次性全部传给动画事件函数.</p>
+<h1 id="Animation-Controller"><a href="#Animation-Controller" class="headerlink" title="Animation Controller"></a>Animation Controller</h1><p>Animation Controller 使用一种 &quot;状态机&quot; 的方式来管理所有的动画剪辑, 通过打开 Animator 窗口便可以看到图形化的状态机.</p>
+<p><img data-src="/images/unity_anime/AnimatorWindow.png" alt="AnimatorWindow"></p>
+<ul>
+<li>Entry: 进入状态机的入口, 会连接一个初始的动画剪辑, 默认的动画剪辑为橙色, 过度线也是橙色. 另外 Entry 也可以使用普通的过渡条件过渡到其他的动画类型.</li>
+</ul>
+<p><img data-src="/images/unity_anime/AnimatorWindowEntry.png" alt="AnimatorWindowEntry"></p>
+<ul>
+<li><p>Any State, 任意状态, 是一个始终存在的特殊状态. 当某个状态 &quot;无论当前是什么状态, 只要满足要求均可以跳转过去&quot; 的时候, 使用 Any State 将十分方便. 另外 <font color='red'>Unity 不允许将 Any State 作为退出过渡动画</font>.</p>
+</li>
+<li><p>Exit 出口, 退出状态机的出口.</p>
+</li>
+</ul>
+<h2 id="Sub-State-Machine"><a href="#Sub-State-Machine" class="headerlink" title="Sub-State Machine"></a>Sub-State Machine</h2><p>[<strong>常用</strong>] Sub-State Machine, 译为: 子状态机, 可以理解为就是动画剪辑在状态机中的一个文件夹, 当动画剪辑特别多的时候, 可以用来很方便的整理和规划所有的动画剪辑.</p>
+<h2 id="Blend-Tree"><a href="#Blend-Tree" class="headerlink" title="Blend Tree"></a>Blend Tree</h2><p>动画混合树.</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO...</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="过渡条件"><a href="#过渡条件" class="headerlink" title="过渡条件"></a>过渡条件</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO...</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="Animation-Clip-单个动画剪辑"><a href="#Animation-Clip-单个动画剪辑" class="headerlink" title="Animation Clip 单个动画剪辑"></a>Animation Clip 单个动画剪辑</h2><h3 id="Solo-和-Mute-功能"><a href="#Solo-和-Mute-功能" class="headerlink" title="Solo 和 Mute 功能"></a>Solo 和 Mute 功能</h3><p>这个功能主要应用于动画测试. 测试的时候一般需要控制变量, 每次测试都是测试特定的一条动画转换, 因此需要其他的动画切换此时就非常碍事了. 可以使用 <code>Solo</code> 仅启用勾选了 Solo 的动画过渡, 剩余的全部禁用.</p>
+<p>而有时候需要仅禁用一个动画转换, 其他的全部都要启用, 测试就可以使用 <code>Mute</code> 只禁用掉勾选了 Mute 的动画过渡, 剩余的全部启用.</p>
+<p>Unity 允许 Solo 和 Mute 同时勾选, 但是为了方便理解, <font color='red'><strong>禁止 1 条动画过渡同时勾选 Solo 和 Mute</strong></font>, 同时在使用这个功能时, 只允许同时使用其中一种, <font color='red'><strong>禁止两种同时使用</strong></font>.</p>
+<p>勾选了 Solo 的过渡箭头为<font color='green'><strong>绿色</strong></font>, 勾选了 Mute 的过渡箭头为<font color='red'><strong>红色</strong></font>.</p>
+<h1 id="Animator-组件"><a href="#Animator-组件" class="headerlink" title="Animator 组件"></a>Animator 组件</h1><p>Animator 组件挂载在游戏物体上, 其中需要引用 Animation Controller, 人形游戏物体还需要引用 Avatar.</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Controller</td>
+<td align="left">引用管理此角色动画的 Animator Controller</td>
+</tr>
+<tr>
+<td align="left">Avatar</td>
+<td align="left">人形角色的 Avatar</td>
+</tr>
+<tr>
+<td align="left">Apply Root Motion</td>
+<td align="left">勾选后, 在动画播放期间, 物体的运动相关参数完全由动画本身接管, 此时脚本控制无效. 取消勾选后, 则是由脚本来控制物体的运动参数</td>
+</tr>
+<tr>
+<td align="left">Update Mode</td>
+<td align="left"><strong>Normal</strong>: 与 Update 调用同步更新, 同时动画的速度与游戏时间标度一致; <strong>Animate Physics</strong>: 与 FixedUpdate 调用同步更新, 如果要对具有物理交互的对象的运动进行动画化, 应使用此模式, 例如可四处推动刚体对象的角色; <strong>Unscaled Time</strong>: 与 Update 调用同步更新, 但是动画的速度永远以 100% 的速度播放, 与时间标度无关. 应用于 UI 动画.</td>
+</tr>
+<tr>
+<td align="left">Culling Mode</td>
+<td align="left">动画剔除模式, <strong>Always Animate</strong>: 始终进行动画化; <strong>Cull Update Transforms</strong>: 剔除 Transform 的更新, 未显示时禁用 Transform 的重定向, IK和写入; <strong>Cull Completely</strong>: 完全剔除, 未显示时完全禁用动画</td>
+</tr>
+</tbody></table>
+<h1 id="Timeline"><a href="#Timeline" class="headerlink" title="Timeline"></a>Timeline</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO...</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>正则表达式</title>
     <url>/program/regular_expression.html</url>
     <content><![CDATA[<h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式?"></a>正则表达式?</h1><blockquote>
@@ -3070,143 +3207,6 @@
       </categories>
       <tags>
         <tag>Program</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Unity 动画系统</title>
-    <url>/unity/unity_animation.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="Mecanim-简介"><a href="#Mecanim-简介" class="headerlink" title="Mecanim 简介"></a>Mecanim 简介</h1><p>Unity 的动画系统英文名为: Mecanim, 是一个丰富而复杂的系统. 它支持从模型中直接导入的动画 (Model Import Settings), 也支持直接在 Unity 中创建的或录制的动画.</p>
-<p>Unity 中动画的最小单位是 &quot;动画剪辑 (Animation Clip)&quot;, 这是最小的一个动画单位, 里面包含了对游戏物体的 &quot;位置&quot;, &quot;旋转&quot;, &quot;缩放&quot;, &quot;颜色&quot; 等等很多属性的变化规则. 但是这些动画剪辑并不能直接应用到游戏物体上, 而是需要先在一个叫做 &quot;Animation Controller&quot; 的系统中对这些动画进行设置才行, 包括动画的播放条件, 动画之间的转换规则, 还可以使用遮罩来设置动画的生效范围等.</p>
-<p>使用 &quot;Animation Controller&quot; 将多个动画剪辑设置好规则之后, 就可以将这个 &quot;Animation Controller&quot; 应用到游戏物体上了, Unity 有一个叫做 &quot;Animator&quot; 的游戏组件可以使用并解析 &quot;Animation Controller&quot;.</p>
-<p>这样一个动画从导入或创建直到最后控制游戏物体的动作的整个流程就完成了.</p>
-<p><img data-src="/images/unity_anime/Mecanim.png" alt="Mecanim"></p>
-<ol>
-<li>Project 中的动画放置到 Animation Controller 中</li>
-<li>在 Animation Controller 中混合动画生成一个 Animation Controller 文件</li>
-<li>人物骨骼文件加骨骼遮罩文件生成 Avatar 文件</li>
-<li>Animator 组件引用前面的 Animation Controller 文件和 Avatar 文件.</li>
-</ol>
-<h1 id="Animation-Clip-的来源"><a href="#Animation-Clip-的来源" class="headerlink" title="Animation Clip 的来源"></a>Animation Clip 的来源</h1><p>Unity 支持从外部源导入动画, 并允许在编辑器中使用 Animation 窗口从头开始创建动画剪辑.</p>
-<h2 id="Model-Animation-Clip-Import"><a href="#Model-Animation-Clip-Import" class="headerlink" title="Model Animation Clip Import"></a>Model Animation Clip Import</h2><p>要将模型动画导入到 Unity 中, 需要在模型导入页面的 Animation 选项卡中对动画进行帧数剪辑以及循环帧调整, 具体见另一篇模型导入的博客. <a href="https://kuroha.vip/unity_model_import_settings.html">跳转</a></p>
-<h2 id="Record-Animation-Clip"><a href="#Record-Animation-Clip" class="headerlink" title="Record Animation Clip"></a>Record Animation Clip</h2><p>在 Unity 的 Animation 窗口中还可以创建和编辑动画剪辑.</p>
-<p><img data-src="/images/unity_anime/AnimationWindow.png" alt="AnimationWindow"></p>
-<p>左侧最下方的 &quot;Dopesheet&quot; 是关键帧查看模式, &quot;Curves&quot; 是曲线查看模式. 录制动画时关注点是关键帧, 所以使用关键帧模式, 但是调整动画时, 必须使用曲线模式, 因为 Unity 默认使用平滑插值曲线, 但是有些时候我们会希望使用线性动画曲, 因此必须打开曲线模式查看关键帧之间的过渡方式.</p>
-<p>选中想要查看的动画属性, 之后按下 <kbd>F</kbd> 键可以将右侧的视图缩放到适合观察这几个属性的缩放级别, 便于观察.</p>
-<p>按下 <kbd>A</kbd> 键则可以快速将右侧的视图缩放至查看全部动画属性的缩放级别.</p>
-<p><img data-src="/images/unity_anime/AnimationWindowRecord.png" alt="AnimationWindowRecord"></p>
-<p>Preview: 启用时 Scene 窗口中会实时预览动画的样子, 关闭后 Scene 不会进行实时预览.</p>
-<p>第二个按钮是: 录制模式 [注] 如果打开录制模式, 那么预览模式也会始终打开.</p>
-<p>右侧时间线的标题颜色, 在预览模式下是<font color='blue'>蓝色</font>的, 在录制模式下是<font color='red'>红色</font>的.</p>
-<p>后面的按钮分别是:</p>
-<ul>
-<li>将播放的开头移到动画的开头.</li>
-<li>将播放的开头移到动画的上一个关键帧.</li>
-<li>将播放的开头移到动画的下一个关键帧.</li>
-<li>将播放的开头移到动画的结尾.</li>
-</ul>
-<p>还可使用以下键盘快捷键来控制动画播放开头:</p>
-<table>
-<thead>
-<tr>
-<th align="left">快捷键</th>
-<th align="left">作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><kbd>,</kbd></td>
-<td align="left">跳到上一帧</td>
-</tr>
-<tr>
-<td align="left"><kbd>.</kbd></td>
-<td align="left">跳到下一帧</td>
-</tr>
-<tr>
-<td align="left"><kbd>Alt</kbd> + <kbd>,</kbd></td>
-<td align="left">跳到上一个关键帧</td>
-</tr>
-<tr>
-<td align="left"><kbd>Alt</kbd> + <kbd>.</kbd></td>
-<td align="left">跳到下一个关键帧</td>
-</tr>
-</tbody></table>
-<h2 id="Animation-Events"><a href="#Animation-Events" class="headerlink" title="Animation Events"></a>Animation Events</h2><p>时间线区域可以给动画添加动画事件, 动画的事件函数还可以接收一个参数, 这个参数可以是: <code>float</code>, <code>string</code>, <code>int</code>, <code>object</code>, <code>AnimationEvent</code> 类型, 其中 AnimationEvent 类型可以将动画的很多信息一次性全部传给动画事件函数.</p>
-<h1 id="Animation-Controller"><a href="#Animation-Controller" class="headerlink" title="Animation Controller"></a>Animation Controller</h1><p>Animation Controller 使用一种 &quot;状态机&quot; 的方式来管理所有的动画剪辑, 通过打开 Animator 窗口便可以看到图形化的状态机.</p>
-<p><img data-src="/images/unity_anime/AnimatorWindow.png" alt="AnimatorWindow"></p>
-<ul>
-<li>Entry: 进入状态机的入口, 会连接一个初始的动画剪辑, 默认的动画剪辑为橙色, 过度线也是橙色. 另外 Entry 也可以使用普通的过渡条件过渡到其他的动画类型.</li>
-</ul>
-<p><img data-src="/images/unity_anime/AnimatorWindowEntry.png" alt="AnimatorWindowEntry"></p>
-<ul>
-<li><p>Any State, 任意状态, 是一个始终存在的特殊状态. 当某个状态 &quot;无论当前是什么状态, 只要满足要求均可以跳转过去&quot; 的时候, 使用 Any State 将十分方便. 另外 <font color='red'>Unity 不允许将 Any State 作为退出过渡动画</font>.</p>
-</li>
-<li><p>Exit 出口, 退出状态机的出口.</p>
-</li>
-</ul>
-<h2 id="Sub-State-Machine"><a href="#Sub-State-Machine" class="headerlink" title="Sub-State Machine"></a>Sub-State Machine</h2><p>[<strong>常用</strong>] Sub-State Machine, 译为: 子状态机, 可以理解为就是动画剪辑在状态机中的一个文件夹, 当动画剪辑特别多的时候, 可以用来很方便的整理和规划所有的动画剪辑.</p>
-<h2 id="Blend-Tree"><a href="#Blend-Tree" class="headerlink" title="Blend Tree"></a>Blend Tree</h2><p>动画混合树.</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO...</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<h2 id="过渡条件"><a href="#过渡条件" class="headerlink" title="过渡条件"></a>过渡条件</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO...</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-<h2 id="Animation-Clip-单个动画剪辑"><a href="#Animation-Clip-单个动画剪辑" class="headerlink" title="Animation Clip 单个动画剪辑"></a>Animation Clip 单个动画剪辑</h2><h3 id="Solo-和-Mute-功能"><a href="#Solo-和-Mute-功能" class="headerlink" title="Solo 和 Mute 功能"></a>Solo 和 Mute 功能</h3><p>这个功能主要应用于动画测试. 测试的时候一般需要控制变量, 每次测试都是测试特定的一条动画转换, 因此需要其他的动画切换此时就非常碍事了. 可以使用 <code>Solo</code> 仅启用勾选了 Solo 的动画过渡, 剩余的全部禁用.</p>
-<p>而有时候需要仅禁用一个动画转换, 其他的全部都要启用, 测试就可以使用 <code>Mute</code> 只禁用掉勾选了 Mute 的动画过渡, 剩余的全部启用.</p>
-<p>Unity 允许 Solo 和 Mute 同时勾选, 但是为了方便理解, <font color='red'><strong>禁止 1 条动画过渡同时勾选 Solo 和 Mute</strong></font>, 同时在使用这个功能时, 只允许同时使用其中一种, <font color='red'><strong>禁止两种同时使用</strong></font>.</p>
-<p>勾选了 Solo 的过渡箭头为<font color='green'><strong>绿色</strong></font>, 勾选了 Mute 的过渡箭头为<font color='red'><strong>红色</strong></font>.</p>
-<h1 id="Animator-组件"><a href="#Animator-组件" class="headerlink" title="Animator 组件"></a>Animator 组件</h1><p>Animator 组件挂载在游戏物体上, 其中需要引用 Animation Controller, 人形游戏物体还需要引用 Avatar.</p>
-<table>
-<thead>
-<tr>
-<th align="left">参数</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Controller</td>
-<td align="left">引用管理此角色动画的 Animator Controller</td>
-</tr>
-<tr>
-<td align="left">Avatar</td>
-<td align="left">人形角色的 Avatar</td>
-</tr>
-<tr>
-<td align="left">Apply Root Motion</td>
-<td align="left">勾选后, 在动画播放期间, 物体的运动相关参数完全由动画本身接管, 此时脚本控制无效. 取消勾选后, 则是由脚本来控制物体的运动参数</td>
-</tr>
-<tr>
-<td align="left">Update Mode</td>
-<td align="left"><strong>Normal</strong>: 与 Update 调用同步更新, 同时动画的速度与游戏时间标度一致; <strong>Animate Physics</strong>: 与 FixedUpdate 调用同步更新, 如果要对具有物理交互的对象的运动进行动画化, 应使用此模式, 例如可四处推动刚体对象的角色; <strong>Unscaled Time</strong>: 与 Update 调用同步更新, 但是动画的速度永远以 100% 的速度播放, 与时间标度无关. 应用于 UI 动画.</td>
-</tr>
-<tr>
-<td align="left">Culling Mode</td>
-<td align="left">动画剔除模式, <strong>Always Animate</strong>: 始终进行动画化; <strong>Cull Update Transforms</strong>: 剔除 Transform 的更新, 未显示时禁用 Transform 的重定向, IK和写入; <strong>Cull Completely</strong>: 完全剔除, 未显示时完全禁用动画</td>
-</tr>
-</tbody></table>
-<h1 id="Timeline"><a href="#Timeline" class="headerlink" title="Timeline"></a>Timeline</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO...</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Unity</category>
-      </categories>
-      <tags>
-        <tag>Unity</tag>
       </tags>
   </entry>
   <entry>
@@ -3786,6 +3786,59 @@
       </tags>
   </entry>
   <entry>
+    <title>如何让 Unity 走代理?</title>
+    <url>/unity/unity_proxy.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<p>最近在学习制作 Unity 游戏, 到了最后需要发布 Android 版本游戏程序的时候, 发现根本导不出来!!!</p>
+<p>每次都会卡在 Gradle 的构建上... 看了日志之后知道了原来是从仓库下载包的时候下载失败了...那我就更郁闷了, 我 24 小时全天开着梯子, 你跟我说现在还有我下载不下来的东西? 后来在这篇文章中找到了答案! <span class="exturl" data-url="aHR0cHM6Ly93d3cueW9tdW5jaGFuLm1vZS9hcmNoaXZlcy8zMjAjc2VhcmNo">解决Unity的网络水土不服问题<i class="fa fa-external-link-alt"></i></span></p>
+<p>原来 Unity 压根不吃梯子啊~ ~ !</p>
+<h1 id="解决方法一"><a href="#解决方法一" class="headerlink" title="解决方法一"></a>解决方法一</h1><p><strong><code>使用阿里的镜像源替代 Google 源</code></strong></p>
+<ol>
+<li><p>找到 Unity 的安装目录.</p>
+</li>
+<li><p>使用 VSCode 打开路径: <code>Editor\Data\PlaybackEngines\AndroidPlayer\Tools\GradleTemplates</code>.</p>
+</li>
+<li><p>对路径中的文件逐一修改, 将其中所有的</p>
+</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">google()</span><br><span class="line">jcenter()</span><br></pre></td></tr></table></figure>
+
+<p>修改为:</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">maven &#123;</span><br><span class="line">    url <span class="string">&quot;https://maven.aliyun.com/repository/google&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">maven &#123;</span><br><span class="line">    url <span class="string">&quot;https://maven.aliyun.com/repository/jcenter&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><font color='red'><strong>重启 Unity 项目</strong></font>, 重新发布即可!</li>
+</ol>
+<p>[<strong>注</strong>]</p>
+<ol>
+<li><p>文件中要替换的 <code>google() jcenter()</code> 不止一处, 必须全部替换!</p>
+</li>
+<li><p>Unity 每次打开项目的时候, 都会从模板中复制文件, 在项目中建立缓存, 其中就包含我们刚刚修改的文件. 如果不重启项目, 那么项目中的缓存文件依旧使用的是修改前的文件, 此时发布依旧会失败, 所以必须重启 Unity 项目, 让 Unity 使用我们修改后的模板重新建立缓存!</p>
+</li>
+</ol>
+<h1 id="解决方法二"><a href="#解决方法二" class="headerlink" title="解决方法二"></a>解决方法二</h1><p><strong><code>为 Unity Hub 和 Unity 设置代理</code></strong></p>
+<p>Unity Hub 和 Unity 在连接网络时并不会读取浏览器配置, 因此梯子时无效的! 但是 Unity Hub 和 Unity 会读取环境变量中 <code>HTTP_PROXY</code> 和 <code>HTTPS_PROXY</code> 的值判断是否使用代理.</p>
+<p>因此只要配置好这两个环境变量就好了.</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">HTTP_PROXY = http:<span class="comment">//127.0.0.1:1080</span></span><br><span class="line">HTTPS_PROXY = http:<span class="comment">//127.0.0.1:1080</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>我最终采用的是第一种方法, 虽然设置麻烦了一点, 但是没有副作用.</p>
+<p>第二种也用过, 也是可以实现的, 但是有副作用, 会导致其他的软件可能无法正常联网, 比如我的饥荒. (未完全证实) 不过我也确实不喜欢改动环境变量! 😂</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cueW9tdW5jaGFuLm1vZS9hcmNoaXZlcy8zMjAjc2VhcmNo">解决Unity的网络水土不服问题<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NoYW5nZV9mcm9tX25vdy9hcnRpY2xlL2RldGFpbHMvMTAwNTE5NTQ2">Unity使用Gradle打包出错问题<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Unity 中的小技巧</title>
     <url>/unity/unity_others.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -3930,59 +3983,6 @@
 <td align="left">让游戏物体可以被多选同时编辑</td>
 </tr>
 </tbody></table>
-]]></content>
-      <categories>
-        <category>Unity</category>
-      </categories>
-      <tags>
-        <tag>Unity</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何让 Unity 走代理?</title>
-    <url>/unity/unity_proxy.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<p>最近在学习制作 Unity 游戏, 到了最后需要发布 Android 版本游戏程序的时候, 发现根本导不出来!!!</p>
-<p>每次都会卡在 Gradle 的构建上... 看了日志之后知道了原来是从仓库下载包的时候下载失败了...那我就更郁闷了, 我 24 小时全天开着梯子, 你跟我说现在还有我下载不下来的东西? 后来在这篇文章中找到了答案! <span class="exturl" data-url="aHR0cHM6Ly93d3cueW9tdW5jaGFuLm1vZS9hcmNoaXZlcy8zMjAjc2VhcmNo">解决Unity的网络水土不服问题<i class="fa fa-external-link-alt"></i></span></p>
-<p>原来 Unity 压根不吃梯子啊~ ~ !</p>
-<h1 id="解决方法一"><a href="#解决方法一" class="headerlink" title="解决方法一"></a>解决方法一</h1><p><strong><code>使用阿里的镜像源替代 Google 源</code></strong></p>
-<ol>
-<li><p>找到 Unity 的安装目录.</p>
-</li>
-<li><p>使用 VSCode 打开路径: <code>Editor\Data\PlaybackEngines\AndroidPlayer\Tools\GradleTemplates</code>.</p>
-</li>
-<li><p>对路径中的文件逐一修改, 将其中所有的</p>
-</li>
-</ol>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">google()</span><br><span class="line">jcenter()</span><br></pre></td></tr></table></figure>
-
-<p>修改为:</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">maven &#123;</span><br><span class="line">    url <span class="string">&quot;https://maven.aliyun.com/repository/google&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">maven &#123;</span><br><span class="line">    url <span class="string">&quot;https://maven.aliyun.com/repository/jcenter&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li><font color='red'><strong>重启 Unity 项目</strong></font>, 重新发布即可!</li>
-</ol>
-<p>[<strong>注</strong>]</p>
-<ol>
-<li><p>文件中要替换的 <code>google() jcenter()</code> 不止一处, 必须全部替换!</p>
-</li>
-<li><p>Unity 每次打开项目的时候, 都会从模板中复制文件, 在项目中建立缓存, 其中就包含我们刚刚修改的文件. 如果不重启项目, 那么项目中的缓存文件依旧使用的是修改前的文件, 此时发布依旧会失败, 所以必须重启 Unity 项目, 让 Unity 使用我们修改后的模板重新建立缓存!</p>
-</li>
-</ol>
-<h1 id="解决方法二"><a href="#解决方法二" class="headerlink" title="解决方法二"></a>解决方法二</h1><p><strong><code>为 Unity Hub 和 Unity 设置代理</code></strong></p>
-<p>Unity Hub 和 Unity 在连接网络时并不会读取浏览器配置, 因此梯子时无效的! 但是 Unity Hub 和 Unity 会读取环境变量中 <code>HTTP_PROXY</code> 和 <code>HTTPS_PROXY</code> 的值判断是否使用代理.</p>
-<p>因此只要配置好这两个环境变量就好了.</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">HTTP_PROXY = http:<span class="comment">//127.0.0.1:1080</span></span><br><span class="line">HTTPS_PROXY = http:<span class="comment">//127.0.0.1:1080</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>我最终采用的是第一种方法, 虽然设置麻烦了一点, 但是没有副作用.</p>
-<p>第二种也用过, 也是可以实现的, 但是有副作用, 会导致其他的软件可能无法正常联网, 比如我的饥荒. (未完全证实) 不过我也确实不喜欢改动环境变量! 😂</p>
-<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cueW9tdW5jaGFuLm1vZS9hcmNoaXZlcy8zMjAjc2VhcmNo">解决Unity的网络水土不服问题<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NoYW5nZV9mcm9tX25vdy9hcnRpY2xlL2RldGFpbHMvMTAwNTE5NTQ2">Unity使用Gradle打包出错问题<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ol>
 ]]></content>
       <categories>
         <category>Unity</category>

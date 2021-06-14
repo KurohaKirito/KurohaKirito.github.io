@@ -396,6 +396,13 @@
 
   
   <url>
+    <loc>https://kuroha.vip/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/</loc>
+    <lastmod>2021-06-14</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://kuroha.vip/tags/%E7%94%B5%E8%84%91%E6%8A%80%E5%B7%A7/</loc>
     <lastmod>2021-06-14</lastmod>
     <changefreq>daily</changefreq>
@@ -404,13 +411,6 @@
   
   <url>
     <loc>https://kuroha.vip/tags/CSharp/</loc>
-    <lastmod>2021-06-14</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://kuroha.vip/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/</loc>
     <lastmod>2021-06-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -473,14 +473,14 @@
   </url>
   
   <url>
-    <loc>https://kuroha.vip/tags/Program/</loc>
+    <loc>https://kuroha.vip/tags/Unity/</loc>
     <lastmod>2021-06-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://kuroha.vip/tags/Unity/</loc>
+    <loc>https://kuroha.vip/tags/Program/</loc>
     <lastmod>2021-06-14</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
