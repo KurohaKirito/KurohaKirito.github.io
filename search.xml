@@ -391,6 +391,119 @@
       </tags>
   </entry>
   <entry>
+    <title>委托(四) &quot;委托与事件的区别&quot; 以及 &quot;观察者模式&quot;</title>
+    <url>/csharp/csharp_delegate_04.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="🌴前言"><a href="#🌴前言" class="headerlink" title="🌴前言"></a>🌴前言</h1><p>最开始知道委托和事件是在 SiKi 的 C# 课程上(很抱歉, 大学就只上了 C 语言课, Java 课听了一节...😅), 由于之前没有接触过类似的语法, 又或是学习单片机的时候 C 语言语法在脑海中根深蒂固了 , 听课时就像是在听天书, 再加上之后也没有使用过这方面的语法, 基本全忘记了. 之前一段时间简单的了解了一下委托和事件, 然后网上都是用 &quot;观察者模式&quot; 去讲的...然而文章中连观察者都没有仔细去讲...所以这样更晕了好嘛...😑 于是自己抽时间多看了几篇文章, 做一下总结. 先说一下观察者模式吧, 毕竟委托和事件的区别用观察者去讲真的十分合适!</p>
+<h1 id="🍁声明"><a href="#🍁声明" class="headerlink" title="🍁声明"></a>🍁声明</h1><p>阅读下文需要对 &quot;委托&quot; 有基本了解, 如果未达到此基本要求, 请先打怪升级, 达到要求后再来挑战本副本! 推荐练级副本:</p>
+<ol>
+<li><p><a href="https://kuroha.vip/csharp/delegate_01.html">委托(一) 委托的基本用法</a></p>
+</li>
+<li><p><a href="https://kuroha.vip/csharp/delegate_02.html">委托(二) 委托与回调和回调函数</a></p>
+</li>
+<li><p><a href="https://kuroha.vip/csharp/delegate_03.html">委托(三) 委托的初始化</a></p>
+</li>
+</ol>
+<h1 id="👀观察者模式"><a href="#👀观察者模式" class="headerlink" title="👀观察者模式"></a>👀观察者模式</h1><h2 id="quot-模式-quot-是什么"><a href="#quot-模式-quot-是什么" class="headerlink" title="&quot;模式&quot; 是什么?"></a>&quot;模式&quot; 是什么?</h2><ul>
+<li>&quot;模式&quot; 这个东西和之前所学的大部分东西都不是一回事, &quot;模式&quot; 是一种套路, 对, 你没有听错, 套路, 或者说模板! 它是走在我们前面的那些码神们常年编写代码所总结出来的一种在特定场合下特别好用的代码模板. 就像是英语作文模板指导我们以怎样的结构去写英语作文一样, &quot;模式&quot; 是指导我们以一种怎样的结构去编写代码, 以达到减小编程时工作量以及减小日后维护成本的效果.</li>
+</ul>
+<h2 id="观察者模式的内容是什么"><a href="#观察者模式的内容是什么" class="headerlink" title="观察者模式的内容是什么?"></a>观察者模式的内容是什么?</h2><ol>
+<li><p>需要描述的是一种 &quot;一对多&quot; 的依赖关系!</p>
+</li>
+<li><p>当 &quot;一&quot; 的一方状态发生改变时, &quot;多&quot; 的一方中的全部成员都能够收到通知!</p>
+</li>
+<li><p>&quot;多&quot; 的一方收到通知后, 全部的成员都会自动进行更新操作, 而非被动!</p>
+</li>
+</ol>
+<p>这就是 &quot;观察者模式&quot; 了, &quot;一&quot; 的一方叫做 &quot;被观察者&quot;, &quot;多&quot; 的一方叫做 &quot;观察者&quot;, 也叫做: &quot;发布-订阅模型&quot;, 这时分别叫做 &quot;发布器&quot; 和 &quot;订阅器&quot;.</p>
+<ul>
+<li>Q: 为什么没有代码?</li>
+<li>A: 因为模式只是一种套路, 一种模板, 一种思想, 自然是没有代码的! 只要代码是按照这个模板去编写的, 就可以说使用了 &quot;观察者模式&quot;.</li>
+</ul>
+<h2 id="观察者模式的代码实现"><a href="#观察者模式的代码实现" class="headerlink" title="观察者模式的代码实现"></a>观察者模式的代码实现</h2><p>接下来就是代码实现环节了, 一共写了 3 种 <strong><code>链表, 委托, 事件</code></strong> 代码实现, 都是使用的 csharp 语言.</p>
+<p>Q: 需要记忆的代码是哪个呢?</p>
+<p>A: 没有! 对, 就是没有! 真正要记忆的是前面 <strong>观察者模式的内容是什么</strong> 中所提到的 3 点. 看完代码后可不要本末倒置了哦!</p>
+<p>下面代码实现的场景就是当被观察者使用 &quot;发令枪&quot; 开枪时, 观察者们全部开跑~</p>
+<h3 id="链表实现"><a href="#链表实现" class="headerlink" title="链表实现"></a>链表实现</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Exercise</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 被观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Publisher_List</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 保存所有的观察者对象</span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">readonly</span> <span class="title">List</span>&lt;<span class="title">Subscriber_List</span>&gt; subscriberList</span> = <span class="keyword">new</span> List&lt;Subscriber_List&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 进入赛道</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">EnterGame</span>(<span class="params">Subscriber_List subscriber</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            subscriberList.Add(subscriber);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发令枪</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartingGun</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;预备~ . . . 砰! \n&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 遍历所有的观察者 (这一步就是在通知每一个观察者)</span></span><br><span class="line">            <span class="keyword">foreach</span> (Subscriber_List t <span class="keyword">in</span> subscriberList)</span><br><span class="line">            &#123;</span><br><span class="line">                t.Run(); <span class="comment">// 自动更新</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Subscriber_List</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 运动员姓名</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="keyword">string</span> name;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 初始化</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Subscriber_List</span>(<span class="params">Publisher_List publisher, <span class="keyword">string</span> name</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            publisher.EnterGame(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 开跑</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Run</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(name + <span class="string">&quot; 开跑啦~ \n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Program_List</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Publisher_List publisherList = <span class="keyword">new</span> Publisher_List();</span><br><span class="line">            <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">            <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">            publisherList.StartingGun();</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 程序输出:</span></span><br><span class="line">预备~ . . . 砰!</span><br><span class="line"></span><br><span class="line">艾莉 开跑啦~</span><br><span class="line"></span><br><span class="line">克里斯 开跑啦~</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>上面就是一个最简单的观察者模式, 使用链表实现.</p>
+<table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left">实现方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1. 一对多</td>
+<td align="left">被观察者只有一个实例, 使用链表保存所有的观察者实例</td>
+</tr>
+<tr>
+<td align="left">2. 全部通知</td>
+<td align="left">在方法中遍历所有的观察者, 每一个都进行特定的操作</td>
+</tr>
+<tr>
+<td align="left">3. 自动更新</td>
+<td align="left">在 &quot;被观察者&quot; 中调用 &quot;观察者&quot; 的方法, 对外界隐藏调用逻辑</td>
+</tr>
+</tbody></table>
+<p>再来看一下 Main 方法:</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Publisher_List publisherList = <span class="keyword">new</span> Publisher_List();</span><br><span class="line">    <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">    <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">    publisherList.StartingGun();</span><br><span class="line">    Console.ReadKey();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时对外界的 Main 方法而言, 我仅仅开了一下 &quot;发令枪&quot;, 艾莉和克里斯中的 Run 方法就 <font color='red'><strong>自动</strong></font> 被调用了. 如果不这么写, Main 方法就必须先调用发令枪方法, 然后再调用艾莉和克里斯的 Run 方法.</p>
+<h3 id="委托实现"><a href="#委托实现" class="headerlink" title="委托实现"></a>委托实现</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Exercise</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Publisher publisher = <span class="keyword">new</span> Publisher();</span><br><span class="line">            <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">            <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 发令枪</span></span><br><span class="line">            publisher.StartingGun();</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 被观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Publisher</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 委托, 保存所有的观察者</span></span><br><span class="line">        <span class="keyword">public</span> Action PublisherDelegate;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发令枪</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartingGun</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;预备~ . . . 砰! \n&quot;</span>);</span><br><span class="line">            PublisherDelegate?.Invoke(); <span class="comment">// 判断 PublisherDelegate 是否是空, 如果不是空, 则调用里面的 Invoke 方法.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Subscriber</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 运动员姓名</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="keyword">string</span> name;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 构造器</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;publisher&quot;&gt;</span>发布器<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;name&quot;&gt;</span>订阅器名称<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Subscriber</span>(<span class="params">Publisher publisher, <span class="keyword">string</span> name</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            publisher.PublisherDelegate += Run; <span class="comment">// 自动注册</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 开跑</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Run</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(name + <span class="string">&quot; 开跑啦~ \n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 程序输出:</span></span><br><span class="line">预备~ . . . 砰!</span><br><span class="line"></span><br><span class="line">艾莉 开跑啦~</span><br><span class="line"></span><br><span class="line">克里斯 开跑啦~</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用委托实现观察者模式与使用链表时的不同"><a href="#使用委托实现观察者模式与使用链表时的不同" class="headerlink" title="使用委托实现观察者模式与使用链表时的不同"></a>使用委托实现观察者模式与使用链表时的不同</h4><ol>
+<li><p>不再使用链表保存所有的观察者, 而是使用委托的多播特性进行保存.</p>
+</li>
+<li><p>通知所有观察者的步骤不再使用遍历, 而是使用委托的多播特性进行逐个通知.</p>
+</li>
+<li><p>注册观察者时不再使用链表的 Add() 方法, 而是使用委托的 <strong>+=</strong> 和 <strong>-=</strong>.</p>
+</li>
+</ol>
+<p>直接使用委托实现观察者模式有几个不安要素:</p>
+<ol>
+<li><p>如果被观察者 Publisher 中的委托是 public 修饰, 那么外部便可以直接访问, 此时如果外部代码中使用了 <strong>=</strong> 进行委托的注册, 那么委托中已有的注册将被全部清空, 这种隐患是十分恐怖的.</p>
+</li>
+<li><p>如果被观察者 Publisher 中的委托是 public 修饰, 那么外部便可以直接调用此委托, 此时观察者们便无法收到任何通知, 这个隐患同样是致命的.</p>
+</li>
+</ol>
+<p>使用事件实现观察者模式便解决了上面两个致命隐患.</p>
+<h3 id="事件实现"><a href="#事件实现" class="headerlink" title="事件实现"></a>事件实现</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Exercise</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Publisher publisher = <span class="keyword">new</span> Publisher();</span><br><span class="line">            Subscriber subscriberA = <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">            Subscriber subscriberB = <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 发令枪</span></span><br><span class="line">            publisher.StartingGun();</span><br><span class="line">            Console.ReadKey();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 对事件直接赋值 (不允许)</span></span><br><span class="line">            publisher.PublisherEvent = subscriberA.Run;</span><br><span class="line">            <span class="comment">// 对委托直接赋值 (允许)</span></span><br><span class="line">            publisher.PublisherDelegate = subscriberA.Run;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 外部直接调用事件 (不允许)</span></span><br><span class="line">            publisher.PublisherEvent();</span><br><span class="line">            <span class="comment">// 外部直接调用委托 (允许)</span></span><br><span class="line">            publisher.PublisherDelegate();</span><br><span class="line"></span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 被观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Publisher</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 事件, 保存所有的观察者</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">event</span> Action PublisherEvent;</span><br><span class="line">        <span class="keyword">public</span> Action PublisherDelegate;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发令枪</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartingGun</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;预备~ . . . 砰! \n&quot;</span>);</span><br><span class="line">            PublisherEvent?.Invoke(); <span class="comment">// 判断 PublisherEvent 是否是空, 如果不是空, 则调用里面的 Invoke 方法.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Subscriber</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 运动员姓名</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="keyword">string</span> name;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 构造器</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;publisher&quot;&gt;</span>发布器<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;name&quot;&gt;</span>订阅器名称<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Subscriber</span>(<span class="params">Publisher publisher, <span class="keyword">string</span> name</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            publisher.PublisherEvent += Run; <span class="comment">// 自动注册</span></span><br><span class="line">            publisher.PublisherEvent = Run;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 开跑</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Run</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(name + <span class="string">&quot; 开跑啦~ \n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码直接粘贴到 VS 中其实是报错的, 其中第 18 行, 第 23 行以及第 65 行会报错! 报错信息是一样的:</p>
+<p><code>CS0070  事件 &quot;Publisher.PublisherEvent&quot; 只能出现在 += 或 -= 的左边(从类型 &quot;Publisher&quot; 中使用时除外)</code></p>
+<p>从这里也就可以得出结论, 委托和事件的不同.</p>
+<h1 id="🍀委托和事件的异同"><a href="#🍀委托和事件的异同" class="headerlink" title="🍀委托和事件的异同"></a>🍀委托和事件的异同</h1><ol>
+<li><p>一个使用 public 修饰的委托实例, 在声明类的外部可以直接调用. 而事件即使修饰为 public, 也仅能在声明类内部调用, 外部调用时编译器会直接报错, 发现隐患.</p>
+</li>
+<li><p>委托可以使用 = 进行赋值, 但是事件不可以, 无论任何时候, 事件都仅能使用 += 和 -= 进行注册, 使用 = 时编译器会直接报错, 发现隐患.</p>
+</li>
+<li><p>除此以外, 委托和事件一致.</p>
+</li>
+</ol>
+<h1 id="🌈参考链接"><a href="#🌈参考链接" class="headerlink" title="🌈参考链接"></a>🌈参考链接</h1><ul>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cucnVub29iLmNvbS9kZXNpZ24tcGF0dGVybi9vYnNlcnZlci1wYXR0ZXJuLmh0bWw=">菜鸟教程 - 观察者模式<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9kZXNpZ24tcGF0dGVybnMucmVhZHRoZWRvY3MuaW8vemhfQ04vbGF0ZXN0L2JlaGF2aW9yYWxfcGF0dGVybnMvb2JzZXJ2ZXIuaHRtbA==">Graphic Design Patterns - 观察者模式<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20va2tsbGRvZy9hcmNoaXZlLzIwMTIvMDEvMTcvMjMyNDIyOC5odG1s">C# 委托与事件区别简单总结<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>CSharp</category>
+      </categories>
+      <tags>
+        <tag>CSharp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>委托(二) 委托与 &quot;回调和回调函数&quot;</title>
     <url>/csharp/csharp_delegate_02.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -554,119 +667,6 @@
 <td align="left">null</td>
 </tr>
 </tbody></table>
-]]></content>
-      <categories>
-        <category>CSharp</category>
-      </categories>
-      <tags>
-        <tag>CSharp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>委托(四) &quot;委托与事件的区别&quot; 以及 &quot;观察者模式&quot;</title>
-    <url>/csharp/csharp_delegate_04.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="🌴前言"><a href="#🌴前言" class="headerlink" title="🌴前言"></a>🌴前言</h1><p>最开始知道委托和事件是在 SiKi 的 C# 课程上(很抱歉, 大学就只上了 C 语言课, Java 课听了一节...😅), 由于之前没有接触过类似的语法, 又或是学习单片机的时候 C 语言语法在脑海中根深蒂固了 , 听课时就像是在听天书, 再加上之后也没有使用过这方面的语法, 基本全忘记了. 之前一段时间简单的了解了一下委托和事件, 然后网上都是用 &quot;观察者模式&quot; 去讲的...然而文章中连观察者都没有仔细去讲...所以这样更晕了好嘛...😑 于是自己抽时间多看了几篇文章, 做一下总结. 先说一下观察者模式吧, 毕竟委托和事件的区别用观察者去讲真的十分合适!</p>
-<h1 id="🍁声明"><a href="#🍁声明" class="headerlink" title="🍁声明"></a>🍁声明</h1><p>阅读下文需要对 &quot;委托&quot; 有基本了解, 如果未达到此基本要求, 请先打怪升级, 达到要求后再来挑战本副本! 推荐练级副本:</p>
-<ol>
-<li><p><a href="https://kuroha.vip/csharp/delegate_01.html">委托(一) 委托的基本用法</a></p>
-</li>
-<li><p><a href="https://kuroha.vip/csharp/delegate_02.html">委托(二) 委托与回调和回调函数</a></p>
-</li>
-<li><p><a href="https://kuroha.vip/csharp/delegate_03.html">委托(三) 委托的初始化</a></p>
-</li>
-</ol>
-<h1 id="👀观察者模式"><a href="#👀观察者模式" class="headerlink" title="👀观察者模式"></a>👀观察者模式</h1><h2 id="quot-模式-quot-是什么"><a href="#quot-模式-quot-是什么" class="headerlink" title="&quot;模式&quot; 是什么?"></a>&quot;模式&quot; 是什么?</h2><ul>
-<li>&quot;模式&quot; 这个东西和之前所学的大部分东西都不是一回事, &quot;模式&quot; 是一种套路, 对, 你没有听错, 套路, 或者说模板! 它是走在我们前面的那些码神们常年编写代码所总结出来的一种在特定场合下特别好用的代码模板. 就像是英语作文模板指导我们以怎样的结构去写英语作文一样, &quot;模式&quot; 是指导我们以一种怎样的结构去编写代码, 以达到减小编程时工作量以及减小日后维护成本的效果.</li>
-</ul>
-<h2 id="观察者模式的内容是什么"><a href="#观察者模式的内容是什么" class="headerlink" title="观察者模式的内容是什么?"></a>观察者模式的内容是什么?</h2><ol>
-<li><p>需要描述的是一种 &quot;一对多&quot; 的依赖关系!</p>
-</li>
-<li><p>当 &quot;一&quot; 的一方状态发生改变时, &quot;多&quot; 的一方中的全部成员都能够收到通知!</p>
-</li>
-<li><p>&quot;多&quot; 的一方收到通知后, 全部的成员都会自动进行更新操作, 而非被动!</p>
-</li>
-</ol>
-<p>这就是 &quot;观察者模式&quot; 了, &quot;一&quot; 的一方叫做 &quot;被观察者&quot;, &quot;多&quot; 的一方叫做 &quot;观察者&quot;, 也叫做: &quot;发布-订阅模型&quot;, 这时分别叫做 &quot;发布器&quot; 和 &quot;订阅器&quot;.</p>
-<ul>
-<li>Q: 为什么没有代码?</li>
-<li>A: 因为模式只是一种套路, 一种模板, 一种思想, 自然是没有代码的! 只要代码是按照这个模板去编写的, 就可以说使用了 &quot;观察者模式&quot;.</li>
-</ul>
-<h2 id="观察者模式的代码实现"><a href="#观察者模式的代码实现" class="headerlink" title="观察者模式的代码实现"></a>观察者模式的代码实现</h2><p>接下来就是代码实现环节了, 一共写了 3 种 <strong><code>链表, 委托, 事件</code></strong> 代码实现, 都是使用的 csharp 语言.</p>
-<p>Q: 需要记忆的代码是哪个呢?</p>
-<p>A: 没有! 对, 就是没有! 真正要记忆的是前面 <strong>观察者模式的内容是什么</strong> 中所提到的 3 点. 看完代码后可不要本末倒置了哦!</p>
-<p>下面代码实现的场景就是当被观察者使用 &quot;发令枪&quot; 开枪时, 观察者们全部开跑~</p>
-<h3 id="链表实现"><a href="#链表实现" class="headerlink" title="链表实现"></a>链表实现</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Exercise</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 被观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Publisher_List</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 保存所有的观察者对象</span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">readonly</span> <span class="title">List</span>&lt;<span class="title">Subscriber_List</span>&gt; subscriberList</span> = <span class="keyword">new</span> List&lt;Subscriber_List&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 进入赛道</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">EnterGame</span>(<span class="params">Subscriber_List subscriber</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            subscriberList.Add(subscriber);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发令枪</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartingGun</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;预备~ . . . 砰! \n&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 遍历所有的观察者 (这一步就是在通知每一个观察者)</span></span><br><span class="line">            <span class="keyword">foreach</span> (Subscriber_List t <span class="keyword">in</span> subscriberList)</span><br><span class="line">            &#123;</span><br><span class="line">                t.Run(); <span class="comment">// 自动更新</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Subscriber_List</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 运动员姓名</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="keyword">string</span> name;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 初始化</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Subscriber_List</span>(<span class="params">Publisher_List publisher, <span class="keyword">string</span> name</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            publisher.EnterGame(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 开跑</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Run</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(name + <span class="string">&quot; 开跑啦~ \n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Program_List</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Publisher_List publisherList = <span class="keyword">new</span> Publisher_List();</span><br><span class="line">            <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">            <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">            publisherList.StartingGun();</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 程序输出:</span></span><br><span class="line">预备~ . . . 砰!</span><br><span class="line"></span><br><span class="line">艾莉 开跑啦~</span><br><span class="line"></span><br><span class="line">克里斯 开跑啦~</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>上面就是一个最简单的观察者模式, 使用链表实现.</p>
-<table>
-<thead>
-<tr>
-<th align="left">特性</th>
-<th align="left">实现方式</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">1. 一对多</td>
-<td align="left">被观察者只有一个实例, 使用链表保存所有的观察者实例</td>
-</tr>
-<tr>
-<td align="left">2. 全部通知</td>
-<td align="left">在方法中遍历所有的观察者, 每一个都进行特定的操作</td>
-</tr>
-<tr>
-<td align="left">3. 自动更新</td>
-<td align="left">在 &quot;被观察者&quot; 中调用 &quot;观察者&quot; 的方法, 对外界隐藏调用逻辑</td>
-</tr>
-</tbody></table>
-<p>再来看一下 Main 方法:</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Publisher_List publisherList = <span class="keyword">new</span> Publisher_List();</span><br><span class="line">    <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">    <span class="keyword">new</span> Subscriber_List(publisherList, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">    publisherList.StartingGun();</span><br><span class="line">    Console.ReadKey();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>此时对外界的 Main 方法而言, 我仅仅开了一下 &quot;发令枪&quot;, 艾莉和克里斯中的 Run 方法就 <font color='red'><strong>自动</strong></font> 被调用了. 如果不这么写, Main 方法就必须先调用发令枪方法, 然后再调用艾莉和克里斯的 Run 方法.</p>
-<h3 id="委托实现"><a href="#委托实现" class="headerlink" title="委托实现"></a>委托实现</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Exercise</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Publisher publisher = <span class="keyword">new</span> Publisher();</span><br><span class="line">            <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">            <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 发令枪</span></span><br><span class="line">            publisher.StartingGun();</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 被观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Publisher</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 委托, 保存所有的观察者</span></span><br><span class="line">        <span class="keyword">public</span> Action PublisherDelegate;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发令枪</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartingGun</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;预备~ . . . 砰! \n&quot;</span>);</span><br><span class="line">            PublisherDelegate?.Invoke(); <span class="comment">// 判断 PublisherDelegate 是否是空, 如果不是空, 则调用里面的 Invoke 方法.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Subscriber</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 运动员姓名</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="keyword">string</span> name;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 构造器</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;publisher&quot;&gt;</span>发布器<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;name&quot;&gt;</span>订阅器名称<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Subscriber</span>(<span class="params">Publisher publisher, <span class="keyword">string</span> name</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            publisher.PublisherDelegate += Run; <span class="comment">// 自动注册</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 开跑</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Run</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(name + <span class="string">&quot; 开跑啦~ \n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 程序输出:</span></span><br><span class="line">预备~ . . . 砰!</span><br><span class="line"></span><br><span class="line">艾莉 开跑啦~</span><br><span class="line"></span><br><span class="line">克里斯 开跑啦~</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="使用委托实现观察者模式与使用链表时的不同"><a href="#使用委托实现观察者模式与使用链表时的不同" class="headerlink" title="使用委托实现观察者模式与使用链表时的不同"></a>使用委托实现观察者模式与使用链表时的不同</h4><ol>
-<li><p>不再使用链表保存所有的观察者, 而是使用委托的多播特性进行保存.</p>
-</li>
-<li><p>通知所有观察者的步骤不再使用遍历, 而是使用委托的多播特性进行逐个通知.</p>
-</li>
-<li><p>注册观察者时不再使用链表的 Add() 方法, 而是使用委托的 <strong>+=</strong> 和 <strong>-=</strong>.</p>
-</li>
-</ol>
-<p>直接使用委托实现观察者模式有几个不安要素:</p>
-<ol>
-<li><p>如果被观察者 Publisher 中的委托是 public 修饰, 那么外部便可以直接访问, 此时如果外部代码中使用了 <strong>=</strong> 进行委托的注册, 那么委托中已有的注册将被全部清空, 这种隐患是十分恐怖的.</p>
-</li>
-<li><p>如果被观察者 Publisher 中的委托是 public 修饰, 那么外部便可以直接调用此委托, 此时观察者们便无法收到任何通知, 这个隐患同样是致命的.</p>
-</li>
-</ol>
-<p>使用事件实现观察者模式便解决了上面两个致命隐患.</p>
-<h3 id="事件实现"><a href="#事件实现" class="headerlink" title="事件实现"></a>事件实现</h3><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Exercise</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Publisher publisher = <span class="keyword">new</span> Publisher();</span><br><span class="line">            Subscriber subscriberA = <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;艾莉&quot;</span>);</span><br><span class="line">            Subscriber subscriberB = <span class="keyword">new</span> Subscriber(publisher, <span class="string">&quot;克里斯&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 发令枪</span></span><br><span class="line">            publisher.StartingGun();</span><br><span class="line">            Console.ReadKey();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 对事件直接赋值 (不允许)</span></span><br><span class="line">            publisher.PublisherEvent = subscriberA.Run;</span><br><span class="line">            <span class="comment">// 对委托直接赋值 (允许)</span></span><br><span class="line">            publisher.PublisherDelegate = subscriberA.Run;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 外部直接调用事件 (不允许)</span></span><br><span class="line">            publisher.PublisherEvent();</span><br><span class="line">            <span class="comment">// 外部直接调用委托 (允许)</span></span><br><span class="line">            publisher.PublisherDelegate();</span><br><span class="line"></span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 被观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Publisher</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 事件, 保存所有的观察者</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">event</span> Action PublisherEvent;</span><br><span class="line">        <span class="keyword">public</span> Action PublisherDelegate;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发令枪</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">StartingGun</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(<span class="string">&quot;预备~ . . . 砰! \n&quot;</span>);</span><br><span class="line">            PublisherEvent?.Invoke(); <span class="comment">// 判断 PublisherEvent 是否是空, 如果不是空, 则调用里面的 Invoke 方法.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 观察者</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Subscriber</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 运动员姓名</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="keyword">string</span> name;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 构造器</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;publisher&quot;&gt;</span>发布器<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;name&quot;&gt;</span>订阅器名称<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Subscriber</span>(<span class="params">Publisher publisher, <span class="keyword">string</span> name</span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            publisher.PublisherEvent += Run; <span class="comment">// 自动注册</span></span><br><span class="line">            publisher.PublisherEvent = Run;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 开跑</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Run</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>        &#123;</span><br><span class="line">            Console.WriteLine(name + <span class="string">&quot; 开跑啦~ \n&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面的代码直接粘贴到 VS 中其实是报错的, 其中第 18 行, 第 23 行以及第 65 行会报错! 报错信息是一样的:</p>
-<p><code>CS0070  事件 &quot;Publisher.PublisherEvent&quot; 只能出现在 += 或 -= 的左边(从类型 &quot;Publisher&quot; 中使用时除外)</code></p>
-<p>从这里也就可以得出结论, 委托和事件的不同.</p>
-<h1 id="🍀委托和事件的异同"><a href="#🍀委托和事件的异同" class="headerlink" title="🍀委托和事件的异同"></a>🍀委托和事件的异同</h1><ol>
-<li><p>一个使用 public 修饰的委托实例, 在声明类的外部可以直接调用. 而事件即使修饰为 public, 也仅能在声明类内部调用, 外部调用时编译器会直接报错, 发现隐患.</p>
-</li>
-<li><p>委托可以使用 = 进行赋值, 但是事件不可以, 无论任何时候, 事件都仅能使用 += 和 -= 进行注册, 使用 = 时编译器会直接报错, 发现隐患.</p>
-</li>
-<li><p>除此以外, 委托和事件一致.</p>
-</li>
-</ol>
-<h1 id="🌈参考链接"><a href="#🌈参考链接" class="headerlink" title="🌈参考链接"></a>🌈参考链接</h1><ul>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cucnVub29iLmNvbS9kZXNpZ24tcGF0dGVybi9vYnNlcnZlci1wYXR0ZXJuLmh0bWw=">菜鸟教程 - 观察者模式<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9kZXNpZ24tcGF0dGVybnMucmVhZHRoZWRvY3MuaW8vemhfQ04vbGF0ZXN0L2JlaGF2aW9yYWxfcGF0dGVybnMvb2JzZXJ2ZXIuaHRtbA==">Graphic Design Patterns - 观察者模式<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20va2tsbGRvZy9hcmNoaXZlLzIwMTIvMDEvMTcvMjMyNDIyOC5odG1s">C# 委托与事件区别简单总结<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ul>
 ]]></content>
       <categories>
         <category>CSharp</category>
@@ -1462,6 +1462,30 @@
       </tags>
   </entry>
   <entry>
+    <title>日记系列--2021年06月</title>
+    <url>/diary/2021-06.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="2021-年-6-月-1-日"><a href="#2021-年-6-月-1-日" class="headerlink" title="2021 年 6 月 1 日"></a>2021 年 6 月 1 日</h1><p>六一儿童节啦, 距离上一次写日记也已经过去了整整一年, 这一年还真是发生了太多事情啊.</p>
+<p>第一件事是我离职了, 目前在厦门真有趣工作了, 这里给我的体验就是两个字: 天堂! 超整洁的办公环境, 超享受的茶水间, 超级大佬的同事, 果然游戏开发最棒! 大体总结一下这段时间的经历吧.</p>
+<h2 id="离职和就职的巧合"><a href="#离职和就职的巧合" class="headerlink" title="离职和就职的巧合"></a>离职和就职的巧合</h2><p>2020 年 1 月 14 号的时候, 由于之前请假去面试, 经理直接找我面谈了, 就直说赶紧走, 这不留你... 我也是见识到了, 你没价值了, 真的是说赶你走就赶你走啊... 我当时还在纠结这可咋整, 下一份工作还没着落呢, 唉... 渐渐地恐慌感都上来了.</p>
+<p>还好幸运女神是站在我这边的, 上午刚谈完话, 中午真有趣就来消息了, 说是我可以去厦门啦... 哈哈, 这真的是戏剧的一幕啊... 中午饭都没吃, 直接和 HR 谈好需要准备的东西, 然后回去和经理说: 我现在就走... 经理反而好像还有点急了: 这么着急? 我: 对, 很着急, 现在就想走. (哈哈, 你不是让我走嘛, 那我现在就走, 马上就走, 你就自己继续在国子那个破公司里面继续发霉吧, 活该, 哈哈!!) 看着他哪个样子, 是真的开心啊!</p>
+<h2 id="飞往厦门"><a href="#飞往厦门" class="headerlink" title="飞往厦门"></a>飞往厦门</h2><p>之后就是正常的准备了, 拍照, 体检, 买机票, 上飞机. (我还是第一次坐飞机呢), 那天王健还请假来送我, 真的感动, 也不知道下一次什么时候能在见面.</p>
+<h2 id="入住酒店"><a href="#入住酒店" class="headerlink" title="入住酒店"></a>入住酒店</h2><p>飞机降落后, 去到 HR 指定的酒店里放下行李. 话说这酒店也太豪华了吧, 说真的, 说是 5 星级的我想都不过分. 图片都在谷歌相册里面, 想看在里面还能找到. 之后找房子住, 在豆瓣上遇到了毛寒睿, 又叫孟浩然, 哈哈. 我情人节的时候还向她告白了, 可惜被拒绝了, ≧ ﹏ ≦, 目前还是普通联系着, 算是一个网络好友吧, 可以分享生活中的一些趣事, 反正我也没有其他人可以分享. 后来就是她转租, 我续租, 就这样住在了莲花国际.</p>
+<h2 id="正式入职工作"><a href="#正式入职工作" class="headerlink" title="正式入职工作"></a>正式入职工作</h2><p>之后正式入职, 办理入职手续, 总之只能用惊艳来形容, 我真的是来对公司了, 幸福啊. 过年的时候公司每人发了一台 Switch, Switch 啊, 梦寐以求的游戏机, 2300 多软妹币呢! 后来还举办了 2 次烤肉和 1 次剧本杀, 剧本杀好开心啊, 我可是雾山云雨的大师兄啊, 哈哈!</p>
+<h2 id="饥荒与搬家"><a href="#饥荒与搬家" class="headerlink" title="饥荒与搬家"></a>饥荒与搬家</h2><p>中间一段时间和同事们迷上了饥荒游戏, 一起在饥荒的世界中探险, 那段时光真的快乐, 每次都不知不觉玩到凌晨, 也正是这个原因, 后来决意要搬到一个离公司近的地方. 后来就是搬到了 D03, 和同事王珲一起住, 期间买了好多新家具, 总之很不错, 除了冰箱买亏了, 其他的都超满意!</p>
+<h2 id="俄罗斯方块"><a href="#俄罗斯方块" class="headerlink" title="俄罗斯方块"></a>俄罗斯方块</h2><p>最近打算做一个能上架商店的游戏, 于是就拿最简单的俄罗斯方块尝试一下, 目前已经做了个差不多, 有时间把最后的高亮预判实现一下, 整理一下代码, 上传到谷歌商店试试.</p>
+<h2 id="六一儿童节"><a href="#六一儿童节" class="headerlink" title="六一儿童节"></a>六一儿童节</h2><p>在之后就是今天了, 公司还举办了挺大的一个活动, 我抽了一支扭蛋, 宝可梦系列的, 具体是只啥宠物就不知道了...不过还蛮可爱的.</p>
+<p>说实话本来是想把一些照片贴过来的, 不过一想到照片那么大, 还是算了吧, 得找个时间把博客好好清理清理了. 就先写到这里吧, 以后的事情以后再说.</p>
+]]></content>
+      <categories>
+        <category>Diary</category>
+      </categories>
+      <tags>
+        <tag>Diary</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>日记系列--2020年04月</title>
     <url>/diary/2020_04.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -1550,30 +1574,6 @@
 <p>不行, 我得开始规划自己的时间了, 对自己目标没有用的事情坚决不再做了, 刷什么魔塔, 刷什么动漫, 什么想这想那的, 都不如静下心来看本书, 钻研钻研技术.</p>
 <p>最近有段时间迷上了魔塔, 虽然自己玩了好久, 但是始终得不到要领, 于是就开始看魔塔的一个基础理论, 叫做 &quot;蓝宝石转化理论&quot;, 先不说我理解了多少这个理论, 但是从这次经历我深刻的理解了看书真的是成长的捷径, 研究事物背后的理论才能成为学神, 所以我打算从现在开始利用闲余时间开始看书, 就看各种与游戏开发相关的书籍, 也开始尝试写技术类博客, 博客的内容是写下自己的想法, 而不是记笔记, 记笔记不应该使用博客, 而是使用大脑, 还有就是书籍不要怕脏, 有什么想法就直接写在书上, 书都买了, 为什么不用呢? 当初为什么没有选择借书, 不就是因为借的书不能随手记笔记嘛.</p>
 <p>那么就先写到这吧, 希望未来的自己回过头来看自己这篇日记的时候能真正的成为一名学神.</p>
-]]></content>
-      <categories>
-        <category>Diary</category>
-      </categories>
-      <tags>
-        <tag>Diary</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>日记系列--2021年06月</title>
-    <url>/diary/2021-06.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="2021-年-6-月-1-日"><a href="#2021-年-6-月-1-日" class="headerlink" title="2021 年 6 月 1 日"></a>2021 年 6 月 1 日</h1><p>六一儿童节啦, 距离上一次写日记也已经过去了整整一年, 这一年还真是发生了太多事情啊.</p>
-<p>第一件事是我离职了, 目前在厦门真有趣工作了, 这里给我的体验就是两个字: 天堂! 超整洁的办公环境, 超享受的茶水间, 超级大佬的同事, 果然游戏开发最棒! 大体总结一下这段时间的经历吧.</p>
-<h2 id="离职和就职的巧合"><a href="#离职和就职的巧合" class="headerlink" title="离职和就职的巧合"></a>离职和就职的巧合</h2><p>2020 年 1 月 14 号的时候, 由于之前请假去面试, 经理直接找我面谈了, 就直说赶紧走, 这不留你... 我也是见识到了, 你没价值了, 真的是说赶你走就赶你走啊... 我当时还在纠结这可咋整, 下一份工作还没着落呢, 唉... 渐渐地恐慌感都上来了.</p>
-<p>还好幸运女神是站在我这边的, 上午刚谈完话, 中午真有趣就来消息了, 说是我可以去厦门啦... 哈哈, 这真的是戏剧的一幕啊... 中午饭都没吃, 直接和 HR 谈好需要准备的东西, 然后回去和经理说: 我现在就走... 经理反而好像还有点急了: 这么着急? 我: 对, 很着急, 现在就想走. (哈哈, 你不是让我走嘛, 那我现在就走, 马上就走, 你就自己继续在国子那个破公司里面继续发霉吧, 活该, 哈哈!!) 看着他哪个样子, 是真的开心啊!</p>
-<h2 id="飞往厦门"><a href="#飞往厦门" class="headerlink" title="飞往厦门"></a>飞往厦门</h2><p>之后就是正常的准备了, 拍照, 体检, 买机票, 上飞机. (我还是第一次坐飞机呢), 那天王健还请假来送我, 真的感动, 也不知道下一次什么时候能在见面.</p>
-<h2 id="入住酒店-遇到-MHR"><a href="#入住酒店-遇到-MHR" class="headerlink" title="入住酒店, 遇到 MHR"></a>入住酒店, 遇到 MHR</h2><p>飞机降落后, 去到 HR 指定的酒店里放下行李. 话说这酒店也太豪华了吧, 说真的, 说是 5 星级的我想都不过分. 图片都在谷歌相册里面, 想看在里面还能找到. 之后找房子住, 在豆瓣上遇到了毛寒睿, 又叫孟浩然, 哈哈. 我情人节的时候还向她告白了, 可惜被拒绝了, ≧ ﹏ ≦, 目前还是普通联系着, 算是一个网络好友吧, 可以分享生活中的一些趣事, 反正我也没有其他人可以分享. 后来就是她转租, 我续租, 就这样住在了莲花国际.</p>
-<h2 id="正式入职工作"><a href="#正式入职工作" class="headerlink" title="正式入职工作"></a>正式入职工作</h2><p>之后正式入职, 办理入职手续, 总之只能用惊艳来形容, 我真的是来对公司了, 幸福啊. 过年的时候公司每人发了一台 Switch, Switch 啊, 梦寐以求的游戏机, 2300 多软妹币呢! 后来还举办了 2 次烤肉和 1 次剧本杀, 剧本杀好开心啊, 我可是雾山云雨的大师兄啊, 哈哈!</p>
-<h2 id="饥荒与搬家"><a href="#饥荒与搬家" class="headerlink" title="饥荒与搬家"></a>饥荒与搬家</h2><p>中间一段时间和同事们迷上了饥荒游戏, 一起在饥荒的世界中探险, 那段时光真的快乐, 每次都不知不觉玩到凌晨, 也正是这个原因, 后来决意要搬到一个离公司近的地方. 后来就是搬到了 D03, 和同事王珲一起住, 期间买了好多新家具, 总之很不错, 除了冰箱买亏了, 其他的都超满意!</p>
-<h2 id="俄罗斯方块"><a href="#俄罗斯方块" class="headerlink" title="俄罗斯方块"></a>俄罗斯方块</h2><p>最近打算做一个能上架商店的游戏, 于是就拿最简单的俄罗斯方块尝试一下, 目前已经做了个差不多, 有时间把最后的高亮预判实现一下, 整理一下代码, 上传到谷歌商店试试.</p>
-<h2 id="六一儿童节"><a href="#六一儿童节" class="headerlink" title="六一儿童节"></a>六一儿童节</h2><p>在之后就是今天了, 公司还举办了挺大的一个活动, 我抽了一支扭蛋, 宝可梦系列的, 具体是只啥宠物就不知道了...不过还蛮可爱的.</p>
-<p>说实话本来是想把一些照片贴过来的, 不过一想到照片那么大, 还是算了吧, 得找个时间把博客好好清理清理了. 就先写到这里吧, 以后的事情以后再说.</p>
 ]]></content>
       <categories>
         <category>Diary</category>
@@ -2739,6 +2739,143 @@
       </tags>
   </entry>
   <entry>
+    <title>Unity 动画系统</title>
+    <url>/unity/unity_animation.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="Mecanim-简介"><a href="#Mecanim-简介" class="headerlink" title="Mecanim 简介"></a>Mecanim 简介</h1><p>Unity 的动画系统英文名为: Mecanim, 是一个丰富而复杂的系统. 它支持从模型中直接导入的动画 (Model Import Settings), 也支持直接在 Unity 中创建的或录制的动画.</p>
+<p>Unity 中动画的最小单位是 &quot;动画剪辑 (Animation Clip)&quot;, 这是最小的一个动画单位, 里面包含了对游戏物体的 &quot;位置&quot;, &quot;旋转&quot;, &quot;缩放&quot;, &quot;颜色&quot; 等等很多属性的变化规则. 但是这些动画剪辑并不能直接应用到游戏物体上, 而是需要先在一个叫做 &quot;Animation Controller&quot; 的系统中对这些动画进行设置才行, 包括动画的播放条件, 动画之间的转换规则, 还可以使用遮罩来设置动画的生效范围等.</p>
+<p>使用 &quot;Animation Controller&quot; 将多个动画剪辑设置好规则之后, 就可以将这个 &quot;Animation Controller&quot; 应用到游戏物体上了, Unity 有一个叫做 &quot;Animator&quot; 的游戏组件可以使用并解析 &quot;Animation Controller&quot;.</p>
+<p>这样一个动画从导入或创建直到最后控制游戏物体的动作的整个流程就完成了.</p>
+<p><img data-src="/images/unity_anime/Mecanim.png" alt="Mecanim"></p>
+<ol>
+<li>Project 中的动画放置到 Animation Controller 中</li>
+<li>在 Animation Controller 中混合动画生成一个 Animation Controller 文件</li>
+<li>人物骨骼文件加骨骼遮罩文件生成 Avatar 文件</li>
+<li>Animator 组件引用前面的 Animation Controller 文件和 Avatar 文件.</li>
+</ol>
+<h1 id="Animation-Clip-的来源"><a href="#Animation-Clip-的来源" class="headerlink" title="Animation Clip 的来源"></a>Animation Clip 的来源</h1><p>Unity 支持从外部源导入动画, 并允许在编辑器中使用 Animation 窗口从头开始创建动画剪辑.</p>
+<h2 id="Model-Animation-Clip-Import"><a href="#Model-Animation-Clip-Import" class="headerlink" title="Model Animation Clip Import"></a>Model Animation Clip Import</h2><p>要将模型动画导入到 Unity 中, 需要在模型导入页面的 Animation 选项卡中对动画进行帧数剪辑以及循环帧调整, 具体见另一篇模型导入的博客. <a href="https://kuroha.vip/unity_model_import_settings.html">跳转</a></p>
+<h2 id="Record-Animation-Clip"><a href="#Record-Animation-Clip" class="headerlink" title="Record Animation Clip"></a>Record Animation Clip</h2><p>在 Unity 的 Animation 窗口中还可以创建和编辑动画剪辑.</p>
+<p><img data-src="/images/unity_anime/AnimationWindow.png" alt="AnimationWindow"></p>
+<p>左侧最下方的 &quot;Dopesheet&quot; 是关键帧查看模式, &quot;Curves&quot; 是曲线查看模式. 录制动画时关注点是关键帧, 所以使用关键帧模式, 但是调整动画时, 必须使用曲线模式, 因为 Unity 默认使用平滑插值曲线, 但是有些时候我们会希望使用线性动画曲, 因此必须打开曲线模式查看关键帧之间的过渡方式.</p>
+<p>选中想要查看的动画属性, 之后按下 <kbd>F</kbd> 键可以将右侧的视图缩放到适合观察这几个属性的缩放级别, 便于观察.</p>
+<p>按下 <kbd>A</kbd> 键则可以快速将右侧的视图缩放至查看全部动画属性的缩放级别.</p>
+<p><img data-src="/images/unity_anime/AnimationWindowRecord.png" alt="AnimationWindowRecord"></p>
+<p>Preview: 启用时 Scene 窗口中会实时预览动画的样子, 关闭后 Scene 不会进行实时预览.</p>
+<p>第二个按钮是: 录制模式 [注] 如果打开录制模式, 那么预览模式也会始终打开.</p>
+<p>右侧时间线的标题颜色, 在预览模式下是<font color='blue'>蓝色</font>的, 在录制模式下是<font color='red'>红色</font>的.</p>
+<p>后面的按钮分别是:</p>
+<ul>
+<li>将播放的开头移到动画的开头.</li>
+<li>将播放的开头移到动画的上一个关键帧.</li>
+<li>将播放的开头移到动画的下一个关键帧.</li>
+<li>将播放的开头移到动画的结尾.</li>
+</ul>
+<p>还可使用以下键盘快捷键来控制动画播放开头:</p>
+<table>
+<thead>
+<tr>
+<th align="left">快捷键</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><kbd>,</kbd></td>
+<td align="left">跳到上一帧</td>
+</tr>
+<tr>
+<td align="left"><kbd>.</kbd></td>
+<td align="left">跳到下一帧</td>
+</tr>
+<tr>
+<td align="left"><kbd>Alt</kbd> + <kbd>,</kbd></td>
+<td align="left">跳到上一个关键帧</td>
+</tr>
+<tr>
+<td align="left"><kbd>Alt</kbd> + <kbd>.</kbd></td>
+<td align="left">跳到下一个关键帧</td>
+</tr>
+</tbody></table>
+<h2 id="Animation-Events"><a href="#Animation-Events" class="headerlink" title="Animation Events"></a>Animation Events</h2><p>时间线区域可以给动画添加动画事件, 动画的事件函数还可以接收一个参数, 这个参数可以是: <code>float</code>, <code>string</code>, <code>int</code>, <code>object</code>, <code>AnimationEvent</code> 类型, 其中 AnimationEvent 类型可以将动画的很多信息一次性全部传给动画事件函数.</p>
+<h1 id="Animation-Controller"><a href="#Animation-Controller" class="headerlink" title="Animation Controller"></a>Animation Controller</h1><p>Animation Controller 使用一种 &quot;状态机&quot; 的方式来管理所有的动画剪辑, 通过打开 Animator 窗口便可以看到图形化的状态机.</p>
+<p><img data-src="/images/unity_anime/AnimatorWindow.png" alt="AnimatorWindow"></p>
+<ul>
+<li>Entry: 进入状态机的入口, 会连接一个初始的动画剪辑, 默认的动画剪辑为橙色, 过度线也是橙色. 另外 Entry 也可以使用普通的过渡条件过渡到其他的动画类型.</li>
+</ul>
+<p><img data-src="/images/unity_anime/AnimatorWindowEntry.png" alt="AnimatorWindowEntry"></p>
+<ul>
+<li><p>Any State, 任意状态, 是一个始终存在的特殊状态. 当某个状态 &quot;无论当前是什么状态, 只要满足要求均可以跳转过去&quot; 的时候, 使用 Any State 将十分方便. 另外 <font color='red'>Unity 不允许将 Any State 作为退出过渡动画</font>.</p>
+</li>
+<li><p>Exit 出口, 退出状态机的出口.</p>
+</li>
+</ul>
+<h2 id="Sub-State-Machine"><a href="#Sub-State-Machine" class="headerlink" title="Sub-State Machine"></a>Sub-State Machine</h2><p>[<strong>常用</strong>] Sub-State Machine, 译为: 子状态机, 可以理解为就是动画剪辑在状态机中的一个文件夹, 当动画剪辑特别多的时候, 可以用来很方便的整理和规划所有的动画剪辑.</p>
+<h2 id="Blend-Tree"><a href="#Blend-Tree" class="headerlink" title="Blend Tree"></a>Blend Tree</h2><p>动画混合树.</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO...</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="过渡条件"><a href="#过渡条件" class="headerlink" title="过渡条件"></a>过渡条件</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO...</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 id="Animation-Clip-单个动画剪辑"><a href="#Animation-Clip-单个动画剪辑" class="headerlink" title="Animation Clip 单个动画剪辑"></a>Animation Clip 单个动画剪辑</h2><h3 id="Solo-和-Mute-功能"><a href="#Solo-和-Mute-功能" class="headerlink" title="Solo 和 Mute 功能"></a>Solo 和 Mute 功能</h3><p>这个功能主要应用于动画测试. 测试的时候一般需要控制变量, 每次测试都是测试特定的一条动画转换, 因此需要其他的动画切换此时就非常碍事了. 可以使用 <code>Solo</code> 仅启用勾选了 Solo 的动画过渡, 剩余的全部禁用.</p>
+<p>而有时候需要仅禁用一个动画转换, 其他的全部都要启用, 测试就可以使用 <code>Mute</code> 只禁用掉勾选了 Mute 的动画过渡, 剩余的全部启用.</p>
+<p>Unity 允许 Solo 和 Mute 同时勾选, 但是为了方便理解, <font color='red'><strong>禁止 1 条动画过渡同时勾选 Solo 和 Mute</strong></font>, 同时在使用这个功能时, 只允许同时使用其中一种, <font color='red'><strong>禁止两种同时使用</strong></font>.</p>
+<p>勾选了 Solo 的过渡箭头为<font color='green'><strong>绿色</strong></font>, 勾选了 Mute 的过渡箭头为<font color='red'><strong>红色</strong></font>.</p>
+<h1 id="Animator-组件"><a href="#Animator-组件" class="headerlink" title="Animator 组件"></a>Animator 组件</h1><p>Animator 组件挂载在游戏物体上, 其中需要引用 Animation Controller, 人形游戏物体还需要引用 Avatar.</p>
+<table>
+<thead>
+<tr>
+<th align="left">参数</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Controller</td>
+<td align="left">引用管理此角色动画的 Animator Controller</td>
+</tr>
+<tr>
+<td align="left">Avatar</td>
+<td align="left">人形角色的 Avatar</td>
+</tr>
+<tr>
+<td align="left">Apply Root Motion</td>
+<td align="left">勾选后, 在动画播放期间, 物体的运动相关参数完全由动画本身接管, 此时脚本控制无效. 取消勾选后, 则是由脚本来控制物体的运动参数</td>
+</tr>
+<tr>
+<td align="left">Update Mode</td>
+<td align="left"><strong>Normal</strong>: 与 Update 调用同步更新, 同时动画的速度与游戏时间标度一致; <strong>Animate Physics</strong>: 与 FixedUpdate 调用同步更新, 如果要对具有物理交互的对象的运动进行动画化, 应使用此模式, 例如可四处推动刚体对象的角色; <strong>Unscaled Time</strong>: 与 Update 调用同步更新, 但是动画的速度永远以 100% 的速度播放, 与时间标度无关. 应用于 UI 动画.</td>
+</tr>
+<tr>
+<td align="left">Culling Mode</td>
+<td align="left">动画剔除模式, <strong>Always Animate</strong>: 始终进行动画化; <strong>Cull Update Transforms</strong>: 剔除 Transform 的更新, 未显示时禁用 Transform 的重定向, IK和写入; <strong>Cull Completely</strong>: 完全剔除, 未显示时完全禁用动画</td>
+</tr>
+</tbody></table>
+<h1 id="Timeline"><a href="#Timeline" class="headerlink" title="Timeline"></a>Timeline</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO...</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>JSON 参考手册</title>
     <url>/program/json_notes.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -2770,6 +2907,128 @@
       </categories>
       <tags>
         <tag>JSON</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>如何创建自定义瓦片</title>
+    <url>/unity/unity_customizeTile.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="选用待继承的瓦片"><a href="#选用待继承的瓦片" class="headerlink" title="选用待继承的瓦片"></a>选用待继承的瓦片</h1><p>编写自定义瓦片其实就是通过继承 Unity 原有瓦片, 并添加新数据来创建自己的瓦片, 因此首先需要选用待继承的瓦片, 这个根据项目的需要选择即可.</p>
+<p>如果瓦片需要播放动画, 便需要继承动画瓦片, 需要使用预制体就继承预制体瓦片, 需要使用普通瓦片, 随机瓦片, 规则瓦片时都可以继承自规则瓦片.</p>
+<h1 id="添加自定义数据"><a href="#添加自定义数据" class="headerlink" title="添加自定义数据"></a>添加自定义数据</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 魔剑镇魂曲瓦片, 继承自 RuleTile</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">[<span class="meta">Serializable</span>]</span><br><span class="line">[<span class="meta">CreateAssetMenu(fileName = <span class="meta-string">&quot;New Sword Requiem Tile.asset&quot;</span>, menuName = <span class="meta-string">&quot;Sword Requiem Tile&quot;</span>)</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SwordRequiemTile</span> : <span class="title">RuleTile</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 枚举: 地形类型</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> EM_Terrain defaultTerrainType;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面是我自定义的 <code>Sword Requiem Tile</code>, 只添加了一个简单的枚举类型数据.</p>
+<ul>
+<li><p>Serializable: 标记此类可以被序列化.</p>
+</li>
+<li><p>CreateAssetMenu: 标记此脚本可以在资源菜单中直接创建, 创建的默认文件为: <code>New Sword Requiem Tile.asset</code>, 菜单项的路径为: <code>Sword Requiem Tile</code>.</p>
+</li>
+<li><p>SwordRequiemTile: 继承自规则瓦片的自定义瓦片的类型名称.</p>
+</li>
+<li><p>defaultTerrainType: 自定义数据-默认地形类型.</p>
+</li>
+</ul>
+<p>[<strong>注</strong>] 这个地方有一个挺大的坑, 可以看到我这里的自定义数据使用的是 &#39;字段&#39; 而非 &#39;属性&#39;, 因为使用属性, Inspector 面板中便无法持久保存瓦片属性.</p>
+<p>表现在项目中就是, 首先创建枚举, &#39;森林&#39; 的枚举值为 0, &#39;断层&#39; 为 1, 我创建了一个 Sword Requiem Tile, 默认地形类型自动初始化为 &#39;森林&#39;, 然后修改瓦片的地形类型为 &#39;断层&#39;, 之后绘制地形, 运行游戏, 发现一切正常, 但是一旦关闭 Unity, 再次打开时所有瓦片的自定义数据全部会被重置为 &#39;森林&#39;, 即默认值, 想想这个多可怕!</p>
+<p>以上情况不知道是不是我自己的失误, 总之这里使用原始的字段不会有任何问题.</p>
+<h1 id="编写自定义瓦片的-Inspector-面板"><a href="#编写自定义瓦片的-Inspector-面板" class="headerlink" title="编写自定义瓦片的 Inspector 面板"></a>编写自定义瓦片的 Inspector 面板</h1><p>之前使用 &#39;属性&#39; 作为自定义数据的时候编写了 Inspector 面板的脚本, 后来改用了 &#39;字段&#39; 之后就发现根本不用单独编写脚本了, Unity 会自动进行渲染...😅 这里就先不写 Inspector 面板该如何自定义了, 因为我也不会啊~ 留一个链接, 以便日后捡起来用.</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNDIzNDMxNQ==">自定义属性面板<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h1><p>2021 年 3 月 16 日更新自定义 Inspector 面板, 见博客: <a href="https://kuroha.vip/unity/unity_editor.html">Unity 自定义编辑器</a></p>
+]]></content>
+      <categories>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
+        <tag>Tile</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Unity 中的坐标系</title>
+    <url>/unity/unity_coordinatesystem.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在制作魔剑镇魂曲的 TileMap 时用到了各种坐标系之间的转换, 当时被整得云里雾里的, 现在来回顾一下. 游戏中我只用到了笛卡尔坐标系, 没有用到极坐标系, 后面就直接简称为坐标系了.</p>
+<h1 id="坐标系与坐标"><a href="#坐标系与坐标" class="headerlink" title="坐标系与坐标"></a>坐标系与坐标</h1><ul>
+<li><p>首先需要强调一下坐标系和坐标完全不是一回事, 文章中有很多地方涉及到坐标系和坐标, 为了避免混淆, 一定要在脑海中清晰地区分两者. 坐标系是一个系统, 而坐标只是一个表示位置的数字.</p>
+</li>
+<li><p>坐标是不可能独立存在的, 它必须依存于某个坐标系, 因此很多时候我们就直接简称为某某坐标. 比如在屏幕坐标系中一个点的坐标简称为 &quot;屏幕坐标&quot;, 在世界坐标系中一个点的坐标简称为 &quot;世界坐标&quot;.</p>
+</li>
+</ul>
+<h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><p>Unity 中的坐标大致分为 4 种:</p>
+<table>
+<thead>
+<tr>
+<th align="left">坐标</th>
+<th align="left">关键字</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">世界坐标</td>
+<td align="left">World Point</td>
+</tr>
+<tr>
+<td align="left">本地坐标</td>
+<td align="left">Local Point</td>
+</tr>
+<tr>
+<td align="left">屏幕坐标</td>
+<td align="left">Screen Point</td>
+</tr>
+<tr>
+<td align="left">视图坐标</td>
+<td align="left">View Point</td>
+</tr>
+</tbody></table>
+<h1 id="世界坐标-World-Point"><a href="#世界坐标-World-Point" class="headerlink" title="世界坐标 (World Point)"></a>世界坐标 (World Point)</h1><ul>
+<li><p>Unity 中有一个覆盖全部游戏物体的坐标系, 所有的游戏物体都靠这个坐标系来确定自身在游戏世界中的准确位置, 这个坐标系就是世界坐标系. 有时为了明显和 &quot;局部坐标系&quot; 相对应也被称为 &quot;全局坐标系&quot;. 在世界坐标系中得出的点的坐标称为世界坐标 (World Point).</p>
+</li>
+<li><p>但是遗憾的是在游戏物体 Inspector 面板中, Transform 处显示的 Position 是<font color='red'><strong>在父物体坐标系中的坐标</strong></font>, 而不是在世界坐标系中的坐标. 只有当物体没有父物体的时候, Transform 处显示的 Position 才是在世界坐标系中的坐标.</p>
+</li>
+<li><p>但是在脚本中, 使用 transform.position 获取的却是游戏物体的世界坐标.</p>
+</li>
+</ul>
+<h1 id="本地坐标-Local-Point"><a href="#本地坐标-Local-Point" class="headerlink" title="本地坐标 (Local Point)"></a>本地坐标 (Local Point)</h1><ul>
+<li><p>Unity 中每个游戏物体都有其自身坐标系, 其子物体便是使用这个坐标系来确定与父物体的相对位置关系. 在父物体坐标系下得出的点的坐标称为本地坐标 (Local Point).</p>
+</li>
+<li><p>由于本地坐标系和物体绑定, 因此当游戏物体进行旋转, 移动的时候, 坐标系也会进行相应的旋转和移动. 但是本地坐标却有一个特点: <font color='red'><strong>不变性</strong></font>. 当游戏物体进行旋转, 移动的时候, 其子物体的本地坐标是不变的, 即子物体相对于自身的相对位置不会改变, 因此子物体会跟随其父物体旋转, 移动.</p>
+</li>
+<li><p>Unity 中模型 Mesh 保存的顶点坐标均为本地坐标, 因为本地坐标的不变性, 即使物体进行旋转或者移动, 也不会影响顶点的坐标.</p>
+</li>
+<li><p>在脚本中使用 transform.position 获取的是游戏物体的世界坐标, 使用 transform.localPosition 获取的便是游戏物体的本地坐标. 但是当物体没有父物体的时候,  transform.localPosition 获取的也是世界坐标.</p>
+</li>
+</ul>
+<h1 id="屏幕坐标-Screen-Point"><a href="#屏幕坐标-Screen-Point" class="headerlink" title="屏幕坐标 (Screen Point)"></a>屏幕坐标 (Screen Point)</h1><ul>
+<li><p>屏幕坐标系是基于游戏窗口建立的坐标系.</p>
+</li>
+<li><p>屏幕坐标系以像素为单位, 窗口的左下角坐标为 (0, 0), 右上角坐标为窗口大小. 脚本中可以通过 (Screen.width, Screen.height) 来获取窗口大小.</p>
+</li>
+<li><p>脚本中使用 Input.mousePosition 可以获得鼠标坐标, 这个坐标便是基于屏幕坐标系计算得来的. 另外使用 Input.GetTouch(0).position 可以获得单个手指触摸屏幕时手指的坐标, 这个坐标也是基于屏幕坐标系计算得来的.</p>
+</li>
+<li><p>需要注意的是屏幕坐标不是根据玩家显示器的大小建立的坐标系, 而是以游戏窗口建立的坐标系, 比如玩家屏幕为: 1920 X 1080, 但是游戏窗口是: 800 X 600, 那么右上角的坐标是 (800, 600).</p>
+</li>
+</ul>
+<h1 id="视图坐标-View-Point"><a href="#视图坐标-View-Point" class="headerlink" title="视图坐标 (View Point)"></a>视图坐标 (View Point)</h1><ul>
+<li><p>摄像机预览窗口显示的画面, 也是基于游戏窗口建立的坐标系.</p>
+</li>
+<li><p>视图坐标系的大小为单位 1, 窗口的左下角坐标为 (0, 0), 右上角坐标为 (1, 1).</p>
+</li>
+<li><p>屏幕坐标单位化后得到的就是视图坐标.</p>
+</li>
+</ul>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM0NTM2NTUxL2FydGljbGUvZGV0YWlscy85MDI2OTkwOA==">Unity中屏幕坐标、视口坐标和世界坐标、局部坐标与其之间的相互转换<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cDovL2xpdXFpbmd3ZW4ubWUvMjAxNy8wNy8zMS91bmRlcnN0YW5kaW5nLWNvb3JkaW5hdGUtc3lzdGVtLWluLXVuaXR5M2Qv">理解Unity3D中的四种坐标体系<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Unity</category>
+      </categories>
+      <tags>
+        <tag>Unity</tag>
       </tags>
   </entry>
   <entry>
@@ -3070,265 +3329,6 @@
       </categories>
       <tags>
         <tag>Program</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Unity 动画系统</title>
-    <url>/unity/unity_animation.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="Mecanim-简介"><a href="#Mecanim-简介" class="headerlink" title="Mecanim 简介"></a>Mecanim 简介</h1><p>Unity 的动画系统英文名为: Mecanim, 是一个丰富而复杂的系统. 它支持从模型中直接导入的动画 (Model Import Settings), 也支持直接在 Unity 中创建的或录制的动画.</p>
-<p>Unity 中动画的最小单位是 &quot;动画剪辑 (Animation Clip)&quot;, 这是最小的一个动画单位, 里面包含了对游戏物体的 &quot;位置&quot;, &quot;旋转&quot;, &quot;缩放&quot;, &quot;颜色&quot; 等等很多属性的变化规则. 但是这些动画剪辑并不能直接应用到游戏物体上, 而是需要先在一个叫做 &quot;Animation Controller&quot; 的系统中对这些动画进行设置才行, 包括动画的播放条件, 动画之间的转换规则, 还可以使用遮罩来设置动画的生效范围等.</p>
-<p>使用 &quot;Animation Controller&quot; 将多个动画剪辑设置好规则之后, 就可以将这个 &quot;Animation Controller&quot; 应用到游戏物体上了, Unity 有一个叫做 &quot;Animator&quot; 的游戏组件可以使用并解析 &quot;Animation Controller&quot;.</p>
-<p>这样一个动画从导入或创建直到最后控制游戏物体的动作的整个流程就完成了.</p>
-<p><img data-src="/images/unity_anime/Mecanim.png" alt="Mecanim"></p>
-<ol>
-<li>Project 中的动画放置到 Animation Controller 中</li>
-<li>在 Animation Controller 中混合动画生成一个 Animation Controller 文件</li>
-<li>人物骨骼文件加骨骼遮罩文件生成 Avatar 文件</li>
-<li>Animator 组件引用前面的 Animation Controller 文件和 Avatar 文件.</li>
-</ol>
-<h1 id="Animation-Clip-的来源"><a href="#Animation-Clip-的来源" class="headerlink" title="Animation Clip 的来源"></a>Animation Clip 的来源</h1><p>Unity 支持从外部源导入动画, 并允许在编辑器中使用 Animation 窗口从头开始创建动画剪辑.</p>
-<h2 id="Model-Animation-Clip-Import"><a href="#Model-Animation-Clip-Import" class="headerlink" title="Model Animation Clip Import"></a>Model Animation Clip Import</h2><p>要将模型动画导入到 Unity 中, 需要在模型导入页面的 Animation 选项卡中对动画进行帧数剪辑以及循环帧调整, 具体见另一篇模型导入的博客. <a href="https://kuroha.vip/unity_model_import_settings.html">跳转</a></p>
-<h2 id="Record-Animation-Clip"><a href="#Record-Animation-Clip" class="headerlink" title="Record Animation Clip"></a>Record Animation Clip</h2><p>在 Unity 的 Animation 窗口中还可以创建和编辑动画剪辑.</p>
-<p><img data-src="/images/unity_anime/AnimationWindow.png" alt="AnimationWindow"></p>
-<p>左侧最下方的 &quot;Dopesheet&quot; 是关键帧查看模式, &quot;Curves&quot; 是曲线查看模式. 录制动画时关注点是关键帧, 所以使用关键帧模式, 但是调整动画时, 必须使用曲线模式, 因为 Unity 默认使用平滑插值曲线, 但是有些时候我们会希望使用线性动画曲, 因此必须打开曲线模式查看关键帧之间的过渡方式.</p>
-<p>选中想要查看的动画属性, 之后按下 <kbd>F</kbd> 键可以将右侧的视图缩放到适合观察这几个属性的缩放级别, 便于观察.</p>
-<p>按下 <kbd>A</kbd> 键则可以快速将右侧的视图缩放至查看全部动画属性的缩放级别.</p>
-<p><img data-src="/images/unity_anime/AnimationWindowRecord.png" alt="AnimationWindowRecord"></p>
-<p>Preview: 启用时 Scene 窗口中会实时预览动画的样子, 关闭后 Scene 不会进行实时预览.</p>
-<p>第二个按钮是: 录制模式 [注] 如果打开录制模式, 那么预览模式也会始终打开.</p>
-<p>右侧时间线的标题颜色, 在预览模式下是<font color='blue'>蓝色</font>的, 在录制模式下是<font color='red'>红色</font>的.</p>
-<p>后面的按钮分别是:</p>
-<ul>
-<li>将播放的开头移到动画的开头.</li>
-<li>将播放的开头移到动画的上一个关键帧.</li>
-<li>将播放的开头移到动画的下一个关键帧.</li>
-<li>将播放的开头移到动画的结尾.</li>
-</ul>
-<p>还可使用以下键盘快捷键来控制动画播放开头:</p>
-<table>
-<thead>
-<tr>
-<th align="left">快捷键</th>
-<th align="left">作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><kbd>,</kbd></td>
-<td align="left">跳到上一帧</td>
-</tr>
-<tr>
-<td align="left"><kbd>.</kbd></td>
-<td align="left">跳到下一帧</td>
-</tr>
-<tr>
-<td align="left"><kbd>Alt</kbd> + <kbd>,</kbd></td>
-<td align="left">跳到上一个关键帧</td>
-</tr>
-<tr>
-<td align="left"><kbd>Alt</kbd> + <kbd>.</kbd></td>
-<td align="left">跳到下一个关键帧</td>
-</tr>
-</tbody></table>
-<h2 id="Animation-Events"><a href="#Animation-Events" class="headerlink" title="Animation Events"></a>Animation Events</h2><p>时间线区域可以给动画添加动画事件, 动画的事件函数还可以接收一个参数, 这个参数可以是: <code>float</code>, <code>string</code>, <code>int</code>, <code>object</code>, <code>AnimationEvent</code> 类型, 其中 AnimationEvent 类型可以将动画的很多信息一次性全部传给动画事件函数.</p>
-<h1 id="Animation-Controller"><a href="#Animation-Controller" class="headerlink" title="Animation Controller"></a>Animation Controller</h1><p>Animation Controller 使用一种 &quot;状态机&quot; 的方式来管理所有的动画剪辑, 通过打开 Animator 窗口便可以看到图形化的状态机.</p>
-<p><img data-src="/images/unity_anime/AnimatorWindow.png" alt="AnimatorWindow"></p>
-<ul>
-<li>Entry: 进入状态机的入口, 会连接一个初始的动画剪辑, 默认的动画剪辑为橙色, 过度线也是橙色. 另外 Entry 也可以使用普通的过渡条件过渡到其他的动画类型.</li>
-</ul>
-<p><img data-src="/images/unity_anime/AnimatorWindowEntry.png" alt="AnimatorWindowEntry"></p>
-<ul>
-<li><p>Any State, 任意状态, 是一个始终存在的特殊状态. 当某个状态 &quot;无论当前是什么状态, 只要满足要求均可以跳转过去&quot; 的时候, 使用 Any State 将十分方便. 另外 <font color='red'>Unity 不允许将 Any State 作为退出过渡动画</font>.</p>
-</li>
-<li><p>Exit 出口, 退出状态机的出口.</p>
-</li>
-</ul>
-<h2 id="Sub-State-Machine"><a href="#Sub-State-Machine" class="headerlink" title="Sub-State Machine"></a>Sub-State Machine</h2><p>[<strong>常用</strong>] Sub-State Machine, 译为: 子状态机, 可以理解为就是动画剪辑在状态机中的一个文件夹, 当动画剪辑特别多的时候, 可以用来很方便的整理和规划所有的动画剪辑.</p>
-<h2 id="Blend-Tree"><a href="#Blend-Tree" class="headerlink" title="Blend Tree"></a>Blend Tree</h2><p>动画混合树.</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO...</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<h2 id="过渡条件"><a href="#过渡条件" class="headerlink" title="过渡条件"></a>过渡条件</h2><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO...</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-<h2 id="Animation-Clip-单个动画剪辑"><a href="#Animation-Clip-单个动画剪辑" class="headerlink" title="Animation Clip 单个动画剪辑"></a>Animation Clip 单个动画剪辑</h2><h3 id="Solo-和-Mute-功能"><a href="#Solo-和-Mute-功能" class="headerlink" title="Solo 和 Mute 功能"></a>Solo 和 Mute 功能</h3><p>这个功能主要应用于动画测试. 测试的时候一般需要控制变量, 每次测试都是测试特定的一条动画转换, 因此需要其他的动画切换此时就非常碍事了. 可以使用 <code>Solo</code> 仅启用勾选了 Solo 的动画过渡, 剩余的全部禁用.</p>
-<p>而有时候需要仅禁用一个动画转换, 其他的全部都要启用, 测试就可以使用 <code>Mute</code> 只禁用掉勾选了 Mute 的动画过渡, 剩余的全部启用.</p>
-<p>Unity 允许 Solo 和 Mute 同时勾选, 但是为了方便理解, <font color='red'><strong>禁止 1 条动画过渡同时勾选 Solo 和 Mute</strong></font>, 同时在使用这个功能时, 只允许同时使用其中一种, <font color='red'><strong>禁止两种同时使用</strong></font>.</p>
-<p>勾选了 Solo 的过渡箭头为<font color='green'><strong>绿色</strong></font>, 勾选了 Mute 的过渡箭头为<font color='red'><strong>红色</strong></font>.</p>
-<h1 id="Animator-组件"><a href="#Animator-组件" class="headerlink" title="Animator 组件"></a>Animator 组件</h1><p>Animator 组件挂载在游戏物体上, 其中需要引用 Animation Controller, 人形游戏物体还需要引用 Avatar.</p>
-<table>
-<thead>
-<tr>
-<th align="left">参数</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">Controller</td>
-<td align="left">引用管理此角色动画的 Animator Controller</td>
-</tr>
-<tr>
-<td align="left">Avatar</td>
-<td align="left">人形角色的 Avatar</td>
-</tr>
-<tr>
-<td align="left">Apply Root Motion</td>
-<td align="left">勾选后, 在动画播放期间, 物体的运动相关参数完全由动画本身接管, 此时脚本控制无效. 取消勾选后, 则是由脚本来控制物体的运动参数</td>
-</tr>
-<tr>
-<td align="left">Update Mode</td>
-<td align="left"><strong>Normal</strong>: 与 Update 调用同步更新, 同时动画的速度与游戏时间标度一致; <strong>Animate Physics</strong>: 与 FixedUpdate 调用同步更新, 如果要对具有物理交互的对象的运动进行动画化, 应使用此模式, 例如可四处推动刚体对象的角色; <strong>Unscaled Time</strong>: 与 Update 调用同步更新, 但是动画的速度永远以 100% 的速度播放, 与时间标度无关. 应用于 UI 动画.</td>
-</tr>
-<tr>
-<td align="left">Culling Mode</td>
-<td align="left">动画剔除模式, <strong>Always Animate</strong>: 始终进行动画化; <strong>Cull Update Transforms</strong>: 剔除 Transform 的更新, 未显示时禁用 Transform 的重定向, IK和写入; <strong>Cull Completely</strong>: 完全剔除, 未显示时完全禁用动画</td>
-</tr>
-</tbody></table>
-<h1 id="Timeline"><a href="#Timeline" class="headerlink" title="Timeline"></a>Timeline</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// TODO...</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Unity</category>
-      </categories>
-      <tags>
-        <tag>Unity</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Unity 中的坐标系</title>
-    <url>/unity/unity_coordinatesystem.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在制作魔剑镇魂曲的 TileMap 时用到了各种坐标系之间的转换, 当时被整得云里雾里的, 现在来回顾一下. 游戏中我只用到了笛卡尔坐标系, 没有用到极坐标系, 后面就直接简称为坐标系了.</p>
-<h1 id="坐标系与坐标"><a href="#坐标系与坐标" class="headerlink" title="坐标系与坐标"></a>坐标系与坐标</h1><ul>
-<li><p>首先需要强调一下坐标系和坐标完全不是一回事, 文章中有很多地方涉及到坐标系和坐标, 为了避免混淆, 一定要在脑海中清晰地区分两者. 坐标系是一个系统, 而坐标只是一个表示位置的数字.</p>
-</li>
-<li><p>坐标是不可能独立存在的, 它必须依存于某个坐标系, 因此很多时候我们就直接简称为某某坐标. 比如在屏幕坐标系中一个点的坐标简称为 &quot;屏幕坐标&quot;, 在世界坐标系中一个点的坐标简称为 &quot;世界坐标&quot;.</p>
-</li>
-</ul>
-<h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><p>Unity 中的坐标大致分为 4 种:</p>
-<table>
-<thead>
-<tr>
-<th align="left">坐标</th>
-<th align="left">关键字</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">世界坐标</td>
-<td align="left">World Point</td>
-</tr>
-<tr>
-<td align="left">本地坐标</td>
-<td align="left">Local Point</td>
-</tr>
-<tr>
-<td align="left">屏幕坐标</td>
-<td align="left">Screen Point</td>
-</tr>
-<tr>
-<td align="left">视图坐标</td>
-<td align="left">View Point</td>
-</tr>
-</tbody></table>
-<h1 id="世界坐标-World-Point"><a href="#世界坐标-World-Point" class="headerlink" title="世界坐标 (World Point)"></a>世界坐标 (World Point)</h1><ul>
-<li><p>Unity 中有一个覆盖全部游戏物体的坐标系, 所有的游戏物体都靠这个坐标系来确定自身在游戏世界中的准确位置, 这个坐标系就是世界坐标系. 有时为了明显和 &quot;局部坐标系&quot; 相对应也被称为 &quot;全局坐标系&quot;. 在世界坐标系中得出的点的坐标称为世界坐标 (World Point).</p>
-</li>
-<li><p>但是遗憾的是在游戏物体 Inspector 面板中, Transform 处显示的 Position 是<font color='red'><strong>在父物体坐标系中的坐标</strong></font>, 而不是在世界坐标系中的坐标. 只有当物体没有父物体的时候, Transform 处显示的 Position 才是在世界坐标系中的坐标.</p>
-</li>
-<li><p>但是在脚本中, 使用 transform.position 获取的却是游戏物体的世界坐标.</p>
-</li>
-</ul>
-<h1 id="本地坐标-Local-Point"><a href="#本地坐标-Local-Point" class="headerlink" title="本地坐标 (Local Point)"></a>本地坐标 (Local Point)</h1><ul>
-<li><p>Unity 中每个游戏物体都有其自身坐标系, 其子物体便是使用这个坐标系来确定与父物体的相对位置关系. 在父物体坐标系下得出的点的坐标称为本地坐标 (Local Point).</p>
-</li>
-<li><p>由于本地坐标系和物体绑定, 因此当游戏物体进行旋转, 移动的时候, 坐标系也会进行相应的旋转和移动. 但是本地坐标却有一个特点: <font color='red'><strong>不变性</strong></font>. 当游戏物体进行旋转, 移动的时候, 其子物体的本地坐标是不变的, 即子物体相对于自身的相对位置不会改变, 因此子物体会跟随其父物体旋转, 移动.</p>
-</li>
-<li><p>Unity 中模型 Mesh 保存的顶点坐标均为本地坐标, 因为本地坐标的不变性, 即使物体进行旋转或者移动, 也不会影响顶点的坐标.</p>
-</li>
-<li><p>在脚本中使用 transform.position 获取的是游戏物体的世界坐标, 使用 transform.localPosition 获取的便是游戏物体的本地坐标. 但是当物体没有父物体的时候,  transform.localPosition 获取的也是世界坐标.</p>
-</li>
-</ul>
-<h1 id="屏幕坐标-Screen-Point"><a href="#屏幕坐标-Screen-Point" class="headerlink" title="屏幕坐标 (Screen Point)"></a>屏幕坐标 (Screen Point)</h1><ul>
-<li><p>屏幕坐标系是基于游戏窗口建立的坐标系.</p>
-</li>
-<li><p>屏幕坐标系以像素为单位, 窗口的左下角坐标为 (0, 0), 右上角坐标为窗口大小. 脚本中可以通过 (Screen.width, Screen.height) 来获取窗口大小.</p>
-</li>
-<li><p>脚本中使用 Input.mousePosition 可以获得鼠标坐标, 这个坐标便是基于屏幕坐标系计算得来的. 另外使用 Input.GetTouch(0).position 可以获得单个手指触摸屏幕时手指的坐标, 这个坐标也是基于屏幕坐标系计算得来的.</p>
-</li>
-<li><p>需要注意的是屏幕坐标不是根据玩家显示器的大小建立的坐标系, 而是以游戏窗口建立的坐标系, 比如玩家屏幕为: 1920 X 1080, 但是游戏窗口是: 800 X 600, 那么右上角的坐标是 (800, 600).</p>
-</li>
-</ul>
-<h1 id="视图坐标-View-Point"><a href="#视图坐标-View-Point" class="headerlink" title="视图坐标 (View Point)"></a>视图坐标 (View Point)</h1><ul>
-<li><p>摄像机预览窗口显示的画面, 也是基于游戏窗口建立的坐标系.</p>
-</li>
-<li><p>视图坐标系的大小为单位 1, 窗口的左下角坐标为 (0, 0), 右上角坐标为 (1, 1).</p>
-</li>
-<li><p>屏幕坐标单位化后得到的就是视图坐标.</p>
-</li>
-</ul>
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM0NTM2NTUxL2FydGljbGUvZGV0YWlscy85MDI2OTkwOA==">Unity中屏幕坐标、视口坐标和世界坐标、局部坐标与其之间的相互转换<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cDovL2xpdXFpbmd3ZW4ubWUvMjAxNy8wNy8zMS91bmRlcnN0YW5kaW5nLWNvb3JkaW5hdGUtc3lzdGVtLWluLXVuaXR5M2Qv">理解Unity3D中的四种坐标体系<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Unity</category>
-      </categories>
-      <tags>
-        <tag>Unity</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>如何创建自定义瓦片</title>
-    <url>/unity/unity_customizeTile.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="选用待继承的瓦片"><a href="#选用待继承的瓦片" class="headerlink" title="选用待继承的瓦片"></a>选用待继承的瓦片</h1><p>编写自定义瓦片其实就是通过继承 Unity 原有瓦片, 并添加新数据来创建自己的瓦片, 因此首先需要选用待继承的瓦片, 这个根据项目的需要选择即可.</p>
-<p>如果瓦片需要播放动画, 便需要继承动画瓦片, 需要使用预制体就继承预制体瓦片, 需要使用普通瓦片, 随机瓦片, 规则瓦片时都可以继承自规则瓦片.</p>
-<h1 id="添加自定义数据"><a href="#添加自定义数据" class="headerlink" title="添加自定义数据"></a>添加自定义数据</h1><figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 魔剑镇魂曲瓦片, 继承自 RuleTile</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">[<span class="meta">Serializable</span>]</span><br><span class="line">[<span class="meta">CreateAssetMenu(fileName = <span class="meta-string">&quot;New Sword Requiem Tile.asset&quot;</span>, menuName = <span class="meta-string">&quot;Sword Requiem Tile&quot;</span>)</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">SwordRequiemTile</span> : <span class="title">RuleTile</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 枚举: 地形类型</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> EM_Terrain defaultTerrainType;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上面是我自定义的 <code>Sword Requiem Tile</code>, 只添加了一个简单的枚举类型数据.</p>
-<ul>
-<li><p>Serializable: 标记此类可以被序列化.</p>
-</li>
-<li><p>CreateAssetMenu: 标记此脚本可以在资源菜单中直接创建, 创建的默认文件为: <code>New Sword Requiem Tile.asset</code>, 菜单项的路径为: <code>Sword Requiem Tile</code>.</p>
-</li>
-<li><p>SwordRequiemTile: 继承自规则瓦片的自定义瓦片的类型名称.</p>
-</li>
-<li><p>defaultTerrainType: 自定义数据-默认地形类型.</p>
-</li>
-</ul>
-<p>[<strong>注</strong>] 这个地方有一个挺大的坑, 可以看到我这里的自定义数据使用的是 &#39;字段&#39; 而非 &#39;属性&#39;, 因为使用属性, Inspector 面板中便无法持久保存瓦片属性.</p>
-<p>表现在项目中就是, 首先创建枚举, &#39;森林&#39; 的枚举值为 0, &#39;断层&#39; 为 1, 我创建了一个 Sword Requiem Tile, 默认地形类型自动初始化为 &#39;森林&#39;, 然后修改瓦片的地形类型为 &#39;断层&#39;, 之后绘制地形, 运行游戏, 发现一切正常, 但是一旦关闭 Unity, 再次打开时所有瓦片的自定义数据全部会被重置为 &#39;森林&#39;, 即默认值, 想想这个多可怕!</p>
-<p>以上情况不知道是不是我自己的失误, 总之这里使用原始的字段不会有任何问题.</p>
-<h1 id="编写自定义瓦片的-Inspector-面板"><a href="#编写自定义瓦片的-Inspector-面板" class="headerlink" title="编写自定义瓦片的 Inspector 面板"></a>编写自定义瓦片的 Inspector 面板</h1><p>之前使用 &#39;属性&#39; 作为自定义数据的时候编写了 Inspector 面板的脚本, 后来改用了 &#39;字段&#39; 之后就发现根本不用单独编写脚本了, Unity 会自动进行渲染...😅 这里就先不写 Inspector 面板该如何自定义了, 因为我也不会啊~ 留一个链接, 以便日后捡起来用.</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly96aHVhbmxhbi56aGlodS5jb20vcC8zNDIzNDMxNQ==">自定义属性面板<i class="fa fa-external-link-alt"></i></span></p>
-<h1 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h1><p>2021 年 3 月 16 日更新自定义 Inspector 面板, 见博客: <a href="https://kuroha.vip/unity/unity_editor.html">Unity 自定义编辑器</a></p>
-]]></content>
-      <categories>
-        <category>Unity</category>
-      </categories>
-      <tags>
-        <tag>Unity</tag>
-        <tag>Tile</tag>
       </tags>
   </entry>
   <entry>
@@ -3939,56 +3939,35 @@
       </tags>
   </entry>
   <entry>
-    <title>如何让 Unity 走代理?</title>
-    <url>/unity/unity_proxy.html</url>
+    <title>Unity 材质的冗余贴图引用清除器</title>
+    <url>/unity/unity_redundant_texture_references_cleaner.html</url>
     <content><![CDATA[<a id="more"></a>
 
-<p>最近在学习制作 Unity 游戏, 到了最后需要发布 Android 版本游戏程序的时候, 发现根本导不出来!!!</p>
-<p>每次都会卡在 Gradle 的构建上... 看了日志之后知道了原来是从仓库下载包的时候下载失败了...那我就更郁闷了, 我 24 小时全天开着梯子, 你跟我说现在还有我下载不下来的东西? 后来在这篇文章中找到了答案! <span class="exturl" data-url="aHR0cHM6Ly93d3cueW9tdW5jaGFuLm1vZS9hcmNoaXZlcy8zMjAjc2VhcmNo">解决Unity的网络水土不服问题<i class="fa fa-external-link-alt"></i></span></p>
-<p>原来 Unity 压根不吃梯子啊~ ~ !</p>
-<h1 id="解决方法一"><a href="#解决方法一" class="headerlink" title="解决方法一"></a>解决方法一</h1><p><strong><code>使用阿里的镜像源替代 Google 源</code></strong></p>
+<p>Unity 中有 .mat 文件, 一般称之为: 材质球.</p>
+<p>本质来说材质球并不是一个资源文件, 而是一堆设置, 里面包含了 Shader 和若干 Texture, 其中 Shader 和 Texture 才是真正的资源文件, 材质球只是将他们组合在一起.</p>
+<p>也可以理解为材质球文件将 Shader 进行了图形化展示, 将 Shader 代码中需要的 Texture 和属性数据全部暴露出来, 以便开发者们快速对这些变量赋值.</p>
+<h1 id="冗余引用会造成的问题"><a href="#冗余引用会造成的问题" class="headerlink" title="冗余引用会造成的问题"></a>冗余引用会造成的问题</h1><p>无论是使用 Resources 还是 AssetBundle, 冗余的贴图引用对资源的打包和加载都没有影响.</p>
+<p>但是如果冗余的纹理贴图被作为独立的 AssetBundle 包来处理, 则该纹理贴图会作为依赖项存在.</p>
+<h1 id="冗余产生原因-撤销"><a href="#冗余产生原因-撤销" class="headerlink" title="冗余产生原因: 撤销"></a>冗余产生原因: 撤销</h1><p>Unity 的材质球有一个特性, 那就是对材质球的操作可以 &quot;撤销&quot;. 而撤销的实现方式是将之前设置过的贴图引用也会保存在 .mate 文件中, 这样就导致冗余引用.</p>
+<p>比如美术人员操作材质球的时候, 先将一张贴图拖进去, 然后发现这里不需要赋值, 于是撤销, 但是即使撤销了, 贴图的引用依然保存在 mate 文件中, 最终打包时这个依赖关系还是会被打包进去.</p>
+<h1 id="冗余产生原因-更换-Shader"><a href="#冗余产生原因-更换-Shader" class="headerlink" title="冗余产生原因: 更换 Shader"></a>冗余产生原因: 更换 Shader</h1><p>材质球的 Shader 是可以更换的, 这样也会导致冗余引用的产生.</p>
+<p>比如美术人员制作材质球的时候, 直接拷贝了一份相似的材质球, 这个材质球上引用了 3 张贴图; 之后美术人员更换了一个 Shader, 这个 Shader 只用到了其中的 1 张贴图.</p>
+<p>更换之后会发现这张贴图自动使用了之前的贴图引用, 对于美术工作人员是十分方便的, 堪称智能!</p>
+<p>但是这个智能是有代价的, 没有使用到的另外 2 张贴图的引用依然被保存在 mate 文件中, 这样就产生了冗余引用.</p>
+<h1 id="清除冗余贴图引用的脚本"><a href="#清除冗余贴图引用的脚本" class="headerlink" title="清除冗余贴图引用的脚本"></a>清除冗余贴图引用的脚本</h1><p>使用下面的脚本可以清除整个项目中的冗余贴图引用.</p>
+<p>使用方法:</p>
 <ol>
-<li><p>找到 Unity 的安装目录.</p>
-</li>
-<li><p>使用 VSCode 打开路径: <code>Editor\Data\PlaybackEngines\AndroidPlayer\Tools\GradleTemplates</code>.</p>
-</li>
-<li><p>对路径中的文件逐一修改, 将其中所有的</p>
-</li>
+<li>设置工程路径 PRE_PATH 的值, 设置到 Assets 文件夹的上一级.</li>
+<li>在自定义的窗口类的 OnGUI 方法中调用 OnGUI_RedundantTextureReferencesCleaner 方法</li>
 </ol>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">google()</span><br><span class="line">jcenter()</span><br></pre></td></tr></table></figure>
-
-<p>修改为:</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">maven &#123;</span><br><span class="line">    url <span class="string">&quot;https://maven.aliyun.com/repository/google&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">maven &#123;</span><br><span class="line">    url <span class="string">&quot;https://maven.aliyun.com/repository/jcenter&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li><font color='red'><strong>重启 Unity 项目</strong></font>, 重新发布即可!</li>
-</ol>
-<p>[<strong>注</strong>]</p>
-<ol>
-<li><p>文件中要替换的 <code>google() jcenter()</code> 不止一处, 必须全部替换!</p>
-</li>
-<li><p>Unity 每次打开项目的时候, 都会从模板中复制文件, 在项目中建立缓存, 其中就包含我们刚刚修改的文件. 如果不重启项目, 那么项目中的缓存文件依旧使用的是修改前的文件, 此时发布依旧会失败, 所以必须重启 Unity 项目, 让 Unity 使用我们修改后的模板重新建立缓存!</p>
-</li>
-</ol>
-<h1 id="解决方法二"><a href="#解决方法二" class="headerlink" title="解决方法二"></a>解决方法二</h1><p><strong><code>为 Unity Hub 和 Unity 设置代理</code></strong></p>
-<p>Unity Hub 和 Unity 在连接网络时并不会读取浏览器配置, 因此梯子时无效的! 但是 Unity Hub 和 Unity 会读取环境变量中 <code>HTTP_PROXY</code> 和 <code>HTTPS_PROXY</code> 的值判断是否使用代理.</p>
-<p>因此只要配置好这两个环境变量就好了.</p>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">HTTP_PROXY = http:<span class="comment">//127.0.0.1:1080</span></span><br><span class="line">HTTPS_PROXY = http:<span class="comment">//127.0.0.1:1080</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>我最终采用的是第一种方法, 虽然设置麻烦了一点, 但是没有副作用.</p>
-<p>第二种也用过, 也是可以实现的, 但是有副作用, 会导致其他的软件可能无法正常联网, 比如我的饥荒. (未完全证实) 不过我也确实不喜欢改动环境变量! 😂</p>
-<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cueW9tdW5jaGFuLm1vZS9hcmNoaXZlcy8zMjAjc2VhcmNo">解决Unity的网络水土不服问题<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NoYW5nZV9mcm9tX25vdy9hcnRpY2xlL2RldGFpbHMvMTAwNTE5NTQ2">Unity使用Gradle打包出错问题<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ol>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.IO;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"><span class="keyword">using</span> System.Text.RegularExpressions;</span><br><span class="line"><span class="keyword">using</span> UnityEditor;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RedundantTextureReferencesCleaner</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">float</span> UI_DEFAULT_MARGIN = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">float</span> UI_INPUT_AREA_WIDTH = <span class="number">400</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">float</span> UI_BUTTON_WIDTH = <span class="number">120</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">float</span> UI_BUTTON_HEIGHT = <span class="number">25</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">bool</span> RedundantTextureReferencesFoldout = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">string</span> RedundantTextureReferencesPath = <span class="keyword">string</span>.Empty;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">OnGUI_RedundantTextureReferencesCleaner</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        GUILayout.Space (<span class="number">2</span> * UI_DEFAULT_MARGIN);</span><br><span class="line"></span><br><span class="line">        RedundantTextureReferencesFoldout =</span><br><span class="line">            EditorGUILayout.Foldout (RedundantTextureReferencesFoldout, <span class="string">&quot;Detect Unused Material&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">if</span> (!RedundantTextureReferencesFoldout) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        GUILayout.BeginVertical (<span class="string">&quot;Box&quot;</span>);</span><br><span class="line">        RedundantTextureReferencesPath = EditorGUILayout.TextField (<span class="string">&quot;Input Path To Detect&quot;</span>,</span><br><span class="line">            RedundantTextureReferencesPath,</span><br><span class="line">            GUILayout.Width (UI_INPUT_AREA_WIDTH));</span><br><span class="line">        GUILayout.EndVertical();</span><br><span class="line"></span><br><span class="line">        GUILayout.BeginHorizontal (<span class="string">&quot;Box&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (GUILayout.Button (<span class="string">&quot;Detect Shader&quot;</span>, GUILayout.Height (UI_BUTTON_HEIGHT),</span><br><span class="line">            GUILayout.Width (UI_BUTTON_WIDTH))) &#123;</span><br><span class="line">            DetectRedundantTextureReferences();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        GUILayout.EndHorizontal();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">DetectRedundantTextureReferences</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        GetAllFillPath (RedundantTextureReferencesPath, <span class="string">&quot;*.mat&quot;</span>, <span class="keyword">out</span> <span class="keyword">string</span> message, <span class="keyword">out</span> <span class="keyword">string</span>[] allFileName);</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty (message)) &#123;</span><br><span class="line">            Debug.Log (message);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Debug.Log (<span class="string">$&quot;Find <span class="subst">&#123;allFileName.Length&#125;</span> Materials!&quot;</span>);</span><br><span class="line">        <span class="keyword">var</span> assetFileName = GetAllFileAssetPath (allFileName);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 读取预制体</span></span><br><span class="line">        <span class="keyword">int</span> progressBarCounter = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> repairCounter = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">var</span> materials = <span class="keyword">new</span> List&lt;Material&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">0</span>; index &lt; assetFileName.Count; index++) &#123;</span><br><span class="line">            EditorUtility.DisplayProgressBar (<span class="string">&quot;读取材质资源中&quot;</span>, <span class="string">$&quot;<span class="subst">&#123;index + <span class="number">1</span>&#125;</span>/<span class="subst">&#123;assetFileName.Count&#125;</span>&quot;</span>,</span><br><span class="line">                (<span class="keyword">float</span>) (index + <span class="number">1</span>) / assetFileName.Count);</span><br><span class="line">            materials.Add (AssetDatabase.LoadAssetAtPath&lt;Material&gt; (assetFileName[index]));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        EditorUtility.ClearProgressBar();</span><br><span class="line">        Debug.Log (<span class="string">$&quot;Prefabs: 共读取了 <span class="subst">&#123;materials.Count&#125;</span> 个材质&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 遍历材质</span></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> material <span class="keyword">in</span> materials) &#123;</span><br><span class="line">            <span class="keyword">if</span> (EditorUtility.DisplayCancelableProgressBar (<span class="string">&quot;检测中&quot;</span>, <span class="string">$&quot;<span class="subst">&#123;++progressBarCounter&#125;</span>/<span class="subst">&#123;materials.Count&#125;</span>&quot;</span>,</span><br><span class="line">                (<span class="keyword">float</span>) progressBarCounter / materials.Count)) &#123;</span><br><span class="line">                EditorUtility.ClearProgressBar();</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (RepairMaterial (material)) &#123;</span><br><span class="line">                repairCounter++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Debug.Log (<span class="string">$&quot;RepairCounter: 共修复了 <span class="subst">&#123;repairCounter&#125;</span> 个问题&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">bool</span> <span class="title">RepairMaterial</span>(<span class="params">Material _material</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> isRepaired = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">var</span> textureGUIDs = CollectTextureGUIDs (_material);</span><br><span class="line">        <span class="keyword">string</span> materialPathName = Path.GetFullPath (AssetDatabase.GetAssetPath (_material));</span><br><span class="line">        <span class="keyword">var</span> strBuilder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">using</span> (<span class="keyword">var</span> reader = <span class="keyword">new</span> StreamReader (materialPathName)) &#123;</span><br><span class="line">            <span class="keyword">var</span> regex = <span class="keyword">new</span> Regex (<span class="string">@&quot;\s+guid:\s+(\w+),&quot;</span>);</span><br><span class="line">            <span class="keyword">string</span> line = reader.ReadLine();</span><br><span class="line">            <span class="keyword">while</span> (<span class="literal">null</span> != line) &#123;</span><br><span class="line">                <span class="keyword">if</span> (line.Contains (<span class="string">&quot;m_Texture:&quot;</span>)) &#123;</span><br><span class="line">                    <span class="comment">// 包含纹理贴图引用的行，使用正则表达式获取纹理贴图的 guid</span></span><br><span class="line">                    <span class="keyword">var</span> match = regex.Match (line);</span><br><span class="line">                    <span class="keyword">if</span> (match.Success) &#123;</span><br><span class="line">                        <span class="keyword">string</span> textureGUID = match.Groups[<span class="number">1</span>].Value;</span><br><span class="line">                        <span class="keyword">if</span> (textureGUIDs.Contains (textureGUID)) &#123;</span><br><span class="line">                            strBuilder.AppendLine (line);</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            <span class="comment">// 材质没有用到纹理贴图，guid 赋值为 0 来清除引用关系</span></span><br><span class="line">                            isRepaired = <span class="literal">true</span>;</span><br><span class="line">                            strBuilder.AppendLine (line.Substring (<span class="number">0</span>,</span><br><span class="line">                                line.IndexOf (<span class="string">&quot;fileID:&quot;</span>, StringComparison.Ordinal) + <span class="number">7</span>) + <span class="string">&quot; 0&#125;&quot;</span>);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        strBuilder.AppendLine (line);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    strBuilder.AppendLine (line);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                line = reader.ReadLine();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">using</span> (<span class="keyword">var</span> writer = <span class="keyword">new</span> StreamWriter (materialPathName)) &#123;</span><br><span class="line">            writer.Write (strBuilder.ToString());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> isRepaired;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> HashSet&lt;<span class="keyword">string</span>&gt; <span class="title">CollectTextureGUIDs</span>(<span class="params">Material _material</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> textureGUIDs = <span class="keyword">new</span> HashSet&lt;<span class="keyword">string</span>&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ShaderUtil.GetPropertyCount (_material.shader); ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (ShaderUtil.ShaderPropertyType.TexEnv !=</span><br><span class="line">                ShaderUtil.GetPropertyType (_material.shader, i)) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> texture = _material.GetTexture (ShaderUtil.GetPropertyName (_material.shader, i));</span><br><span class="line">            <span class="keyword">if</span> (<span class="literal">null</span> == texture) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">string</span> textureGUID = AssetDatabase.AssetPathToGUID (AssetDatabase.GetAssetPath (texture));</span><br><span class="line">            <span class="keyword">if</span> (!textureGUIDs.Contains (textureGUID)) &#123;</span><br><span class="line">                textureGUIDs.Add (textureGUID);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> textureGUIDs;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">GetAllFillPath</span>(<span class="params"><span class="keyword">string</span> path, <span class="keyword">string</span> strFilter, <span class="keyword">out</span> <span class="keyword">string</span> message, <span class="keyword">out</span> <span class="keyword">string</span>[] result</span>)</span> &#123;</span><br><span class="line">        result = <span class="literal">null</span>;</span><br><span class="line">        message = <span class="keyword">string</span>.Empty;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">string</span> detectPath = Path.Combine (Application.dataPath, path);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">string</span>.IsNullOrEmpty (detectPath)) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!Directory.Exists (detectPath)) &#123;</span><br><span class="line">            message = <span class="string">&quot;路径不存在!&quot;</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        result = Directory.GetFiles (detectPath, strFilter, SearchOption.AllDirectories);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;<span class="keyword">string</span>&gt; <span class="title">GetAllFileAssetPath</span>(<span class="params"><span class="keyword">in</span> <span class="keyword">string</span>[] paths</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> result = <span class="keyword">new</span> List&lt;<span class="keyword">string</span>&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; paths.Length; i++) &#123;</span><br><span class="line">            EditorUtility.DisplayProgressBar (<span class="string">&quot;读取资源中&quot;</span>, <span class="string">$&quot;<span class="subst">&#123;i + <span class="number">1</span>&#125;</span>/<span class="subst">&#123;paths.Length&#125;</span>&quot;</span>, (<span class="keyword">float</span>) (i + <span class="number">1</span>) / paths.Length);</span><br><span class="line">            <span class="keyword">var</span> path = paths[i].Substring (paths[i].IndexOf (<span class="string">&quot;Assets&quot;</span>, StringComparison.Ordinal));</span><br><span class="line">            <span class="keyword">if</span> (path.IndexOf (<span class="string">&quot;.meta&quot;</span>, StringComparison.OrdinalIgnoreCase) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                result.Add (path);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        EditorUtility.ClearProgressBar();</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Unity</category>
       </categories>
       <tags>
         <tag>Unity</tag>
+        <tag>Editor</tag>
       </tags>
   </entry>
   <entry>
@@ -4114,35 +4093,56 @@
       </tags>
   </entry>
   <entry>
-    <title>Unity 材质的冗余贴图引用清除器</title>
-    <url>/unity/unity_redundant_texture_references_cleaner.html</url>
+    <title>如何让 Unity 走代理?</title>
+    <url>/unity/unity_proxy.html</url>
     <content><![CDATA[<a id="more"></a>
 
-<p>Unity 中有 .mat 文件, 一般称之为: 材质球.</p>
-<p>本质来说材质球并不是一个资源文件, 而是一堆设置, 里面包含了 Shader 和若干 Texture, 其中 Shader 和 Texture 才是真正的资源文件, 材质球只是将他们组合在一起.</p>
-<p>也可以理解为材质球文件将 Shader 进行了图形化展示, 将 Shader 代码中需要的 Texture 和属性数据全部暴露出来, 以便开发者们快速对这些变量赋值.</p>
-<h1 id="冗余引用会造成的问题"><a href="#冗余引用会造成的问题" class="headerlink" title="冗余引用会造成的问题"></a>冗余引用会造成的问题</h1><p>无论是使用 Resources 还是 AssetBundle, 冗余的贴图引用对资源的打包和加载都没有影响.</p>
-<p>但是如果冗余的纹理贴图被作为独立的 AssetBundle 包来处理, 则该纹理贴图会作为依赖项存在.</p>
-<h1 id="冗余产生原因-撤销"><a href="#冗余产生原因-撤销" class="headerlink" title="冗余产生原因: 撤销"></a>冗余产生原因: 撤销</h1><p>Unity 的材质球有一个特性, 那就是对材质球的操作可以 &quot;撤销&quot;. 而撤销的实现方式是将之前设置过的贴图引用也会保存在 .mate 文件中, 这样就导致冗余引用.</p>
-<p>比如美术人员操作材质球的时候, 先将一张贴图拖进去, 然后发现这里不需要赋值, 于是撤销, 但是即使撤销了, 贴图的引用依然保存在 mate 文件中, 最终打包时这个依赖关系还是会被打包进去.</p>
-<h1 id="冗余产生原因-更换-Shader"><a href="#冗余产生原因-更换-Shader" class="headerlink" title="冗余产生原因: 更换 Shader"></a>冗余产生原因: 更换 Shader</h1><p>材质球的 Shader 是可以更换的, 这样也会导致冗余引用的产生.</p>
-<p>比如美术人员制作材质球的时候, 直接拷贝了一份相似的材质球, 这个材质球上引用了 3 张贴图; 之后美术人员更换了一个 Shader, 这个 Shader 只用到了其中的 1 张贴图.</p>
-<p>更换之后会发现这张贴图自动使用了之前的贴图引用, 对于美术工作人员是十分方便的, 堪称智能!</p>
-<p>但是这个智能是有代价的, 没有使用到的另外 2 张贴图的引用依然被保存在 mate 文件中, 这样就产生了冗余引用.</p>
-<h1 id="清除冗余贴图引用的脚本"><a href="#清除冗余贴图引用的脚本" class="headerlink" title="清除冗余贴图引用的脚本"></a>清除冗余贴图引用的脚本</h1><p>使用下面的脚本可以清除整个项目中的冗余贴图引用.</p>
-<p>使用方法:</p>
+<p>最近在学习制作 Unity 游戏, 到了最后需要发布 Android 版本游戏程序的时候, 发现根本导不出来!!!</p>
+<p>每次都会卡在 Gradle 的构建上... 看了日志之后知道了原来是从仓库下载包的时候下载失败了...那我就更郁闷了, 我 24 小时全天开着梯子, 你跟我说现在还有我下载不下来的东西? 后来在这篇文章中找到了答案! <span class="exturl" data-url="aHR0cHM6Ly93d3cueW9tdW5jaGFuLm1vZS9hcmNoaXZlcy8zMjAjc2VhcmNo">解决Unity的网络水土不服问题<i class="fa fa-external-link-alt"></i></span></p>
+<p>原来 Unity 压根不吃梯子啊~ ~ !</p>
+<h1 id="解决方法一"><a href="#解决方法一" class="headerlink" title="解决方法一"></a>解决方法一</h1><p><strong><code>使用阿里的镜像源替代 Google 源</code></strong></p>
 <ol>
-<li>设置工程路径 PRE_PATH 的值, 设置到 Assets 文件夹的上一级.</li>
-<li>在自定义的窗口类的 OnGUI 方法中调用 OnGUI_RedundantTextureReferencesCleaner 方法</li>
+<li><p>找到 Unity 的安装目录.</p>
+</li>
+<li><p>使用 VSCode 打开路径: <code>Editor\Data\PlaybackEngines\AndroidPlayer\Tools\GradleTemplates</code>.</p>
+</li>
+<li><p>对路径中的文件逐一修改, 将其中所有的</p>
+</li>
 </ol>
-<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.IO;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"><span class="keyword">using</span> System.Text.RegularExpressions;</span><br><span class="line"><span class="keyword">using</span> UnityEditor;</span><br><span class="line"><span class="keyword">using</span> UnityEngine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">RedundantTextureReferencesCleaner</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">float</span> UI_DEFAULT_MARGIN = <span class="number">5</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">float</span> UI_INPUT_AREA_WIDTH = <span class="number">400</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">float</span> UI_BUTTON_WIDTH = <span class="number">120</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">const</span> <span class="keyword">float</span> UI_BUTTON_HEIGHT = <span class="number">25</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">bool</span> RedundantTextureReferencesFoldout = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">string</span> RedundantTextureReferencesPath = <span class="keyword">string</span>.Empty;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">OnGUI_RedundantTextureReferencesCleaner</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        GUILayout.Space (<span class="number">2</span> * UI_DEFAULT_MARGIN);</span><br><span class="line"></span><br><span class="line">        RedundantTextureReferencesFoldout =</span><br><span class="line">            EditorGUILayout.Foldout (RedundantTextureReferencesFoldout, <span class="string">&quot;Detect Unused Material&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">        <span class="keyword">if</span> (!RedundantTextureReferencesFoldout) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        GUILayout.BeginVertical (<span class="string">&quot;Box&quot;</span>);</span><br><span class="line">        RedundantTextureReferencesPath = EditorGUILayout.TextField (<span class="string">&quot;Input Path To Detect&quot;</span>,</span><br><span class="line">            RedundantTextureReferencesPath,</span><br><span class="line">            GUILayout.Width (UI_INPUT_AREA_WIDTH));</span><br><span class="line">        GUILayout.EndVertical();</span><br><span class="line"></span><br><span class="line">        GUILayout.BeginHorizontal (<span class="string">&quot;Box&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (GUILayout.Button (<span class="string">&quot;Detect Shader&quot;</span>, GUILayout.Height (UI_BUTTON_HEIGHT),</span><br><span class="line">            GUILayout.Width (UI_BUTTON_WIDTH))) &#123;</span><br><span class="line">            DetectRedundantTextureReferences();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        GUILayout.EndHorizontal();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">DetectRedundantTextureReferences</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">        GetAllFillPath (RedundantTextureReferencesPath, <span class="string">&quot;*.mat&quot;</span>, <span class="keyword">out</span> <span class="keyword">string</span> message, <span class="keyword">out</span> <span class="keyword">string</span>[] allFileName);</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">string</span>.IsNullOrEmpty (message)) &#123;</span><br><span class="line">            Debug.Log (message);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Debug.Log (<span class="string">$&quot;Find <span class="subst">&#123;allFileName.Length&#125;</span> Materials!&quot;</span>);</span><br><span class="line">        <span class="keyword">var</span> assetFileName = GetAllFileAssetPath (allFileName);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 读取预制体</span></span><br><span class="line">        <span class="keyword">int</span> progressBarCounter = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> repairCounter = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">var</span> materials = <span class="keyword">new</span> List&lt;Material&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> index = <span class="number">0</span>; index &lt; assetFileName.Count; index++) &#123;</span><br><span class="line">            EditorUtility.DisplayProgressBar (<span class="string">&quot;读取材质资源中&quot;</span>, <span class="string">$&quot;<span class="subst">&#123;index + <span class="number">1</span>&#125;</span>/<span class="subst">&#123;assetFileName.Count&#125;</span>&quot;</span>,</span><br><span class="line">                (<span class="keyword">float</span>) (index + <span class="number">1</span>) / assetFileName.Count);</span><br><span class="line">            materials.Add (AssetDatabase.LoadAssetAtPath&lt;Material&gt; (assetFileName[index]));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        EditorUtility.ClearProgressBar();</span><br><span class="line">        Debug.Log (<span class="string">$&quot;Prefabs: 共读取了 <span class="subst">&#123;materials.Count&#125;</span> 个材质&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 遍历材质</span></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> material <span class="keyword">in</span> materials) &#123;</span><br><span class="line">            <span class="keyword">if</span> (EditorUtility.DisplayCancelableProgressBar (<span class="string">&quot;检测中&quot;</span>, <span class="string">$&quot;<span class="subst">&#123;++progressBarCounter&#125;</span>/<span class="subst">&#123;materials.Count&#125;</span>&quot;</span>,</span><br><span class="line">                (<span class="keyword">float</span>) progressBarCounter / materials.Count)) &#123;</span><br><span class="line">                EditorUtility.ClearProgressBar();</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (RepairMaterial (material)) &#123;</span><br><span class="line">                repairCounter++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Debug.Log (<span class="string">$&quot;RepairCounter: 共修复了 <span class="subst">&#123;repairCounter&#125;</span> 个问题&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">bool</span> <span class="title">RepairMaterial</span>(<span class="params">Material _material</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> isRepaired = <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">var</span> textureGUIDs = CollectTextureGUIDs (_material);</span><br><span class="line">        <span class="keyword">string</span> materialPathName = Path.GetFullPath (AssetDatabase.GetAssetPath (_material));</span><br><span class="line">        <span class="keyword">var</span> strBuilder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">using</span> (<span class="keyword">var</span> reader = <span class="keyword">new</span> StreamReader (materialPathName)) &#123;</span><br><span class="line">            <span class="keyword">var</span> regex = <span class="keyword">new</span> Regex (<span class="string">@&quot;\s+guid:\s+(\w+),&quot;</span>);</span><br><span class="line">            <span class="keyword">string</span> line = reader.ReadLine();</span><br><span class="line">            <span class="keyword">while</span> (<span class="literal">null</span> != line) &#123;</span><br><span class="line">                <span class="keyword">if</span> (line.Contains (<span class="string">&quot;m_Texture:&quot;</span>)) &#123;</span><br><span class="line">                    <span class="comment">// 包含纹理贴图引用的行，使用正则表达式获取纹理贴图的 guid</span></span><br><span class="line">                    <span class="keyword">var</span> match = regex.Match (line);</span><br><span class="line">                    <span class="keyword">if</span> (match.Success) &#123;</span><br><span class="line">                        <span class="keyword">string</span> textureGUID = match.Groups[<span class="number">1</span>].Value;</span><br><span class="line">                        <span class="keyword">if</span> (textureGUIDs.Contains (textureGUID)) &#123;</span><br><span class="line">                            strBuilder.AppendLine (line);</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            <span class="comment">// 材质没有用到纹理贴图，guid 赋值为 0 来清除引用关系</span></span><br><span class="line">                            isRepaired = <span class="literal">true</span>;</span><br><span class="line">                            strBuilder.AppendLine (line.Substring (<span class="number">0</span>,</span><br><span class="line">                                line.IndexOf (<span class="string">&quot;fileID:&quot;</span>, StringComparison.Ordinal) + <span class="number">7</span>) + <span class="string">&quot; 0&#125;&quot;</span>);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        strBuilder.AppendLine (line);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    strBuilder.AppendLine (line);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                line = reader.ReadLine();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">using</span> (<span class="keyword">var</span> writer = <span class="keyword">new</span> StreamWriter (materialPathName)) &#123;</span><br><span class="line">            writer.Write (strBuilder.ToString());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> isRepaired;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> HashSet&lt;<span class="keyword">string</span>&gt; <span class="title">CollectTextureGUIDs</span>(<span class="params">Material _material</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> textureGUIDs = <span class="keyword">new</span> HashSet&lt;<span class="keyword">string</span>&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ShaderUtil.GetPropertyCount (_material.shader); ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (ShaderUtil.ShaderPropertyType.TexEnv !=</span><br><span class="line">                ShaderUtil.GetPropertyType (_material.shader, i)) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> texture = _material.GetTexture (ShaderUtil.GetPropertyName (_material.shader, i));</span><br><span class="line">            <span class="keyword">if</span> (<span class="literal">null</span> == texture) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">string</span> textureGUID = AssetDatabase.AssetPathToGUID (AssetDatabase.GetAssetPath (texture));</span><br><span class="line">            <span class="keyword">if</span> (!textureGUIDs.Contains (textureGUID)) &#123;</span><br><span class="line">                textureGUIDs.Add (textureGUID);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> textureGUIDs;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">GetAllFillPath</span>(<span class="params"><span class="keyword">string</span> path, <span class="keyword">string</span> strFilter, <span class="keyword">out</span> <span class="keyword">string</span> message, <span class="keyword">out</span> <span class="keyword">string</span>[] result</span>)</span> &#123;</span><br><span class="line">        result = <span class="literal">null</span>;</span><br><span class="line">        message = <span class="keyword">string</span>.Empty;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">string</span> detectPath = Path.Combine (Application.dataPath, path);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">string</span>.IsNullOrEmpty (detectPath)) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!Directory.Exists (detectPath)) &#123;</span><br><span class="line">            message = <span class="string">&quot;路径不存在!&quot;</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        result = Directory.GetFiles (detectPath, strFilter, SearchOption.AllDirectories);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;<span class="keyword">string</span>&gt; <span class="title">GetAllFileAssetPath</span>(<span class="params"><span class="keyword">in</span> <span class="keyword">string</span>[] paths</span>)</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> result = <span class="keyword">new</span> List&lt;<span class="keyword">string</span>&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; paths.Length; i++) &#123;</span><br><span class="line">            EditorUtility.DisplayProgressBar (<span class="string">&quot;读取资源中&quot;</span>, <span class="string">$&quot;<span class="subst">&#123;i + <span class="number">1</span>&#125;</span>/<span class="subst">&#123;paths.Length&#125;</span>&quot;</span>, (<span class="keyword">float</span>) (i + <span class="number">1</span>) / paths.Length);</span><br><span class="line">            <span class="keyword">var</span> path = paths[i].Substring (paths[i].IndexOf (<span class="string">&quot;Assets&quot;</span>, StringComparison.Ordinal));</span><br><span class="line">            <span class="keyword">if</span> (path.IndexOf (<span class="string">&quot;.meta&quot;</span>, StringComparison.OrdinalIgnoreCase) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                result.Add (path);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        EditorUtility.ClearProgressBar();</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">google()</span><br><span class="line">jcenter()</span><br></pre></td></tr></table></figure>
+
+<p>修改为:</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">maven &#123;</span><br><span class="line">    url <span class="string">&quot;https://maven.aliyun.com/repository/google&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">maven &#123;</span><br><span class="line">    url <span class="string">&quot;https://maven.aliyun.com/repository/jcenter&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><font color='red'><strong>重启 Unity 项目</strong></font>, 重新发布即可!</li>
+</ol>
+<p>[<strong>注</strong>]</p>
+<ol>
+<li><p>文件中要替换的 <code>google() jcenter()</code> 不止一处, 必须全部替换!</p>
+</li>
+<li><p>Unity 每次打开项目的时候, 都会从模板中复制文件, 在项目中建立缓存, 其中就包含我们刚刚修改的文件. 如果不重启项目, 那么项目中的缓存文件依旧使用的是修改前的文件, 此时发布依旧会失败, 所以必须重启 Unity 项目, 让 Unity 使用我们修改后的模板重新建立缓存!</p>
+</li>
+</ol>
+<h1 id="解决方法二"><a href="#解决方法二" class="headerlink" title="解决方法二"></a>解决方法二</h1><p><strong><code>为 Unity Hub 和 Unity 设置代理</code></strong></p>
+<p>Unity Hub 和 Unity 在连接网络时并不会读取浏览器配置, 因此梯子时无效的! 但是 Unity Hub 和 Unity 会读取环境变量中 <code>HTTP_PROXY</code> 和 <code>HTTPS_PROXY</code> 的值判断是否使用代理.</p>
+<p>因此只要配置好这两个环境变量就好了.</p>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">HTTP_PROXY = http:<span class="comment">//127.0.0.1:1080</span></span><br><span class="line">HTTPS_PROXY = http:<span class="comment">//127.0.0.1:1080</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>我最终采用的是第一种方法, 虽然设置麻烦了一点, 但是没有副作用.</p>
+<p>第二种也用过, 也是可以实现的, 但是有副作用, 会导致其他的软件可能无法正常联网, 比如我的饥荒. (未完全证实) 不过我也确实不喜欢改动环境变量! 😂</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cueW9tdW5jaGFuLm1vZS9hcmNoaXZlcy8zMjAjc2VhcmNo">解决Unity的网络水土不服问题<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NoYW5nZV9mcm9tX25vdy9hcnRpY2xlL2RldGFpbHMvMTAwNTE5NTQ2">Unity使用Gradle打包出错问题<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ol>
 ]]></content>
       <categories>
         <category>Unity</category>
       </categories>
       <tags>
         <tag>Unity</tag>
-        <tag>Editor</tag>
       </tags>
   </entry>
   <entry>
@@ -5183,229 +5183,6 @@ const dp_update = new DPlayer({
       </tags>
   </entry>
   <entry>
-    <title>Oracle 异构数据库访问</title>
-    <url>/oracle/oracle_gateways.html</url>
-    <content><![CDATA[<a id="more"></a>
-
-<h1 id="🦴前言"><a href="#🦴前言" class="headerlink" title="🦴前言"></a>🦴前言</h1><p>从 Oracle 连接 SQL Server 数据库, 需要用透明网关 (Transparent Gateway), 通过它, 我们可以访问并操作 SQL Server 数据库, 当前也可以连接其他数据库, 实现数据库的异构服务.<br>目前是SQL SERVER2005异构连接.</p>
-<h1 id="🌴声明"><a href="#🌴声明" class="headerlink" title="🌴声明"></a>🌴声明</h1><ul>
-<li><p>本文写于 2020 年 07 月 29 号, 请注意文章时效性!</p>
-</li>
-<li><p>如果你要配置的环境不是 <code>Oracle Database 和 Oracle Gateways 安装在一台电脑上</code> 这种, 请出门左转 Google, 本文仅在这种环境下验证通过, 不保证 100% 适用于其他环境. 另外, 经测试, Microsoft SQL Server 无论是否安装和 Database 在同一台电脑上本文均有效!</p>
-</li>
-<li><p>在 Oracle 8i 中没有透明网关, Oracle 10.2 的透明网关是单独的一个插件 <code>10201_gateways_win32.zip</code>, 需要另外安装. 因此本文只适用于 Oracle 11 版本, 其他版本没有进行单独测试, 但相近的版本应该也是适应的. (不保证)</p>
-</li>
-</ul>
-<h1 id="🐌Oracle-Database-使用-Oracle-Gateways-访问-Microsoft-SQL-Server"><a href="#🐌Oracle-Database-使用-Oracle-Gateways-访问-Microsoft-SQL-Server" class="headerlink" title="🐌Oracle Database 使用 Oracle Gateways 访问 Microsoft SQL Server"></a>🐌Oracle Database 使用 Oracle Gateways 访问 Microsoft SQL Server</h1><p>公司中一个项目要用 Oracle 访问 SQL Server, 于是我先在自己电脑上做一下配置实验, 本次实验中 Oracle Database 和 Oracle Gateways 安装在自己电脑上, SQL Server 数据库安装在另一台电脑上.</p>
-<h2 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h2><h3 id="Oracle-Database"><a href="#Oracle-Database" class="headerlink" title="Oracle Database"></a>Oracle Database</h3><ul>
-<li>版本: Oracle Database 11.2.0.1.0 - Production (32 bit)</li>
-<li>服务器名称(IP): 192.168.11.95</li>
-<li>数据库名: orcl</li>
-<li>账号密码: scott/a</li>
-<li>本地监听: 1521</li>
-<li>对外监听: 1522</li>
-</ul>
-<h3 id="Oracle-Gateways"><a href="#Oracle-Gateways" class="headerlink" title="Oracle Gateways"></a>Oracle Gateways</h3><ul>
-<li>版本: Oracle Gateways 11.2.0.1.0 (32 bit)</li>
-<li>服务器名称(IP): 192.168.11.95</li>
-<li>数据库名: dg4msql</li>
-<li>本地监听: 1521</li>
-<li>对外监听: 1522</li>
-</ul>
-<p>[<strong>注</strong>] Oracle Database 和 Oracle Gateways 的版本和位数都必须保持一致. (不要问我怎么知道的, 问就是不知道! 🙄)</p>
-<h3 id="Microsoft-SQL-Server"><a href="#Microsoft-SQL-Server" class="headerlink" title="Microsoft SQL Server"></a>Microsoft SQL Server</h3><ul>
-<li>版本: Microsoft SQL Server 2008 R2 (64 bit)</li>
-<li>服务器名称(IP): 192.168.10.9</li>
-<li>实例名: (null)</li>
-<li>数据库名: htgl20180809</li>
-<li>账号密码: sa/sa2008</li>
-</ul>
-<h4 id="查看-Microsoft-SQL-Server-数据库的信息"><a href="#查看-Microsoft-SQL-Server-数据库的信息" class="headerlink" title="查看 Microsoft SQL Server 数据库的信息"></a>查看 Microsoft SQL Server 数据库的信息</h4><ol>
-<li><p>在 Microsoft SQL Server 的对象资源管理器中找到要查看的数据库, 右键属性</p>
-<p> <img data-src="/images/oracle_gateways/SQL_Server1.png" alt="SQL_Server_1"></p>
-</li>
-<li><p>在弹出的窗口中点击左下方的 &quot;查看连接属性&quot;.</p>
-<p> <img data-src="/images/oracle_gateways/SQL_Server2.png" alt="SQL_Server_2"></p>
-</li>
-<li><p>在弹出的窗口中就可以看到需要的信息了, 其中 <code>服务器主机名</code>, <code>实例名</code> 和 <code>数据库名</code> 在安装 Gateways 时会用到.</p>
-<p> <img data-src="/images/oracle_gateways/SQL_Server3.png" alt="SQL_Server_3"></p>
-</li>
-</ol>
-<h2 id="下载-Oracle-Database-和-Oracle-Gateways"><a href="#下载-Oracle-Database-和-Oracle-Gateways" class="headerlink" title="下载 Oracle Database 和 Oracle Gateways"></a>下载 Oracle Database 和 Oracle Gateways</h2><p>目前 Oracle 官网把所有信息都放置到一个菜单中, 导致很多平时不怎么访问这种官网的人根本找不到 Oracle 家的软件在哪里下载...还是说一下如何下载 Oracle 软件吧...</p>
-<ol>
-<li><p>登录 <span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS8=">Oracle 官网<i class="fa fa-external-link-alt"></i></span>, 展开上方的 <code>Products</code> 菜单, 点击其中的 <code>Oracle Database</code> 选项.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Download1.png" alt="Oracle_Download_1"></p>
-</li>
-<li><p>点击下载最新版本的 Oracle Database 软件: <code>Download Database 19c</code>.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Download2.png" alt="Oracle_Download_2"></p>
-</li>
-<li><p>随后会跳转到一个很长很长的页面, 这个页面包含了几乎所有 Oracle 的数据库产品软件, 不再受到 Oracle 支持的版本这里不会显示, 比如 10g 系列就已经不再受 Oracle 支持了, 所以这里也就找不到 10g 系列的下载地址了. 一直往下滑, 找到需要的 <code>11.2.0.1.0</code> 版本的位置, 由于我需要 32 位的数据库软件, 所以这里点击 <code>Microsoft Windows (32-bit)</code> 右侧的 <code>See All</code>, 进入相应的详细信息页面.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Download3.png" alt="Oracle_Download_3"></p>
-</li>
-<li><p>详细信息页面的第一条就是 <code>Oracle Database</code> 的下载地址, Oracle 官方将软件打包成了两个压缩包, 全部下载即可. 第二条便是客户端的下载地址, 如果需要使用 PL/SQL 等软件操作数据库, 就需要下载安装 <code>Oracle Database Client</code> 了.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Download4.png" alt="Oracle_Download_4"></p>
-</li>
-<li><p>详细信息页面中, 紧接着客户端的第三条信息就是 <code>Oracle Gateways</code> 的下载地址了, 点击下载即可.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Download5.png" alt="Oracle_Download_5"></p>
-</li>
-<li><p>[<strong>注</strong>] 全部下载之后先不要着急解压, 先看一看下图, 下图是一个 <code>分卷压缩包</code>, 可以看到这个压缩包除了第一卷以外, 从第二卷开始, 后缀名使用了序号进行命名, 这种压缩包只要解压以 <code>zip</code> 为后缀名的第一卷即可, 以 <code>序号</code> 为后缀名并且文件名称和以 <code>zip</code> 为后缀名的文件 <strong><code>同名</code></strong> 的分卷压缩包都会自动解压.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Download6.png" alt="Oracle_Download_6"></p>
-<p> 但是, 从 Oracle 官网下载的压缩包中, Database 的包被分成了两个:</p>
-<p> <code>win32_11gR2_database_1of2.zip</code></p>
-<p> <code>win32_11gR2_database_2of2.zip</code></p>
-<p> 需要注意的是这俩货可不是分卷压缩包, 必须两个都解压, 不要只解压了第一个就不管了, 不然后面会报错的. (不要问我怎么知道的, 问就是不知道! 🙄) 解压后应该是这个样子:</p>
-<p> <code>win32_11gR2_database_1of2.zip</code> 和 <code>win32_11gR2_database_2of2.zip</code> 都会解压到 database 文件夹中.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Download7.png" alt="Oracle_Download_7"></p>
-</li>
-</ol>
-<h2 id="安装-Oracle-Gateways"><a href="#安装-Oracle-Gateways" class="headerlink" title="安装 Oracle Gateways"></a>安装 Oracle Gateways</h2><ol>
-<li><p>启动 gateways 文件夹中的安装程序.</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install1.png" alt="Oracle_Gateways_Install_1"></p>
-</li>
-<li><p>在这个页面可以查看已经安装的产品或者卸载产品, 点击下一步进行安装配置.</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install2.png" alt="Oracle_Gateways_Install_2"></p>
-</li>
-<li><p>在选择产品名称和路径时, 下面是默认配置.</p>
-<p> [<strong>注</strong>] 由于 Database 和 Gateways 安装在同一台电脑上, 为了避免两者的监听出现问题, 要将 Gateways 安装到 Database 的路径中, 所以不要使用下面的默认配置.</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install3.png" alt="Oracle_Gateways_Install_3"></p>
-<p> 而是从下拉框中选择 Oracle Database 的产品名称和路径: <code>OraDb11g_home1</code>, 如图.</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install4.png" alt="Oracle_Gateways_Install_4"></p>
-<p> 选择后的配置是这个样子的:</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install5.png" alt="Oracle_Gateways_Install_5"></p>
-</li>
-<li><p>选择安装产品组件, 安装用于访问 Microsoft SQL Server 的组件. 由于我之前已经安装过了, 所以截图中显示的是 &quot;重新安装&quot;, 如果你电脑上没还有安装这个组件, 应该会显示 &quot;未安装&quot;.</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install6.png" alt="Oracle_Gateways_Install_6"></p>
-</li>
-<li><p>输入要连接的 Microsoft SQL Server 的信息, 包括服务器主机名, 实例名, 数据库名, 由于我之前查看 SQL Server 信息的时候发现我要连接的 SQL Server 数据库实例名为空, 所以图中填写实例名的地方空着.</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install7.png" alt="Oracle_Gateways_Install_7"></p>
-</li>
-<li><p>最后点击安装.</p>
-<p> <img data-src="/images/oracle_gateways/Gateways_Install8.png" alt="Oracle_Gateways_Install_8"></p>
-</li>
-</ol>
-<h2 id="配置-Oracle-Database-和-Oracle-Gateways"><a href="#配置-Oracle-Database-和-Oracle-Gateways" class="headerlink" title="配置 Oracle Database 和 Oracle Gateways"></a>配置 Oracle Database 和 Oracle Gateways</h2><ol>
-<li><p>关闭数据库监听程序.</p>
-<p> Windows 服务中带有 <code>TNSListener</code> 的服务就是监听程序, 找到与待配置数据库对应的监听程序, 右键, 停止.</p>
-<p> [<strong>注</strong>] 修改 <code>监听程序</code> 和 <code>服务命名</code> 的配置文件之前, 一定要先关闭监听程序, 否则很容易导致 PL/SQL 连接数据库时报错: <code>ORA-12514: TNS: 监听程序当前无法识别连接描述符中请求的服务</code>, 甚至会导致数据库无法访问, 监听程序也无法启动, 启动监听程序时报错: <code>某些服务在未由其他服务或程序使用时将自动停止</code>, 这时就只能重启数据库了, (不说了, 说多了都是泪啊~ 😫), 为了避免这些乱七八糟的麻烦, 一开始就先把监听程序停止掉就好了.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Configure1.png" alt="Oracle_Configure_1"></p>
-</li>
-<li><p>修改 Gateways 的数据库连接配置, 配置文件路径:</p>
-<p> <code>...\product\11.2.0\dbhome_1\dg4msql\admin\initdg4msql.ora</code></p>
-<p> 这个文件告诉了 Gateways 具体要连接到哪个 SQL Server 数据库, 这个文件会使用在安装 Gateways 的时候填写的信息进行默认设置, 如果只需要连接一个 SQL Server 数据库, 默认设置就可以了, 不需要做任何改动, 当然也可以进行自定义, 下面是这个文件的默认设置.</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HS_FDS_CONNECT_INFO&#x3D;[192.168.10.9]&#x2F;&#x2F;htgl20180809</span><br><span class="line">HS_FDS_TRACE_LEVEL&#x3D;OFF</span><br><span class="line">HS_FDS_RECOVERY_ACCOUNT&#x3D;RECOVER</span><br><span class="line">HS_FDS_RECOVERY_PWD&#x3D;RECOVER</span><br></pre></td></tr></table></figure>
-
-<p> 这个文件重要配置的内容很少, 就只有异构数据库的连接信息.</p>
-<ul>
-<li><p><code>initdg4msql.ora</code> 文件的命名规则是: <code>initSID.ora</code>, Gateways 安装时默认的 SID 为 dg4msql, 所以文件的名字就是 initdg4msql.ora, 当需要连接多个 SQL Server 数据库的时候, 这里的 SID 自然就需要自定义了. 每一个要连接的 SQL Server 数据库都对应一个 initSID.ora 文件, SID 写一个通俗易懂的, 唯一的名称即可, 这个 SID 得记好, 后面还需要用到. 比如要连接两个 SQL Server 数据库 <code>htgl</code> 和 <code>cggl</code>, 那么就可以复制一份 initdg4msql.ora 文件, 并重命名为 <code>inithtgl.ora</code> 和 <code>initcggl.ora</code>, 分别进行配置即可.</p>
-</li>
-<li><p><code>HS_FDS_CONNECT_INFO</code> 的填写规则: <code>[SQL Server 服务器主机名]/SQL Server 实例名/SQL Server 数据库名</code>. 这个就是具体的 SQL Server 连接信息了.</p>
-</li>
-<li><p>这个文件夹中还有两个配置示例文件: <code>listener.ora.sample</code> 和 <code>tnsnames.ora.sample</code>, 这是用于 Database 配置时的示例文件, 用意是教会我们怎么修改 <code>监听程序</code> 和 <code>服务命名</code> 的配置, 不需要修改, 即使你修改了也不会生效, 因为文件的后缀是 <code>.sample</code>.</p>
-</li>
-</ul>
-</li>
-<li><p>修改 Oracle Database 的 <strong>监听程序</strong> 配置, 配置文件路径:</p>
-<p> <code>...\product\11.2.0\dbhome_1\NETWORK\ADMIN\listener.ora</code></p>
-<p> 在监听程序配置文件的 <code>SID_LIST_LISTENER</code> 中添加之前配置好的 Gateways SID, 下图中高亮的这段配置文本就是之前配置的 SID 为 dg4msql 的 Gateways, 其实这一段文本是从之前提到的模板文件 <code>listener.ora.sample</code> 中复制过来的.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Configure2.png" alt="Oracle_Configure_2"></p>
-<ul>
-<li><code>SID_NAME</code> 填写之前配置的 <code>initSID.ora</code> 文件使用的 SID 名.</li>
-<li><code>PROGRAM</code> 是 Gateways 所在的文件夹的名字, 可以看到目前 Gateways 就是安装到了 <code>dg4msql</code> 文件夹中, 所以不要修改这个值.</li>
-<li><code>ORACLE_HOME</code> 数据库软件的安装位置.</li>
-</ul>
-</li>
-<li><p>修改 Oracle Database 的 <strong>服务命名</strong> 配置, 配置文件路径:</p>
-<p> <code>...\product\11.2.0\dbhome_1\NETWORK\ADMIN\tnsnames.ora</code></p>
-<p> 在服务命名配置文件中添加之前创建的 dg4msql 服务. 高亮的这段配置文本就是从之前提到的模板文件 <code>tnsnames.ora.sample</code> 中复制过来的.</p>
-<p> <img data-src="/images/oracle_gateways/Oracle_Configure3.png" alt="Oracle_Configure_3"></p>
-</li>
-<li><p>重启 Oracle 监听程序.</p>
-<p> 此时再将之前关闭的监听程序启动.</p>
-</li>
-</ol>
-<h2 id="创建数据库连接-DBLink"><a href="#创建数据库连接-DBLink" class="headerlink" title="创建数据库连接 DBLink"></a>创建数据库连接 DBLink</h2><p>使用下面的格式写一条语句创建 DBLink, 也可以使用 PL/SQL 进行可视化创建.</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">create database link 变量名(随意)</span></span><br><span class="line"><span class="comment">  connect to 用户名 identified by 用户密码</span></span><br><span class="line"><span class="comment">  using &#x27;透明网关标识&#x27;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> htgl</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> sa <span class="keyword">identified</span> <span class="keyword">by</span> sa2008</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;dg4msql&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="连接测试"><a href="#连接测试" class="headerlink" title="连接测试"></a>连接测试</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">--select &quot;字段名&quot; from &quot;SQL Server 中的表名&quot;@(DBLink变量名)</span></span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;rybh&quot;</span> <span class="keyword">from</span> <span class="string">&quot;ryb&quot;</span>@htgl;</span><br><span class="line"><span class="comment">--当需要多表连接查询时, 可以这样写</span></span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;zt&quot;</span> <span class="keyword">as</span> <span class="keyword">id</span>,</span><br><span class="line">       (<span class="keyword">select</span> <span class="string">&quot;xm&quot;</span> <span class="keyword">from</span> <span class="string">&quot;ryb&quot;</span>@htgl <span class="keyword">where</span> <span class="string">&quot;rybh&quot;</span> = <span class="string">&quot;htqxb&quot;</span>.<span class="string">&quot;rybh&quot;</span>@htgl) <span class="keyword">as</span> <span class="keyword">name</span></span><br><span class="line">  <span class="keyword">from</span> <span class="string">&quot;htqxb&quot;</span>@htgl</span><br><span class="line"> <span class="keyword">where</span> <span class="string">&quot;rybh&quot;</span> = <span class="string">&#x27;150007&#x27;</span>;</span><br><span class="line"><span class="comment">--另外异构数据库不支持 join 类查询.</span></span><br></pre></td></tr></table></figure>
-
-<p>[<strong>注</strong>] 使用 Oracle 访问 SQL Server 时, 你会发现总是会报这样一个错误: <code>***字段名无效!</code>. 这个错误是因为 Oracle 访问 SQL Server 时, 字段名要使用 <code>双引号</code> 括起来. (不要问我怎么知道的, 问就是不知道! 🙄) 表名最好也使用双引号括起来.</p>
-<h1 id="🦄多异构数据库的配置"><a href="#🦄多异构数据库的配置" class="headerlink" title="🦄多异构数据库的配置"></a>🦄多异构数据库的配置</h1><p>公司的项目现在又要求 Oracle 数据库必须能够访问 SQL Server 中的 <code>htgl20180809</code> 和 <code>cggl20180808</code> 这两个数据库, 之前提到过, 每一个要连接的异构数据库都对应一个 initSID.ora 文件, 唯一标识就是 SID.</p>
-<h2 id="修改-Gateways-的数据库连接配置"><a href="#修改-Gateways-的数据库连接配置" class="headerlink" title="修改 Gateways 的数据库连接配置"></a>修改 Gateways 的数据库连接配置</h2><p>建立两个 initSID.ora 文件, 起名为: <code>inithtgl.ora</code> 和 <code>initcggl.ora</code>, 对应的 SID 就是 <code>htgl</code> 和 <code>cggl</code>.</p>
-<p><img data-src="/images/oracle_gateways/Gateways_Multiple1.png" alt="Gateways_Multiple_1"></p>
-<p>这个是文件 inithtgl.ora 的内容, 连接 192.168.10.9 上的 htgl20180809 数据库.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HS_FDS_CONNECT_INFO&#x3D;[192.168.10.9]&#x2F;&#x2F;htgl20180809</span><br><span class="line">HS_FDS_TRACE_LEVEL&#x3D;OFF</span><br><span class="line">HS_FDS_RECOVERY_ACCOUNT&#x3D;RECOVER</span><br><span class="line">HS_FDS_RECOVERY_PWD&#x3D;RECOVER</span><br></pre></td></tr></table></figure>
-
-<p>这个是文件 initcggl.ora 的内容, 连接 192.168.10.9 上的 cggl20180808 数据库.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HS_FDS_CONNECT_INFO&#x3D;[192.168.10.9]&#x2F;&#x2F;cggl20180808</span><br><span class="line">HS_FDS_TRACE_LEVEL&#x3D;OFF</span><br><span class="line">HS_FDS_RECOVERY_ACCOUNT&#x3D;RECOVER</span><br><span class="line">HS_FDS_RECOVERY_PWD&#x3D;RECOVER</span><br></pre></td></tr></table></figure>
-
-<h2 id="修改-Oracle-Database-监听程序配置"><a href="#修改-Oracle-Database-监听程序配置" class="headerlink" title="修改 Oracle Database 监听程序配置"></a>修改 Oracle Database 监听程序配置</h2><p>监听程序的配置, 其实就是把之前配置好的 Gateways 的 SID 放到监听程序的 LIST 中, 反映到文件中就是在 <code>SID_LIST_LISTENER</code> 中添加 SID 设置.</p>
-<p><img data-src="/images/oracle_gateways/Gateways_Multiple2.png" alt="Gateways_Multiple_2"></p>
-<ul>
-<li><p><code>PROGRAM</code> 是 Gateways 的安装路径, Gateways 就是安装在 dg4msql 文件夹下的, 所以这个值不能变.</p>
-</li>
-<li><p><code>SID_NAME</code> 是 Gateways 的 SID 值.</p>
-</li>
-</ul>
-<h2 id="修改-Oracle-Database-服务命名配置"><a href="#修改-Oracle-Database-服务命名配置" class="headerlink" title="修改 Oracle Database 服务命名配置"></a>修改 Oracle Database 服务命名配置</h2><p>服务命名的配置顾名思义, 就是将配置好的 Gateways 服务在服务配置文件中列出来, 告诉 Oracle 数据库我们配置了 Gateways 服务, 不然 Oracle 数据库是不知道的.</p>
-<p><img data-src="/images/oracle_gateways/Gateways_Multiple3.png" alt="Gateways_Multiple_3"></p>
-<ul>
-<li><p>= 号前面的是服务的名称, 一般保持和 SID 的名称一致, <code>dg4msql/admin</code> 文件夹中的 <code>tnsnames.sample</code> 文件也是这样教我们的.</p>
-</li>
-<li><p><code>SID</code> 改成之前配置 Gateways 时使用的 SID.</p>
-</li>
-</ul>
-<h2 id="连接测试-1"><a href="#连接测试-1" class="headerlink" title="连接测试"></a>连接测试</h2><p>配置都做好之后, 建立 DBLink, 就可以访问 SQL Server 了.</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> htgl <span class="keyword">connect</span> <span class="keyword">to</span> sa <span class="keyword">identified</span> <span class="keyword">by</span> sa2008</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;htgl&#x27;</span>;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> cggl <span class="keyword">connect</span> <span class="keyword">to</span> sa <span class="keyword">identified</span> <span class="keyword">by</span> sa2008</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;cggl&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--drop database link htgl;</span></span><br><span class="line"><span class="comment">--drop database link cggl;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;khyh&quot;</span>, <span class="string">&quot;htbh&quot;</span>, <span class="string">&quot;htmc&quot;</span>, <span class="string">&quot;htje&quot;</span> <span class="keyword">from</span> <span class="string">&quot;cghtb&quot;</span>@htgl <span class="keyword">where</span> <span class="string">&quot;wpbh&quot;</span> <span class="keyword">like</span> <span class="string">&#x27;2018%&#x27;</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;wpbh&quot;</span>, <span class="string">&quot;wpmc&quot;</span>, <span class="string">&quot;shl&quot;</span>, <span class="string">&quot;dw&quot;</span> <span class="keyword">from</span> <span class="string">&quot;cggl_sqmxb&quot;</span>@cggl;</span><br></pre></td></tr></table></figure>
-
-<p>这是 htgl20180809 数据库的查询结果:</p>
-<p><img data-src="/images/oracle_gateways/Gateways_Multiple4.png" alt="Gateways_Multiple_4"></p>
-<p>这是 cggl20180808 数据库的查询结果:</p>
-<p><img data-src="/images/oracle_gateways/Gateways_Multiple5.png" alt="Gateways_Multiple_5"></p>
-<h1 id="Oracle-连接-Oracle"><a href="#Oracle-连接-Oracle" class="headerlink" title="Oracle 连接 Oracle"></a>Oracle 连接 Oracle</h1><p>这个就比较简单了, 既然不需要使用虚拟网关, 那么直接建立 <code>database link</code> 即可.</p>
-<p>[<strong>注</strong>] <font color='red'>两台电脑必须在用一个局域网中!</font></p>
-<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> DBLinkName</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> DatabaseUser <span class="keyword">identified</span> <span class="keyword">by</span> DatabasePassword</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;DatabaseSID&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th align="left">字段</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">DBLinkName</td>
-<td align="left">创建的 DBLink 的名字</td>
-</tr>
-<tr>
-<td align="left">DatabaseUser</td>
-<td align="left">待连接数据库的登录用户名</td>
-</tr>
-<tr>
-<td align="left">DatabasePassword</td>
-<td align="left">待连接数据库的登录密码</td>
-</tr>
-<tr>
-<td align="left">DatabaseSID</td>
-<td align="left">待链接数据库的服务名, 同时要写明 IP 地址. 如果是本地数据库, 可以不加 IP 地址</td>
-</tr>
-</tbody></table>
-<h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">--连接远程计算机数据库</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> DB_DZYH</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> dzyh <span class="keyword">identified</span> <span class="keyword">by</span> dzyh123</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;192.168.10.136/dzyhcs&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--连接本地计算机数据库</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> DB_DZYH</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> dzyh <span class="keyword">identified</span> <span class="keyword">by</span> dzyh123</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;dzyhcs&#x27;</span>;</span><br></pre></td></tr></table></figure>
-
-<h1 id="🐬参考链接"><a href="#🐬参考链接" class="headerlink" title="🐬参考链接"></a>🐬参考链接</h1><ul>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Rhbmd4aW5nSUxvdmV5b3UvYXJ0aWNsZS9kZXRhaWxzLzgwNjc2NDM3">Oracle连接Sql Server (win32_11gR2_gateways)<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3pkYzUyNTU1NTUvYXJ0aWNsZS9kZXRhaWxzLzEyNTc1NzIz">Oracle11g+ 配置多个gateway 连接sqlserver<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Oracle</category>
-      </categories>
-      <tags>
-        <tag>Oracle</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Oracle SQL 基础</title>
     <url>/oracle/oracle_notes.html</url>
     <content><![CDATA[<a id="more"></a>
@@ -5814,6 +5591,229 @@ const dp_update = new DPlayer({
 
 <h1 id="Oracle-中简单的分页查询实现方式"><a href="#Oracle-中简单的分页查询实现方式" class="headerlink" title="Oracle 中简单的分页查询实现方式"></a>Oracle 中简单的分页查询实现方式</h1><p>使用 <code>MINUS</code> 实现. MINUS 为差集, 返回左侧集合中在右侧集合中不存在的部分.</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">--返回第 101 - 200 行数据 (循环查询中建议使用 &lt;= 和 &lt;= 搭配)</span></span><br><span class="line"><span class="keyword">SELECT</span> yqbh <span class="keyword">FROM</span> zjb <span class="keyword">where</span> yqbh <span class="keyword">in</span> (</span><br><span class="line">   <span class="keyword">SELECT</span> yqbh</span><br><span class="line">     <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> yqbh <span class="keyword">FROM</span> zjb)</span><br><span class="line">    <span class="keyword">WHERE</span> <span class="keyword">ROWNUM</span> &lt;= <span class="number">200</span></span><br><span class="line">   <span class="keyword">MINUS</span></span><br><span class="line">   <span class="keyword">SELECT</span> yqbh</span><br><span class="line">     <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> yqbh <span class="keyword">FROM</span> zjb)</span><br><span class="line">    <span class="keyword">WHERE</span> <span class="keyword">ROWNUM</span> &lt;= <span class="number">100</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">--返回第 n - m 行数据 (单次查询中建议使用 &lt;= 和 &lt; 搭配)</span></span><br><span class="line"><span class="keyword">SELECT</span> yqbh <span class="keyword">FROM</span> zjb <span class="keyword">where</span> yqbh <span class="keyword">in</span> (</span><br><span class="line">   <span class="keyword">SELECT</span> yqbh</span><br><span class="line">     <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> yqbh <span class="keyword">FROM</span> zjb)</span><br><span class="line">    <span class="keyword">WHERE</span> <span class="keyword">ROWNUM</span> &lt;= m</span><br><span class="line">   <span class="keyword">MINUS</span></span><br><span class="line">   <span class="keyword">SELECT</span> yqbh</span><br><span class="line">     <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> yqbh <span class="keyword">FROM</span> zjb)</span><br><span class="line">    <span class="keyword">WHERE</span> <span class="keyword">ROWNUM</span> &lt; n</span><br><span class="line">);</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Oracle</category>
+      </categories>
+      <tags>
+        <tag>Oracle</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Oracle 异构数据库访问</title>
+    <url>/oracle/oracle_gateways.html</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h1 id="🦴前言"><a href="#🦴前言" class="headerlink" title="🦴前言"></a>🦴前言</h1><p>从 Oracle 连接 SQL Server 数据库, 需要用透明网关 (Transparent Gateway), 通过它, 我们可以访问并操作 SQL Server 数据库, 当前也可以连接其他数据库, 实现数据库的异构服务.<br>目前是SQL SERVER2005异构连接.</p>
+<h1 id="🌴声明"><a href="#🌴声明" class="headerlink" title="🌴声明"></a>🌴声明</h1><ul>
+<li><p>本文写于 2020 年 07 月 29 号, 请注意文章时效性!</p>
+</li>
+<li><p>如果你要配置的环境不是 <code>Oracle Database 和 Oracle Gateways 安装在一台电脑上</code> 这种, 请出门左转 Google, 本文仅在这种环境下验证通过, 不保证 100% 适用于其他环境. 另外, 经测试, Microsoft SQL Server 无论是否安装和 Database 在同一台电脑上本文均有效!</p>
+</li>
+<li><p>在 Oracle 8i 中没有透明网关, Oracle 10.2 的透明网关是单独的一个插件 <code>10201_gateways_win32.zip</code>, 需要另外安装. 因此本文只适用于 Oracle 11 版本, 其他版本没有进行单独测试, 但相近的版本应该也是适应的. (不保证)</p>
+</li>
+</ul>
+<h1 id="🐌Oracle-Database-使用-Oracle-Gateways-访问-Microsoft-SQL-Server"><a href="#🐌Oracle-Database-使用-Oracle-Gateways-访问-Microsoft-SQL-Server" class="headerlink" title="🐌Oracle Database 使用 Oracle Gateways 访问 Microsoft SQL Server"></a>🐌Oracle Database 使用 Oracle Gateways 访问 Microsoft SQL Server</h1><p>公司中一个项目要用 Oracle 访问 SQL Server, 于是我先在自己电脑上做一下配置实验, 本次实验中 Oracle Database 和 Oracle Gateways 安装在自己电脑上, SQL Server 数据库安装在另一台电脑上.</p>
+<h2 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h2><h3 id="Oracle-Database"><a href="#Oracle-Database" class="headerlink" title="Oracle Database"></a>Oracle Database</h3><ul>
+<li>版本: Oracle Database 11.2.0.1.0 - Production (32 bit)</li>
+<li>服务器名称(IP): 192.168.11.95</li>
+<li>数据库名: orcl</li>
+<li>账号密码: scott/a</li>
+<li>本地监听: 1521</li>
+<li>对外监听: 1522</li>
+</ul>
+<h3 id="Oracle-Gateways"><a href="#Oracle-Gateways" class="headerlink" title="Oracle Gateways"></a>Oracle Gateways</h3><ul>
+<li>版本: Oracle Gateways 11.2.0.1.0 (32 bit)</li>
+<li>服务器名称(IP): 192.168.11.95</li>
+<li>数据库名: dg4msql</li>
+<li>本地监听: 1521</li>
+<li>对外监听: 1522</li>
+</ul>
+<p>[<strong>注</strong>] Oracle Database 和 Oracle Gateways 的版本和位数都必须保持一致. (不要问我怎么知道的, 问就是不知道! 🙄)</p>
+<h3 id="Microsoft-SQL-Server"><a href="#Microsoft-SQL-Server" class="headerlink" title="Microsoft SQL Server"></a>Microsoft SQL Server</h3><ul>
+<li>版本: Microsoft SQL Server 2008 R2 (64 bit)</li>
+<li>服务器名称(IP): 192.168.10.9</li>
+<li>实例名: (null)</li>
+<li>数据库名: htgl20180809</li>
+<li>账号密码: sa/sa2008</li>
+</ul>
+<h4 id="查看-Microsoft-SQL-Server-数据库的信息"><a href="#查看-Microsoft-SQL-Server-数据库的信息" class="headerlink" title="查看 Microsoft SQL Server 数据库的信息"></a>查看 Microsoft SQL Server 数据库的信息</h4><ol>
+<li><p>在 Microsoft SQL Server 的对象资源管理器中找到要查看的数据库, 右键属性</p>
+<p> <img data-src="/images/oracle_gateways/SQL_Server1.png" alt="SQL_Server_1"></p>
+</li>
+<li><p>在弹出的窗口中点击左下方的 &quot;查看连接属性&quot;.</p>
+<p> <img data-src="/images/oracle_gateways/SQL_Server2.png" alt="SQL_Server_2"></p>
+</li>
+<li><p>在弹出的窗口中就可以看到需要的信息了, 其中 <code>服务器主机名</code>, <code>实例名</code> 和 <code>数据库名</code> 在安装 Gateways 时会用到.</p>
+<p> <img data-src="/images/oracle_gateways/SQL_Server3.png" alt="SQL_Server_3"></p>
+</li>
+</ol>
+<h2 id="下载-Oracle-Database-和-Oracle-Gateways"><a href="#下载-Oracle-Database-和-Oracle-Gateways" class="headerlink" title="下载 Oracle Database 和 Oracle Gateways"></a>下载 Oracle Database 和 Oracle Gateways</h2><p>目前 Oracle 官网把所有信息都放置到一个菜单中, 导致很多平时不怎么访问这种官网的人根本找不到 Oracle 家的软件在哪里下载...还是说一下如何下载 Oracle 软件吧...</p>
+<ol>
+<li><p>登录 <span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS8=">Oracle 官网<i class="fa fa-external-link-alt"></i></span>, 展开上方的 <code>Products</code> 菜单, 点击其中的 <code>Oracle Database</code> 选项.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download1.png" alt="Oracle_Download_1"></p>
+</li>
+<li><p>点击下载最新版本的 Oracle Database 软件: <code>Download Database 19c</code>.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download2.png" alt="Oracle_Download_2"></p>
+</li>
+<li><p>随后会跳转到一个很长很长的页面, 这个页面包含了几乎所有 Oracle 的数据库产品软件, 不再受到 Oracle 支持的版本这里不会显示, 比如 10g 系列就已经不再受 Oracle 支持了, 所以这里也就找不到 10g 系列的下载地址了. 一直往下滑, 找到需要的 <code>11.2.0.1.0</code> 版本的位置, 由于我需要 32 位的数据库软件, 所以这里点击 <code>Microsoft Windows (32-bit)</code> 右侧的 <code>See All</code>, 进入相应的详细信息页面.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download3.png" alt="Oracle_Download_3"></p>
+</li>
+<li><p>详细信息页面的第一条就是 <code>Oracle Database</code> 的下载地址, Oracle 官方将软件打包成了两个压缩包, 全部下载即可. 第二条便是客户端的下载地址, 如果需要使用 PL/SQL 等软件操作数据库, 就需要下载安装 <code>Oracle Database Client</code> 了.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download4.png" alt="Oracle_Download_4"></p>
+</li>
+<li><p>详细信息页面中, 紧接着客户端的第三条信息就是 <code>Oracle Gateways</code> 的下载地址了, 点击下载即可.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download5.png" alt="Oracle_Download_5"></p>
+</li>
+<li><p>[<strong>注</strong>] 全部下载之后先不要着急解压, 先看一看下图, 下图是一个 <code>分卷压缩包</code>, 可以看到这个压缩包除了第一卷以外, 从第二卷开始, 后缀名使用了序号进行命名, 这种压缩包只要解压以 <code>zip</code> 为后缀名的第一卷即可, 以 <code>序号</code> 为后缀名并且文件名称和以 <code>zip</code> 为后缀名的文件 <strong><code>同名</code></strong> 的分卷压缩包都会自动解压.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download6.png" alt="Oracle_Download_6"></p>
+<p> 但是, 从 Oracle 官网下载的压缩包中, Database 的包被分成了两个:</p>
+<p> <code>win32_11gR2_database_1of2.zip</code></p>
+<p> <code>win32_11gR2_database_2of2.zip</code></p>
+<p> 需要注意的是这俩货可不是分卷压缩包, 必须两个都解压, 不要只解压了第一个就不管了, 不然后面会报错的. (不要问我怎么知道的, 问就是不知道! 🙄) 解压后应该是这个样子:</p>
+<p> <code>win32_11gR2_database_1of2.zip</code> 和 <code>win32_11gR2_database_2of2.zip</code> 都会解压到 database 文件夹中.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download7.png" alt="Oracle_Download_7"></p>
+</li>
+</ol>
+<h2 id="安装-Oracle-Gateways"><a href="#安装-Oracle-Gateways" class="headerlink" title="安装 Oracle Gateways"></a>安装 Oracle Gateways</h2><ol>
+<li><p>启动 gateways 文件夹中的安装程序.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install1.png" alt="Oracle_Gateways_Install_1"></p>
+</li>
+<li><p>在这个页面可以查看已经安装的产品或者卸载产品, 点击下一步进行安装配置.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install2.png" alt="Oracle_Gateways_Install_2"></p>
+</li>
+<li><p>在选择产品名称和路径时, 下面是默认配置.</p>
+<p> [<strong>注</strong>] 由于 Database 和 Gateways 安装在同一台电脑上, 为了避免两者的监听出现问题, 要将 Gateways 安装到 Database 的路径中, 所以不要使用下面的默认配置.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install3.png" alt="Oracle_Gateways_Install_3"></p>
+<p> 而是从下拉框中选择 Oracle Database 的产品名称和路径: <code>OraDb11g_home1</code>, 如图.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install4.png" alt="Oracle_Gateways_Install_4"></p>
+<p> 选择后的配置是这个样子的:</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install5.png" alt="Oracle_Gateways_Install_5"></p>
+</li>
+<li><p>选择安装产品组件, 安装用于访问 Microsoft SQL Server 的组件. 由于我之前已经安装过了, 所以截图中显示的是 &quot;重新安装&quot;, 如果你电脑上没还有安装这个组件, 应该会显示 &quot;未安装&quot;.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install6.png" alt="Oracle_Gateways_Install_6"></p>
+</li>
+<li><p>输入要连接的 Microsoft SQL Server 的信息, 包括服务器主机名, 实例名, 数据库名, 由于我之前查看 SQL Server 信息的时候发现我要连接的 SQL Server 数据库实例名为空, 所以图中填写实例名的地方空着.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install7.png" alt="Oracle_Gateways_Install_7"></p>
+</li>
+<li><p>最后点击安装.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install8.png" alt="Oracle_Gateways_Install_8"></p>
+</li>
+</ol>
+<h2 id="配置-Oracle-Database-和-Oracle-Gateways"><a href="#配置-Oracle-Database-和-Oracle-Gateways" class="headerlink" title="配置 Oracle Database 和 Oracle Gateways"></a>配置 Oracle Database 和 Oracle Gateways</h2><ol>
+<li><p>关闭数据库监听程序.</p>
+<p> Windows 服务中带有 <code>TNSListener</code> 的服务就是监听程序, 找到与待配置数据库对应的监听程序, 右键, 停止.</p>
+<p> [<strong>注</strong>] 修改 <code>监听程序</code> 和 <code>服务命名</code> 的配置文件之前, 一定要先关闭监听程序, 否则很容易导致 PL/SQL 连接数据库时报错: <code>ORA-12514: TNS: 监听程序当前无法识别连接描述符中请求的服务</code>, 甚至会导致数据库无法访问, 监听程序也无法启动, 启动监听程序时报错: <code>某些服务在未由其他服务或程序使用时将自动停止</code>, 这时就只能重启数据库了, (不说了, 说多了都是泪啊~ 😫), 为了避免这些乱七八糟的麻烦, 一开始就先把监听程序停止掉就好了.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Configure1.png" alt="Oracle_Configure_1"></p>
+</li>
+<li><p>修改 Gateways 的数据库连接配置, 配置文件路径:</p>
+<p> <code>...\product\11.2.0\dbhome_1\dg4msql\admin\initdg4msql.ora</code></p>
+<p> 这个文件告诉了 Gateways 具体要连接到哪个 SQL Server 数据库, 这个文件会使用在安装 Gateways 的时候填写的信息进行默认设置, 如果只需要连接一个 SQL Server 数据库, 默认设置就可以了, 不需要做任何改动, 当然也可以进行自定义, 下面是这个文件的默认设置.</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HS_FDS_CONNECT_INFO&#x3D;[192.168.10.9]&#x2F;&#x2F;htgl20180809</span><br><span class="line">HS_FDS_TRACE_LEVEL&#x3D;OFF</span><br><span class="line">HS_FDS_RECOVERY_ACCOUNT&#x3D;RECOVER</span><br><span class="line">HS_FDS_RECOVERY_PWD&#x3D;RECOVER</span><br></pre></td></tr></table></figure>
+
+<p> 这个文件重要配置的内容很少, 就只有异构数据库的连接信息.</p>
+<ul>
+<li><p><code>initdg4msql.ora</code> 文件的命名规则是: <code>initSID.ora</code>, Gateways 安装时默认的 SID 为 dg4msql, 所以文件的名字就是 initdg4msql.ora, 当需要连接多个 SQL Server 数据库的时候, 这里的 SID 自然就需要自定义了. 每一个要连接的 SQL Server 数据库都对应一个 initSID.ora 文件, SID 写一个通俗易懂的, 唯一的名称即可, 这个 SID 得记好, 后面还需要用到. 比如要连接两个 SQL Server 数据库 <code>htgl</code> 和 <code>cggl</code>, 那么就可以复制一份 initdg4msql.ora 文件, 并重命名为 <code>inithtgl.ora</code> 和 <code>initcggl.ora</code>, 分别进行配置即可.</p>
+</li>
+<li><p><code>HS_FDS_CONNECT_INFO</code> 的填写规则: <code>[SQL Server 服务器主机名]/SQL Server 实例名/SQL Server 数据库名</code>. 这个就是具体的 SQL Server 连接信息了.</p>
+</li>
+<li><p>这个文件夹中还有两个配置示例文件: <code>listener.ora.sample</code> 和 <code>tnsnames.ora.sample</code>, 这是用于 Database 配置时的示例文件, 用意是教会我们怎么修改 <code>监听程序</code> 和 <code>服务命名</code> 的配置, 不需要修改, 即使你修改了也不会生效, 因为文件的后缀是 <code>.sample</code>.</p>
+</li>
+</ul>
+</li>
+<li><p>修改 Oracle Database 的 <strong>监听程序</strong> 配置, 配置文件路径:</p>
+<p> <code>...\product\11.2.0\dbhome_1\NETWORK\ADMIN\listener.ora</code></p>
+<p> 在监听程序配置文件的 <code>SID_LIST_LISTENER</code> 中添加之前配置好的 Gateways SID, 下图中高亮的这段配置文本就是之前配置的 SID 为 dg4msql 的 Gateways, 其实这一段文本是从之前提到的模板文件 <code>listener.ora.sample</code> 中复制过来的.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Configure2.png" alt="Oracle_Configure_2"></p>
+<ul>
+<li><code>SID_NAME</code> 填写之前配置的 <code>initSID.ora</code> 文件使用的 SID 名.</li>
+<li><code>PROGRAM</code> 是 Gateways 所在的文件夹的名字, 可以看到目前 Gateways 就是安装到了 <code>dg4msql</code> 文件夹中, 所以不要修改这个值.</li>
+<li><code>ORACLE_HOME</code> 数据库软件的安装位置.</li>
+</ul>
+</li>
+<li><p>修改 Oracle Database 的 <strong>服务命名</strong> 配置, 配置文件路径:</p>
+<p> <code>...\product\11.2.0\dbhome_1\NETWORK\ADMIN\tnsnames.ora</code></p>
+<p> 在服务命名配置文件中添加之前创建的 dg4msql 服务. 高亮的这段配置文本就是从之前提到的模板文件 <code>tnsnames.ora.sample</code> 中复制过来的.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Configure3.png" alt="Oracle_Configure_3"></p>
+</li>
+<li><p>重启 Oracle 监听程序.</p>
+<p> 此时再将之前关闭的监听程序启动.</p>
+</li>
+</ol>
+<h2 id="创建数据库连接-DBLink"><a href="#创建数据库连接-DBLink" class="headerlink" title="创建数据库连接 DBLink"></a>创建数据库连接 DBLink</h2><p>使用下面的格式写一条语句创建 DBLink, 也可以使用 PL/SQL 进行可视化创建.</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">create database link 变量名(随意)</span></span><br><span class="line"><span class="comment">  connect to 用户名 identified by 用户密码</span></span><br><span class="line"><span class="comment">  using &#x27;透明网关标识&#x27;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> htgl</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> sa <span class="keyword">identified</span> <span class="keyword">by</span> sa2008</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;dg4msql&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="连接测试"><a href="#连接测试" class="headerlink" title="连接测试"></a>连接测试</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">--select &quot;字段名&quot; from &quot;SQL Server 中的表名&quot;@(DBLink变量名)</span></span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;rybh&quot;</span> <span class="keyword">from</span> <span class="string">&quot;ryb&quot;</span>@htgl;</span><br><span class="line"><span class="comment">--当需要多表连接查询时, 可以这样写</span></span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;zt&quot;</span> <span class="keyword">as</span> <span class="keyword">id</span>,</span><br><span class="line">       (<span class="keyword">select</span> <span class="string">&quot;xm&quot;</span> <span class="keyword">from</span> <span class="string">&quot;ryb&quot;</span>@htgl <span class="keyword">where</span> <span class="string">&quot;rybh&quot;</span> = <span class="string">&quot;htqxb&quot;</span>.<span class="string">&quot;rybh&quot;</span>@htgl) <span class="keyword">as</span> <span class="keyword">name</span></span><br><span class="line">  <span class="keyword">from</span> <span class="string">&quot;htqxb&quot;</span>@htgl</span><br><span class="line"> <span class="keyword">where</span> <span class="string">&quot;rybh&quot;</span> = <span class="string">&#x27;150007&#x27;</span>;</span><br><span class="line"><span class="comment">--另外异构数据库不支持 join 类查询.</span></span><br></pre></td></tr></table></figure>
+
+<p>[<strong>注</strong>] 使用 Oracle 访问 SQL Server 时, 你会发现总是会报这样一个错误: <code>***字段名无效!</code>. 这个错误是因为 Oracle 访问 SQL Server 时, 字段名要使用 <code>双引号</code> 括起来. (不要问我怎么知道的, 问就是不知道! 🙄) 表名最好也使用双引号括起来.</p>
+<h1 id="🦄多异构数据库的配置"><a href="#🦄多异构数据库的配置" class="headerlink" title="🦄多异构数据库的配置"></a>🦄多异构数据库的配置</h1><p>公司的项目现在又要求 Oracle 数据库必须能够访问 SQL Server 中的 <code>htgl20180809</code> 和 <code>cggl20180808</code> 这两个数据库, 之前提到过, 每一个要连接的异构数据库都对应一个 initSID.ora 文件, 唯一标识就是 SID.</p>
+<h2 id="修改-Gateways-的数据库连接配置"><a href="#修改-Gateways-的数据库连接配置" class="headerlink" title="修改 Gateways 的数据库连接配置"></a>修改 Gateways 的数据库连接配置</h2><p>建立两个 initSID.ora 文件, 起名为: <code>inithtgl.ora</code> 和 <code>initcggl.ora</code>, 对应的 SID 就是 <code>htgl</code> 和 <code>cggl</code>.</p>
+<p><img data-src="/images/oracle_gateways/Gateways_Multiple1.png" alt="Gateways_Multiple_1"></p>
+<p>这个是文件 inithtgl.ora 的内容, 连接 192.168.10.9 上的 htgl20180809 数据库.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HS_FDS_CONNECT_INFO&#x3D;[192.168.10.9]&#x2F;&#x2F;htgl20180809</span><br><span class="line">HS_FDS_TRACE_LEVEL&#x3D;OFF</span><br><span class="line">HS_FDS_RECOVERY_ACCOUNT&#x3D;RECOVER</span><br><span class="line">HS_FDS_RECOVERY_PWD&#x3D;RECOVER</span><br></pre></td></tr></table></figure>
+
+<p>这个是文件 initcggl.ora 的内容, 连接 192.168.10.9 上的 cggl20180808 数据库.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HS_FDS_CONNECT_INFO&#x3D;[192.168.10.9]&#x2F;&#x2F;cggl20180808</span><br><span class="line">HS_FDS_TRACE_LEVEL&#x3D;OFF</span><br><span class="line">HS_FDS_RECOVERY_ACCOUNT&#x3D;RECOVER</span><br><span class="line">HS_FDS_RECOVERY_PWD&#x3D;RECOVER</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改-Oracle-Database-监听程序配置"><a href="#修改-Oracle-Database-监听程序配置" class="headerlink" title="修改 Oracle Database 监听程序配置"></a>修改 Oracle Database 监听程序配置</h2><p>监听程序的配置, 其实就是把之前配置好的 Gateways 的 SID 放到监听程序的 LIST 中, 反映到文件中就是在 <code>SID_LIST_LISTENER</code> 中添加 SID 设置.</p>
+<p><img data-src="/images/oracle_gateways/Gateways_Multiple2.png" alt="Gateways_Multiple_2"></p>
+<ul>
+<li><p><code>PROGRAM</code> 是 Gateways 的安装路径, Gateways 就是安装在 dg4msql 文件夹下的, 所以这个值不能变.</p>
+</li>
+<li><p><code>SID_NAME</code> 是 Gateways 的 SID 值.</p>
+</li>
+</ul>
+<h2 id="修改-Oracle-Database-服务命名配置"><a href="#修改-Oracle-Database-服务命名配置" class="headerlink" title="修改 Oracle Database 服务命名配置"></a>修改 Oracle Database 服务命名配置</h2><p>服务命名的配置顾名思义, 就是将配置好的 Gateways 服务在服务配置文件中列出来, 告诉 Oracle 数据库我们配置了 Gateways 服务, 不然 Oracle 数据库是不知道的.</p>
+<p><img data-src="/images/oracle_gateways/Gateways_Multiple3.png" alt="Gateways_Multiple_3"></p>
+<ul>
+<li><p>= 号前面的是服务的名称, 一般保持和 SID 的名称一致, <code>dg4msql/admin</code> 文件夹中的 <code>tnsnames.sample</code> 文件也是这样教我们的.</p>
+</li>
+<li><p><code>SID</code> 改成之前配置 Gateways 时使用的 SID.</p>
+</li>
+</ul>
+<h2 id="连接测试-1"><a href="#连接测试-1" class="headerlink" title="连接测试"></a>连接测试</h2><p>配置都做好之后, 建立 DBLink, 就可以访问 SQL Server 了.</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> htgl <span class="keyword">connect</span> <span class="keyword">to</span> sa <span class="keyword">identified</span> <span class="keyword">by</span> sa2008</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;htgl&#x27;</span>;</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> cggl <span class="keyword">connect</span> <span class="keyword">to</span> sa <span class="keyword">identified</span> <span class="keyword">by</span> sa2008</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;cggl&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--drop database link htgl;</span></span><br><span class="line"><span class="comment">--drop database link cggl;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;khyh&quot;</span>, <span class="string">&quot;htbh&quot;</span>, <span class="string">&quot;htmc&quot;</span>, <span class="string">&quot;htje&quot;</span> <span class="keyword">from</span> <span class="string">&quot;cghtb&quot;</span>@htgl <span class="keyword">where</span> <span class="string">&quot;wpbh&quot;</span> <span class="keyword">like</span> <span class="string">&#x27;2018%&#x27;</span>;</span><br><span class="line"><span class="keyword">select</span> <span class="string">&quot;wpbh&quot;</span>, <span class="string">&quot;wpmc&quot;</span>, <span class="string">&quot;shl&quot;</span>, <span class="string">&quot;dw&quot;</span> <span class="keyword">from</span> <span class="string">&quot;cggl_sqmxb&quot;</span>@cggl;</span><br></pre></td></tr></table></figure>
+
+<p>这是 htgl20180809 数据库的查询结果:</p>
+<p><img data-src="/images/oracle_gateways/Gateways_Multiple4.png" alt="Gateways_Multiple_4"></p>
+<p>这是 cggl20180808 数据库的查询结果:</p>
+<p><img data-src="/images/oracle_gateways/Gateways_Multiple5.png" alt="Gateways_Multiple_5"></p>
+<h1 id="Oracle-连接-Oracle"><a href="#Oracle-连接-Oracle" class="headerlink" title="Oracle 连接 Oracle"></a>Oracle 连接 Oracle</h1><p>这个就比较简单了, 既然不需要使用虚拟网关, 那么直接建立 <code>database link</code> 即可.</p>
+<p>[<strong>注</strong>] <font color='red'>两台电脑必须在用一个局域网中!</font></p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> DBLinkName</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> DatabaseUser <span class="keyword">identified</span> <span class="keyword">by</span> DatabasePassword</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;DatabaseSID&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">字段</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">DBLinkName</td>
+<td align="left">创建的 DBLink 的名字</td>
+</tr>
+<tr>
+<td align="left">DatabaseUser</td>
+<td align="left">待连接数据库的登录用户名</td>
+</tr>
+<tr>
+<td align="left">DatabasePassword</td>
+<td align="left">待连接数据库的登录密码</td>
+</tr>
+<tr>
+<td align="left">DatabaseSID</td>
+<td align="left">待链接数据库的服务名, 同时要写明 IP 地址. 如果是本地数据库, 可以不加 IP 地址</td>
+</tr>
+</tbody></table>
+<h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">--连接远程计算机数据库</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> DB_DZYH</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> dzyh <span class="keyword">identified</span> <span class="keyword">by</span> dzyh123</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;192.168.10.136/dzyhcs&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--连接本地计算机数据库</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">database</span> <span class="keyword">link</span> DB_DZYH</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> dzyh <span class="keyword">identified</span> <span class="keyword">by</span> dzyh123</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;dzyhcs&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="🐬参考链接"><a href="#🐬参考链接" class="headerlink" title="🐬参考链接"></a>🐬参考链接</h1><ul>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Rhbmd4aW5nSUxvdmV5b3UvYXJ0aWNsZS9kZXRhaWxzLzgwNjc2NDM3">Oracle连接Sql Server (win32_11gR2_gateways)<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3pkYzUyNTU1NTUvYXJ0aWNsZS9kZXRhaWxzLzEyNTc1NzIz">Oracle11g+ 配置多个gateway 连接sqlserver<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
+]]></content>
       <categories>
         <category>Oracle</category>
       </categories>
