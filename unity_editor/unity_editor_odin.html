@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="学习一个 Unity 上的第三方插件 Odin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity Plugins Odin">
+<meta property="og:url" content="https://kuroha.vip/unity_editor/unity_editor_odin.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="学习一个 Unity 上的第三方插件 Odin">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/images/unity_editor/Odin_Inspector_Logo.png">
+<meta property="article:published_time" content="2023-11-24T13:28:26.885Z">
+<meta property="article:modified_time" content="2023-11-24T13:28:26.886Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="Odin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/images/unity_editor/Odin_Inspector_Logo.png">
+
+
+<link rel="canonical" href="https://kuroha.vip/unity_editor/unity_editor_odin.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/unity_editor/unity_editor_odin.html","path":"unity_editor/unity_editor_odin.html","title":"Unity Plugins Odin"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Unity Plugins Odin | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">68</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">31</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫"><a href="/catch_the_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Odin"><span class="nav-number">1.</span> <span class="nav-text"> Odin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AssetsOnly"><span class="nav-number">2.</span> <span class="nav-text">AssetsOnly</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SceneObjectsOnly"><span class="nav-number">3.</span> <span class="nav-text">SceneObjectsOnly</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CustomValueDrawer"><span class="nav-number">4.</span> <span class="nav-text">CustomValueDrawer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Delayed-DelayedProperty"><span class="nav-number">5.</span> <span class="nav-text">Delayed  DelayedProperty</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DetailedInfoBox"><span class="nav-number">6.</span> <span class="nav-text">DetailedInfoBox</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ShowInInspector"><span class="nav-number">7.</span> <span class="nav-text">ShowInInspector</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EnableGUI"><span class="nav-number">8.</span> <span class="nav-text">EnableGUI</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GUIColor"><span class="nav-number">9.</span> <span class="nav-text">GUIColor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HideLabel"><span class="nav-number">10.</span> <span class="nav-text">HideLabel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PropertyOrder-1"><span class="nav-number">11.</span> <span class="nav-text">[PropertyOrder(-1)]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PropertySpace-SpaceBefore-30-SpaceAfter-30"><span class="nav-number">12.</span> <span class="nav-text">[PropertySpace(SpaceBefore &#x3D; 30, SpaceAfter &#x3D; 30)]</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ReadOnly"><span class="nav-number">13.</span> <span class="nav-text">ReadOnly</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Required"><span class="nav-number">14.</span> <span class="nav-text">Required</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Searchable"><span class="nav-number">15.</span> <span class="nav-text">Searchable</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Title"><span class="nav-number">16.</span> <span class="nav-text">Title</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TypeFilter"><span class="nav-number">17.</span> <span class="nav-text">TypeFilter</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TypeInfoBox"><span class="nav-number">18.</span> <span class="nav-text">TypeInfoBox</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ValidateInput"><span class="nav-number">19.</span> <span class="nav-text">ValidateInput</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ValueDropdown"><span class="nav-number">20.</span> <span class="nav-text">ValueDropdown</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AssetList"><span class="nav-number">21.</span> <span class="nav-text">AssetList</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AssetSelector"><span class="nav-number">22.</span> <span class="nav-text">AssetSelector</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ChildGameObjectsOnly"><span class="nav-number">23.</span> <span class="nav-text">ChildGameObjectsOnly</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ColorPalette"><span class="nav-number">24.</span> <span class="nav-text">ColorPalette</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DisplayAsString"><span class="nav-number">25.</span> <span class="nav-text">DisplayAsString</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HideLabel-1"><span class="nav-number">26.</span> <span class="nav-text">HideLabel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FilePath-FolderPath"><span class="nav-number">27.</span> <span class="nav-text">FilePath FolderPath</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Toggle"><span class="nav-number">28.</span> <span class="nav-text">Toggle</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/avatar/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="dGVuY2VudDovL0FkZENvbnRhY3QvP2Zyb21JZD00NSZmcm9tU3ViSWQ9MSZzdWJjbWQ9YWxsJnVpbj0xODMyNjEzMDAx" title="QQ → tencent:&#x2F;&#x2F;AddContact&#x2F;?fromId&#x3D;45&amp;fromSubId&#x3D;1&amp;subcmd&#x3D;all&amp;uin&#x3D;1832613001"><i class="fab fa-qq fa-fw"></i>QQ</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://kuroha.vip/images/weixin.png" title="WeChat → https:&#x2F;&#x2F;kuroha.vip&#x2F;images&#x2F;weixin.png" rel="noopener me"><i class="fab fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9ub2FoYXBwcy5naXRodWIuaW8v" title="https:&#x2F;&#x2F;noahapps.github.io&#x2F;">Noah</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/unity_editor/unity_editor_odin.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Unity Plugins Odin | 二次元游宅客">
+      <meta itemprop="description" content="学习一个 Unity 上的第三方插件 Odin">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity Plugins Odin
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-11-24 21:28:26" itemprop="dateCreated datePublished" datetime="2023-11-24T21:28:26+08:00">2023-11-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>10 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">学习一个 Unity 上的第三方插件 Odin</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="Odin"><a href="#Odin" class="headerlink" title=" Odin"></a><img data-src="/images/unity_editor/Odin_Inspector_Logo.png" alt="Odin"> Odin</h1><ul>
+<li><p>立即刷新</p>
+<p>  <code>Sirenix.Utilities.Editor.GUIHelper.RequestRepaint();</code></p>
+</li>
+<li><p>取一个随机的 [0, 1) 值 [正弦函数]</p>
+<p>  <code>Mathf.Abs(Mathf.Sin((float)EditorApplication.timeSinceStartup))</code></p>
+</li>
+<li><p>Odin 中一些需要引用变量值或者需要引用方法的地方都可以使用美元符号来引用</p>
+<p>  <code>Required(&quot;$变量名&quot;)</code> <code>Required(&quot;$方法名&quot;)</code></p>
+</li>
+<li><p>Odin 中也可以使用 <strong>@</strong> 字符来直接引用方法体内容, 在方法体很短很短的时候可以用一下</p>
+</li>
+<li><p><code>EditorGUI.BeginChangeCheck()</code> 和 <code>if (EditorGUI.EndChangeCheck())</code> 可以实现监控 GUI 变更</p>
+</li>
+<li><p><code>EditorGUIUtility.isProSkin</code> 判断是否是黑色主题</p>
+</li>
+<li><p>得到 Android 平台当前导入设置的尺寸和压缩格式</p>
+<p>  <code>return textureImporter.GetPlatformTextureSettings(&quot;Android&quot;, out var maxSize, out var format);</code></p>
+<ul>
+<li>其中平台名称可选 <code>&quot;Standalone&quot;, &quot;Web&quot;, &quot;iPhone&quot;, &quot;Android&quot;, &quot;WebGL&quot;, &quot;Windows Store Apps&quot;, &quot;PS4&quot;, &quot;XboxOne&quot;, &quot;Nintendo Switch&quot;, &quot;tvOS&quot;</code>.</li>
+</ul>
+</li>
+<li><p>得到默认的导入设置 <code>textureImporter.GetDefaultPlatformTextureSettings()</code></p>
+</li>
+<li><p>修改 Mesh 的压缩等级</p>
+<p>  <code>MeshUtility.SetMeshCompression(Mesh mesh, ModelImporterMeshCompression level);</code></p>
+</li>
+</ul>
+<h1 id="AssetsOnly"><a href="#AssetsOnly" class="headerlink" title="AssetsOnly"></a><code>AssetsOnly</code></h1><p>修饰一个字段, 这个字段只能使用 Project 面板中资源赋值</p>
+<h1 id="SceneObjectsOnly"><a href="#SceneObjectsOnly" class="headerlink" title="SceneObjectsOnly"></a><code>SceneObjectsOnly</code></h1><p>修饰一个字段, 这个字段只能使用 Scene 中的物体赋值</p>
+<h1 id="CustomValueDrawer"><a href="#CustomValueDrawer" class="headerlink" title="CustomValueDrawer"></a><code>CustomValueDrawer</code></h1><p>使用自定义方法来绘制字段的 Inspector</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用特性修饰字段, 并且引用自定义的界面绘制方法</span></span><br><span class="line">[<span class="meta">CustomValueDrawer(nameof(MyCustomDrawer))</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="built_in">float</span> CustomDrawerStatic;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 界面绘制方法</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">float</span> <span class="title">MyCustomDrawer</span>(<span class="params"><span class="built_in">float</span> <span class="keyword">value</span>, GUIContent label</span>)</span> &#123; <span class="keyword">return</span> EditorGUILayout.Slider(label, <span class="keyword">value</span>, <span class="number">0f</span>, <span class="number">10f</span>); &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Delayed-DelayedProperty"><a href="#Delayed-DelayedProperty" class="headerlink" title="Delayed  DelayedProperty"></a><code>Delayed</code>  <code>DelayedProperty</code></h1><p>分别修饰字段和属性, 让用户的修改不再实时生效, 而是当用户按下 Enter 时或者控件丢失焦点时生效</p>
+<h1 id="DetailedInfoBox"><a href="#DetailedInfoBox" class="headerlink" title="DetailedInfoBox"></a><code>DetailedInfoBox</code></h1><p>修饰一个字段, 在其上方展示一个消息框</p>
+<p>可以使用 <code>InfoMessageType</code> 来控制消息框中显示什么样的图标, None 为不显示图标, 默认为 Info</p>
+<p>可以使用 <code>VisibleIf(nameof(function))</code> 来控制消息框的显示与隐藏</p>
+<h1 id="ShowInInspector"><a href="#ShowInInspector" class="headerlink" title="ShowInInspector"></a><code>ShowInInspector</code></h1><p>可以修饰字段与属性, 将值显示在面板中</p>
+<p>但是此特性仅仅实现了对值的显示, 无法保存修改</p>
+<p>对于仅有 get 器的属性, 显示在面板中的时候是灰色的</p>
+<h1 id="EnableGUI"><a href="#EnableGUI" class="headerlink" title="EnableGUI"></a><code>EnableGUI</code></h1><p>当仅有 get 器的属性使用 <code>ShowInInspector</code> 修饰后显示在面板中的时候是灰色的, 此时再使用此特性修饰, 显示的属性将不再是灰色的</p>
+<h1 id="GUIColor"><a href="#GUIColor" class="headerlink" title="GUIColor"></a><code>GUIColor</code></h1><p>以指定的颜色来绘制 GUI</p>
+<p>可以直接串 3 ~ 4 个数字来控制颜色, 也可以传一个返回值为 Color 的方法名称, 使用 nameof 关键字</p>
+<h1 id="HideLabel"><a href="#HideLabel" class="headerlink" title="HideLabel"></a><code>HideLabel</code></h1><p>可以隐藏界面上的变量名, 只显示变量值</p>
+<h1 id="PropertyOrder-1"><a href="#PropertyOrder-1" class="headerlink" title="[PropertyOrder(-1)]"></a><code>[PropertyOrder(-1)]</code></h1><p>用来控制属性在界面上的显示顺序, 数字小的先显示, 允许负数</p>
+<h1 id="PropertySpace-SpaceBefore-30-SpaceAfter-30"><a href="#PropertySpace-SpaceBefore-30-SpaceAfter-30" class="headerlink" title="[PropertySpace(SpaceBefore = 30, SpaceAfter = 30)]"></a><code>[PropertySpace(SpaceBefore = 30, SpaceAfter = 30)]</code></h1><p>控制一个的属性或者字段的上下空白间距</p>
+<h1 id="ReadOnly"><a href="#ReadOnly" class="headerlink" title="ReadOnly"></a><code>ReadOnly</code></h1><p>和 <code>EnableGUI</code> 正好相反, 此特性修饰后, 显示将变为灰色, 当仅显示数值而不允许修改的时候使用</p>
+<h1 id="Required"><a href="#Required" class="headerlink" title="Required"></a><code>Required</code></h1><p>当修饰的值为 null 的时候会提示错误信息</p>
+<p>可以使用 <code>Required(&quot;自定义错误提示信息&quot;)</code> 来自定义提示的信息</p>
+<p>另外需要显示动态提示的时候可以使用 <code>Required(&quot;$变量名&quot;)</code> <code>Required(&quot;$方法名&quot;)</code> 来实现, 但是这里不能使用 nameof, 只能使用名称字符串</p>
+<h1 id="Searchable"><a href="#Searchable" class="headerlink" title="Searchable"></a><code>Searchable</code></h1><p>通过添加特性为字段其添加一个搜索框, 可用于搜索对应的类或其子类的成员, 但目前不可用于字典类型</p>
+<ul>
+<li><p>也可以直接修饰 MonoBehavior 类, 此时会在界面顶部显示一个搜索框</p>
+</li>
+<li><p>还可以通过实现 <code>ISearchFilterable</code> 接口来自定义搜索规则</p>
+<p>  <code>Searchable(FilterOptions = SearchFilterOptions.ISearchFilterableInterface)</code></p>
+</li>
+<li><p><strong>但是目前此属性在搜索数字 0 1 2 的时候会有 Bug, 再加上这个界面上很少使用搜索, 因此默认禁用</strong></p>
+</li>
+</ul>
+<h1 id="Title"><a href="#Title" class="headerlink" title="Title"></a><code>Title</code></h1><p>在字段上方显示标题</p>
+<p>可以显示主标题 + 副标题, 默认主标题为加粗 + 分割线</p>
+<p>可以使用 <code>bold</code> 参数控制是否是粗体</p>
+<p>可以使用 <code>horizontalLine</code> 参数控制是否显示分割线</p>
+<p>可以使用 <code>TitleAlignments</code> 参数控制主标题和副标题的对齐方式</p>
+<h1 id="TypeFilter"><a href="#TypeFilter" class="headerlink" title="TypeFilter"></a><code>TypeFilter</code></h1><p>此特性的应用场景是显示的字段是基类型, 并且它还有好几个子类型, 于是编辑器就不知道该序列化哪个了</p>
+<p>所以就有了这个筛选类型的特性, 来决定这个字段按照什么类型来序列化</p>
+<p>由于筛选函数是自定义的, 因此也可以指定只能选择特定的类型</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> IEnumerable&lt;Type&gt; <span class="title">GetFilteredTypeList</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> types = <span class="keyword">typeof</span>(BaseClass).Assembly.GetTypes()</span><br><span class="line">        <span class="comment">// 非抽象类 (这里 BaseClass 是 abstract 类)</span></span><br><span class="line">        .Where(type =&gt; !type.IsAbstract)</span><br><span class="line">        <span class="comment">// 非泛型类</span></span><br><span class="line">        .Where(type =&gt; !type.IsGenericTypeDefinition)</span><br><span class="line">        <span class="comment">// 是 BaseClass 的派生类</span></span><br><span class="line">        .Where(type =&gt; <span class="keyword">typeof</span>(BaseClass).IsAssignableFrom(type));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 按照需求添加指定的类型</span></span><br><span class="line">    types = types.AppendWith(<span class="keyword">typeof</span>(C1&lt;&gt;).MakeGenericType(<span class="keyword">typeof</span>(GameObject)));</span><br><span class="line">    types = types.AppendWith(<span class="keyword">typeof</span>(C1&lt;&gt;).MakeGenericType(<span class="keyword">typeof</span>(AnimationCurve)));</span><br><span class="line">    types = types.AppendWith(<span class="keyword">typeof</span>(C1&lt;&gt;).MakeGenericType(<span class="keyword">typeof</span>(List&lt;<span class="built_in">float</span>&gt;)));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> types;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="TypeInfoBox"><a href="#TypeInfoBox" class="headerlink" title="TypeInfoBox"></a><code>TypeInfoBox</code></h1><p>用来修饰 MonoBehavior 以及 ScriptableObject, 可以在类型的最上方显示一条信息</p>
+<h1 id="ValidateInput"><a href="#ValidateInput" class="headerlink" title="ValidateInput"></a><code>ValidateInput</code></h1><p>变量输入值验证</p>
+<ul>
+<li>传入方法名以及消息内容 <code>[ValidateInput(nameof(IsRight), &quot;输入值不正确!&quot;)]</code></li>
+<li>可以通过 <code>InfoMessageType</code> 来控制显示的图标类型</li>
+</ul>
+<h1 id="ValueDropdown"><a href="#ValueDropdown" class="headerlink" title="ValueDropdown"></a><strong><strong><code>ValueDropdown</code></strong></strong></h1><p>用来实现一个下拉框</p>
+<p>下拉框所需要的数据 [ MemberName ] 有两种传参方式</p>
+<ul>
+<li>传递 <strong>数组 或者 链表</strong> <code>int[]</code> <code>Vector3[]</code> <strong><code>List&lt;GameObject&gt;</code></strong> 数组及链表的内容会同时作为下拉框选项的显示文本和选项的实际值</li>
+<li>传递 <strong>下拉列表</strong> <code>ValueDropdownList&lt;T&gt;</code> 这个类型是一个键值对链表, Key 为 string 类型, Value 为自定义泛型 T, 这种情况下, Key 会作为下拉框的显示文本, Value 则会作为选项的实际值, 一般常用 <code>&lt;string, string&gt;</code> 和 <code>&lt;string, int&gt;</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">参数名</th>
+<th align="left">参数类型</th>
+<th align="center">参数默认值</th>
+<th align="left">参数说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">SortDropdownItems</td>
+<td align="left">bool</td>
+<td align="center">false</td>
+<td align="left">参数设置为 true 的时候, Key 的显示会按照字母升序来进行排序, false 时不进行排序</td>
+</tr>
+<tr>
+<td align="left">DropdownTitle</td>
+<td align="left">string</td>
+<td align="center">null</td>
+<td align="left">给下拉框设置一个标题</td>
+</tr>
+<tr>
+<td align="left">DropdownHeight</td>
+<td align="left">int</td>
+<td align="center">自适应</td>
+<td align="left">固定下拉框的高度</td>
+</tr>
+<tr>
+<td align="left">DropdownWidth</td>
+<td align="left">int</td>
+<td align="center">自适应</td>
+<td align="left">固定下拉框的宽度</td>
+</tr>
+<tr>
+<td align="left">FlattenTreeView</td>
+<td align="left">bool</td>
+<td align="center">false</td>
+<td align="left">是否平铺树形视图, 默认为 false 使用树形视图, 如果设置为 true, 则会使用平铺视图;</br>树形数据使用 &#x2F; 来分割层级</td>
+</tr>
+<tr>
+<td align="left">DoubleClickToConfirm</td>
+<td align="left">bool</td>
+<td align="center">false</td>
+<td align="left">true: 双击选中选项</br>一般当数据源为树形结构时使用</td>
+</tr>
+<tr>
+<td align="left">HideChildProperties</td>
+<td align="left">bool</td>
+<td align="center">false</td>
+<td align="left">true: 会隐藏掉属性自身的面板绘制</br>比如 Vector3 类型就没有的自身的 x y z 三个输入框绘制, 只保留一个 (x, y, z) 的下拉框</td>
+</tr>
+<tr>
+<td align="left">AppendNextDrawer</td>
+<td align="left">bool</td>
+<td align="center">false</td>
+<td align="left">true: 使用一个子菜单 ︙ 来代替下拉框</br>此时字段显示的数值为下拉框的值, 而不是显示文本</td>
+</tr>
+<tr>
+<td align="left">DisableGUIInAppendedDrawer</td>
+<td align="left">bool</td>
+<td align="center">false</td>
+<td align="left">配合 AppendNextDrawer 使用</br>AppendNextDrawer 会导致字段显示的是下拉框的值, 而不是显示文本, 所以可以对值进行修改</br>DisableGUIInAppendedDrawer 设置为 true 时, 字段显示的值将会是灰色的, 无法修改</td>
+</tr>
+<tr>
+<td align="left">ExpandAllMenuItems</td>
+<td align="left">bool</td>
+<td align="center">false</td>
+<td align="left">设置为 true 之后, 则会默认展开整个树形结构, 否则默认折叠整个树形结构</td>
+</tr>
+<tr>
+<td align="left">IsUniqueList</td>
+<td align="left">bool</td>
+<td align="center">false</td>
+<td align="left">是否是多选列表</br>设置为 true 时将可以选择多个选项添加到列表, 选择完成后点击 √</td>
+</tr>
+<tr>
+<td align="left">ExcludeExistingValuesInList</td>
+<td align="left">bool</td>
+<td align="center">false</td>
+<td align="left">是否排除已存在的值, false 表示可以重复添加, true 则不允许添加重复值</td>
+</tr>
+<tr>
+<td align="left">DisableListAddButtonBehaviour</td>
+<td align="left">bool</td>
+<td align="center">false</td>
+<td align="left">禁用下拉列表, 以弹窗的形式弹出</td>
+</tr>
+<tr>
+<td align="left">DrawDropdownForListElements</td>
+<td align="left">bool</td>
+<td align="center">false</td>
+<td align="left">是否为列表元素绘制下拉框, 默认绘制</td>
+</tr>
+<tr>
+<td align="left">NumberOfItemsBeforeEnablingSearch</td>
+<td align="left">int</td>
+<td align="center">10</td>
+<td align="left">当下拉框的选项个数超出指定个数后, 绘制搜索框</td>
+</tr>
+</tbody></table>
+<h1 id="AssetList"><a href="#AssetList" class="headerlink" title="AssetList"></a><code>AssetList</code></h1><p>用于生成一个资源列表, 这个列表用来给修饰的字段赋值, 资源列表的资源来源是 Project 面板中的资源, 并不是 Hierarchy 中的游戏物体</p>
+<p>因此这里的字段大多是 Texture, Sprite 等资源类型, 即使是 GameObject 指代的也是预制体而不是场景物体</p>
+<p>可以修饰 UnityEngine.Object 类型的 单个字段 或者 数组字段 或者 列表字段</p>
+<p>参数1: Path 用于指定资源列表的来源, 不传 Path 则默认为 Assets 目录下的全部资源</p>
+<p>参数2: AutoPopulate 是否自动将符合条件的资源添加到修饰的字段中</p>
+<p>参数3: CustomFilterMethod 自定义筛选方法, 方法的参数为字段的元素类型</p>
+<p>比如字段为 GameObject, 那么筛选方法的参数就是 GameObject 类型 <code>private bool Filter(GameObject obj)</code></p>
+<p>比如字段为 List<Sprite>, 那么筛选方法的参数就是 Sprite 类型 <code>private bool Filter(Sprite sprite)</code></p>
+<p>参数4: LayerNames 根据 Layer 来筛选预制体资源, 由于只有预制体有标签, 所以只能修饰 GameObject 类型</p>
+<p>参数5: Tags 根据 Tag 来筛选预制体资源, 可以使用 <code>,</code> 分割多个标签 <code>Tags = &quot;TagA,TagB&quot;</code></p>
+<p>参数6: AssetNamePrefix 根据名称的前缀来筛选资源</p>
+<h1 id="AssetSelector"><a href="#AssetSelector" class="headerlink" title="AssetSelector"></a><code>AssetSelector</code></h1><p>修饰单个字段, 会在字段前显示一个 ︙ 符号, 产生一个资源选择框</p>
+<p>修饰列表字段, 会在最右侧产生一个 + 号, 用于选择资源</p>
+<p>FlattenTreeView 参数: 控制是否将树形结构平铺, 默认为 false 不平铺</p>
+<p>Paths 参数: 限定资源选择的路径, 默认为 Assets 目录下的全部资源</p>
+<p>Filter 参数: 筛选器, 字符串类型参数, 字符串规则就是 Unity 的搜索规则 <code>name t:Model l:Water</code></p>
+<p>DropdownTitle 参数: 定义选择框标题</p>
+<p>ExpandAllMenuItems 参数: 是否强制展开树形结构</p>
+<p>IsUniqueList 参数: 是否可以一次添加多个 false: 一次只能添加一个资源到列表</p>
+<p>ExcludeExistingValuesInList 参数: 是否排除已存在列表中的资源 (即使显示已存在的资源, 也不允许选择同一个资源两次)</p>
+<p>DrawDropdownForListElements: 是否给列表中的元素绘制下拉框</p>
+<p>DisableListAddButtonBehaviour: 以弹窗的方式取代下拉框</p>
+<h1 id="ChildGameObjectsOnly"><a href="#ChildGameObjectsOnly" class="headerlink" title="ChildGameObjectsOnly"></a><code>ChildGameObjectsOnly</code></h1><p>用于限制字段的值只能是子物体或自身上的组件</p>
+<h1 id="ColorPalette"><a href="#ColorPalette" class="headerlink" title="ColorPalette"></a><code>ColorPalette</code></h1><p>修饰一个 Color 字段以及数组列表, 会产生一个调色板选择器, 可以选择不用的调色板, 之后再选择调色板上具有的颜色给 Color 字段赋值</p>
+<ul>
+<li><p>PaletteName: 指定调色板名称</p>
+<p>  指定名称时, 除了直接写明调色板的名称, 也可以引用变量值</p>
+<p>  <code>[ColorPalette(&quot;$字符串变量名&quot;)]</code></p>
+<p>  还可以使用运算表达式, 比如下方将会引用 &quot;调色板_1&quot;, &quot;调色板_2&quot;, &quot;调色板_3&quot; 之类的</p>
+<p>  [ColorPalette(&quot;@&quot;调色板_&quot; + 数字变量&quot;)]</p>
+</li>
+<li><p>ShowAlpha: 颜色值显示时是否在下方显示 Alpha 通道状态</p>
+</li>
+</ul>
+<h1 id="DisplayAsString"><a href="#DisplayAsString" class="headerlink" title="DisplayAsString"></a><code>DisplayAsString</code></h1><p>用于任何属性, 对应的值在检查器中以文本形式显示字符串.</p>
+<p>如果属性的值要在检查器中显示字符串, 但不允许进行任何编辑, 则推荐使用此特性</p>
+<h1 id="HideLabel-1"><a href="#HideLabel-1" class="headerlink" title="HideLabel"></a><code>HideLabel</code></h1><p>用于任何属性, 隐藏其属性名称, 仅显示属性的值</p>
+<h1 id="FilePath-FolderPath"><a href="#FilePath-FolderPath" class="headerlink" title="FilePath FolderPath"></a><code>FilePath</code> <code>FolderPath</code></h1><p>用于字符串属性以及字符串的数组和列表, 会显示一个文件夹图标, 用于选择文件给字符串赋值为选择文件的相对路径</p>
+<p>ParentFolder: 自定义相对文件夹, 默认为相对 Assets 文件夹</p>
+<p>[仅 <code>FilePath</code>]  Extensions &#x3D; &quot;cs, lua&quot;: 限定文件的后缀</p>
+<p>AbsolutePath: 赋值的时候为绝对路径, 默认是 false, 此时使用的是相对路径</p>
+<p>RequireExistingPath: 要求路径必须存在, 不存在时显示错误信息</p>
+<p>UseBackslashes: 默认为 false, 此时使用 &#x2F; 分割目录, 设置为 true, 则使用 \ 分割目录</p>
+<h1 id="Toggle"><a href="#Toggle" class="headerlink" title="Toggle"></a><code>Toggle</code></h1><p>修饰含有 bool 类型变量的结构体或者类</p>
+<p>需要一个必填参数: 类或者结构体中 bool 类型的变量的名称</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">Toggle(nameof(MyToggleable.enabled))</span>]</span><br><span class="line"><span class="keyword">public</span> MyToggleable toggler = <span class="keyword">new</span> MyToggleable();</span><br><span class="line"></span><br><span class="line">[<span class="meta">Serializable</span>]</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">MyToggleable</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">bool</span> enabled;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> myValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/donate/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/unity_editor/unity_editor_odin.html" title="Unity Plugins Odin">https://kuroha.vip/unity_editor/unity_editor_odin.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/followme/wechat.png">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Odin/" rel="tag"><i class="fa fa-tag"></i> Odin</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/diary/prove.html" rel="prev" title="健身记录">
+                  <i class="fa fa-angle-left"></i> 健身记录
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/computer/computer_adb.html" rel="next" title="工作中常用的一些 ADB 命令">
+                  工作中常用的一些 ADB 命令 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">143k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:39</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>

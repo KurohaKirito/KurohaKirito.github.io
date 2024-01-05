@@ -1,0 +1,3 @@
+User-agent:Baiduspider
+Disallow:/
+Sitemap: https://kuroha.vip/sitemap.xml

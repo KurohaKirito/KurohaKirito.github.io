@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="第一份工作主要和数据库打交道, 使用的是 Oracle 数据库, 由于自己对数据库也不是很熟悉, 于是就抽空整理了一下基础知识, 让自己的知识更加系统化.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle SQL 基础">
+<meta property="og:url" content="https://kuroha.vip/oracle/oracle_notes.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="第一份工作主要和数据库打交道, 使用的是 Oracle 数据库, 由于自己对数据库也不是很熟悉, 于是就抽空整理了一下基础知识, 让自己的知识更加系统化.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_notes/sql_join.png">
+<meta property="article:published_time" content="2020-04-23T23:07:06.000Z">
+<meta property="article:modified_time" content="2021-02-26T00:27:13.291Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="Oracle">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/images/oracle_notes/sql_join.png">
+
+
+<link rel="canonical" href="https://kuroha.vip/oracle/oracle_notes.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/oracle/oracle_notes.html","path":"oracle/oracle_notes.html","title":"Oracle SQL 基础"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Oracle SQL 基础 | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">68</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">31</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫"><a href="/catch_the_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E5%8A%9F%E8%83%BD%E8%AF%AD%E5%8F%A5"><span class="nav-number">1.</span> <span class="nav-text">Oracle 中常用的功能语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-%E8%A7%A6%E5%8F%91%E5%99%A8%E7%9B%B8%E5%85%B3"><span class="nav-number">2.</span> <span class="nav-text">Oracle 触发器相关</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-%E9%94%81%E7%9B%B8%E5%85%B3"><span class="nav-number">3.</span> <span class="nav-text">Oracle 锁相关</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E7%9B%B8%E5%85%B3%E8%AF%AD%E5%8F%A5"><span class="nav-number">4.</span> <span class="nav-text">Oracle 时间格式相关语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-%E7%94%A8%E6%88%B7%E7%9B%B8%E5%85%B3%E7%9A%84%E6%93%8D%E4%BD%9C%E8%AF%AD%E5%8F%A5"><span class="nav-number">5.</span> <span class="nav-text">Oracle 用户相关的操作语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-%E8%A1%A8%E7%A9%BA%E9%97%B4%E6%93%8D%E4%BD%9C%E8%AF%AD%E5%8F%A5"><span class="nav-number">6.</span> <span class="nav-text">Oracle 表空间操作语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-impdp-%E5%92%8C-expdp-%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">7.</span> <span class="nav-text">Oracle impdp 和 expdp 的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%86%99"><span class="nav-number">8.</span> <span class="nav-text">SQL 的大小写</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E4%B8%AD%E7%9A%84%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">9.</span> <span class="nav-text">SQL 中的运算符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E4%B8%AD%E7%9A%84-order-by"><span class="nav-number">10.</span> <span class="nav-text">SQL 中的 order by</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E4%B8%AD%E7%9A%84-insert-into"><span class="nav-number">11.</span> <span class="nav-text">SQL 中的 insert into</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E4%B8%AD%E7%9A%84-update-set"><span class="nav-number">12.</span> <span class="nav-text">SQL 中的 update set</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E4%B8%AD%E7%9A%84-delete-from"><span class="nav-number">13.</span> <span class="nav-text">SQL 中的 delete from</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E4%B8%AD%E4%B8%89%E7%A7%8D%E5%88%A0%E9%99%A4-drop-delete-truncate-%E7%9A%84%E4%B8%8D%E5%90%8C%E4%B9%8B%E5%A4%84"><span class="nav-number">14.</span> <span class="nav-text">SQL 中三种删除 (drop, delete, truncate) 的不同之处</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D-join-on"><span class="nav-number">15.</span> <span class="nav-text">SQL 中的各种 join on</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E4%B8%AD%E7%9A%84-union-%E5%92%8C-union-all"><span class="nav-number">16.</span> <span class="nav-text">SQL 中的 union 和 union all</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E4%B8%AD%E7%9A%84-select-into"><span class="nav-number">17.</span> <span class="nav-text">SQL 中的 select into</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E4%B8%AD%E7%9A%84-create"><span class="nav-number">18.</span> <span class="nav-text">SQL 中的 create</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E4%B8%AD-select-%E6%97%B6%E5%8F%AA%E8%BF%94%E5%9B%9E%E5%89%8D-n-%E6%9D%A1%E6%95%B0%E6%8D%AE"><span class="nav-number">19.</span> <span class="nav-text">SQL 中 select 时只返回前 n 条数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E4%B8%AD%E7%9A%84%E7%BA%A6%E6%9D%9F"><span class="nav-number">20.</span> <span class="nav-text">SQL 中的约束</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#not-null"><span class="nav-number">20.1.</span> <span class="nav-text">not null</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unique"><span class="nav-number">20.2.</span> <span class="nav-text">unique</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#primary-key"><span class="nav-number">20.3.</span> <span class="nav-text">primary key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#foreign-key"><span class="nav-number">20.4.</span> <span class="nav-text">foreign key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#check"><span class="nav-number">20.5.</span> <span class="nav-text">check</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#default"><span class="nav-number">20.6.</span> <span class="nav-text">default</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E4%B8%AD%E7%9A%84%E8%87%AA%E5%8A%A8%E5%A2%9E%E5%8A%A0-auto-increment"><span class="nav-number">21.</span> <span class="nav-text">SQL 中的自动增加 (auto_increment)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%97%A5%E6%9C%9F%E6%93%8D%E4%BD%9C"><span class="nav-number">22.</span> <span class="nav-text">SQL 中常用的日期操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">23.</span> <span class="nav-text">SQL 中常用的函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL-%E4%B8%AD%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E6%8D%A2"><span class="nav-number">23.1.</span> <span class="nav-text">SQL 中的大小写转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Oracle-%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="nav-number">23.2.</span> <span class="nav-text">Oracle 中的字符串操作函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Oracle-%E4%B8%AD%E7%9A%84%E4%BF%9D%E7%95%99%E4%BD%8D%E6%95%B0%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0"><span class="nav-number">23.3.</span> <span class="nav-text">Oracle 中的保留位数操作函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-%E6%9F%A5%E7%9C%8B%E6%9C%80%E8%BF%91%E6%89%A7%E8%A1%8C%E7%9A%84%E8%AF%AD%E5%8F%A5"><span class="nav-number">24.</span> <span class="nav-text">Oracle 查看最近执行的语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-%E6%8B%BC%E6%8E%A5%E6%95%B4%E5%88%97%E6%95%B0%E6%8D%AE%E4%B8%BA%E4%B8%80%E4%B8%AA%E4%BB%A5%E9%80%97%E5%8F%B7%E5%88%86%E5%89%B2%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">25.</span> <span class="nav-text">Oracle 拼接整列数据为一个以逗号分割的字符串</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-%E5%88%A0%E9%99%A4%E6%97%A0%E7%94%A8%E7%9A%84-Oracle-%E6%9C%8D%E5%8A%A1"><span class="nav-number">26.</span> <span class="nav-text">Windows 删除无用的 Oracle 服务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-%E8%BF%98%E5%8E%9F%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8C%85"><span class="nav-number">27.</span> <span class="nav-text">Oracle 还原数据库包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-%E4%B8%AD%E9%80%92%E5%BD%92%E6%9F%A5%E8%AF%A2"><span class="nav-number">28.</span> <span class="nav-text">Oracle 中递归查询</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL-Server-%E4%B8%AD%E9%80%92%E5%BD%92%E6%9F%A5%E8%AF%A2"><span class="nav-number">29.</span> <span class="nav-text">SQL Server 中递归查询</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PL-SQL-%E4%B8%AD-DECODE-%E6%96%B9%E6%B3%95%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">30.</span> <span class="nav-text">PL&#x2F;SQL 中 DECODE() 方法的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%94%A8%E6%B3%95"><span class="nav-number">30.1.</span> <span class="nav-text">基础用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E9%85%8D-SIGN-%E5%87%BD%E6%95%B0"><span class="nav-number">30.2.</span> <span class="nav-text">搭配 SIGN() 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%B1%BB%E4%B8%89%E7%9B%AE%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">30.3.</span> <span class="nav-text">实现类三目运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E9%85%8D-SUM-%E5%87%BD%E6%95%B0-%E4%B8%80%E6%AC%A1%E6%B1%82%E5%87%BA%E5%A4%9A%E4%B8%AA%E6%95%B0%E9%87%8F"><span class="nav-number">30.4.</span> <span class="nav-text">搭配 SUM() 函数, 一次求出多个数量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E9%85%8D-ORDER-BY-%E5%AF%B9%E5%AD%97%E7%AC%A6%E5%88%97%E8%BF%9B%E8%A1%8C%E7%89%B9%E5%AE%9A%E7%9A%84%E6%8E%92%E5%BA%8F"><span class="nav-number">30.5.</span> <span class="nav-text">搭配 ORDER BY, 对字符列进行特定的排序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-%E4%B8%AD%E7%AE%80%E5%8D%95%E7%9A%84%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="nav-number">31.</span> <span class="nav-text">Oracle 中简单的分页查询实现方式</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/avatar/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="dGVuY2VudDovL0FkZENvbnRhY3QvP2Zyb21JZD00NSZmcm9tU3ViSWQ9MSZzdWJjbWQ9YWxsJnVpbj0xODMyNjEzMDAx" title="QQ → tencent:&#x2F;&#x2F;AddContact&#x2F;?fromId&#x3D;45&amp;fromSubId&#x3D;1&amp;subcmd&#x3D;all&amp;uin&#x3D;1832613001"><i class="fab fa-qq fa-fw"></i>QQ</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://kuroha.vip/images/weixin.png" title="WeChat → https:&#x2F;&#x2F;kuroha.vip&#x2F;images&#x2F;weixin.png" rel="noopener me"><i class="fab fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9ub2FoYXBwcy5naXRodWIuaW8v" title="https:&#x2F;&#x2F;noahapps.github.io&#x2F;">Noah</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/oracle/oracle_notes.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Oracle SQL 基础 | 二次元游宅客">
+      <meta itemprop="description" content="第一份工作主要和数据库打交道, 使用的是 Oracle 数据库, 由于自己对数据库也不是很熟悉, 于是就抽空整理了一下基础知识, 让自己的知识更加系统化.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Oracle SQL 基础
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-04-24 07:07:06" itemprop="dateCreated datePublished" datetime="2020-04-24T07:07:06+08:00">2020-04-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2021-02-26 08:27:13" itemprop="dateModified" datetime="2021-02-26T08:27:13+08:00">2021-02-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Oracle/" itemprop="url" rel="index"><span itemprop="name">Oracle</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>22 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">第一份工作主要和数据库打交道, 使用的是 Oracle 数据库, 由于自己对数据库也不是很熟悉, 于是就抽空整理了一下基础知识, 让自己的知识更加系统化.</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="Oracle-中常用的功能语句"><a href="#Oracle-中常用的功能语句" class="headerlink" title="Oracle 中常用的功能语句"></a>Oracle 中常用的功能语句</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--查询特定表中不允许为 null 的列</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">distinct</span> nullable, column_name</span><br><span class="line">  <span class="keyword">from</span> dba_tab_columns</span><br><span class="line"> <span class="keyword">where</span> table_name <span class="operator">=</span> <span class="string">&#x27;DDB&#x27;</span></span><br><span class="line">   <span class="keyword">and</span> nullable <span class="operator">=</span> <span class="string">&#x27;N&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--获取全部带有 &quot;指定列名&quot; 的表</span></span><br><span class="line"><span class="keyword">select</span> table_name <span class="keyword">from</span> user_tab_cols <span class="keyword">where</span> column_name <span class="operator">=</span> <span class="string">&#x27;SAASDM&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--快速备份</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> [备份表的名称] <span class="keyword">as</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> [表名];</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> person_backup_20201031 <span class="keyword">as</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> person;</span><br><span class="line"></span><br><span class="line"><span class="comment">--查询数据库中所有用户的信息 (用户名, ID, 创建日期)</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> all_users;</span><br><span class="line"></span><br><span class="line"><span class="comment">--查询当前登录用户的信息</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> user_users;</span><br><span class="line"></span><br><span class="line"><span class="comment">--查询最近执行过的语句</span></span><br><span class="line"><span class="keyword">select</span> sql_text, sql_fulltext, first_load_time, last_active_time</span><br><span class="line">  <span class="keyword">from</span> v$<span class="keyword">sql</span></span><br><span class="line"> <span class="keyword">where</span> sql_fulltext <span class="keyword">like</span> <span class="string">&#x27;%筛选条件%&#x27;</span></span><br><span class="line"> <span class="keyword">order</span> <span class="keyword">by</span> last_active_time <span class="keyword">desc</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--查看数据库的位数</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">case</span> length(address) <span class="keyword">when</span> <span class="number">8</span> <span class="keyword">then</span> <span class="string">&#x27;32 位数据库&#x27;</span> <span class="keyword">when</span> <span class="number">16</span> <span class="keyword">then</span> <span class="string">&#x27;64 位数据库&#x27;</span> <span class="keyword">end</span> <span class="keyword">as</span> 数据库版本 <span class="keyword">from</span> v$<span class="keyword">sql</span> <span class="keyword">where</span> rownum <span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Oracle-触发器相关"><a href="#Oracle-触发器相关" class="headerlink" title="Oracle 触发器相关"></a>Oracle 触发器相关</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--查看本账户下的所有触发器</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> USER_TRIGGERS;</span><br><span class="line"><span class="comment">--管理员查看数据库实例下所有的触发器</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> ALL_TRIGGERS;</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> DBA_TRIGGERS;</span><br><span class="line"><span class="comment">--启用或禁用触发器</span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TRIGGER</span> trigger_name DISABLE;</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TRIGGER</span> trigger_name ENABLE;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Oracle-锁相关"><a href="#Oracle-锁相关" class="headerlink" title="Oracle 锁相关"></a>Oracle 锁相关</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--查看死锁1</span></span><br><span class="line"><span class="keyword">select</span> sess.sid,</span><br><span class="line">       sess.serial#,</span><br><span class="line">       lo.oracle_username,</span><br><span class="line">       lo.os_user_name,</span><br><span class="line">       ao.object_name,</span><br><span class="line">       lo.locked_mode</span><br><span class="line">  <span class="keyword">from</span> v$locked_object lo, dba_objects ao, v$session sess</span><br><span class="line"> <span class="keyword">where</span> ao.object_id <span class="operator">=</span> lo.object_id</span><br><span class="line">   <span class="keyword">and</span> lo.session_id <span class="operator">=</span> sess.sid;</span><br><span class="line"></span><br><span class="line"><span class="comment">--查看死锁2</span></span><br><span class="line"><span class="keyword">select</span> <span class="string">&#x27;alter system kill session &#x27;&#x27;&#x27;</span> <span class="operator">||</span> a.sid <span class="operator">||</span> <span class="string">&#x27;,&#x27;</span> <span class="operator">||</span> a.serial# <span class="operator">||</span> <span class="string">&#x27;&#x27;&#x27;;&#x27;</span></span><br><span class="line">  <span class="keyword">from</span> v$session a</span><br><span class="line"> <span class="keyword">where</span> sid <span class="keyword">in</span> (<span class="keyword">select</span> sid <span class="keyword">from</span> v$enqueue_lock t <span class="keyword">where</span> t.type <span class="operator">=</span><span class="string">&#x27;TO&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">--解除死锁</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">system</span> kill session <span class="string">&#x27;68,4221&#x27;</span>; <span class="comment">-- &quot;sess.sid,sess.serial#&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--杀死进程</span></span><br><span class="line"><span class="keyword">select</span> spid, osuser, s.program</span><br><span class="line">     <span class="keyword">from</span> v$session s,v$process p</span><br><span class="line">     <span class="keyword">where</span> s.paddr<span class="operator">=</span>p.addr <span class="keyword">and</span> s.sid<span class="operator">=</span><span class="number">68</span> <span class="comment">--&quot;sess.sid&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--CMD 中执行, spid: 实例名 thread: spid</span></span><br><span class="line">orakill spid thread</span><br></pre></td></tr></table></figure>
+
+<h1 id="Oracle-时间格式相关语句"><a href="#Oracle-时间格式相关语句" class="headerlink" title="Oracle 时间格式相关语句"></a>Oracle 时间格式相关语句</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--查看当前的默认时间格式 (必须以管理员登录)</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> props$ <span class="keyword">where</span> name <span class="operator">=</span> <span class="string">&#x27;NLS_DATE_FORMAT&#x27;</span>;<span class="comment">--DD-MON-RR</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--更新当前的默认时间格式 (必须以管理员登录, 重启数据库后生效)</span></span><br><span class="line"><span class="keyword">update</span> props$ <span class="keyword">set</span> <span class="keyword">value</span>$ <span class="operator">=</span> <span class="string">&#x27;YYYY-MM-DD HH24:MI:SS&#x27;</span> <span class="keyword">where</span> name <span class="operator">=</span> <span class="string">&#x27;NLS_DATE_FORMAT&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Oracle-用户相关的操作语句"><a href="#Oracle-用户相关的操作语句" class="headerlink" title="Oracle 用户相关的操作语句"></a>Oracle 用户相关的操作语句</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--创建新用户</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">user</span> scott identified <span class="keyword">by</span> scott123;</span><br><span class="line"></span><br><span class="line"><span class="comment">--修改用户密码</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">user</span> scott identified <span class="keyword">by</span> scott333;</span><br><span class="line"></span><br><span class="line"><span class="comment">--删除用户 (用户拥有对象时, 无法直接删除用户, 必须先删除对象)</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">user</span> scott;</span><br><span class="line"></span><br><span class="line"><span class="comment">--删除用户对象</span></span><br><span class="line"><span class="keyword">drop</span> <span class="keyword">user</span> scott cascade;</span><br><span class="line"></span><br><span class="line"><span class="comment">--给用户授权</span></span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">connect</span>, resource, dba <span class="keyword">to</span> scott;</span><br><span class="line"></span><br><span class="line"><span class="comment">--撤销授权</span></span><br><span class="line"><span class="keyword">revoke</span> <span class="keyword">connect</span>, resource, dba <span class="keyword">from</span> scott;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Oracle-表空间操作语句"><a href="#Oracle-表空间操作语句" class="headerlink" title="Oracle 表空间操作语句"></a>Oracle 表空间操作语句</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--创建新的表空间</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span>space assets datafile <span class="string">&#x27;f:\tablespace\tablespacefolder\assets.dbf&#x27;</span> size <span class="number">30000</span>m; <span class="comment">-- 30G</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--删除空表空间, 包含物理文件</span></span><br><span class="line"><span class="keyword">drop</span> tablespace tablespace_name including contents;</span><br><span class="line"></span><br><span class="line"><span class="comment">--查看所有表空间的总大小</span></span><br><span class="line"><span class="keyword">select</span> tablespace_name, (<span class="built_in">sum</span>(bytes) <span class="operator">/</span> <span class="number">1024</span> <span class="operator">/</span> <span class="number">1024</span>) <span class="keyword">as</span> spacesize <span class="keyword">from</span> dba_data_files <span class="keyword">group</span> <span class="keyword">by</span> tablespace_name;</span><br><span class="line"></span><br><span class="line"><span class="comment">--查看表空间的使用情况</span></span><br><span class="line"><span class="keyword">select</span> tablespace_name <span class="keyword">as</span> &quot;表空间名称&quot;, spacesize <span class="keyword">as</span> &quot;总空间 MB&quot;, usedsize &quot;已使用空间 MB&quot;, trunc(usedsize<span class="operator">/</span>spacesize<span class="operator">*</span><span class="number">100</span>, <span class="number">2</span>) <span class="keyword">as</span> &quot;已使用百分比 %&quot; <span class="keyword">from</span> (</span><br><span class="line"><span class="keyword">select</span> tablespace_name, (<span class="built_in">sum</span>(bytes) <span class="operator">/</span> <span class="number">1024</span> <span class="operator">/</span> <span class="number">1024</span>) <span class="keyword">as</span> spacesize,</span><br><span class="line">(<span class="keyword">select</span> (<span class="built_in">sum</span>(bytes) <span class="operator">/</span> <span class="number">1024</span> <span class="operator">/</span> <span class="number">1024</span>) <span class="keyword">from</span> dba_segments <span class="keyword">where</span> tablespace_name <span class="operator">=</span> A.tablespace_name) <span class="keyword">as</span> usedsize</span><br><span class="line"><span class="keyword">from</span> dba_data_files A <span class="keyword">group</span> <span class="keyword">by</span> tablespace_name);</span><br><span class="line"></span><br><span class="line"><span class="comment">--扩充特定表空间原本的数据文件 (只能扩大, 不能缩小, 如原大小为 2G, 现在需要将其扩大 1G, 则这里需要写 3G)</span></span><br><span class="line"><span class="keyword">alter</span> database datafile <span class="string">&#x27;f:\tablespace\tablespacefolder\assets.dbf&#x27;</span> resize <span class="number">300</span>m;</span><br><span class="line"></span><br><span class="line"><span class="comment">--向特定表空间追加新的数据文件</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span>space assets <span class="keyword">add</span> datafile <span class="string">&#x27;f:\tablespace\tablespacefolder\assets1.dbf&#x27;</span> size <span class="number">30000</span>m; <span class="comment">-- 30G</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span>space assets <span class="keyword">add</span> datafile <span class="string">&#x27;f:\tablespace\tablespacefolder\assets2.dbf&#x27;</span> size <span class="number">30000</span>m; <span class="comment">-- 30G</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--设置表空间自动扩充</span></span><br><span class="line"><span class="keyword">alter</span> database datafile <span class="string">&#x27;f:\tablespace\tablespacefolder\assets1.dbf&#x27;</span> autoextend <span class="keyword">on</span> next <span class="number">200</span>m maxsize unlimited;</span><br><span class="line"><span class="keyword">alter</span> database datafile <span class="string">&#x27;f:\tablespace\tablespacefolder\assets2.dbf&#x27;</span> autoextend <span class="keyword">on</span> next <span class="number">200</span>m maxsize unlimited;</span><br><span class="line"></span><br><span class="line"><span class="comment">--查看所有表空间文件路径</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> dba_data_files;</span><br><span class="line"></span><br><span class="line"><span class="comment">--查看特定用户的默认表空间</span></span><br><span class="line"><span class="keyword">select</span> username, default_tablespace <span class="keyword">from</span> dba_users <span class="keyword">where</span> username <span class="operator">=</span> <span class="string">&#x27;SCOTT&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--设置特定用户的默认表空间</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">user</span> scott <span class="keyword">default</span> tablespace assets;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Oracle-impdp-和-expdp-的使用"><a href="#Oracle-impdp-和-expdp-的使用" class="headerlink" title="Oracle impdp 和 expdp 的使用"></a>Oracle impdp 和 expdp 的使用</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--创建自定义路径</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace directory dir_dp <span class="keyword">as</span> <span class="string">&#x27;f:/dmp&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--授权自定义路径</span></span><br><span class="line"><span class="keyword">grant</span> read, write <span class="keyword">on</span> directory dir_dp <span class="keyword">to</span> scott;</span><br><span class="line"></span><br><span class="line"><span class="comment">--查看目录设置及相应权限设置</span></span><br><span class="line"><span class="keyword">select</span> privilege, directory_name, directory_path <span class="keyword">from</span> user_tab_privs t, all_directories d</span><br><span class="line"><span class="keyword">where</span> t.table_name(<span class="operator">+</span>) <span class="operator">=</span> d.directory_name <span class="keyword">order</span> <span class="keyword">by</span> <span class="number">2</span>, <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--使用路径参数执行导出与导入</span></span><br><span class="line">expdp scott<span class="operator">/</span>scott123@数据库服务名 directory<span class="operator">=</span>dir_dp dumpfile<span class="operator">=</span><span class="number">001.</span>dmp logfile<span class="operator">=</span><span class="number">001.</span>log <span class="keyword">full</span><span class="operator">=</span>y version<span class="operator">=</span><span class="number">10.2</span><span class="number">.0</span><span class="number">.1</span><span class="number">.0</span>;</span><br><span class="line">impdp scott<span class="operator">/</span>scott123@数据库服务名 directory<span class="operator">=</span>dir_dp dumpfile<span class="operator">=</span><span class="number">001.</span>dmp logfile<span class="operator">=</span><span class="number">001.</span>log <span class="keyword">full</span><span class="operator">=</span>y table_exists_action<span class="operator">=</span>replace;</span><br></pre></td></tr></table></figure>
+
+<p>[<strong>注</strong>]</p>
+<ol>
+<li>有的时候也会使用 imp, exp 进行少量数据的导入导出.</li>
+</ol>
+<ul>
+<li><ul>
+<li><code>imp scott/scott123@数据库服务名 file=f:/001.dmp log=f:/001.log full=y ignore=y</code></li>
+</ul>
+</li>
+<li><ul>
+<li><code>exp scott/scott123@数据库服务名 file=f:/001.dmp log=f:/001.log full=y</code></li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><p>exp 不能指定版本号, expdp 可以.</p>
+</li>
+<li><p>imp 和 exp 可以加路径, impdp 和 expdp 不可以直接加路径, 只能通过自定义路径来更改导入导出的位置.</p>
+</li>
+<li><p>imp 导入时, 如果出现表已经存在的错误, 可以加入 <code>ignore=y</code> 参数, 加入此参数后, 已存在的表会进行数据追加, 不加此参数, 新导入的数据会被跳过!</p>
+</li>
+<li><p><code>table_exists_action</code> 参数用于指定导入操作对表的处理行为, 一共有四种:</p>
+</li>
+</ol>
+<ul>
+<li><ul>
+<li><code>SKIP</code>: 这是默认行为, 如果表已存在则直接跳过, 同时报错!</li>
+</ul>
+</li>
+<li><ul>
+<li><code>APPEND</code>: 如果表已存在则向表中追加数据.</li>
+</ul>
+</li>
+<li><ul>
+<li><code>REPLACE</code>: 如果表已存在则 DROP 表, 然后创建表, 最后导入数据.</li>
+</ul>
+</li>
+<li><ul>
+<li><code>TRUNCATE</code>: 如果表已存在则 TRUNCATE 表, 然后导入数据.</li>
+</ul>
+</li>
+</ul>
+<h1 id="SQL-的大小写"><a href="#SQL-的大小写" class="headerlink" title="SQL 的大小写"></a>SQL 的大小写</h1><ol>
+<li><p>sql 中的关键字, 字段名, 表名都是大小写不敏感的.</p>
+</li>
+<li><p>sql 中的字符串是大小写敏感的, <code>like &#39;a%&#39;</code> 和 <code>like &#39;A%&#39;</code> 是完全不一样的.</p>
+</li>
+</ol>
+<h1 id="SQL-中的运算符"><a href="#SQL-中的运算符" class="headerlink" title="SQL 中的运算符"></a>SQL 中的运算符</h1><ol>
+<li><code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code> 这些运算符是进行范围比较的, 因此规定实际使用时, 尽量只用作数值类型的比较. 数值类型比较的时候不能加引号. <code>where a &lt; 3 and a &gt; 1</code> 而不是 <code>where a &lt; &#39;3&#39; and a &gt; &#39;1&#39;</code></li>
+<li><code>=</code>, <code>&lt;&gt;</code>, <code>!=</code> 相等和不相等这两种运算符既可以运算字符串, 也可以运算数值. <code>&lt;&gt;</code> 比 <code>!=</code> 用得更多一些. sql 中等于运算符是 <code>=</code> 不是 <code>==</code></li>
+<li><code>between and</code> 运算符本质上也是范围比较运算符, 因此规定实际使用时, 也尽量只用作数值类型的比较. 语法格式是: <code>a between 1 and 2</code></li>
+<li>比较运算符也适用于其他类型的比较, 比如字母, 日期. 比如: <code>where between &#39;A&#39; and &#39;H&#39;</code> <code>where between &#39;2019-01-01&#39; and &#39;2019-12-31&#39;</code></li>
+</ol>
+<blockquote>
+<p>[<strong>注意</strong>] 在不同的数据库中, <code>between</code> 操作符会产生不同的结果! 在某些数据库中, <code>between</code> 选取介于两个值之间但不包括两个测试值的字段. 在某些数据库中, <code>between</code> 选取介于两个值之间且包括两个测试值的字段. 在某些数据库中, <code>between</code> 选取介于两个值之间且包括第一个测试值但不包括最后一个测试值的字段. 因此, 请检查您的数据库是如何处理 <code>between</code> 操作符!</p>
+</blockquote>
+<h1 id="SQL-中的-order-by"><a href="#SQL-中的-order-by" class="headerlink" title="SQL 中的 order by"></a>SQL 中的 order by</h1><ol>
+<li><code>order by</code> 作用是将结果表中的数据进行排序.</li>
+<li><code>order by asc</code> 为升序排序, 即第1条数据最小, 向后数据会越来越大. <code>asc</code> 可以省略.</li>
+<li><code>order by desc</code> 为降序排序, 即第1条数据最大, 向后数据越来越小.</li>
+<li><code>order by</code> 可以同时对多列进行排序, 但是实际使用时不要超过两列. 如 <code>order by a,b</code>, 数据会先根据 a 进行升序排序, 之后对具有相同 a 值的数据进行按照 b 的升序排序.</li>
+</ol>
+<h1 id="SQL-中的-insert-into"><a href="#SQL-中的-insert-into" class="headerlink" title="SQL 中的 insert into"></a>SQL 中的 insert into</h1><ol>
+<li><p><code>insert into</code> 的作用是向表中插入一行数据, 每执行一次 <code>insert into</code> 只能插入一行数据.</p>
+</li>
+<li><p><code>insert into</code> 的语法格式是 <code>insert into tablename (columnname1, columnname2, ...) values (value1, value2, ...)</code>, 前面的括号写要赋值的字段名, 后面写对应的值. 要对一行的所有字段赋值的时候, 前面的括号可以省略, 此时后面的括号必须写上全部的数据.</p>
+</li>
+<li><p><code>insert into tablename</code> 后面也可以直接跟一个 select 语句, 作用是将查询出的数据保存到一个<strong>已存在的表</strong>中, 但是这里的 <code>tablename</code> 必须是已存在的表.</p>
+</li>
+<li><p>使用 select 的时候语法格式是 <code>insert into tablename (columnname1, columnname2, ...) (select * from table)</code>, 不能加 <code>values</code> 关键字, 否则报错.</p>
+</li>
+</ol>
+<h1 id="SQL-中的-update-set"><a href="#SQL-中的-update-set" class="headerlink" title="SQL 中的 update set"></a>SQL 中的 update set</h1><ol>
+<li><p><code>update set</code> 的作用是更新表中已经存在的数据.</p>
+</li>
+<li><p><code>update set</code> 可以一次更新多行, 这取决于 <code>where</code> 条件.</p>
+</li>
+<li><p><code>update set</code> 可以一次更新多个字段, 只要使用 <code>,</code> 隔开即可.</p>
+</li>
+<li><p><code>update set</code> 的语法格式是: <code>update table set a=1, b=2, c=3 where ()</code>, set 后面可以跟多个赋值语句, 中间使用逗号隔开, 更新语句的数量使用 where 来决定, 实际使用时必须加 where 条件.</p>
+</li>
+</ol>
+<h1 id="SQL-中的-delete-from"><a href="#SQL-中的-delete-from" class="headerlink" title="SQL 中的 delete from"></a>SQL 中的 delete from</h1><ol>
+<li><code>delete from</code> 的作用是删除表中数据.</li>
+<li><code>delete from</code> 可以一次删除多行, 这取决于 <code>where</code> 条件.</li>
+<li><code>delete from</code> 的语法格式是: <code>delete from table where ()</code>, delete 的语法格式基本是固定的, 只是后面的 where 条件不同.</li>
+</ol>
+<h1 id="SQL-中三种删除-drop-delete-truncate-的不同之处"><a href="#SQL-中三种删除-drop-delete-truncate-的不同之处" class="headerlink" title="SQL 中三种删除 (drop, delete, truncate) 的不同之处"></a>SQL 中三种删除 (drop, delete, truncate) 的不同之处</h1><ul>
+<li><p>delete: 删除表内容, 不删除表结构, 不释放空间, 可以回滚.</p>
+</li>
+<li><p>truncate: 删除表内容, 不删除表结构, 释放空间, 默认不能回滚.</p>
+</li>
+<li><p>drop: 删除表内容, 同时删除表结构, 释放空间, 不能回滚.</p>
+</li>
+<li><p>执行速度: drop &gt; truncate &gt; delete</p>
+</li>
+</ul>
+<h1 id="SQL-中的各种-join-on"><a href="#SQL-中的各种-join-on" class="headerlink" title="SQL 中的各种 join on"></a>SQL 中的各种 join on</h1><ol>
+<li><p><code>join on</code> 不是用来单纯取交集并集的, 它更多的是用来做<strong>数据拼接</strong>的.</p>
+</li>
+<li><p><code>inner join on</code> 可以省略写作 <code>join on</code></p>
+</li>
+<li><p><code>inner join on</code> 是在两个表之间取交集. 只有符合 on 条件的数据才会被拼接并返回. <code>from tableA join tableB on tableA.a = tableB.b</code> 只有符合 <code>tableA.a = tableB.b</code> 的数据才会被拼接并返回.</p>
+</li>
+<li><p><code>left join on</code> 是在两个表之前取左集, 符合<code>on</code> 条件的会被拼接并返回, 不符合 <code>on</code> 条件的左表数据也会返回, 当然这些数据是没有办法作拼接的.</p>
+</li>
+<li><p><code>right join on</code> 是在两个表之前取右集, 符合<code>on</code>条件的会被拼接并返回, 不符合 <code>on</code> 条件的右表数据也会返回, 当然这些数据是没有办法作拼接的.</p>
+</li>
+</ol>
+<p><img data-src="/images/oracle_notes/sql_join.png" alt="sql-join"></p>
+<h1 id="SQL-中的-union-和-union-all"><a href="#SQL-中的-union-和-union-all" class="headerlink" title="SQL 中的 union 和 union all"></a>SQL 中的 union 和 union all</h1><ol>
+<li><p><code>join on</code> 可以理解为横向拼接, <code>union all</code> 可以理解为纵向拼接. 2X2 的两个表使用 <code>join on</code> 拼接后是 2X4, <code>union all</code> 拼接后是 4X2.</p>
+</li>
+<li><p><code>union</code> 拼接自带去重, 如果想要将全部的数据保留下来, 则需要使用 <code>union all</code>.</p>
+</li>
+<li><p><code>union all</code> 返回表的列名使用的是第一个 select 语句的列名.</p>
+</li>
+</ol>
+<h1 id="SQL-中的-select-into"><a href="#SQL-中的-select-into" class="headerlink" title="SQL 中的 select into"></a>SQL 中的 select into</h1><ol>
+<li><p><code>select into</code> 的作用是将查询出来的数据保存到一个<strong>新的临时表</strong>中.</p>
+</li>
+<li><p><code>select into</code> 必须跟新表, 不允许跟已存在的表.</p>
+</li>
+<li><p>语法格式是 <code>select () into table_new from table_old where ()</code>.</p>
+</li>
+<li><p><font color='red'><strong>Oracle 和 PL&#x2F;SQL 中不支持此语句! 可以使用 create table as select 进行代替.</strong></font></p>
+</li>
+<li><p><font color='red'><strong>在 Sql Server 中这条语句可以正常使用!</strong></font></p>
+</li>
+</ol>
+<h1 id="SQL-中的-create"><a href="#SQL-中的-create" class="headerlink" title="SQL 中的 create"></a>SQL 中的 create</h1><ol>
+<li><p><code>create database</code> 用来创建一个新数据库.</p>
+</li>
+<li><p><code>create table</code> 用来创建一个新表.</p>
+</li>
+<li><p><code>create table</code> 的语法格式:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span> table_name</span><br><span class="line">(</span><br><span class="line">    column_name_1 data_type(size),</span><br><span class="line">    column_name_2 data_type(size),</span><br><span class="line">    ......</span><br><span class="line">    column_name_n data_type(size)</span><br><span class="line">); <span class="comment">--创建新表, 字段使用 () 括起来, 字段和类型之间使用空格隔开, 最后一个字段后没有 , 号, 语句最后加 ; 号.</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="SQL-中-select-时只返回前-n-条数据"><a href="#SQL-中-select-时只返回前-n-条数据" class="headerlink" title="SQL 中 select 时只返回前 n 条数据"></a>SQL 中 select 时只返回前 n 条数据</h1><ol>
+<li><p>为了达到这个效果, Oracle 中可以使用 <code>rownum</code>, SQL Server 中可以使用 <code>select top</code>, My SQL 中可以使用 <code>limit</code>. 在这一方面, Oracle 中有一个很大的缺点, <code>rownum</code> 不能直接直接写 <code>rownum = 2</code>, 返回第二条数据, <code>rownum</code> 必须是从 1 开始的一个序列.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> () <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> () <span class="keyword">and</span> rownum <span class="operator">&lt;=</span> <span class="number">2</span>; <span class="comment">-- Oracle, 返回前 2 条数据</span></span><br><span class="line"><span class="keyword">select</span> () <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> () <span class="keyword">and</span> rownum <span class="operator">&lt;=</span> <span class="number">10</span>; <span class="comment">-- Oracle, 只返回前 10 条数据</span></span><br><span class="line"><span class="keyword">select</span> top <span class="number">2</span> () <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> (); <span class="comment">--Sql Server, 返回前 2 条数据</span></span><br><span class="line"><span class="keyword">select</span> top <span class="number">50</span> <span class="keyword">percent</span> () <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">where</span> (); <span class="comment">--Sql Server, 返回前 1/2 的数据</span></span><br><span class="line"><span class="keyword">select</span> () <span class="keyword">from</span> <span class="keyword">table</span> () limit <span class="number">2</span>; <span class="comment">--My Sql, 返回前 2 条数据</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="SQL-中的约束"><a href="#SQL-中的约束" class="headerlink" title="SQL 中的约束"></a>SQL 中的约束</h1><p>SQL 中的约束用来规范列中的数据, 如果有违反约束的数据行为, 一般为 <code>insert</code> 和 <code>update</code>, 那么这个行为会被禁止.</p>
+<p>SQL 中主要的约束有: <code>not null</code>, <code>unique</code>, <code>primary key</code>, <code>foreign key</code>, <code>check</code>, <code>default</code>.</p>
+<h2 id="not-null"><a href="#not-null" class="headerlink" title="not null"></a>not null</h2><ol>
+<li><p><code>not null</code> 约束是强制某一列不接受空值.</p>
+</li>
+<li><p>在进行 <code>insert</code> 或者 <code>update</code> 的时候如果没有给这一列赋值, 语句就会执行失败.</p>
+</li>
+</ol>
+<h2 id="unique"><a href="#unique" class="headerlink" title="unique"></a>unique</h2><ol>
+<li><p><code>unique</code> 约束是将某一列或者某些列作为表中数据的<strong>唯一标识</strong>.</p>
+</li>
+<li><p><code>unique</code> 约束可以在一张表中设置多个.</p>
+</li>
+<li><p><code>unique</code> 约束中, <code>null</code> 值是允许存在的.</p>
+</li>
+</ol>
+<h2 id="primary-key"><a href="#primary-key" class="headerlink" title="primary key"></a>primary key</h2><ol>
+<li><p><code>primary key</code> 约束被称为<strong>主键</strong>. 唯一标识表中的每一条数据.</p>
+</li>
+<li><p><code>primary key</code> 约束的列在一张表中只能有一个.</p>
+</li>
+<li><p><code>primary key</code> 中不允许出现 <code>null</code> 值.</p>
+</li>
+<li><p>每一张表中都应该有一个主键.</p>
+</li>
+</ol>
+<h2 id="foreign-key"><a href="#foreign-key" class="headerlink" title="foreign key"></a>foreign key</h2><ol>
+<li><p><code>foreign key</code> 约束被称为<strong>外键</strong>.</p>
+</li>
+<li><p>一个表中的 <code>foreign key</code> 指向另一个表中的 <code>primary key</code>.</p>
+</li>
+<li><p>一个表中的 <code>foreign key</code> 也可以指向另一个表中的 <code>unique</code>, 但是实际使用中不要这样使用. 即<strong>外键</strong>指向<strong>主键</strong>.</p>
+</li>
+<li><p><code>foreign key</code> 所在的表称为<strong>子表</strong>, 被指向的 <code>primary key</code> 所在的表称为<strong>父表</strong>.</p>
+</li>
+<li><p><code>foreign key</code> 同样可以约束 <code>insert</code>, <code>update</code> 行为. 当要插入的值或者更新后的值在父表被指向的列中不存在时, 语句执行失败.</p>
+</li>
+</ol>
+<h2 id="check"><a href="#check" class="headerlink" title="check"></a>check</h2><ol>
+<li><code>check</code> 约束用来限制列中值的范围.</li>
+</ol>
+<h2 id="default"><a href="#default" class="headerlink" title="default"></a>default</h2><ol>
+<li><code>default</code> 约束用来设置列的默认值.</li>
+</ol>
+<h1 id="SQL-中的自动增加-auto-increment"><a href="#SQL-中的自动增加-auto-increment" class="headerlink" title="SQL 中的自动增加 (auto_increment)"></a>SQL 中的自动增加 (auto_increment)</h1><ol>
+<li><p>Oracle 中并没有直接提供 <code>auto_increment</code>, 而是使用序列 <code>sequence</code> 实现了自动增加.</p>
+</li>
+<li><p>先创建一个新的序列 <code>sequence</code>. 最后的<strong>循环</strong>一般不要设置, 因为自动增加多用于主键, 而主键是唯一标识的, 不允许重复. <code>maxvalue</code> 一般也不用设置, 创建序列时默认会设置一个非常非常大的数字, 就是这个: <code>9999999999999999999999999999</code>, 够大了吧?</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> sequence sequence_new</span><br><span class="line">minvalue <span class="number">1</span>      <span class="comment">--最小值</span></span><br><span class="line"><span class="comment">--maxvalue 5    --最大值</span></span><br><span class="line"><span class="keyword">start</span> <span class="keyword">with</span> <span class="number">1</span>    <span class="comment">--开始值</span></span><br><span class="line">increment <span class="keyword">by</span> <span class="number">1</span>  <span class="comment">--增量</span></span><br><span class="line">cache <span class="number">2</span>         <span class="comment">--缓存大小</span></span><br><span class="line"><span class="comment">--cycle;        --循环</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用序列中的 <code>nextval</code> 属性实现自动增加. 每次调用 <code>nextval</code> 序列中的值就会自动增加.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sequence_new.nextval <span class="keyword">from</span> dual;</span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> tableA (ID) <span class="keyword">values</span> (sequence_new.nextval);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="SQL-中常用的日期操作"><a href="#SQL-中常用的日期操作" class="headerlink" title="SQL 中常用的日期操作"></a>SQL 中常用的日期操作</h1><ul>
+<li><p>获取系统的当前日期: <code>select sysdate from dual;</code></p>
+</li>
+<li><p>获取月的开始: <code>select trunc(sysdate, &#39;MM&#39;) from dual;</code></p>
+</li>
+<li><p>获取月的结束: <code>select last_day(sysdate) from dual;</code></p>
+</li>
+<li><p>获取周日: <code>select trunc(sysdate, &#39;d&#39;) from dual;</code></p>
+<p> [<strong>注</strong>] 上面这条语句其实是获取一周的开始, 但是西方国家中 &quot;周日&quot; 是一周的开始😅</p>
+</li>
+<li><p>获取周一: <code>select trunc(sysdate, &#39;d&#39;) + 1 from dual;</code></p>
+<p> [<strong>注</strong>] trunc() 函数返回的是 &quot;date&quot; 类型, 可以直接做加减运算. 加减运算的单位是 &quot;天&quot;.</p>
+</li>
+<li><p>获取小时的开始: <code>select trunc(sysdate, &#39;hh&#39;) from dual;</code></p>
+</li>
+<li><p>获取分钟的开始: <code>select trunc(sysdate, &#39;mi&#39;) from dual;</code></p>
+</li>
+<li><p>增加一个月: <code>select add_months(sysdate, 1) from dual;</code></p>
+</li>
+<li><p>减少一个月: <code>select add_months(sysdate, -1) from dual;</code></p>
+</li>
+<li><p>增加一年: <code>select add_months(sysdate, 12) from dual;</code></p>
+</li>
+<li><p>减少一年: <code>select add_months(sysdate, -12) from dual;</code></p>
+</li>
+<li><p><code>trunc</code> 方法也可以截取数字:</p>
+ <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>    ) <span class="keyword">from</span> dual; <span class="comment">--123</span></span><br><span class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,  <span class="number">0</span>) <span class="keyword">from</span> dual; <span class="comment">--123</span></span><br><span class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,  <span class="number">1</span>) <span class="keyword">from</span> dual; <span class="comment">--123.4</span></span><br><span class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>, <span class="number">-1</span>) <span class="keyword">from</span> dual; <span class="comment">--120</span></span><br><span class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>, <span class="number">-4</span>) <span class="keyword">from</span> dual; <span class="comment">--0</span></span><br><span class="line"><span class="keyword">select</span> trunc(<span class="number">123.458</span>,  <span class="number">4</span>) <span class="keyword">from</span> dual; <span class="comment">--123.458</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="SQL-中常用的函数"><a href="#SQL-中常用的函数" class="headerlink" title="SQL 中常用的函数"></a>SQL 中常用的函数</h1><ol>
+<li><p><code>avg()</code> 返回数值列的平均值. 括号中的列必须是数值列. 多用于比较条件中的参数.</p>
+<p><code>select student_id from table_student group by student_id having avg(student_score) &gt; 80</code> 查出平均分大于 80 分的学生的 id.</p>
+</li>
+<li><p><code>count()</code> 有多种用法.</p>
+<ul>
+<li><p><code>count(*)</code> 和 <code>count(1)</code> 等效, 获取查询数据的条数.</p>
+</li>
+<li><p><code>count(column_name)</code> 获取 column_name 这一列中非空的值. (<strong>null 不计算, 重复值全部计算在内</strong>)</p>
+</li>
+<li><p><code>count(distinct column_name)</code> 获取 column_name 这一列中非空的且唯一的值的数目. (<strong>null 不计算, 重复值只计算一次</strong>)</p>
+</li>
+</ul>
+</li>
+<li><p><code>max()</code> 用于取出列中数据的最大值. <code>min()</code> 用于取出列中数据的最小值.</p>
+<ul>
+<li><p><code>max()</code> 函数不仅可以取出数值列的最大值, 还可以用于<strong>字符串</strong>, <strong>日期</strong>列.</p>
+</li>
+<li><p><code>select max(student_age) from table_student;</code> 年龄 (数值列)</p>
+</li>
+<li><p><code>select max(student_id) from table_student;</code> 学号 (字符串列)</p>
+</li>
+<li><p><code>select max(student_birth) from table_student;</code> 出生日期 (日期列)</p>
+</li>
+<li><p><code>min()</code> 函数同样具有以上性质.</p>
+</li>
+</ul>
+</li>
+<li><p><code>sum()</code> 返回数值列的和.</p>
+<p><code>select sum(score) from table_student group by student_id;</code> 求出每个学生的总分.</p>
+</li>
+<li><p><code>group by</code> 根据一个或多个列, 对查询出来的结果集进行分组.</p>
+<ul>
+<li><p><code>where</code> 关键字无法对分组后的结果集进行筛选, 分组之前可以.</p>
+</li>
+<li><p><code>group by</code> 常常搭配 <code>avg()</code>, <code>count()</code>, <code>max()</code>, <code>min()</code>, <code>sum()</code>, <code>having</code> 一起使用.</p>
+</li>
+</ul>
+</li>
+<li><p><code>having</code> 关键字的出现就是为了解决 &quot;<code>where</code> 不能处理分组后的结果集&quot; 这个问题.</p>
+<p><code>having</code> 可以对 <code>group by</code> 分组后的数据进行筛选.</p>
+</li>
+<li><p><code>exists()</code> 对括号中的子句进行判断, 如果子句中有数据, 返回 true, 没有数据返回 false.</p>
+</li>
+<li><p><code>substr(parame1, parame2, parame3)</code> 截取字符串</p>
+<ul>
+<li><p>parame1: 待处理字符串</p>
+</li>
+<li><p>parame2: 起始位置, 0 1 都代表第一个字符</p>
+</li>
+<li><p>parame3: 截取长度</p>
+</li>
+<li><p>substr(parame1, parame2) : 取出 parame1 中 parame2 位置之后的整个字符串</p>
+</li>
+</ul>
+</li>
+<li><p><code>instr(parame1, parame2)</code> 检索字符串</p>
+<ul>
+<li><p>parame1: 元字符串</p>
+</li>
+<li><p>parame2: 待查找字符串</p>
+</li>
+<li><p>parame3 (可选) : 查找的起始位置, 正数为从左向右检索, 负数为从右向左检索</p>
+</li>
+<li><p>parame4 (可选) : 返回第几次的检索位置</p>
+</li>
+</ul>
+</li>
+<li><p><code>replace(parame1, parame2, parame3)</code> 替换字符串</p>
+</li>
+</ol>
+<ul>
+<li><p>replace(parame1, parame2, parame3): 将 parame1 中所有的 parame2 全部替换成 parame3.</p>
+</li>
+<li><p>replace(parame1, parame2) : 将 parame1 中所有的 parame2 全部删除.</p>
+</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--举例: 取出 name 字段中 &#x27;/&#x27; 后的字符串</span></span><br><span class="line"><span class="keyword">select</span> substr(name, instr(name, <span class="string">&#x27;/&#x27;</span>) <span class="operator">+</span> <span class="number">1</span>) <span class="keyword">from</span> dmb <span class="keyword">where</span> saasdm <span class="operator">=</span> <span class="string">&#x27;test&#x27;</span> <span class="keyword">order</span> <span class="keyword">by</span> dmxh;</span><br></pre></td></tr></table></figure>
+
+<h2 id="SQL-中的大小写转换"><a href="#SQL-中的大小写转换" class="headerlink" title="SQL 中的大小写转换"></a>SQL 中的大小写转换</h2><ol>
+<li><p><code>upper()</code> 方法可以将查询出来的字符串数据全部转为大写字母.</p>
+</li>
+<li><p><code>lower()</code> 方法可以将查询出来的字符串数据全部转为小写字母.</p>
+</li>
+<li><p>上面两个方式是将查询结果集中的数据转换大小写, 并不会修改数据库中真正的数据.</p>
+</li>
+</ol>
+<h2 id="Oracle-中的字符串操作函数"><a href="#Oracle-中的字符串操作函数" class="headerlink" title="Oracle 中的字符串操作函数"></a>Oracle 中的字符串操作函数</h2><ol>
+<li><p><code>substr(column_name, startPositon, length)</code> 方法是 Oracle 数据库中的字符串截取函数.</p>
+<ul>
+<li><p>column_name: 是要操作的列名.</p>
+</li>
+<li><p>startPosition: 是要截取的开始位置, 其中 0 和 1 都表示从第一个字符开始截取.</p>
+</li>
+<li><p>length: 是要截取的字符串的长度.</p>
+</li>
+</ul>
+</li>
+<li><p><code>length()</code> 函数返回字符串数据的长度.</p>
+</li>
+</ol>
+<h2 id="Oracle-中的保留位数操作函数"><a href="#Oracle-中的保留位数操作函数" class="headerlink" title="Oracle 中的保留位数操作函数"></a>Oracle 中的保留位数操作函数</h2><ol>
+<li><p><code>trunc()</code> 函数, 可以截取数字, 达到控制保留位数的效果, 但是不会对数据进行四舍五入.</p>
+</li>
+<li><p><code>round()</code> 函数, 可以对数字进行四舍五入, 达到控制保留位数的效果.</p>
+</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> round(<span class="number">3456.3456</span>, <span class="number">-4</span>) <span class="keyword">from</span> dual; <span class="comment">--0</span></span><br><span class="line"><span class="keyword">select</span> round(<span class="number">3456.3456</span>, <span class="number">-3</span>) <span class="keyword">from</span> dual; <span class="comment">--3000</span></span><br><span class="line"><span class="keyword">select</span> round(<span class="number">3456.3456</span>, <span class="number">-2</span>) <span class="keyword">from</span> dual; <span class="comment">--3500</span></span><br><span class="line"><span class="keyword">select</span> round(<span class="number">3456.3456</span>, <span class="number">-1</span>) <span class="keyword">from</span> dual; <span class="comment">--3460</span></span><br><span class="line"><span class="keyword">select</span> round(<span class="number">3456.3456</span>,  <span class="number">0</span>) <span class="keyword">from</span> dual; <span class="comment">--3456</span></span><br><span class="line"><span class="keyword">select</span> round(<span class="number">3456.3456</span>    ) <span class="keyword">from</span> dual; <span class="comment">--3456</span></span><br><span class="line"><span class="keyword">select</span> round(<span class="number">3456.3456</span>,  <span class="number">1</span>) <span class="keyword">from</span> dual; <span class="comment">--3456.3</span></span><br><span class="line"><span class="keyword">select</span> round(<span class="number">3456.3456</span>,  <span class="number">2</span>) <span class="keyword">from</span> dual; <span class="comment">--3456.35</span></span><br><span class="line"><span class="keyword">select</span> round(<span class="number">3456.3456</span>,  <span class="number">3</span>) <span class="keyword">from</span> dual; <span class="comment">--3456.346</span></span><br><span class="line"><span class="keyword">select</span> round(<span class="number">3456.3456</span>,  <span class="number">4</span>) <span class="keyword">from</span> dual; <span class="comment">--3456.3456</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Oracle-查看最近执行的语句"><a href="#Oracle-查看最近执行的语句" class="headerlink" title="Oracle 查看最近执行的语句"></a>Oracle 查看最近执行的语句</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> v$<span class="keyword">sql</span> <span class="keyword">where</span> sql_fulltext <span class="keyword">like</span> <span class="string">&#x27;% %&#x27;</span> <span class="keyword">order</span> <span class="keyword">by</span> last_active_time <span class="keyword">desc</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Oracle-拼接整列数据为一个以逗号分割的字符串"><a href="#Oracle-拼接整列数据为一个以逗号分割的字符串" class="headerlink" title="Oracle 拼接整列数据为一个以逗号分割的字符串"></a>Oracle 拼接整列数据为一个以逗号分割的字符串</h1><ul>
+<li><p><code>wm_concat()</code> 方法可以将整列数据为一个以 <code>逗号</code> 分割的字符串.</p>
+</li>
+<li><p><code>chr(39)</code> 表示单引号, 这样可以将单引号拼接到字符串中.</p>
+</li>
+<li><p>在外层套用一个 <code>replace()</code> 方法, 可以将 <code>逗号</code> 替换为想要使用的分隔符.</p>
+ <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="string">&#x27;(&#x27;</span> <span class="operator">||</span> chr(<span class="number">39</span>) <span class="operator">||</span> replace(wm_concat(<span class="keyword">distinct</span> mkbh), <span class="string">&#x27;,&#x27;</span>, chr(<span class="number">39</span>)<span class="operator">||</span><span class="string">&#x27;,&#x27;</span><span class="operator">||</span>chr(<span class="number">39</span>)) <span class="operator">||</span> chr(<span class="number">39</span>) <span class="operator">||</span> <span class="string">&#x27;)&#x27;</span> <span class="keyword">from</span> mkb <span class="keyword">where</span> systype<span class="operator">=</span><span class="string">&#x27;dwb&#x27;</span>;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="Windows-删除无用的-Oracle-服务"><a href="#Windows-删除无用的-Oracle-服务" class="headerlink" title="Windows 删除无用的 Oracle 服务"></a>Windows 删除无用的 Oracle 服务</h1><p>在 Power Shell 中输入 <code>sc delete 服务名</code> 命令可以删除 Windows 服务. 如:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">sc</span> <span class="string">delete</span> <span class="string">OracleDBConsolesdzc</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Oracle-还原数据库包"><a href="#Oracle-还原数据库包" class="headerlink" title="Oracle 还原数据库包"></a>Oracle 还原数据库包</h1><p>由于经常要还原数据库包, 所以记录一下常用的语句.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--创建新用户</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">user</span> scott identified <span class="keyword">by</span> scott123;</span><br><span class="line"></span><br><span class="line"><span class="comment">--给新用户授权</span></span><br><span class="line"><span class="keyword">grant</span> <span class="keyword">connect</span>, resource, dba <span class="keyword">to</span> scott;</span><br><span class="line"></span><br><span class="line"><span class="comment">--查看表空间文件地址</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> dba_data_files;</span><br><span class="line"></span><br><span class="line"><span class="comment">--创建新的表空间</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">table</span>space assets datafile <span class="string">&#x27;d:\oracle\product\11.2.0\dbhome_1\database\assets.dbf&#x27;</span> size <span class="number">2048</span>m;</span><br><span class="line"></span><br><span class="line"><span class="comment">--设置表空间自动扩充</span></span><br><span class="line"><span class="keyword">alter</span> database datafile <span class="string">&#x27;d:\oracle\product\11.2.0\dbhome_1\database\assets2.dbf&#x27;</span> autoextend <span class="keyword">on</span> next <span class="number">200</span>m maxsize unlimited;</span><br><span class="line"></span><br><span class="line"><span class="comment">--设置默认表空间</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">user</span> scott <span class="keyword">default</span> tablespace assets;</span><br><span class="line"></span><br><span class="line"><span class="comment">--新建数据泵路径</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">or</span> replace directory dir_dp <span class="keyword">as</span> <span class="string">&#x27;f:/dmp&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--使用数据库导出导入</span></span><br><span class="line">expdp scott<span class="operator">/</span>scott123@数据库实例名 directory<span class="operator">=</span>dir_dp dumpfile<span class="operator">=</span><span class="number">001.</span>dmp logfile<span class="operator">=</span><span class="number">001.</span>log <span class="keyword">full</span><span class="operator">=</span>y version<span class="operator">=</span><span class="number">10.2</span><span class="number">.0</span><span class="number">.1</span><span class="number">.0</span></span><br><span class="line">impdp scott<span class="operator">/</span>scott123@数据库实例名 directory<span class="operator">=</span>dir_dp dumpfile<span class="operator">=</span><span class="number">001.</span>dmp logfile<span class="operator">=</span><span class="number">001.</span>log table_exists_action<span class="operator">=</span>replace <span class="keyword">full</span><span class="operator">=</span>y</span><br></pre></td></tr></table></figure>
+
+<h1 id="Oracle-中递归查询"><a href="#Oracle-中递归查询" class="headerlink" title="Oracle 中递归查询"></a>Oracle 中递归查询</h1><p>Oracle 中的递归查询使用 <code>START WITH</code> 和 <code>CONNECT BY PRIOR</code> 实现.</p>
+<ol>
+<li><p><code>START WITH</code> 后面跟开始条件.</p>
+</li>
+<li><p><code>CONNECT BY PRIOR</code> 后面跟递归条件.</p>
+</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--递归查询</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> dwbh</span><br><span class="line">  <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line">          <span class="keyword">FROM</span> dwb<span class="variable">@ZCXT</span> a</span><br><span class="line">         <span class="keyword">WHERE</span> a.saasdm <span class="operator">=</span> <span class="string">&#x27;495543161&#x27;</span></span><br><span class="line">         <span class="keyword">START</span> <span class="keyword">WITH</span> a.DWBH <span class="operator">=</span> <span class="string">&#x27;000007&#x27;</span></span><br><span class="line">        <span class="keyword">CONNECT</span> <span class="keyword">BY</span> PRIOR a.SJDW <span class="operator">=</span> a.DWBH);</span><br></pre></td></tr></table></figure>
+
+<p>第一次查询为: 上级单位是 &#39;000007&#39; 的单位, 比如结果为: &#39;7000001&#39; 和 &#39;7000002&#39;;</p>
+<p>第二次查询为: 上级单位是 &#39;7000001&#39; 的单位, 查询结果为空, 则继续查询上级单位是 &#39;7000002&#39; 的单位, 若查询结果依然为空, 则终止查询.</p>
+<p>使用的是 <code>广度优先遍历</code>.</p>
+<h1 id="SQL-Server-中递归查询"><a href="#SQL-Server-中递归查询" class="headerlink" title="SQL Server 中递归查询"></a>SQL Server 中递归查询</h1><p>SQL Server 中的递归查询使用 <code>WITH</code> 实现. <code>WITH</code> 后面跟树形结构的创建语句, 之后对树形结构查询即可.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--递归查询 (bjdw: 本级单位, sjdw: 上级单位)</span></span><br><span class="line"><span class="keyword">WITH</span> DwTree (bjdw, mc, sjdw, Tree)</span><br><span class="line"><span class="keyword">AS</span></span><br><span class="line">(</span><br><span class="line">   <span class="keyword">SELECT</span> bjdw, mc, sjdw , <span class="number">0</span> <span class="keyword">AS</span> Tree</span><br><span class="line">   <span class="keyword">FROM</span> DWB a</span><br><span class="line">   <span class="keyword">WHERE</span> a.bjdw <span class="keyword">in</span> (<span class="keyword">select</span> bh <span class="keyword">from</span> cggl_SHQXB <span class="keyword">where</span> bjdw<span class="operator">=</span><span class="string">&#x27;110017&#x27;</span>) <span class="comment">-- 开始条件</span></span><br><span class="line">   <span class="keyword">UNION</span> <span class="keyword">ALL</span></span><br><span class="line">   <span class="keyword">SELECT</span> b.bjdw, b.mc, b.sjdw , DwTree.Tree <span class="operator">+</span> <span class="number">1</span></span><br><span class="line">   <span class="keyword">FROM</span> DWB b</span><br><span class="line">   <span class="keyword">JOIN</span> DwTree <span class="keyword">ON</span> b.sjdw <span class="operator">=</span> DwTree.bjdw <span class="comment">-- 递归条件</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">SELECT</span> bjdw <span class="keyword">FROM</span> DwTree OPTION (MAXRECURSION <span class="number">10</span>); <span class="comment">-- OPTION: 设置最大遍历深度, 防止无限循环</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="PL-SQL-中-DECODE-方法的使用"><a href="#PL-SQL-中-DECODE-方法的使用" class="headerlink" title="PL&#x2F;SQL 中 DECODE() 方法的使用"></a>PL&#x2F;SQL 中 DECODE() 方法的使用</h1><h2 id="基础用法"><a href="#基础用法" class="headerlink" title="基础用法"></a>基础用法</h2><p>语法: DECODE(条件, 值1, 返回值1, 值2, 返回值2, ... 值n, 返回值n, 缺省值);</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> ztbz, DECODE(ztbz, <span class="string">&#x27;55&#x27;</span>, <span class="string">&#x27;未提交&#x27;</span>, <span class="string">&#x27;00&#x27;</span>, <span class="string">&#x27;提交&#x27;</span>, <span class="string">&#x27;92&#x27;</span>, <span class="string">&#x27;审核中&#x27;</span>, <span class="string">&#x27;91&#x27;</span>, <span class="string">&#x27;退回&#x27;</span>, <span class="string">&#x27;99&#x27;</span>, <span class="string">&#x27;审核通过&#x27;</span>, <span class="string">&#x27;缺省状态&#x27;</span>) <span class="keyword">AS</span> ztmc</span><br><span class="line">  <span class="keyword">FROM</span> zjb</span><br><span class="line"> <span class="keyword">GROUP</span> <span class="keyword">BY</span> ztbz;</span><br></pre></td></tr></table></figure>
+
+<h2 id="搭配-SIGN-函数"><a href="#搭配-SIGN-函数" class="headerlink" title="搭配 SIGN() 函数"></a>搭配 SIGN() 函数</h2><p>SIGN(value) 函数: value 为 0 返回 0, 大于 0 返回 1, 小于 0 返回 -1;</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--判断一列和固定值的大小关系</span></span><br><span class="line"><span class="keyword">SELECT</span> DECODE(SIGN(dj <span class="operator">-</span> <span class="number">10000</span>), <span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;大于一万&#x27;</span>, <span class="string">&#x27;0&#x27;</span>, <span class="string">&#x27;等于一万&#x27;</span>, <span class="string">&#x27;小于一万&#x27;</span>) <span class="keyword">AS</span> jezt <span class="keyword">FROM</span> zjb;</span><br></pre></td></tr></table></figure>
+
+<h2 id="实现类三目运算符"><a href="#实现类三目运算符" class="headerlink" title="实现类三目运算符"></a>实现类三目运算符</h2><p>DECODE() 函数如果只写 4 个参数, DECODE(value, 值1, 值2, 值3), 此时的含义就可以解释为: 计算 value 的值, 如果返回值等于 值1, 则返回 值2, 否则返回 值3. (当然这其实还是 DECODE() 的本质用法)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> DECODE(dj, <span class="number">100</span>, <span class="string">&#x27;等于 100&#x27;</span>, <span class="string">&#x27;不等于 100&#x27;</span>) <span class="keyword">FROM</span> zjb;</span><br></pre></td></tr></table></figure>
+
+<h2 id="搭配-SUM-函数-一次求出多个数量"><a href="#搭配-SUM-函数-一次求出多个数量" class="headerlink" title="搭配 SUM() 函数, 一次求出多个数量"></a>搭配 SUM() 函数, 一次求出多个数量</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="built_in">SUM</span>(DECODE(INSTR(saasdm, <span class="string">&#x27;1&#x27;</span>), <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)) <span class="keyword">AS</span> &quot;saasdm 中含有 1&quot;,</span><br><span class="line">       <span class="built_in">SUM</span>(DECODE(INSTR(saasdm, <span class="string">&#x27;2&#x27;</span>), <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)) <span class="keyword">AS</span> &quot;saasdm 中含有 2&quot;,</span><br><span class="line">       <span class="built_in">SUM</span>(DECODE(INSTR(saasdm, <span class="string">&#x27;H&#x27;</span>), <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)) <span class="keyword">AS</span> &quot;saasdm 中含有 H&quot;,</span><br><span class="line">       <span class="built_in">SUM</span>(DECODE(INSTR(saasdm, <span class="string">&#x27;9&#x27;</span>), <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)) <span class="keyword">AS</span> &quot;saasdm 中含有 9&quot;</span><br><span class="line">  <span class="keyword">FROM</span> dwjgb;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">SUM</span>(DECODE(SIGN(dj <span class="operator">-</span> <span class="number">100</span>), <span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>)) <span class="keyword">AS</span> &quot;单价大于一百&quot;,</span><br><span class="line">       <span class="built_in">SUM</span>(DECODE(SIGN(dj <span class="operator">-</span> <span class="number">1000</span>), <span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>)) <span class="keyword">AS</span> &quot;单价大于一千&quot;,</span><br><span class="line">       <span class="built_in">SUM</span>(DECODE(SIGN(dj <span class="operator">-</span> <span class="number">10000</span>), <span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>)) <span class="keyword">AS</span> &quot;单价大于一万&quot;,</span><br><span class="line">       <span class="built_in">SUM</span>(DECODE(SIGN(dj <span class="operator">-</span> <span class="number">100000</span>), <span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>)) <span class="keyword">AS</span> &quot;单价大于十万&quot;,</span><br><span class="line">       <span class="built_in">SUM</span>(DECODE(SIGN(dj <span class="operator">-</span> <span class="number">1000000</span>), <span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>)) <span class="keyword">AS</span> &quot;单价大于一百万&quot;,</span><br><span class="line">       <span class="built_in">SUM</span>(DECODE(SIGN(dj <span class="operator">-</span> <span class="number">10000000</span>), <span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>)) <span class="keyword">AS</span> &quot;单价大于一千万&quot;</span><br><span class="line">  <span class="keyword">FROM</span> zjb;</span><br></pre></td></tr></table></figure>
+
+<h2 id="搭配-ORDER-BY-对字符列进行特定的排序"><a href="#搭配-ORDER-BY-对字符列进行特定的排序" class="headerlink" title="搭配 ORDER BY, 对字符列进行特定的排序"></a>搭配 ORDER BY, 对字符列进行特定的排序</h2><p>将资产按照 &quot;未提交, 已提交, 审核中, 审核完成, 其他&quot; 的顺序进行排序.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line">  <span class="keyword">FROM</span> zjb</span><br><span class="line"> <span class="keyword">WHERE</span> ztbz <span class="keyword">IN</span> (<span class="string">&#x27;55&#x27;</span>, <span class="string">&#x27;00&#x27;</span>, <span class="string">&#x27;92&#x27;</span>, <span class="string">&#x27;99&#x27;</span>)</span><br><span class="line"> <span class="keyword">ORDER</span> <span class="keyword">BY</span> DECODE(ztbz, <span class="string">&#x27;55&#x27;</span>, <span class="number">1</span>, <span class="string">&#x27;00&#x27;</span>, <span class="number">2</span>, <span class="string">&#x27;92&#x27;</span>, <span class="number">3</span>, <span class="string">&#x27;99&#x27;</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+<h1 id="Oracle-中简单的分页查询实现方式"><a href="#Oracle-中简单的分页查询实现方式" class="headerlink" title="Oracle 中简单的分页查询实现方式"></a>Oracle 中简单的分页查询实现方式</h1><p>使用 <code>MINUS</code> 实现. MINUS 为差集, 返回左侧集合中在右侧集合中不存在的部分.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">--返回第 101 - 200 行数据 (循环查询中建议使用 &lt;= 和 &lt;= 搭配)</span></span><br><span class="line"><span class="keyword">SELECT</span> yqbh <span class="keyword">FROM</span> zjb <span class="keyword">where</span> yqbh <span class="keyword">in</span> (</span><br><span class="line">   <span class="keyword">SELECT</span> yqbh</span><br><span class="line">     <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> yqbh <span class="keyword">FROM</span> zjb)</span><br><span class="line">    <span class="keyword">WHERE</span> ROWNUM <span class="operator">&lt;=</span> <span class="number">200</span></span><br><span class="line">   MINUS</span><br><span class="line">   <span class="keyword">SELECT</span> yqbh</span><br><span class="line">     <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> yqbh <span class="keyword">FROM</span> zjb)</span><br><span class="line">    <span class="keyword">WHERE</span> ROWNUM <span class="operator">&lt;=</span> <span class="number">100</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">--返回第 n - m 行数据 (单次查询中建议使用 &lt;= 和 &lt; 搭配)</span></span><br><span class="line"><span class="keyword">SELECT</span> yqbh <span class="keyword">FROM</span> zjb <span class="keyword">where</span> yqbh <span class="keyword">in</span> (</span><br><span class="line">   <span class="keyword">SELECT</span> yqbh</span><br><span class="line">     <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> yqbh <span class="keyword">FROM</span> zjb)</span><br><span class="line">    <span class="keyword">WHERE</span> ROWNUM <span class="operator">&lt;=</span> m</span><br><span class="line">   MINUS</span><br><span class="line">   <span class="keyword">SELECT</span> yqbh</span><br><span class="line">     <span class="keyword">FROM</span> (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> yqbh <span class="keyword">FROM</span> zjb)</span><br><span class="line">    <span class="keyword">WHERE</span> ROWNUM <span class="operator">&lt;</span> n</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/donate/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/oracle/oracle_notes.html" title="Oracle SQL 基础">https://kuroha.vip/oracle/oracle_notes.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/followme/wechat.png">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Oracle/" rel="tag"><i class="fa fa-tag"></i> Oracle</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/diary/2020_04.html" rel="prev" title="日记系列--2020年04月">
+                  <i class="fa fa-angle-left"></i> 日记系列--2020年04月
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/diary/2020_06.html" rel="next" title="日记系列--2020年06月">
+                  日记系列--2020年06月 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">143k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:39</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>

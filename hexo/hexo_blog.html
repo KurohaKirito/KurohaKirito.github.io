@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="最近一直在折腾个人博客, 对于我这个前端纯小白而言, 真是感慨万千.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo + Github Pages 搭建个人博客">
+<meta property="og:url" content="https://kuroha.vip/hexo/hexo_blog.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="最近一直在折腾个人博客, 对于我这个前端纯小白而言, 真是感慨万千.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-07-17T14:10:05.000Z">
+<meta property="article:modified_time" content="2024-01-05T06:55:18.018Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="Hexo">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kuroha.vip/hexo/hexo_blog.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/hexo/hexo_blog.html","path":"hexo/hexo_blog.html","title":"Hexo + Github Pages 搭建个人博客"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Hexo + Github Pages 搭建个人博客 | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">68</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">31</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫"><a href="/catch_the_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Git"><span class="nav-number">2.1.</span> <span class="nav-text">安装 Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Nodejs"><span class="nav-number">2.2.</span> <span class="nav-text">安装 Nodejs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Hexo"><span class="nav-number">2.3.</span> <span class="nav-text">安装 Hexo</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%9C%AC%E5%9C%B0%E5%8D%9A%E5%AE%A2"><span class="nav-number">3.</span> <span class="nav-text">创建本地博客</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E8%81%94-GitHub-%E5%92%8C-Hexo"><span class="nav-number">4.</span> <span class="nav-text">关联 GitHub 和 Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%90%AF-GitHub-Pages"><span class="nav-number">4.1.</span> <span class="nav-text">开启 GitHub Pages</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96-SSH-%E5%AF%86%E9%92%A5"><span class="nav-number">4.2.</span> <span class="nav-text">获取 SSH 密钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E6%9C%AC%E5%9C%B0%E5%8D%9A%E5%AE%A2%E5%88%B0-GitHub-Pages"><span class="nav-number">4.3.</span> <span class="nav-text">部署本地博客到 GitHub Pages</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%84%E5%BD%95"><span class="nav-number">5.</span> <span class="nav-text">附录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8-Hexo-%E5%91%BD%E4%BB%A4"><span class="nav-number">5.1.</span> <span class="nav-text">常用 Hexo 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo-%E4%B8%BB%E9%A2%98"><span class="nav-number">5.2.</span> <span class="nav-text">hexo 主题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AD%A6%E5%91%8A%E4%B8%8E%E9%94%99%E8%AF%AF%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">5.3.</span> <span class="nav-text">警告与错误的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Warning-LF-will-be-replaced-by-CRLF"><span class="nav-number">5.3.1.</span> <span class="nav-text">Warning: LF will be replaced by CRLF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Error-validation-failed"><span class="nav-number">5.3.2.</span> <span class="nav-text">Error: validation failed</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/avatar/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="dGVuY2VudDovL0FkZENvbnRhY3QvP2Zyb21JZD00NSZmcm9tU3ViSWQ9MSZzdWJjbWQ9YWxsJnVpbj0xODMyNjEzMDAx" title="QQ → tencent:&#x2F;&#x2F;AddContact&#x2F;?fromId&#x3D;45&amp;fromSubId&#x3D;1&amp;subcmd&#x3D;all&amp;uin&#x3D;1832613001"><i class="fab fa-qq fa-fw"></i>QQ</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://kuroha.vip/images/weixin.png" title="WeChat → https:&#x2F;&#x2F;kuroha.vip&#x2F;images&#x2F;weixin.png" rel="noopener me"><i class="fab fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9ub2FoYXBwcy5naXRodWIuaW8v" title="https:&#x2F;&#x2F;noahapps.github.io&#x2F;">Noah</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/hexo/hexo_blog.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Hexo + Github Pages 搭建个人博客 | 二次元游宅客">
+      <meta itemprop="description" content="最近一直在折腾个人博客, 对于我这个前端纯小白而言, 真是感慨万千.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hexo + Github Pages 搭建个人博客
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-07-17 22:10:05" itemprop="dateCreated datePublished" datetime="2019-07-17T22:10:05+08:00">2019-07-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-01-05 14:55:18" itemprop="dateModified" datetime="2024-01-05T14:55:18+08:00">2024-01-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">最近一直在折腾个人博客, 对于我这个前端纯小白而言, 真是感慨万千.</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>搭建个人博客的流程大概是: 先搭建博客环境, 就像你要玩电脑游戏, 首先得先买一台电脑一样. <del>这不废话吗</del> 之后在电脑上创建博客的本地文件, 最后再将创建好的本地文件上传到网上就可以了. 这里我使用的是 Hexo 和 Github Pages 来搭建个人博客.</p>
+<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><h2 id="安装-Git"><a href="#安装-Git" class="headerlink" title="安装 Git"></a>安装 Git</h2><p>进入 <span class="exturl" data-url="aHR0cHM6Ly9naXQtc2NtLmNvbS8=">Git 官方网站<i class="fa fa-external-link-alt"></i></span> 下载安装即可.</p>
+<p>验证方法: 在桌面右键, 只要出现 Git GUI Here 和 Git Bash Here 就表示安装成功了.</p>
+<h2 id="安装-Nodejs"><a href="#安装-Nodejs" class="headerlink" title="安装 Nodejs"></a>安装 Nodejs</h2><p>进入 <span class="exturl" data-url="aHR0cHM6Ly9ub2RlanMub3JnL2VuLw==">Nodejs 官方网站<i class="fa fa-external-link-alt"></i></span> 下载安装即可.</p>
+<p>LTS 版本即可满足使用, 可以在 cmd 中使用 <code>node -v</code> 和 <code>npm -v</code> 进行验证, 出现版本号就说明成功了.</p>
+<h2 id="安装-Hexo"><a href="#安装-Hexo" class="headerlink" title="安装 Hexo"></a>安装 Hexo</h2><p>安装 Hexo 之前, 如果你想要更改 Hexo 的安装位置 (Hexo 默认会安装在 C 盘), 可以在 cmd 中输入下面的命令, 记得把路径改为自己的:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">npm</span> <span class="string">config</span> <span class="string">set</span> <span class="string">prefix</span> <span class="string">&quot;H:\Programs Computer\NodeGobal&quot;</span></span><br><span class="line"><span class="string">npm</span> <span class="string">config</span> <span class="string">set</span> <span class="string">cache</span> <span class="string">&quot;H:\Programs Computer\NodeCache&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>之后可以使用以下命令查看设置:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">npm</span> <span class="string">config</span> <span class="string">get</span> <span class="string">prefix</span></span><br><span class="line"><span class="string">npm</span> <span class="string">config</span> <span class="string">get</span> <span class="string">cache</span></span><br></pre></td></tr></table></figure>
+
+<p>先切换 npm 源: 打开 cmd, 输入下面的命令:</p>
+<p><code>npm config set registry https://registry.npm.taobao.org</code></p>
+<p>之后安装 Hexo:</p>
+<p><code>npm install -g hexo</code></p>
+<h1 id="创建本地博客"><a href="#创建本地博客" class="headerlink" title="创建本地博客"></a>创建本地博客</h1><ol>
+<li>   新建一个文件夹, 来放置本地博客, 名字以及路径自己决定. 我的是: F:\WorkSpace\HexoBlog</li>
+<li>   进入这个空的文件夹, 点击鼠标右键, 选择 Git Bash Here, 会弹出一个类似 cmd 的窗口, 这个窗口会一直使用, 不要关闭, 如果不小心关闭了, 再次回到这个文件夹中, 在空白处点击鼠标右键, 选择 Git Bash Here 即可再次打开.</li>
+<li>   初始化本地博客, 在 Git Bash Here 中输入: <code>hexo init</code></li>
+<li>   安装默认依赖包, 在 Git Bash Here 中输入: <code>npm install</code></li>
+<li>   生成静态文件, 在 Git Bash Here 中输入: <code>hexo generate</code> 或者命令的缩写 <code>hexo g</code>, 此时网页就创建好了, 下面我们来预览一下博客的样子.</li>
+<li>   开启服务, 在 Git Bash Here 中输入 <code>hexo server</code> 或者命令的缩写 <code>hexo s</code>, 服务默认开启网址: <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo0MDAwLw==">http://localhost:4000<i class="fa fa-external-link-alt"></i></span> , 此时在浏览器中即可预览博客.</li>
+</ol>
+<p>【注】</p>
+<ul>
+<li>预览完毕后记得按 <code>Ctrl + C</code> 停止服务.</li>
+<li>如果不小心按了<code>Ctrl + C</code> 停止了服务, 再次输入 <code>hexo s</code> 开启服务即可.</li>
+<li>如果 <span class="exturl" data-url="aHR0cDovL2xvY2FsaG9zdDo0MDAwLw==">http://localhost:4000<i class="fa fa-external-link-alt"></i></span> 无法预览博客, 可能是 4000 端口被占用了, 我们先按 Ctrl + C 停止服务, 然后使用下面的语句切换端口:  <code>hexo server -p 端口号</code> , 这里的端口号从 4000 往上加即可, 如: 4001, 具体使用哪个不用太纠结, 可以预览博客即可.</li>
+</ul>
+<h1 id="关联-GitHub-和-Hexo"><a href="#关联-GitHub-和-Hexo" class="headerlink" title="关联 GitHub 和 Hexo"></a>关联 GitHub 和 Hexo</h1><p>经过前面两个步骤, 我们已经在本地创建好了博客, 也可以通过本地服务进行预览, 但是这样网页仅仅保存在本地, 网络上的人无法查看的, 此时我们就要将本地博客和 GitHub Pages 关联, 或者说上传到 GitHub 上, 这样所有人都可以查看了.</p>
+<h2 id="开启-GitHub-Pages"><a href="#开启-GitHub-Pages" class="headerlink" title="开启 GitHub Pages"></a>开启 GitHub Pages</h2><p>GitHub Pages: 其本来用于介绍托管在 GitHub 上的项目, 由于它的空间免费稳定, 因此适合用来搭建个人博客, 但是有以下注意点:</p>
+<ul>
+<li>每个 GitHub 账号只能有一个仓库来存放个人主页,</li>
+<li>仓库的名字必须是 <code>username.github.io</code>,</li>
+<li>通过 <code>http://username.github.io</code> 来访问个人主页,</li>
+<li>个人主页的网站内容是在 master 分支下.</li>
+</ul>
+<p>接下来我们创建个人主页仓库: 在 GitHub 首页右上角头像左侧的加号处, 点击: New repository, 仓库名字必须是: <code>你的 Github 用户名.github.io</code>, 下面选择 Public, 下面的选项是让你是否在仓库中初始化一个 README.md 文件, 自己随意. 最后点击创建仓库, 这样 GitHub Pages 就创建好了.</p>
+<h2 id="获取-SSH-密钥"><a href="#获取-SSH-密钥" class="headerlink" title="获取 SSH 密钥"></a>获取 SSH 密钥</h2><p>直达车:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">git</span> <span class="string">config</span> <span class="string">--global</span> <span class="string">user.name</span> <span class="string">&quot;KurohaKirito&quot;</span></span><br><span class="line"><span class="string">git</span> <span class="string">config</span> <span class="string">--global</span> <span class="string">user.email</span> <span class="string">&quot;KurohaKirito@gmail.com&quot;</span></span><br><span class="line"><span class="string">ssh-keygen</span> <span class="string">-t</span> <span class="string">rsa</span> <span class="string">-C</span> <span class="string">&quot;KurohaKirito@gmail.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>至此, 我们的本地博客和 GitHub Pages 都准备好了, 下面就可以把网页部署 (上传) 到 GitHub Pages 上了. 在部署之前, 我们先设置一下 SSH 密钥. 因为如果不配置 SSH 密钥, 每次部署本地博客到 GitHub Pages 时, 都要输入 Github 账号密码, 非常繁琐.</p>
+<p>获取 SSH 密钥: 如果你是第一次使用 Git, 要先配置 Git 的用户名和邮箱, 在 Git Bash Here 中输入:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">git</span> <span class="string">config</span> <span class="string">--global</span> <span class="string">user.name</span> <span class="string">&quot;username&quot;</span></span><br><span class="line"><span class="string">git</span> <span class="string">config</span> <span class="string">--global</span> <span class="string">user.email</span> <span class="string">&quot;mail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的 username 改成你 GitHub 的用户名, mail 改成你 GitHub 的邮箱. 之后再次输入:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">ssh-keygen</span> <span class="string">-t</span> <span class="string">rsa</span> <span class="string">-C</span> <span class="string">&quot;mail&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>mail 要用你自己的 Github 邮箱. 回车后会依次出现三个选项, 直接全部回车即可. 这样 SSH 密钥就生成了, 接下来需要密钥填写到 GitHub 上.</p>
+<p>在 C:\Users\用户名\.ssh目录中, 会出现这样两个文件: <code>id_rsa</code> 和 <code>id_rsa.pub</code></p>
+<p>打开 <code>id_rsa.pub</code> 文件, 复制里面所有的内容.</p>
+<p>之后打开浏览器, 登录 GitHub, 依次点击头像下的 Settings, 左面的 SSH and GPG keys, 右上角的 New SSH key, 填写标题时, 最好和你那个网页文件夹的名字一致, 方便记忆和日后查找.<br>点击 Add SSH key 并且验证 GitHub 密码, 即可完成密钥的添加.</p>
+<h2 id="部署本地博客到-GitHub-Pages"><a href="#部署本地博客到-GitHub-Pages" class="headerlink" title="部署本地博客到 GitHub Pages"></a>部署本地博客到 GitHub Pages</h2><p>之前的步骤中 SSH 密钥已经设置好了, 接下来就可以部署本地博客到 Github Pages 了, 在这里不建议直接使用 Git 进行部署, 而是使用 Hexo 中的 Hexo deploy 插件进行一键式部署, 方便快捷.</p>
+<p>首先要安装 Hexo deploy 插件, 还是在 Git Bash Here 中输入命令:</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">npm</span> <span class="string">install</span> <span class="string">hexo-deployer-git</span> <span class="string">--save</span></span><br></pre></td></tr></table></figure>
+
+<p>之后打开网页根目录下的 _config.yml 文件, 文件的末尾是这样的:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type:</span><br></pre></td></tr></table></figure>
+
+<p>修改成下面这样:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: https://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:KurohaKirito/KurohaKirito.github.io.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<p>repo 就是你仓库的地址: 有 SSH 和 HTTPS 两种格式, 你选择哪种都可以. 我选择的是 SSH 格式. 在你仓库页面上点击绿色按钮 <code>Clone or download</code> 即可获得仓库地址.</p>
+<p>配置完成之后, 执行部署命令, 还是在 Git Bash Here 中输入命令: <code>hexo deploy</code> 或者命令的缩写: <code>hexo d</code>, 输入 GitHub 用户名, 密码即可.</p>
+<p>验证方法: 在浏览器中输入网址: <span class="exturl" data-url="aHR0cHM6Ly/nlKjmiLflkI0uZ2l0aHViLmlvLw==">https://用户名.github.io<i class="fa fa-external-link-alt"></i></span> , 用户名修改为你自己的 Github 用户名, 如果能看到之前博客的样子, 就说明部署成功了!</p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><h2 id="常用-Hexo-命令"><a href="#常用-Hexo-命令" class="headerlink" title="常用 Hexo 命令"></a>常用 Hexo 命令</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">hexo help</td>
+<td align="left">查看帮助</td>
+</tr>
+<tr>
+<td align="left">hexo -v</td>
+<td align="left">查看本地环境</td>
+</tr>
+<tr>
+<td align="left">hexo init</td>
+<td align="left">初始化 hexo 目录</td>
+</tr>
+<tr>
+<td align="left">hexo new &quot;postName&quot;</td>
+<td align="left">新建文章</td>
+</tr>
+<tr>
+<td align="left">hexo new page &quot;pageName&quot;</td>
+<td align="left">新建页面</td>
+</tr>
+<tr>
+<td align="left">hexo gernerate</td>
+<td align="left">生成网页</td>
+</tr>
+<tr>
+<td align="left">hexo server</td>
+<td align="left">本地预览</td>
+</tr>
+<tr>
+<td align="left">hexo deploy &#x2F; hexo d</td>
+<td align="left">部署到远程服务器</td>
+</tr>
+<tr>
+<td align="left">hexo clean</td>
+<td align="left">清除缓存 建议每次执行命令前先清理缓存</td>
+</tr>
+<tr>
+<td align="left">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</td>
+<td align="left">一键生成部署</td>
+</tr>
+<tr>
+<td align="left">hexo clean ; hexo g ; hexo s</td>
+<td align="left">一键生成部署</td>
+</tr>
+</tbody></table>
+<h2 id="hexo-主题"><a href="#hexo-主题" class="headerlink" title="hexo 主题"></a>hexo 主题</h2><p>下面是我搜集的一些主题及其项目开源地址:</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1pFUk9LSVNFS0kvaGV4by10aGVtZS1nYWw=">Gal<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3lzY29kZXIvaGV4by10aGVtZS1pbmRpZ28=">Indigo<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2x1dW1hbi9oZXhvLXRoZW1lLXNwZms=">Spfk<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NtYWNrZ2cvaGV4by10aGVtZS1zbWFja2Rvd24=">Smackdown<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21hb2NodW5ndWFuZy9ibGFjay1ibHVl">Black-blue<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1NoYW5hTWFpZC9oZXhvLXRoZW1lLXNoYW5h">Shana<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2xpdHRlbi9oZXhvLXRoZW1lLXlpbGlh">Yilia<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3dpbnRlcmxhbmQxOTg5L2hleG8tdGhlbWUtd2ludGVybGFuZA==">Winterland<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RlY2hsYWhvbWEvaGV4by10aGVtZS1va2Nqcw==">OKCjs<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3hpbmc1L2hleG8tdGhlbWUtYW5pbWFzdGFycw==">AnimaStars<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NvbmV5Y29kZS9jb25leQ==">Coney<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hzaWhvaHVhbmcva2lkZG9jaGFu">Kiddochan<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3hpYW5nbWluZy9sYW5kc2NhcGUtcGx1cw==">Landscapeplus<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2lpc3NuYW4vaGV4by10aGVtZS1uZXh0">NexT<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL3RoZW1lcy8=">Hexo Themes Net<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<h2 id="警告与错误的处理"><a href="#警告与错误的处理" class="headerlink" title="警告与错误的处理"></a>警告与错误的处理</h2><h3 id="Warning-LF-will-be-replaced-by-CRLF"><a href="#Warning-LF-will-be-replaced-by-CRLF" class="headerlink" title="Warning: LF will be replaced by CRLF"></a>Warning: LF will be replaced by CRLF</h3><p>问题原因: 不同操作系统所使用的换行符是不一样的:</p>
+<ul>
+<li><p>Unix &#x2F; Linux 采用换行符 LF 表示下一行 (LF: LineFeed 换行)</p>
+</li>
+<li><p>Dos &#x2F; Windows 采用 回车 + 换行 CRLF 表示下一行 (CRLF: CarriageReturn LineFeed 回车换行)</p>
+</li>
+<li><p>Mac OS 采用回车 CR 表示下一行 (CR: CarriageReturn 回车)</p>
+</li>
+</ul>
+<p>在 Git 中, 可以通过以下命令来显示当前你的 Git 中采取哪种对待换行符的方式:</p>
+<p><code>git config core.autocrlf</code></p>
+<p>此命令会有三种输出: <code>true</code>, <code>false</code>, <code>input</code></p>
+<ul>
+<li><p>true: Git 会将你 add 的所有文件视为文本文件, 将结尾的 CRLF 转换为 LF, 而 checkout 时会再将文件的 LF 格式转为 CRLF 格式.</p>
+</li>
+<li><p>false: line endings 不做任何改变, 文本文件保持其原来的样子.</p>
+</li>
+<li><p>input: add 时 Git 会把 CRLF 转换为 LF, 而 check 时仍旧为 LF, 所以 Windows 操作系统不建议设置此值.</p>
+</li>
+</ul>
+<p>解决办法: 将 core.autocrlf 设为 false 即可解决这个问题, 不过如果你跨平台工作的话, 还是需要考虑一下.</p>
+<p>如果你想要将 core autocrlf 设置为 true , 有一个需要慎重的地方, 当你上传一个二进制文件, Git 可能会将二进制文件误以为是文本文件, 从而也会修改你的二进制文件, 从而产生隐患.</p>
+<p>如果你不跨平台的话, 进行如下设置即可: <code>git config --global core.autocrlf false</code></p>
+<h3 id="Error-validation-failed"><a href="#Error-validation-failed" class="headerlink" title="Error: validation failed"></a>Error: validation failed</h3><p>原因: issue 的 id 有长度限制! 最大长度限制是 50 个字符.</p>
+<p>每个 issue 有两个标签, 一个是 gitment, 另一个是 id. 将 id 进行如下配置: <code>id: &#39;&lt;%= page.date %&gt;&#39;</code>, 因为日期是永远不会超出 50 个字符的.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/donate/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/hexo/hexo_blog.html" title="Hexo + Github Pages 搭建个人博客">https://kuroha.vip/hexo/hexo_blog.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/followme/wechat.png">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"><i class="fa fa-tag"></i> Hexo</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo/next_theme_beautify.html" rel="next" title="Hexo + NexT 主题美化 (NexT v7.2.0)">
+                  Hexo + NexT 主题美化 (NexT v7.2.0) <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">143k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:39</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>

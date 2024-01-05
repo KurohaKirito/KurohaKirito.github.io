@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="公司中一个项目要用 Oracle 访问 SQL Server, 于是我先在自己电脑上做一下配置实验.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle 异构数据库访问">
+<meta property="og:url" content="https://kuroha.vip/oracle/oracle_gateways.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="公司中一个项目要用 Oracle 访问 SQL Server, 于是我先在自己电脑上做一下配置实验.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/SQL_Server1.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/SQL_Server2.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/SQL_Server3.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Oracle_Download1.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Oracle_Download2.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Oracle_Download3.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Oracle_Download4.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Oracle_Download5.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Oracle_Download6.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Oracle_Download7.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Gateways_Install1.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Gateways_Install2.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Gateways_Install3.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Gateways_Install4.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Gateways_Install5.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Gateways_Install6.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Gateways_Install7.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Gateways_Install8.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Oracle_Configure1.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Oracle_Configure2.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Oracle_Configure3.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Gateways_Multiple1.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Gateways_Multiple2.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Gateways_Multiple3.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Gateways_Multiple4.png">
+<meta property="og:image" content="https://kuroha.vip/images/oracle_gateways/Gateways_Multiple5.png">
+<meta property="article:published_time" content="2020-07-29T15:47:03.000Z">
+<meta property="article:modified_time" content="2021-02-26T00:27:13.289Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="Oracle">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/images/oracle_gateways/SQL_Server1.png">
+
+
+<link rel="canonical" href="https://kuroha.vip/oracle/oracle_gateways.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/oracle/oracle_gateways.html","path":"oracle/oracle_gateways.html","title":"Oracle 异构数据库访问"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Oracle 异构数据库访问 | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">68</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">31</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫"><a href="/catch_the_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%A6%B4%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">🦴前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8C%B4%E5%A3%B0%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">🌴声明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%90%8COracle-Database-%E4%BD%BF%E7%94%A8-Oracle-Gateways-%E8%AE%BF%E9%97%AE-Microsoft-SQL-Server"><span class="nav-number">3.</span> <span class="nav-text">🐌Oracle Database 使用 Oracle Gateways 访问 Microsoft SQL Server</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E4%BF%A1%E6%81%AF"><span class="nav-number">3.1.</span> <span class="nav-text">环境信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Oracle-Database"><span class="nav-number">3.1.1.</span> <span class="nav-text">Oracle Database</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Oracle-Gateways"><span class="nav-number">3.1.2.</span> <span class="nav-text">Oracle Gateways</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Microsoft-SQL-Server"><span class="nav-number">3.1.3.</span> <span class="nav-text">Microsoft SQL Server</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-Microsoft-SQL-Server-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-number">3.1.3.1.</span> <span class="nav-text">查看 Microsoft SQL Server 数据库的信息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD-Oracle-Database-%E5%92%8C-Oracle-Gateways"><span class="nav-number">3.2.</span> <span class="nav-text">下载 Oracle Database 和 Oracle Gateways</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Oracle-Gateways"><span class="nav-number">3.3.</span> <span class="nav-text">安装 Oracle Gateways</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-Oracle-Database-%E5%92%8C-Oracle-Gateways"><span class="nav-number">3.4.</span> <span class="nav-text">配置 Oracle Database 和 Oracle Gateways</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5-DBLink"><span class="nav-number">3.5.</span> <span class="nav-text">创建数据库连接 DBLink</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95"><span class="nav-number">3.6.</span> <span class="nav-text">连接测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%A6%84%E5%A4%9A%E5%BC%82%E6%9E%84%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">🦄多异构数据库的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-Gateways-%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E9%85%8D%E7%BD%AE"><span class="nav-number">4.1.</span> <span class="nav-text">修改 Gateways 的数据库连接配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-Oracle-Database-%E7%9B%91%E5%90%AC%E7%A8%8B%E5%BA%8F%E9%85%8D%E7%BD%AE"><span class="nav-number">4.2.</span> <span class="nav-text">修改 Oracle Database 监听程序配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9-Oracle-Database-%E6%9C%8D%E5%8A%A1%E5%91%BD%E5%90%8D%E9%85%8D%E7%BD%AE"><span class="nav-number">4.3.</span> <span class="nav-text">修改 Oracle Database 服务命名配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95-1"><span class="nav-number">4.4.</span> <span class="nav-text">连接测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Oracle-%E8%BF%9E%E6%8E%A5-Oracle"><span class="nav-number">5.</span> <span class="nav-text">Oracle 连接 Oracle</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">5.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BE%E4%BE%8B"><span class="nav-number">5.2.</span> <span class="nav-text">举例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%90%AC%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">6.</span> <span class="nav-text">🐬参考链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/avatar/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="dGVuY2VudDovL0FkZENvbnRhY3QvP2Zyb21JZD00NSZmcm9tU3ViSWQ9MSZzdWJjbWQ9YWxsJnVpbj0xODMyNjEzMDAx" title="QQ → tencent:&#x2F;&#x2F;AddContact&#x2F;?fromId&#x3D;45&amp;fromSubId&#x3D;1&amp;subcmd&#x3D;all&amp;uin&#x3D;1832613001"><i class="fab fa-qq fa-fw"></i>QQ</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://kuroha.vip/images/weixin.png" title="WeChat → https:&#x2F;&#x2F;kuroha.vip&#x2F;images&#x2F;weixin.png" rel="noopener me"><i class="fab fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9ub2FoYXBwcy5naXRodWIuaW8v" title="https:&#x2F;&#x2F;noahapps.github.io&#x2F;">Noah</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/oracle/oracle_gateways.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Oracle 异构数据库访问 | 二次元游宅客">
+      <meta itemprop="description" content="公司中一个项目要用 Oracle 访问 SQL Server, 于是我先在自己电脑上做一下配置实验.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Oracle 异构数据库访问
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-07-29 23:47:03" itemprop="dateCreated datePublished" datetime="2020-07-29T23:47:03+08:00">2020-07-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2021-02-26 08:27:13" itemprop="dateModified" datetime="2021-02-26T08:27:13+08:00">2021-02-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Oracle/" itemprop="url" rel="index"><span itemprop="name">Oracle</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">公司中一个项目要用 Oracle 访问 SQL Server, 于是我先在自己电脑上做一下配置实验.</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="🦴前言"><a href="#🦴前言" class="headerlink" title="🦴前言"></a>🦴前言</h1><p>从 Oracle 连接 SQL Server 数据库, 需要用透明网关 (Transparent Gateway), 通过它, 我们可以访问并操作 SQL Server 数据库, 当前也可以连接其他数据库, 实现数据库的异构服务.<br>目前是SQL SERVER2005异构连接.</p>
+<h1 id="🌴声明"><a href="#🌴声明" class="headerlink" title="🌴声明"></a>🌴声明</h1><ul>
+<li><p>本文写于 2020 年 07 月 29 号, 请注意文章时效性!</p>
+</li>
+<li><p>如果你要配置的环境不是 <code>Oracle Database 和 Oracle Gateways 安装在一台电脑上</code> 这种, 请出门左转 Google, 本文仅在这种环境下验证通过, 不保证 100% 适用于其他环境. 另外, 经测试, Microsoft SQL Server 无论是否安装和 Database 在同一台电脑上本文均有效!</p>
+</li>
+<li><p>在 Oracle 8i 中没有透明网关, Oracle 10.2 的透明网关是单独的一个插件 <code>10201_gateways_win32.zip</code>, 需要另外安装. 因此本文只适用于 Oracle 11 版本, 其他版本没有进行单独测试, 但相近的版本应该也是适应的. (不保证)</p>
+</li>
+</ul>
+<h1 id="🐌Oracle-Database-使用-Oracle-Gateways-访问-Microsoft-SQL-Server"><a href="#🐌Oracle-Database-使用-Oracle-Gateways-访问-Microsoft-SQL-Server" class="headerlink" title="🐌Oracle Database 使用 Oracle Gateways 访问 Microsoft SQL Server"></a>🐌Oracle Database 使用 Oracle Gateways 访问 Microsoft SQL Server</h1><p>公司中一个项目要用 Oracle 访问 SQL Server, 于是我先在自己电脑上做一下配置实验, 本次实验中 Oracle Database 和 Oracle Gateways 安装在自己电脑上, SQL Server 数据库安装在另一台电脑上.</p>
+<h2 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h2><h3 id="Oracle-Database"><a href="#Oracle-Database" class="headerlink" title="Oracle Database"></a>Oracle Database</h3><ul>
+<li>版本: Oracle Database 11.2.0.1.0 - Production (32 bit)</li>
+<li>服务器名称(IP): 192.168.11.95</li>
+<li>数据库名: orcl</li>
+<li>账号密码: scott&#x2F;a</li>
+<li>本地监听: 1521</li>
+<li>对外监听: 1522</li>
+</ul>
+<h3 id="Oracle-Gateways"><a href="#Oracle-Gateways" class="headerlink" title="Oracle Gateways"></a>Oracle Gateways</h3><ul>
+<li>版本: Oracle Gateways 11.2.0.1.0 (32 bit)</li>
+<li>服务器名称(IP): 192.168.11.95</li>
+<li>数据库名: dg4msql</li>
+<li>本地监听: 1521</li>
+<li>对外监听: 1522</li>
+</ul>
+<p>[<strong>注</strong>] Oracle Database 和 Oracle Gateways 的版本和位数都必须保持一致. (不要问我怎么知道的, 问就是不知道! 🙄)</p>
+<h3 id="Microsoft-SQL-Server"><a href="#Microsoft-SQL-Server" class="headerlink" title="Microsoft SQL Server"></a>Microsoft SQL Server</h3><ul>
+<li>版本: Microsoft SQL Server 2008 R2 (64 bit)</li>
+<li>服务器名称(IP): 192.168.10.9</li>
+<li>实例名: (null)</li>
+<li>数据库名: htgl20180809</li>
+<li>账号密码: sa&#x2F;sa2008</li>
+</ul>
+<h4 id="查看-Microsoft-SQL-Server-数据库的信息"><a href="#查看-Microsoft-SQL-Server-数据库的信息" class="headerlink" title="查看 Microsoft SQL Server 数据库的信息"></a>查看 Microsoft SQL Server 数据库的信息</h4><ol>
+<li><p>在 Microsoft SQL Server 的对象资源管理器中找到要查看的数据库, 右键属性</p>
+<p> <img data-src="/images/oracle_gateways/SQL_Server1.png" alt="SQL_Server_1"></p>
+</li>
+<li><p>在弹出的窗口中点击左下方的 &quot;查看连接属性&quot;.</p>
+<p> <img data-src="/images/oracle_gateways/SQL_Server2.png" alt="SQL_Server_2"></p>
+</li>
+<li><p>在弹出的窗口中就可以看到需要的信息了, 其中 <code>服务器主机名</code>, <code>实例名</code> 和 <code>数据库名</code> 在安装 Gateways 时会用到.</p>
+<p> <img data-src="/images/oracle_gateways/SQL_Server3.png" alt="SQL_Server_3"></p>
+</li>
+</ol>
+<h2 id="下载-Oracle-Database-和-Oracle-Gateways"><a href="#下载-Oracle-Database-和-Oracle-Gateways" class="headerlink" title="下载 Oracle Database 和 Oracle Gateways"></a>下载 Oracle Database 和 Oracle Gateways</h2><p>目前 Oracle 官网把所有信息都放置到一个菜单中, 导致很多平时不怎么访问这种官网的人根本找不到 Oracle 家的软件在哪里下载...还是说一下如何下载 Oracle 软件吧...</p>
+<ol>
+<li><p>登录 <span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS8=">Oracle 官网<i class="fa fa-external-link-alt"></i></span>, 展开上方的 <code>Products</code> 菜单, 点击其中的 <code>Oracle Database</code> 选项.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download1.png" alt="Oracle_Download_1"></p>
+</li>
+<li><p>点击下载最新版本的 Oracle Database 软件: <code>Download Database 19c</code>.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download2.png" alt="Oracle_Download_2"></p>
+</li>
+<li><p>随后会跳转到一个很长很长的页面, 这个页面包含了几乎所有 Oracle 的数据库产品软件, 不再受到 Oracle 支持的版本这里不会显示, 比如 10g 系列就已经不再受 Oracle 支持了, 所以这里也就找不到 10g 系列的下载地址了. 一直往下滑, 找到需要的 <code>11.2.0.1.0</code> 版本的位置, 由于我需要 32 位的数据库软件, 所以这里点击 <code>Microsoft Windows (32-bit)</code> 右侧的 <code>See All</code>, 进入相应的详细信息页面.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download3.png" alt="Oracle_Download_3"></p>
+</li>
+<li><p>详细信息页面的第一条就是 <code>Oracle Database</code> 的下载地址, Oracle 官方将软件打包成了两个压缩包, 全部下载即可. 第二条便是客户端的下载地址, 如果需要使用 PL&#x2F;SQL 等软件操作数据库, 就需要下载安装 <code>Oracle Database Client</code> 了.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download4.png" alt="Oracle_Download_4"></p>
+</li>
+<li><p>详细信息页面中, 紧接着客户端的第三条信息就是 <code>Oracle Gateways</code> 的下载地址了, 点击下载即可.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download5.png" alt="Oracle_Download_5"></p>
+</li>
+<li><p>[<strong>注</strong>] 全部下载之后先不要着急解压, 先看一看下图, 下图是一个 <code>分卷压缩包</code>, 可以看到这个压缩包除了第一卷以外, 从第二卷开始, 后缀名使用了序号进行命名, 这种压缩包只要解压以 <code>zip</code> 为后缀名的第一卷即可, 以 <code>序号</code> 为后缀名并且文件名称和以 <code>zip</code> 为后缀名的文件 <strong><code>同名</code></strong> 的分卷压缩包都会自动解压.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download6.png" alt="Oracle_Download_6"></p>
+<p> 但是, 从 Oracle 官网下载的压缩包中, Database 的包被分成了两个:</p>
+<p> <code>win32_11gR2_database_1of2.zip</code></p>
+<p> <code>win32_11gR2_database_2of2.zip</code></p>
+<p> 需要注意的是这俩货可不是分卷压缩包, 必须两个都解压, 不要只解压了第一个就不管了, 不然后面会报错的. (不要问我怎么知道的, 问就是不知道! 🙄) 解压后应该是这个样子:</p>
+<p> <code>win32_11gR2_database_1of2.zip</code> 和 <code>win32_11gR2_database_2of2.zip</code> 都会解压到 database 文件夹中.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Download7.png" alt="Oracle_Download_7"></p>
+</li>
+</ol>
+<h2 id="安装-Oracle-Gateways"><a href="#安装-Oracle-Gateways" class="headerlink" title="安装 Oracle Gateways"></a>安装 Oracle Gateways</h2><ol>
+<li><p>启动 gateways 文件夹中的安装程序.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install1.png" alt="Oracle_Gateways_Install_1"></p>
+</li>
+<li><p>在这个页面可以查看已经安装的产品或者卸载产品, 点击下一步进行安装配置.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install2.png" alt="Oracle_Gateways_Install_2"></p>
+</li>
+<li><p>在选择产品名称和路径时, 下面是默认配置.</p>
+<p> [<strong>注</strong>] 由于 Database 和 Gateways 安装在同一台电脑上, 为了避免两者的监听出现问题, 要将 Gateways 安装到 Database 的路径中, 所以不要使用下面的默认配置.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install3.png" alt="Oracle_Gateways_Install_3"></p>
+<p> 而是从下拉框中选择 Oracle Database 的产品名称和路径: <code>OraDb11g_home1</code>, 如图.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install4.png" alt="Oracle_Gateways_Install_4"></p>
+<p> 选择后的配置是这个样子的:</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install5.png" alt="Oracle_Gateways_Install_5"></p>
+</li>
+<li><p>选择安装产品组件, 安装用于访问 Microsoft SQL Server 的组件. 由于我之前已经安装过了, 所以截图中显示的是 &quot;重新安装&quot;, 如果你电脑上没还有安装这个组件, 应该会显示 &quot;未安装&quot;.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install6.png" alt="Oracle_Gateways_Install_6"></p>
+</li>
+<li><p>输入要连接的 Microsoft SQL Server 的信息, 包括服务器主机名, 实例名, 数据库名, 由于我之前查看 SQL Server 信息的时候发现我要连接的 SQL Server 数据库实例名为空, 所以图中填写实例名的地方空着.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install7.png" alt="Oracle_Gateways_Install_7"></p>
+</li>
+<li><p>最后点击安装.</p>
+<p> <img data-src="/images/oracle_gateways/Gateways_Install8.png" alt="Oracle_Gateways_Install_8"></p>
+</li>
+</ol>
+<h2 id="配置-Oracle-Database-和-Oracle-Gateways"><a href="#配置-Oracle-Database-和-Oracle-Gateways" class="headerlink" title="配置 Oracle Database 和 Oracle Gateways"></a>配置 Oracle Database 和 Oracle Gateways</h2><ol>
+<li><p>关闭数据库监听程序.</p>
+<p> Windows 服务中带有 <code>TNSListener</code> 的服务就是监听程序, 找到与待配置数据库对应的监听程序, 右键, 停止.</p>
+<p> [<strong>注</strong>] 修改 <code>监听程序</code> 和 <code>服务命名</code> 的配置文件之前, 一定要先关闭监听程序, 否则很容易导致 PL&#x2F;SQL 连接数据库时报错: <code>ORA-12514: TNS: 监听程序当前无法识别连接描述符中请求的服务</code>, 甚至会导致数据库无法访问, 监听程序也无法启动, 启动监听程序时报错: <code>某些服务在未由其他服务或程序使用时将自动停止</code>, 这时就只能重启数据库了, (不说了, 说多了都是泪啊~ 😫), 为了避免这些乱七八糟的麻烦, 一开始就先把监听程序停止掉就好了.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Configure1.png" alt="Oracle_Configure_1"></p>
+</li>
+<li><p>修改 Gateways 的数据库连接配置, 配置文件路径:</p>
+<p> <code>...\product\11.2.0\dbhome_1\dg4msql\admin\initdg4msql.ora</code></p>
+<p> 这个文件告诉了 Gateways 具体要连接到哪个 SQL Server 数据库, 这个文件会使用在安装 Gateways 的时候填写的信息进行默认设置, 如果只需要连接一个 SQL Server 数据库, 默认设置就可以了, 不需要做任何改动, 当然也可以进行自定义, 下面是这个文件的默认设置.</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HS_FDS_CONNECT_INFO=[192.168.10.9]//htgl20180809</span><br><span class="line">HS_FDS_TRACE_LEVEL=OFF</span><br><span class="line">HS_FDS_RECOVERY_ACCOUNT=RECOVER</span><br><span class="line">HS_FDS_RECOVERY_PWD=RECOVER</span><br></pre></td></tr></table></figure>
+
+<p> 这个文件重要配置的内容很少, 就只有异构数据库的连接信息.</p>
+<ul>
+<li><p><code>initdg4msql.ora</code> 文件的命名规则是: <code>initSID.ora</code>, Gateways 安装时默认的 SID 为 dg4msql, 所以文件的名字就是 initdg4msql.ora, 当需要连接多个 SQL Server 数据库的时候, 这里的 SID 自然就需要自定义了. 每一个要连接的 SQL Server 数据库都对应一个 initSID.ora 文件, SID 写一个通俗易懂的, 唯一的名称即可, 这个 SID 得记好, 后面还需要用到. 比如要连接两个 SQL Server 数据库 <code>htgl</code> 和 <code>cggl</code>, 那么就可以复制一份 initdg4msql.ora 文件, 并重命名为 <code>inithtgl.ora</code> 和 <code>initcggl.ora</code>, 分别进行配置即可.</p>
+</li>
+<li><p><code>HS_FDS_CONNECT_INFO</code> 的填写规则: <code>[SQL Server 服务器主机名]/SQL Server 实例名/SQL Server 数据库名</code>. 这个就是具体的 SQL Server 连接信息了.</p>
+</li>
+<li><p>这个文件夹中还有两个配置示例文件: <code>listener.ora.sample</code> 和 <code>tnsnames.ora.sample</code>, 这是用于 Database 配置时的示例文件, 用意是教会我们怎么修改 <code>监听程序</code> 和 <code>服务命名</code> 的配置, 不需要修改, 即使你修改了也不会生效, 因为文件的后缀是 <code>.sample</code>.</p>
+</li>
+</ul>
+</li>
+<li><p>修改 Oracle Database 的 <strong>监听程序</strong> 配置, 配置文件路径:</p>
+<p> <code>...\product\11.2.0\dbhome_1\NETWORK\ADMIN\listener.ora</code></p>
+<p> 在监听程序配置文件的 <code>SID_LIST_LISTENER</code> 中添加之前配置好的 Gateways SID, 下图中高亮的这段配置文本就是之前配置的 SID 为 dg4msql 的 Gateways, 其实这一段文本是从之前提到的模板文件 <code>listener.ora.sample</code> 中复制过来的.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Configure2.png" alt="Oracle_Configure_2"></p>
+<ul>
+<li><code>SID_NAME</code> 填写之前配置的 <code>initSID.ora</code> 文件使用的 SID 名.</li>
+<li><code>PROGRAM</code> 是 Gateways 所在的文件夹的名字, 可以看到目前 Gateways 就是安装到了 <code>dg4msql</code> 文件夹中, 所以不要修改这个值.</li>
+<li><code>ORACLE_HOME</code> 数据库软件的安装位置.</li>
+</ul>
+</li>
+<li><p>修改 Oracle Database 的 <strong>服务命名</strong> 配置, 配置文件路径:</p>
+<p> <code>...\product\11.2.0\dbhome_1\NETWORK\ADMIN\tnsnames.ora</code></p>
+<p> 在服务命名配置文件中添加之前创建的 dg4msql 服务. 高亮的这段配置文本就是从之前提到的模板文件 <code>tnsnames.ora.sample</code> 中复制过来的.</p>
+<p> <img data-src="/images/oracle_gateways/Oracle_Configure3.png" alt="Oracle_Configure_3"></p>
+</li>
+<li><p>重启 Oracle 监听程序.</p>
+<p> 此时再将之前关闭的监听程序启动.</p>
+</li>
+</ol>
+<h2 id="创建数据库连接-DBLink"><a href="#创建数据库连接-DBLink" class="headerlink" title="创建数据库连接 DBLink"></a>创建数据库连接 DBLink</h2><p>使用下面的格式写一条语句创建 DBLink, 也可以使用 PL&#x2F;SQL 进行可视化创建.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">create database link 变量名(随意)</span></span><br><span class="line"><span class="comment">  connect to 用户名 identified by 用户密码</span></span><br><span class="line"><span class="comment">  using &#x27;透明网关标识&#x27;;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">create</span> database link htgl</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> sa identified <span class="keyword">by</span> sa2008</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;dg4msql&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="连接测试"><a href="#连接测试" class="headerlink" title="连接测试"></a>连接测试</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--select &quot;字段名&quot; from &quot;SQL Server 中的表名&quot;@(DBLink变量名)</span></span><br><span class="line"><span class="keyword">select</span> &quot;rybh&quot; <span class="keyword">from</span> &quot;ryb&quot;<span class="variable">@htgl</span>;</span><br><span class="line"><span class="comment">--当需要多表连接查询时, 可以这样写</span></span><br><span class="line"><span class="keyword">select</span> &quot;zt&quot; <span class="keyword">as</span> id,</span><br><span class="line">       (<span class="keyword">select</span> &quot;xm&quot; <span class="keyword">from</span> &quot;ryb&quot;<span class="variable">@htgl</span> <span class="keyword">where</span> &quot;rybh&quot; <span class="operator">=</span> &quot;htqxb&quot;.&quot;rybh&quot;<span class="variable">@htgl</span>) <span class="keyword">as</span> name</span><br><span class="line">  <span class="keyword">from</span> &quot;htqxb&quot;<span class="variable">@htgl</span></span><br><span class="line"> <span class="keyword">where</span> &quot;rybh&quot; <span class="operator">=</span> <span class="string">&#x27;150007&#x27;</span>;</span><br><span class="line"><span class="comment">--另外异构数据库不支持 join 类查询.</span></span><br></pre></td></tr></table></figure>
+
+<p>[<strong>注</strong>] 使用 Oracle 访问 SQL Server 时, 你会发现总是会报这样一个错误: <code>***字段名无效!</code>. 这个错误是因为 Oracle 访问 SQL Server 时, 字段名要使用 <code>双引号</code> 括起来. (不要问我怎么知道的, 问就是不知道! 🙄) 表名最好也使用双引号括起来.</p>
+<h1 id="🦄多异构数据库的配置"><a href="#🦄多异构数据库的配置" class="headerlink" title="🦄多异构数据库的配置"></a>🦄多异构数据库的配置</h1><p>公司的项目现在又要求 Oracle 数据库必须能够访问 SQL Server 中的 <code>htgl20180809</code> 和 <code>cggl20180808</code> 这两个数据库, 之前提到过, 每一个要连接的异构数据库都对应一个 initSID.ora 文件, 唯一标识就是 SID.</p>
+<h2 id="修改-Gateways-的数据库连接配置"><a href="#修改-Gateways-的数据库连接配置" class="headerlink" title="修改 Gateways 的数据库连接配置"></a>修改 Gateways 的数据库连接配置</h2><p>建立两个 initSID.ora 文件, 起名为: <code>inithtgl.ora</code> 和 <code>initcggl.ora</code>, 对应的 SID 就是 <code>htgl</code> 和 <code>cggl</code>.</p>
+<p><img data-src="/images/oracle_gateways/Gateways_Multiple1.png" alt="Gateways_Multiple_1"></p>
+<p>这个是文件 inithtgl.ora 的内容, 连接 192.168.10.9 上的 htgl20180809 数据库.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HS_FDS_CONNECT_INFO=[192.168.10.9]//htgl20180809</span><br><span class="line">HS_FDS_TRACE_LEVEL=OFF</span><br><span class="line">HS_FDS_RECOVERY_ACCOUNT=RECOVER</span><br><span class="line">HS_FDS_RECOVERY_PWD=RECOVER</span><br></pre></td></tr></table></figure>
+
+<p>这个是文件 initcggl.ora 的内容, 连接 192.168.10.9 上的 cggl20180808 数据库.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HS_FDS_CONNECT_INFO=[192.168.10.9]//cggl20180808</span><br><span class="line">HS_FDS_TRACE_LEVEL=OFF</span><br><span class="line">HS_FDS_RECOVERY_ACCOUNT=RECOVER</span><br><span class="line">HS_FDS_RECOVERY_PWD=RECOVER</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改-Oracle-Database-监听程序配置"><a href="#修改-Oracle-Database-监听程序配置" class="headerlink" title="修改 Oracle Database 监听程序配置"></a>修改 Oracle Database 监听程序配置</h2><p>监听程序的配置, 其实就是把之前配置好的 Gateways 的 SID 放到监听程序的 LIST 中, 反映到文件中就是在 <code>SID_LIST_LISTENER</code> 中添加 SID 设置.</p>
+<p><img data-src="/images/oracle_gateways/Gateways_Multiple2.png" alt="Gateways_Multiple_2"></p>
+<ul>
+<li><p><code>PROGRAM</code> 是 Gateways 的安装路径, Gateways 就是安装在 dg4msql 文件夹下的, 所以这个值不能变.</p>
+</li>
+<li><p><code>SID_NAME</code> 是 Gateways 的 SID 值.</p>
+</li>
+</ul>
+<h2 id="修改-Oracle-Database-服务命名配置"><a href="#修改-Oracle-Database-服务命名配置" class="headerlink" title="修改 Oracle Database 服务命名配置"></a>修改 Oracle Database 服务命名配置</h2><p>服务命名的配置顾名思义, 就是将配置好的 Gateways 服务在服务配置文件中列出来, 告诉 Oracle 数据库我们配置了 Gateways 服务, 不然 Oracle 数据库是不知道的.</p>
+<p><img data-src="/images/oracle_gateways/Gateways_Multiple3.png" alt="Gateways_Multiple_3"></p>
+<ul>
+<li><p>&#x3D; 号前面的是服务的名称, 一般保持和 SID 的名称一致, <code>dg4msql/admin</code> 文件夹中的 <code>tnsnames.sample</code> 文件也是这样教我们的.</p>
+</li>
+<li><p><code>SID</code> 改成之前配置 Gateways 时使用的 SID.</p>
+</li>
+</ul>
+<h2 id="连接测试-1"><a href="#连接测试-1" class="headerlink" title="连接测试"></a>连接测试</h2><p>配置都做好之后, 建立 DBLink, 就可以访问 SQL Server 了.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> database link htgl <span class="keyword">connect</span> <span class="keyword">to</span> sa identified <span class="keyword">by</span> sa2008</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;htgl&#x27;</span>;</span><br><span class="line"><span class="keyword">create</span> database link cggl <span class="keyword">connect</span> <span class="keyword">to</span> sa identified <span class="keyword">by</span> sa2008</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;cggl&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--drop database link htgl;</span></span><br><span class="line"><span class="comment">--drop database link cggl;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> &quot;khyh&quot;, &quot;htbh&quot;, &quot;htmc&quot;, &quot;htje&quot; <span class="keyword">from</span> &quot;cghtb&quot;<span class="variable">@htgl</span> <span class="keyword">where</span> &quot;wpbh&quot; <span class="keyword">like</span> <span class="string">&#x27;2018%&#x27;</span>;</span><br><span class="line"><span class="keyword">select</span> &quot;wpbh&quot;, &quot;wpmc&quot;, &quot;shl&quot;, &quot;dw&quot; <span class="keyword">from</span> &quot;cggl_sqmxb&quot;<span class="variable">@cggl</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这是 htgl20180809 数据库的查询结果:</p>
+<p><img data-src="/images/oracle_gateways/Gateways_Multiple4.png" alt="Gateways_Multiple_4"></p>
+<p>这是 cggl20180808 数据库的查询结果:</p>
+<p><img data-src="/images/oracle_gateways/Gateways_Multiple5.png" alt="Gateways_Multiple_5"></p>
+<h1 id="Oracle-连接-Oracle"><a href="#Oracle-连接-Oracle" class="headerlink" title="Oracle 连接 Oracle"></a>Oracle 连接 Oracle</h1><p>这个就比较简单了, 既然不需要使用虚拟网关, 那么直接建立 <code>database link</code> 即可.</p>
+<p>[<strong>注</strong>] <font color='red'>两台电脑必须在用一个局域网中!</font></p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> database link DBLinkName</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> DatabaseUser identified <span class="keyword">by</span> DatabasePassword</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;DatabaseSID&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">字段</th>
+<th align="left">含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">DBLinkName</td>
+<td align="left">创建的 DBLink 的名字</td>
+</tr>
+<tr>
+<td align="left">DatabaseUser</td>
+<td align="left">待连接数据库的登录用户名</td>
+</tr>
+<tr>
+<td align="left">DatabasePassword</td>
+<td align="left">待连接数据库的登录密码</td>
+</tr>
+<tr>
+<td align="left">DatabaseSID</td>
+<td align="left">待链接数据库的服务名, 同时要写明 IP 地址. 如果是本地数据库, 可以不加 IP 地址</td>
+</tr>
+</tbody></table>
+<h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--连接远程计算机数据库</span></span><br><span class="line"><span class="keyword">create</span> database link DB_DZYH</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> dzyh identified <span class="keyword">by</span> dzyh123</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;192.168.10.136/dzyhcs&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">--连接本地计算机数据库</span></span><br><span class="line"><span class="keyword">create</span> database link DB_DZYH</span><br><span class="line">  <span class="keyword">connect</span> <span class="keyword">to</span> dzyh identified <span class="keyword">by</span> dzyh123</span><br><span class="line">  <span class="keyword">using</span> <span class="string">&#x27;dzyhcs&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="🐬参考链接"><a href="#🐬参考链接" class="headerlink" title="🐬参考链接"></a>🐬参考链接</h1><ul>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3Rhbmd4aW5nSUxvdmV5b3UvYXJ0aWNsZS9kZXRhaWxzLzgwNjc2NDM3">Oracle连接Sql Server (win32_11gR2_gateways)<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3pkYzUyNTU1NTUvYXJ0aWNsZS9kZXRhaWxzLzEyNTc1NzIz">Oracle11g+ 配置多个gateway 连接sqlserver<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/donate/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/oracle/oracle_gateways.html" title="Oracle 异构数据库访问">https://kuroha.vip/oracle/oracle_gateways.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/followme/wechat.png">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Oracle/" rel="tag"><i class="fa fa-tag"></i> Oracle</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/unity/unity_render_order.html" rel="prev" title="Unity - 2D 精灵 和 3D 物体的渲染顺序">
+                  <i class="fa fa-angle-left"></i> Unity - 2D 精灵 和 3D 物体的渲染顺序
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/diary/2020_07.html" rel="next" title="日记系列--2020年07月">
+                  日记系列--2020年07月 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">143k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:39</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>

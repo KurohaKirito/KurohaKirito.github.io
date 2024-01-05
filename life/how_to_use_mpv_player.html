@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="推荐一款顶级的本地视频播放器 MPV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="入门 MPV 播放器">
+<meta property="og:url" content="https://kuroha.vip/life/how_to_use_mpv_player.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="推荐一款顶级的本地视频播放器 MPV">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-30T00:43:08.000Z">
+<meta property="article:modified_time" content="2024-01-05T06:55:32.112Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="MPV">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kuroha.vip/life/how_to_use_mpv_player.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/life/how_to_use_mpv_player.html","path":"life/how_to_use_mpv_player.html","title":"入门 MPV 播放器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>入门 MPV 播放器 | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">68</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">31</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫"><a href="/catch_the_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%92%AD%E6%94%BE%E5%99%A8%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">播放器简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%92%AD%E6%94%BE%E5%88%97%E8%A1%A8"><span class="nav-number">2.</span> <span class="nav-text">播放列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%85%B3%E8%81%94"><span class="nav-number">3.</span> <span class="nav-text">文件关联</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE-%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99"><span class="nav-number">4.</span> <span class="nav-text">快捷键 (区分大小写)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%92%AD%E6%94%BE%E6%8E%A7%E5%88%B6"><span class="nav-number">4.1.</span> <span class="nav-text">播放控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E9%A2%91%E9%9F%B3%E9%A2%91%E6%8E%A7%E5%88%B6"><span class="nav-number">4.2.</span> <span class="nav-text">视频音频控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E5%B9%95%E6%8E%A7%E5%88%B6"><span class="nav-number">4.3.</span> <span class="nav-text">字幕控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AA%97%E5%8F%A3%E6%8E%A7%E5%88%B6"><span class="nav-number">4.4.</span> <span class="nav-text">窗口控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%92%AD%E6%94%BE%E9%80%9F%E5%BA%A6%E6%8E%A7%E5%88%B6"><span class="nav-number">4.5.</span> <span class="nav-text">播放速度控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%89%B2%E5%BD%A9%E8%B0%83%E8%8A%82"><span class="nav-number">4.6.</span> <span class="nav-text">色彩调节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD"><span class="nav-number">4.7.</span> <span class="nav-text">其他功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E9%85%8D%E7%BD%AE"><span class="nav-number">5.</span> <span class="nav-text">自定义配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="nav-number">5.1.</span> <span class="nav-text">程序配置文件路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E6%8D%B7%E9%94%AE%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="nav-number">5.2.</span> <span class="nav-text">快捷键配置文件路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E6%96%87%E4%BB%B6%E8%B7%AF%E5%BE%84"><span class="nav-number">5.3.</span> <span class="nav-text">脚本文件路径</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E6%8E%A8%E8%8D%90"><span class="nav-number">6.</span> <span class="nav-text">脚本推荐</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#autoload-lua"><span class="nav-number">6.1.</span> <span class="nav-text">autoload.lua</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mpv-thumbnail-script-lua"><span class="nav-number">6.2.</span> <span class="nav-text">mpv_thumbnail_script.lua</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#save-sub-delay-lua"><span class="nav-number">6.3.</span> <span class="nav-text">save-sub-delay.lua</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cycle-video-rotate-lua"><span class="nav-number">6.4.</span> <span class="nav-text">cycle-video-rotate.lua</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80"><span class="nav-number">7.</span> <span class="nav-text">下载地址</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/avatar/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="dGVuY2VudDovL0FkZENvbnRhY3QvP2Zyb21JZD00NSZmcm9tU3ViSWQ9MSZzdWJjbWQ9YWxsJnVpbj0xODMyNjEzMDAx" title="QQ → tencent:&#x2F;&#x2F;AddContact&#x2F;?fromId&#x3D;45&amp;fromSubId&#x3D;1&amp;subcmd&#x3D;all&amp;uin&#x3D;1832613001"><i class="fab fa-qq fa-fw"></i>QQ</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://kuroha.vip/images/weixin.png" title="WeChat → https:&#x2F;&#x2F;kuroha.vip&#x2F;images&#x2F;weixin.png" rel="noopener me"><i class="fab fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9ub2FoYXBwcy5naXRodWIuaW8v" title="https:&#x2F;&#x2F;noahapps.github.io&#x2F;">Noah</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/life/how_to_use_mpv_player.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="入门 MPV 播放器 | 二次元游宅客">
+      <meta itemprop="description" content="推荐一款顶级的本地视频播放器 MPV">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          入门 MPV 播放器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-11-30 08:43:08" itemprop="dateCreated datePublished" datetime="2019-11-30T08:43:08+08:00">2019-11-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-01-05 14:55:32" itemprop="dateModified" datetime="2024-01-05T14:55:32+08:00">2024-01-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/LifeTips/" itemprop="url" rel="index"><span itemprop="name">LifeTips</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">推荐一款顶级的本地视频播放器 MPV</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="播放器简介"><a href="#播放器简介" class="headerlink" title="播放器简介"></a>播放器简介</h1><p>默认情况下, MPV 播放器并不提供 GUI 界面, 需要通过命令行或配置文件进行设置, 它配置灵活, 性能优秀, 支持硬件解码.</p>
+<p>基于开源, MPV 衍生出来一大批第三方播放器, 比如 Mac 平台上的 IINA, 以及 Baka MPlayer, bomi, mpc-qt, xt7-player-mpv 等, 它们的核心都是 MPV.</p>
+<h1 id="播放列表"><a href="#播放列表" class="headerlink" title="播放列表"></a>播放列表</h1><ol>
+<li>   MPV 支持播放列表文件 (如: m3u).</li>
+<li>   如果需要临时播放多个文件, 打开MPV, 选中多个文件拖入窗口.</li>
+<li>   鼠标右键单击 上一个 或者 下一个 按钮可以临时显示当前播放列表.</li>
+<li>   如果需要将该目录的所有文件全部添加进 MPV 的播放列表中, 使用命令: <code>mpv *.*</code></li>
+</ol>
+<h1 id="文件关联"><a href="#文件关联" class="headerlink" title="文件关联"></a>文件关联</h1><ol>
+<li><p>   解压 <code>mpv-install-master.zip</code> 文件, 这里是<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3Jvc3N5L21wdi1pbnN0YWxsL2FyY2hpdmUvbWFzdGVyLnppcA==">下载地址<i class="fa fa-external-link-alt"></i></span>.</p>
+</li>
+<li><p>   将三个文件（<code>mpv-document</code>, <code>mpv-install.bat</code>, <code>mpv-uninstall.bat</code>）移动到自定义的 MPV 程序目录下.</p>
+</li>
+<li><p>   以管理员身份运行 <code>mpv-install.bat</code> 进行文件关联. <code>mpv-uninstall.bat</code> 则是用来解除文件关联的.</p>
+</li>
+<li><p>   没做第 3 步之前, 进入 Win10 Setting 设置默认应用时, 会找不到 MPV, 做完第 3 步之后就可以进入 Win10 Setting 设置默认应用了.</p>
+</li>
+</ol>
+<h1 id="快捷键-区分大小写"><a href="#快捷键-区分大小写" class="headerlink" title="快捷键 (区分大小写)"></a>快捷键 (<font color=red>区分大小写</font>)</h1><h2 id="播放控制"><a href="#播放控制" class="headerlink" title="播放控制"></a>播放控制</h2><table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="center">快捷键</th>
+<th align="right">作用说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">p</td>
+<td align="center">Space</td>
+<td align="right">暂停, 继续播放</td>
+</tr>
+<tr>
+<td align="center">Num&#x2F;</td>
+<td align="center">Num*</td>
+<td align="right">减少音量 &#x2F; 增加音量</td>
+</tr>
+<tr>
+<td align="center">9</td>
+<td align="center">0</td>
+<td align="right">减少音量 &#x2F; 增加音量</td>
+</tr>
+<tr>
+<td align="center">m</td>
+<td align="center"></td>
+<td align="right">静音</td>
+</tr>
+<tr>
+<td align="center">←</td>
+<td align="center">→</td>
+<td align="right">快退 &#x2F; 快进 5 秒</td>
+</tr>
+<tr>
+<td align="center">↑</td>
+<td align="center">↓</td>
+<td align="right">快进 &#x2F; 快退 1 分钟</td>
+</tr>
+<tr>
+<td align="center">&lt;</td>
+<td align="center">&gt;</td>
+<td align="right">上一个 &#x2F; 下一个（播放列表中）</td>
+</tr>
+<tr>
+<td align="center">Enter</td>
+<td align="center"></td>
+<td align="right">下一个（播放列表中）</td>
+</tr>
+<tr>
+<td align="center">l</td>
+<td align="center"></td>
+<td align="right">设定 &#x2F; 清除 A - B 循环点</td>
+</tr>
+<tr>
+<td align="center">L</td>
+<td align="center"></td>
+<td align="right">循环播放</td>
+</tr>
+<tr>
+<td align="center">s</td>
+<td align="center"></td>
+<td align="right">对本机画面进行全屏截图</td>
+</tr>
+<tr>
+<td align="center">S</td>
+<td align="center"></td>
+<td align="right">对源画面进行全屏截图</td>
+</tr>
+<tr>
+<td align="center">q</td>
+<td align="center"></td>
+<td align="right">停止播放并退出</td>
+</tr>
+<tr>
+<td align="center">Q</td>
+<td align="center"></td>
+<td align="right">保存当前播放进度并退出</td>
+</tr>
+</tbody></table>
+<h2 id="视频音频控制"><a href="#视频音频控制" class="headerlink" title="视频音频控制"></a>视频音频控制</h2><table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="center">快捷键</th>
+<th align="right">作用说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">_</td>
+<td align="center"></td>
+<td align="right">循环切换可用视频轨</td>
+</tr>
+<tr>
+<td align="center">A</td>
+<td align="center"></td>
+<td align="right">循环切换视频画面比例</td>
+</tr>
+<tr>
+<td align="center">Alt+0</td>
+<td align="center"></td>
+<td align="right">0.5倍源视频画面大小</td>
+</tr>
+<tr>
+<td align="center">Alt+1</td>
+<td align="center"></td>
+<td align="right">1倍源视频画面大小</td>
+</tr>
+<tr>
+<td align="center">Alt+2</td>
+<td align="center"></td>
+<td align="right">2倍源视频画面大小</td>
+</tr>
+<tr>
+<td align="center">#</td>
+<td align="center"></td>
+<td align="right">循环切换可用音频轨</td>
+</tr>
+<tr>
+<td align="center">Ctrl +</td>
+<td align="center">Ctrl -</td>
+<td align="right">音轨延迟+&#x2F;- 0.1秒</td>
+</tr>
+<tr>
+<td align="center">.</td>
+<td align="center"></td>
+<td align="right">下一帧</td>
+</tr>
+<tr>
+<td align="center">,</td>
+<td align="center"></td>
+<td align="right">上一帧</td>
+</tr>
+</tbody></table>
+<h2 id="字幕控制"><a href="#字幕控制" class="headerlink" title="字幕控制"></a>字幕控制</h2><table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="center">快捷键</th>
+<th align="right">作用说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">V</td>
+<td align="center"></td>
+<td align="right">开启&#x2F;关闭字幕</td>
+</tr>
+<tr>
+<td align="center">j</td>
+<td align="center">J</td>
+<td align="right">循环切换可用字幕轨</td>
+</tr>
+<tr>
+<td align="center">x</td>
+<td align="center">z</td>
+<td align="right">字幕时间轴 + &#x2F; - 0.1 秒</td>
+</tr>
+<tr>
+<td align="center">r</td>
+<td align="center">t</td>
+<td align="right">上移&#x2F;下移字幕位置</td>
+</tr>
+</tbody></table>
+<h2 id="窗口控制"><a href="#窗口控制" class="headerlink" title="窗口控制"></a>窗口控制</h2><table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="right">作用说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">f</td>
+<td align="right">进入&#x2F;退出全屏</td>
+</tr>
+<tr>
+<td align="center">ESC</td>
+<td align="right">退出全屏</td>
+</tr>
+</tbody></table>
+<h2 id="播放速度控制"><a href="#播放速度控制" class="headerlink" title="播放速度控制"></a>播放速度控制</h2><table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="right">作用说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">[</td>
+<td align="right">0.9倍慢速播放</td>
+</tr>
+<tr>
+<td align="center">]</td>
+<td align="right">1.1倍快速播放</td>
+</tr>
+<tr>
+<td align="center">{</td>
+<td align="right">0.5倍慢速播放</td>
+</tr>
+<tr>
+<td align="center">}</td>
+<td align="right">2.0倍快速播放</td>
+</tr>
+<tr>
+<td align="center">Backspace</td>
+<td align="right">重置为正常播放速度</td>
+</tr>
+</tbody></table>
+<h2 id="色彩调节"><a href="#色彩调节" class="headerlink" title="色彩调节"></a>色彩调节</h2><table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="center">快捷键</th>
+<th align="right">作用说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="right">对比度-&#x2F;+</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td align="center">4</td>
+<td align="right">亮度-&#x2F;+</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td align="center">6</td>
+<td align="right">伽马-&#x2F;+</td>
+</tr>
+<tr>
+<td align="center">7</td>
+<td align="center">8</td>
+<td align="right">饱和度-&#x2F;+</td>
+</tr>
+</tbody></table>
+<h2 id="其他功能"><a href="#其他功能" class="headerlink" title="其他功能"></a>其他功能</h2><table>
+<thead>
+<tr>
+<th align="center">快捷键</th>
+<th align="center">快捷键</th>
+<th align="right">作用说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">s</td>
+<td align="center">S</td>
+<td align="right">包含 &#x2F; 不包含字幕进行截图</td>
+</tr>
+<tr>
+<td align="center">i</td>
+<td align="center"></td>
+<td align="right">显示视频的详情参数</td>
+</tr>
+</tbody></table>
+<h1 id="自定义配置"><a href="#自定义配置" class="headerlink" title="自定义配置"></a>自定义配置</h1><h2 id="程序配置文件路径"><a href="#程序配置文件路径" class="headerlink" title="程序配置文件路径"></a>程序配置文件路径</h2><p><code>C:\Users\Kirito\AppData\Roaming\mpv\mpv.conf</code></p>
+<h2 id="快捷键配置文件路径"><a href="#快捷键配置文件路径" class="headerlink" title="快捷键配置文件路径"></a>快捷键配置文件路径</h2><p><code>C:\Users\Kirito\AppData\Roaming\mpv\input.conf</code></p>
+<p>下面是我的自定义快捷键设置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 鼠标滑轮调节音量</span></span><br><span class="line"><span class="string">WHEEL_UP</span> <span class="string">add</span> <span class="string">volume</span> <span class="number">1</span></span><br><span class="line"><span class="string">WHEEL_DOWN</span> <span class="string">add</span> <span class="string">volume</span> <span class="number">-1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 等号键循环切换窗口置顶</span></span><br><span class="line"><span class="string">=</span> <span class="string">cycle</span> <span class="string">ontop</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># alt + 方向键旋转画面 (依赖 cycle-video-rotate.lua 脚本)</span></span><br><span class="line"><span class="string">alt+left</span> <span class="string">script-message</span> <span class="string">Cycle_Video_Rotate</span> <span class="number">-90</span></span><br><span class="line"><span class="string">alt+right</span> <span class="string">script-message</span> <span class="string">Cycle_Video_Rotate</span> <span class="number">90</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="脚本文件路径"><a href="#脚本文件路径" class="headerlink" title="脚本文件路径"></a>脚本文件路径</h2><p><code>C:\Users\Kirito\AppData\Roaming\mpv\scripts\...</code></p>
+<p>脚本是 MPV 配置的重头戏. MPV 启动时, 保存在 scripts 文件夹里的脚本文件会自动加载并且执行. 官方 wiki 里有收录的脚本列表, 可以自行查阅, 寻找自己喜欢的功能脚本.</p>
+<h1 id="脚本推荐"><a href="#脚本推荐" class="headerlink" title="脚本推荐"></a>脚本推荐</h1><h2 id="autoload-lua"><a href="#autoload-lua" class="headerlink" title="autoload.lua"></a>autoload.lua</h2><p>autoload.lua: 自动加载当前播放文件目录里的视频文件到播放列表, 也就是自动连播, 原生 MPV 不具有这个功能.</p>
+<h2 id="mpv-thumbnail-script-lua"><a href="#mpv-thumbnail-script-lua" class="headerlink" title="mpv_thumbnail_script.lua"></a>mpv_thumbnail_script.lua</h2><p>mpv_thumbnail_script.lua: 生成并显示预览缩略图.</p>
+<h2 id="save-sub-delay-lua"><a href="#save-sub-delay-lua" class="headerlink" title="save-sub-delay.lua"></a>save-sub-delay.lua</h2><p>save-sub-delay.lua: 遇到外挂字幕时间轴不正确的情况, 调好之后, 这个脚本会保存 delay 信息.</p>
+<h2 id="cycle-video-rotate-lua"><a href="#cycle-video-rotate-lua" class="headerlink" title="cycle-video-rotate.lua"></a>cycle-video-rotate.lua</h2><p>cycle-video-rotate.lua: 实现旋转屏幕效果.</p>
+<h1 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h1><p>脚本下载地址: <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1ZpZGVvUGxheWVyQ29kZS9tcHYtdG9vbHM=">Github MPV Tools<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/donate/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/life/how_to_use_mpv_player.html" title="入门 MPV 播放器">https://kuroha.vip/life/how_to_use_mpv_player.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/followme/wechat.png">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/MPV/" rel="tag"><i class="fa fa-tag"></i> MPV</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/program/javascript_notes.html" rel="prev" title="JavaScript 参考手册">
+                  <i class="fa fa-angle-left"></i> JavaScript 参考手册
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/life/how_to_buy_a_router.html" rel="next" title="如何购买一款理想的路由器">
+                  如何购买一款理想的路由器 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">143k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:39</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>

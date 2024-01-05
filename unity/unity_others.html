@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="作为一名 Unity 初学者, 遇到问题解决之后的经验一定要记录下来.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity 中的小技巧">
+<meta property="og:url" content="https://kuroha.vip/unity/unity_others.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="作为一名 Unity 初学者, 遇到问题解决之后的经验一定要记录下来.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/images/closure/closure.png">
+<meta property="article:published_time" content="2020-12-11T15:11:30.000Z">
+<meta property="article:modified_time" content="2022-08-24T08:16:18.975Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="Unity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/images/closure/closure.png">
+
+
+<link rel="canonical" href="https://kuroha.vip/unity/unity_others.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/unity/unity_others.html","path":"unity/unity_others.html","title":"Unity 中的小技巧"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Unity 中的小技巧 | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">68</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">31</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫"><a href="/catch_the_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E4%BF%AE%E6%94%B9%E8%B5%84%E6%BA%90%E5%AF%BC%E5%85%A5%E8%AE%BE%E7%BD%AE%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF"><span class="nav-number">1.</span> <span class="nav-text">脚本修改资源导入设置的正确姿势</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9D%8C%E9%94%99%E8%AF%AF%E5%A7%BF%E5%8A%BF"><span class="nav-number">1.1.</span> <span class="nav-text">❌错误姿势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%94%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF"><span class="nav-number">1.2.</span> <span class="nav-text">✔正确姿势</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E4%BF%AE%E6%94%B9-Prefab-%E8%B5%84%E6%BA%90%E4%B8%AD%E7%9A%84-Animator-%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">脚本修改 Prefab 资源中的 Animator 设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Unity-Profiler-%E5%88%86%E6%9E%90%E6%8C%87%E5%AE%9A%E7%9A%84%E4%BB%A3%E7%A0%81%E6%AE%B5%E8%80%97%E6%97%B6"><span class="nav-number">3.</span> <span class="nav-text">如何使用 Unity Profiler 分析指定的代码段耗时?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Debug-Log-%E9%AB%98%E4%BA%AE%E6%B8%B8%E6%88%8F%E7%89%A9%E4%BD%93%E5%92%8C%E8%B7%AF%E5%BE%84"><span class="nav-number">4.</span> <span class="nav-text">Debug.Log() 高亮游戏物体和路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E7%A7%BB%E9%99%A4%E5%AD%97%E5%85%B8%E4%B8%AD%E6%89%80%E6%9C%89%E7%AC%A6%E5%90%88%E7%89%B9%E5%AE%9A%E8%A7%84%E5%88%99%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">5.</span> <span class="nav-text">C# 移除字典中所有符合特定规则的数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%A8%E8%84%9A%E6%9C%AC%E4%B8%AD%E6%B8%85%E7%A9%BA-Console-%E7%AA%97%E5%8F%A3"><span class="nav-number">6.</span> <span class="nav-text">在脚本中清空 Console 窗口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UGUI-%E6%8C%89%E9%92%AE%E7%82%B9%E5%87%BB%E4%B9%8B%E5%90%8E%E6%8C%81%E7%BB%AD%E9%AB%98%E4%BA%AE%E7%9A%84-Bug"><span class="nav-number">7.</span> <span class="nav-text">UGUI 按钮点击之后持续高亮的 Bug</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AD%E5%8C%85"><span class="nav-number">8.</span> <span class="nav-text">闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%97%AD%E5%8C%85"><span class="nav-number">8.1.</span> <span class="nav-text">什么是闭包?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%94%E6%A1%88%E8%A7%A3%E6%9E%90"><span class="nav-number">8.2.</span> <span class="nav-text">答案解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%A0%E6%AD%A3"><span class="nav-number">8.3.</span> <span class="nav-text">纠正</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%87%8D%E5%91%BD%E5%90%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%9A%84%E5%8F%98%E9%87%8F%E6%97%B6%E5%A6%82%E6%9E%9C%E4%BF%9D%E6%8C%81%E5%BC%95%E7%94%A8%E4%B8%8D%E4%B8%A2%E5%A4%B1"><span class="nav-number">9.</span> <span class="nav-text">重命名序列化的变量时如果保持引用不丢失?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E7%9A%84%E8%84%9A%E6%9C%AC%E7%BC%96%E8%AF%91%E8%A7%84%E5%88%99"><span class="nav-number">10.</span> <span class="nav-text">Unity 的脚本编译规则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E7%BC%96%E8%BE%91%E8%A7%84%E5%88%99"><span class="nav-number">10.1.</span> <span class="nav-text">脚本编辑规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E7%BC%96%E8%AF%91%E9%A1%BA%E5%BA%8F"><span class="nav-number">10.2.</span> <span class="nav-text">脚本编译顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%84%E7%9B%AE%E5%BD%95%E8%84%9A%E6%9C%AC%E6%9C%80%E7%BB%88%E6%89%80%E5%9C%A8%E7%9A%84-dll"><span class="nav-number">10.3.</span> <span class="nav-text">各目录脚本最终所在的 dll</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E6%8E%A7%E5%88%B6-Unity-%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E6%9A%82%E5%81%9C%E4%B8%8E%E9%80%80%E5%87%BA"><span class="nav-number">11.</span> <span class="nav-text">脚本控制 Unity 编辑器的暂停与退出</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84-C-%E7%89%B9%E6%80%A7"><span class="nav-number">12.</span> <span class="nav-text">Unity 中常用的 C# 特性</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/avatar/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="dGVuY2VudDovL0FkZENvbnRhY3QvP2Zyb21JZD00NSZmcm9tU3ViSWQ9MSZzdWJjbWQ9YWxsJnVpbj0xODMyNjEzMDAx" title="QQ → tencent:&#x2F;&#x2F;AddContact&#x2F;?fromId&#x3D;45&amp;fromSubId&#x3D;1&amp;subcmd&#x3D;all&amp;uin&#x3D;1832613001"><i class="fab fa-qq fa-fw"></i>QQ</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://kuroha.vip/images/weixin.png" title="WeChat → https:&#x2F;&#x2F;kuroha.vip&#x2F;images&#x2F;weixin.png" rel="noopener me"><i class="fab fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9ub2FoYXBwcy5naXRodWIuaW8v" title="https:&#x2F;&#x2F;noahapps.github.io&#x2F;">Noah</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/unity/unity_others.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Unity 中的小技巧 | 二次元游宅客">
+      <meta itemprop="description" content="作为一名 Unity 初学者, 遇到问题解决之后的经验一定要记录下来.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity 中的小技巧
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-11 23:11:30" itemprop="dateCreated datePublished" datetime="2020-12-11T23:11:30+08:00">2020-12-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-08-24 16:16:18" itemprop="dateModified" datetime="2022-08-24T16:16:18+08:00">2022-08-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">作为一名 Unity 初学者, 遇到问题解决之后的经验一定要记录下来.</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="脚本修改资源导入设置的正确姿势"><a href="#脚本修改资源导入设置的正确姿势" class="headerlink" title="脚本修改资源导入设置的正确姿势"></a>脚本修改资源导入设置的正确姿势</h1><h2 id="❌错误姿势"><a href="#❌错误姿势" class="headerlink" title="❌错误姿势"></a>❌错误姿势</h2><p>如果当前程序中只有待修改的资源本身作为 GameObject 变量为已知, 则使用 <code>AssetDatabase.GetAssetPath()</code> 来获取到资源的 Assets 相对路径, 如果已经有资源的绝对路径了, 只要处理为相对路径即可, 总之第一步就是先获取到待修改资源的相对路径.</p>
+<p>有了相对路径之后, 使用 <code>AssetImporter.GetAtPath()</code> 获取到资源的导入设置, 但是此时还只是通用的导入设置, 之后需要进行转换为正确的类型, 比如纹理: <code>as TextureImporter</code>, 模型则使用 <code>as ModelImporter</code>, 这样便获取到了指定类型的导入设置信息了.</p>
+<p>之后对信息进行设置, 这一步很简单, 直接对转换后的变量进行赋值即可.</p>
+<p>最后设置脏标志, 保存, 刷新即可.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EditorUtility.SetDirty(asset);</span><br><span class="line">AssetDatabase.SaveAssets();</span><br><span class="line">AssetDatabase.Refresh();</span><br></pre></td></tr></table></figure>
+
+<p>上面的步骤基本是对的, 但是最关键的一步也就是最后一步保存是大错特错的, 这样设置后你会发现资源的导入设置就会变得非常奇怪. 因为有些设置很简单, 没有附加设置, 但是有些设置是具有附加设置的, 比如 Mip Maps 开关, 当开启 Mip Maps 时会多出现很多关于 Mip Maps 的设置选项. 使用上述方法关闭 Mip Maps 设置后就会出现 Mip Maps 是关闭了, 但是其附加设置却没有关闭!!!</p>
+<h2 id="✔正确姿势"><a href="#✔正确姿势" class="headerlink" title="✔正确姿势"></a>✔正确姿势</h2><p>对资源的导入设置正确修改之后, 应该进行重新导入, 以关闭模型的法线导入为例:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 关闭法线导入</span></span><br><span class="line">modelImporter.importNormals = ModelImporterNormals.None;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 重新导入资源</span></span><br><span class="line"><span class="comment">// AssetDatabase.ImportAsset(assetPath); // ❌ 同样是错误姿势</span></span><br><span class="line">modelImporter.SaveAndReimport(); <span class="comment">// ✔ 正确姿势</span></span><br></pre></td></tr></table></figure>
+
+<p>既不需要 SaveAssets, 也不需要 Refresh, 这才是<strong>资源导入设置</strong>的正确修改姿势.</p>
+<h1 id="脚本修改-Prefab-资源中的-Animator-设置"><a href="#脚本修改-Prefab-资源中的-Animator-设置" class="headerlink" title="脚本修改 Prefab 资源中的 Animator 设置"></a>脚本修改 Prefab 资源中的 Animator 设置</h1><ol>
+<li>使用 <code>AssetDatabase.LoadAssetAtPath</code> 加载预制体</li>
+<li>使用 &#96;&#96; 获取预制体上的 Animator 组件</li>
+<li>修改 Animator 组件的设置</li>
+<li>使用 <code>EditorUtility.SetDirty</code> 设置预制体脏标志</li>
+<li>循环执行上述步骤, 修改所有预制体上的所有 Animator 组件的设置, 并为每一个预制体设置脏标志</li>
+<li>调用保存方法 <code>AssetDatabase.SaveAssets();</code> 保存所有的预制体改动</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; <span class="number">9</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 读取 Prefab</span></span><br><span class="line">    <span class="keyword">var</span> obj = AssetDatabase.LoadAssetAtPath&lt;GameObject&gt;(<span class="string">$&quot;Assets/Art/Effects/Cube (<span class="subst">&#123;i&#125;</span>).prefab&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (obj == <span class="literal">null</span>) &#123; DebugUtil.Log(<span class="string">$&quot;未读取到预制体 <span class="subst">&#123;i&#125;</span>&quot;</span>, <span class="literal">null</span>, <span class="string">&quot;red&quot;</span>); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 修改 Prefab 里面的动画状态机组件</span></span><br><span class="line">    <span class="keyword">var</span> anima = obj.GetComponent&lt;Animator&gt;();</span><br><span class="line">    anima.cullingMode = AnimatorCullingMode.CullCompletely;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 设置脏标志</span></span><br><span class="line">    EditorUtility.SetDirty(obj);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 保存</span></span><br><span class="line">AssetDatabase.SaveAssets();</span><br></pre></td></tr></table></figure>
+
+<h1 id="如何使用-Unity-Profiler-分析指定的代码段耗时"><a href="#如何使用-Unity-Profiler-分析指定的代码段耗时" class="headerlink" title="如何使用 Unity Profiler 分析指定的代码段耗时?"></a>如何使用 Unity Profiler 分析指定的代码段耗时?</h1><p>使用 <code>UnityEngine.Profiling.Profiler.BeginSample(&quot;在 Hierarchy 中显示的名称&quot;)</code> 和 <code>UnityEngine.Profiling.Profiler.EndSample()</code> 可以对两者中间的代码段进行单独的性能分析.</p>
+<p>比如下面的代码可以单独对 <code>AssetBundle.LoadFromFile(assetPath)</code> 这行代码进行性能分析.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (assetBundle == <span class="literal">null</span>)</span><br><span class="line">&#123;</span><br><span class="line">    UnityEngine.Profiling.Profiler.BeginSample(<span class="string">$&quot;Load:<span class="subst">&#123;assetPath&#125;</span>&quot;</span>);</span><br><span class="line">    assetBundle = AssetBundle.LoadFromFile(assetPath);</span><br><span class="line">    UnityEngine.Profiling.Profiler.EndSample();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Debug-Log-高亮游戏物体和路径"><a href="#Debug-Log-高亮游戏物体和路径" class="headerlink" title="Debug.Log() 高亮游戏物体和路径"></a>Debug.Log() 高亮游戏物体和路径</h1><p>众所周知, Debug.Log() 中的第二个参数可以传入一个 UnityEngine.Object 物体, 用于迅速定位游戏物体.</p>
+<p>如果传入自身, 就可以快速定位打印日志的游戏物体; 如果传入日志相关的游戏物体, 自然就可以快速定位到相关的游戏物体.</p>
+<p>但是如何定位一个文件夹呢? 比如现在要打印一个日志: &quot;文件夹 XXX 下有 XXX 个资源文件, 超过最大数量限制, 请尽快拆分文件夹!&quot;, 需要让相关的处理者们快速定位到有问题的路径.</p>
+<p>可以使用 <code>AssetDatabase.LoadAssetAtPath&lt;Object&gt;()</code> 来实现. 这个 API 不仅可以获取 Project 面板中的资源文件, 也可以获取目录.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">foreach</span> (<span class="keyword">var</span> key <span class="keyword">in</span> detectResult.Keys.Where(key =&gt; key.Name.Equals(<span class="string">&quot;.git&quot;</span>) == <span class="literal">false</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (detectResult[key] &gt; <span class="number">70</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        Debug.Log (<span class="string">$&quot;&lt;color=&#x27;red&#x27;&gt;路径 <span class="subst">&#123;key.FullName&#125;</span> 下有 <span class="subst">&#123;detectResult[key]&#125;</span> 个资源&lt;/color&gt;&quot;</span>,</span><br><span class="line">            AssetDatabase.LoadAssetAtPath&lt;Object&gt;(key.FullName.Substring(key.FullName.IndexOf(<span class="string">&quot;Assets&quot;</span>, StringComparison.Ordinal))));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (bundleAssetCounterLogSwitch)</span><br><span class="line">    &#123;</span><br><span class="line">        Debug.Log (<span class="string">$&quot;路径 <span class="subst">&#123;key.FullName&#125;</span> 下有 <span class="subst">&#123;detectResult[key]&#125;</span> 个资源&quot;</span>, </span><br><span class="line">            AssetDatabase.LoadAssetAtPath&lt;Object&gt;(key.FullName.Substring(key.FullName.IndexOf(<span class="string">&quot;Assets&quot;</span>, StringComparison.Ordinal))));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="C-移除字典中所有符合特定规则的数据"><a href="#C-移除字典中所有符合特定规则的数据" class="headerlink" title="C# 移除字典中所有符合特定规则的数据"></a>C# 移除字典中所有符合特定规则的数据</h1><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 字典工具类</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title">DictionaryUtility</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 移除字典中所有符合特定规则的数据</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;typeparam name=&quot;K&quot;&gt;</span>键类型<span class="doctag">&lt;/typeparam&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;typeparam name=&quot;V&quot;&gt;</span>值类型<span class="doctag">&lt;/typeparam&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;dictionary&quot;&gt;</span>待处理字典<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;predicate&quot;&gt;</span>规则<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">RemoveAll</span>&lt;<span class="title">K</span>, <span class="title">V</span>&gt;(<span class="params">IDictionary&lt;K, V&gt; dictionary, Func&lt;K, V, <span class="built_in">bool</span>&gt; predicate</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> keys = <span class="keyword">new</span> List&lt;K&gt;();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> key <span class="keyword">in</span> dictionary.Keys)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (predicate(key, dictionary[key]))</span><br><span class="line">            &#123;</span><br><span class="line">                keys.Add(key);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">foreach</span> (<span class="keyword">var</span> key <span class="keyword">in</span> keys)</span><br><span class="line">        &#123;</span><br><span class="line">            dictionary.Remove(key);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="在脚本中清空-Console-窗口"><a href="#在脚本中清空-Console-窗口" class="headerlink" title="在脚本中清空 Console 窗口"></a>在脚本中清空 Console 窗口</h1><p>在想要清空控制台的位置调用下面的方法即可清空控制台.</p>
+<p>[注] <font color='red'>此方法在安卓平台下无法通过编译!</font></p>
+<p>使用 Conditional 区分平台调用, #if 区分平台编译.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> Clear Console Window</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">[<span class="meta">System.Diagnostics.Conditional(<span class="string">&quot;UNITY_EDITOR&quot;</span>)</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">ClearConsole</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="meta">#<span class="keyword">if</span> UNITY_EDITOR</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> assembly = System.Reflection.Assembly.GetAssembly(<span class="keyword">typeof</span>(SceneView));</span><br><span class="line">    <span class="keyword">var</span> logEntries = assembly.GetType(<span class="string">&quot;UnityEditor.LogEntries&quot;</span>);</span><br><span class="line">    <span class="keyword">var</span> clearConsoleMethod = logEntries.GetMethod(<span class="string">&quot;Clear&quot;</span>);</span><br><span class="line">    clearConsoleMethod?.Invoke(<span class="keyword">new</span> <span class="built_in">object</span>(), <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="UGUI-按钮点击之后持续高亮的-Bug"><a href="#UGUI-按钮点击之后持续高亮的-Bug" class="headerlink" title="UGUI 按钮点击之后持续高亮的 Bug"></a>UGUI 按钮点击之后持续高亮的 Bug</h1><p>Unity 中按钮的外观可以设置为图片切换模式, 这种模式下有一个高亮状态, 当鼠标悬浮在按钮上时, 按钮就会处于高亮状态, 但是我发现默认设置下, 按钮点击之后, 按钮的高亮状态就无法触发了, 除非按下另一个按钮.</p>
+<p>查阅资料发现是 &quot;导航&quot; 的问题, 设置为 <code>none</code> 就可以了.</p>
+<p>在 Button 控件中有一个 <code>Navigation</code> 属性, 设置为 <code>none</code> 即可解决问题. 【当然前提是项目中不使用导航来做界面操作】</p>
+<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><p>之前在学习委托事件的时候了解了一下闭包, 没想到后来在游戏制作中就犯了一个闭包的错误.</p>
+<p>使用的是 Unity 引擎, 先看一个 Start 方法:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    GameObject gameObject;</span><br><span class="line">    characterPackage = characterDataScript.characterData.Package;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> index = <span class="number">0</span>; index &lt; characterPackage.Count; index++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 生成菜单项, 并设置父物体</span></span><br><span class="line">        gameObject = Instantiate(itemMenuItemPrefab, itemMenuItemParent.transform);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 修改菜单项的名称</span></span><br><span class="line">        gameObject.name = index.ToString();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 修改菜单项的图标</span></span><br><span class="line">        gameObject.transform.Find(<span class="string">&quot;Icon&quot;</span>).Find(<span class="string">&quot;Image&quot;</span>).GetComponent&lt;Image&gt;().sprite = characterPackage[index].Icon;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 修改菜单项的文本</span></span><br><span class="line">        gameObject.transform.Find(<span class="string">&quot;Name&quot;</span>).Find(<span class="string">&quot;Text&quot;</span>).GetComponent&lt;Text&gt;().text = characterPackage[index].Name;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 给菜单项的按钮注册事件, [UnityAction: 一个无参的委托, 返回值无所谓]</span></span><br><span class="line">        gameObject.GetComponent&lt;Button&gt;().onClick.AddListener(() =&gt; Event_ItemSelected(gameObject));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行步骤:</p>
+<ol>
+<li>新建一个菜单项, 用 gameObject 保存.</li>
+<li>修改菜单项各项属性. 其中名称属性就是遍历索引 index 的值, 即第一个菜单项的名称是 0, 第二个是 1, 第十个是 9 等等;</li>
+<li>给菜单项上的按钮注册事件, 事件的参数为 gameObject, 即将菜单项自身作为参数传递到方法中.</li>
+</ol>
+<p>那么问题来了, 假设有 4 个菜单项, 那么在事件 <code>Event_ItemSelected</code> 中输出按钮的名称的话, 依次点击菜单项会输出什么呢?</p>
+<p>不是很了解闭包的人应该会说出这个答案: <code>0, 1, 2, 3</code>, 而正确的答案是: <code>3, 3, 3, 3</code>!</p>
+<h2 id="什么是闭包"><a href="#什么是闭包" class="headerlink" title="什么是闭包?"></a>什么是闭包?</h2><p>在上面的代码段中, <code>gameObject</code> 变量是在 Start 方法中定义的, 那么按理来说只要出了 Start 方法, gameObject 变量就不存在了. 但是我们在按钮的 <code>Event_ItemSelected</code> 事件中却又访问了变量 gameObject, 这种现象就是闭包.</p>
+<p>当一个变量脱离了其自身的作用域后, 根据上下文关系继续在某些方法或者类中发挥作用的现象就是闭包. 或者说闭包可以让变量脱离其作用域继续发挥作用.</p>
+<h2 id="答案解析"><a href="#答案解析" class="headerlink" title="答案解析"></a>答案解析</h2><p>在上面的代码中, 每次循环都会创建一个菜单项, 并将 gameObject 变量作为参数绑定事件, 所以最后的结果就是 菜单项 0, 菜单项 1, 菜单项 2, 菜单项 3 都使用了 gameObject 变量作为参数, 而 gameObject 是一个变量啊, 不是一个常量, 创建菜单项 0 的时候, gameObject 确实是菜单项 0, 但是等到了创建菜单项 3 的时候, gameObject 也就变成菜单项 3 了, 因此调用事件的瞬间, 使用的也是那个瞬间的 gameObject 值, 也就是 3.</p>
+<h2 id="纠正"><a href="#纠正" class="headerlink" title="纠正"></a>纠正</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Start</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    characterPackage = characterDataScript.characterData.Package;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">int</span> index = <span class="number">0</span>; index &lt; characterPackage.Count; index++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 生成菜单项, 并设置父物体</span></span><br><span class="line">        GameObject gameObject = Instantiate(itemMenuItemPrefab, itemMenuItemParent.transform);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 修改菜单项的名称</span></span><br><span class="line">        gameObject.name = index.ToString();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 修改菜单项的图标</span></span><br><span class="line">        gameObject.transform.Find(<span class="string">&quot;Icon&quot;</span>).Find(<span class="string">&quot;Image&quot;</span>).GetComponent&lt;Image&gt;().sprite = characterPackage[index].Icon;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 修改菜单项的文本</span></span><br><span class="line">        gameObject.transform.Find(<span class="string">&quot;Name&quot;</span>).Find(<span class="string">&quot;Text&quot;</span>).GetComponent&lt;Text&gt;().text = characterPackage[index].Name;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 给菜单项的按钮注册事件, [UnityAction: 一个无参的委托, 返回值无所谓]</span></span><br><span class="line">        gameObject.GetComponent&lt;Button&gt;().onClick.AddListener(() =&gt; Event_ItemSelected(gameObject));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用这段代码就可以纠正那个错误, 两段代码只有一个区别, 就是 gameObject 变量定义的位置不同. 一个在 for 循环外, 一个在 for 循环内.</p>
+<ol>
+<li><p>在 for 循环<strong>外部</strong>定义时, 每一个菜单项使用的都是同一个 gameObject;</p>
+</li>
+<li><p>在 for 循环<strong>内部</strong>定义时, 每一次循环都会重新定义一个 gameObject, 每一个菜单项之间使用的都是不同的 gameObject;</p>
+</li>
+</ol>
+<p><img data-src="/images/closure/closure.png" alt="closure"></p>
+<h1 id="重命名序列化的变量时如果保持引用不丢失"><a href="#重命名序列化的变量时如果保持引用不丢失" class="headerlink" title="重命名序列化的变量时如果保持引用不丢失?"></a>重命名序列化的变量时如果保持引用不丢失?</h1><p>[<strong>注</strong>] 参考链接: <span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9kM2RmM2FlNzFhOGM=">Unity 的各种小实验<i class="fa fa-external-link-alt"></i></span></p>
+<p>一般情况下, 从 Unity 编辑器上对脚本中的变量复制引用之后, 如果修改了脚本中变量的名称, 那么 Unity 重新编译之后变量的引用就是变成空.</p>
+<p>Unity 提供了一个解决办法, 就是使用 <code>[FormerlySerializedAs(&quot;OldNameString&quot;)]</code> 特性.</p>
+<p>比如目前变量 playerID 的值是 &quot;岚&quot;, 现在需要修改变量的名称, 为了维持变量的引用, 修改名称之后先写一句: <code>[FormerlySerializedAs(&quot;playerID&quot;)]</code>, 之后将变量名修改为 playerName, 保存, 重新编译后会发现 Unity 中 playerName 的值还是 &quot;岚&quot;, 此时可以删除这个特性, 保留着也没问题.</p>
+<h1 id="Unity-的脚本编译规则"><a href="#Unity-的脚本编译规则" class="headerlink" title="Unity 的脚本编译规则"></a>Unity 的脚本编译规则</h1><p>[<strong>注</strong>] 参考链接: <span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9kM2RmM2FlNzFhOGM=">Unity 的各种小实验<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="脚本编辑规则"><a href="#脚本编辑规则" class="headerlink" title="脚本编辑规则"></a>脚本编辑规则</h2><p>最终所有代码都会生成 dll, 放在 <strong>Project&#x2F;Library&#x2F;ScriptAssembiles</strong> 目录中.</p>
+<p>脚本分为运行时和编辑时两类, <strong>运行时脚本</strong>最终会编译进游戏包中, 而<strong>编辑时脚本</strong>仅用于编辑器模式下, 不会被打包进游戏包. </p>
+<h2 id="脚本编译顺序"><a href="#脚本编译顺序" class="headerlink" title="脚本编译顺序"></a>脚本编译顺序</h2><p>最先编译 <strong>Plugins</strong> 目录下的, 然后是 Plugins 下的所有 <strong>Editor</strong> 子目录, 然后编译其他目录, 最后编译其他 Editor 目录.</p>
+<p>先编译的不可以访问后面的数据, 所以 <strong>Plugins 下的代码不能访问其他代码</strong>, 后编译的可以访问先编译的脚本.</p>
+<h2 id="各目录脚本最终所在的-dll"><a href="#各目录脚本最终所在的-dll" class="headerlink" title="各目录脚本最终所在的 dll"></a>各目录脚本最终所在的 dll</h2><ul>
+<li>Plugins 下非 Editor 目录脚本编译进 Assembly-CSharp-firstpass.dll</li>
+<li>Plugins 下的 Editor 目录脚本编译进 Assembly-CSharp-Editor-firstpass.dll</li>
+<li>其他非 Editor 目录脚本编译进 Assembly-CSharp.dll</li>
+<li>其他的 Editor 目录脚本编译进 Assembly-CSharp-Editor.dll</li>
+</ul>
+<h1 id="脚本控制-Unity-编辑器的暂停与退出"><a href="#脚本控制-Unity-编辑器的暂停与退出" class="headerlink" title="脚本控制 Unity 编辑器的暂停与退出"></a>脚本控制 Unity 编辑器的暂停与退出</h1><p>退出功能:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">if</span> UNITY_EDITOR</span></span><br><span class="line">    UnityEditor.EditorApplication.isPlaying = <span class="literal">false</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">    Application.Quit();</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>暂停功能:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UnityEditor.EditorApplication.isPaused = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Unity-中常用的-C-特性"><a href="#Unity-中常用的-C-特性" class="headerlink" title="Unity 中常用的 C# 特性"></a>Unity 中常用的 C# 特性</h1><table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left">作用</th>
+<th align="left">应用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>[Serializefield]</code></td>
+<td align="left">序列化特定的可序列化字段</td>
+<td align="left">将私有的可序列化字段进行标识后, Unity 的 Inspector 面板中将会显示该字段</td>
+</tr>
+<tr>
+<td align="left"><code>[HideInInspector]</code></td>
+<td align="left">隐藏字段</td>
+<td align="left">和 <code>[Serializefield]</code> 正好相反, 此特性是为了在 Inspector 面板中隐藏字段的显示</td>
+</tr>
+<tr>
+<td align="left"><code>[Header(string)]</code></td>
+<td align="left">字段添加头部注释</td>
+<td align="left">Unity 的 Inspector 面板中字段前会显示一段提示文字, 主要用于字段分类</td>
+</tr>
+<tr>
+<td align="left"><code>[Tooltip(string)]</code></td>
+<td align="left">字段添加气泡提示</td>
+<td align="left">鼠标放到 Inspector 面板的字段上会显示气泡提示</td>
+</tr>
+<tr>
+<td align="left"><code>[TextArea]</code></td>
+<td align="left">文本区域</td>
+<td align="left">使 string 类型的变量在 Inspector 面板显示为文本框, 可多行输入</td>
+</tr>
+<tr>
+<td align="left"><code>[Range(float,float)]</code></td>
+<td align="left">滑动条</td>
+<td align="left">使 float 类型的变量在 Inspector 面板中显示为滑动条</td>
+</tr>
+<tr>
+<td align="left"><code>[Space(float)]</code></td>
+<td align="left">空白</td>
+<td align="left">布局时使用, 在 Inspector 面板的相应位置生成一块空白</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left">作用</th>
+<th align="left">应用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>[RequireComponent(typeof(XXX)]</code></td>
+<td align="left">组件依赖</td>
+<td align="left">当脚本需要依赖特定组件的时候使用此特性添加依赖, 依赖的组件将被自动添加并不可移除</td>
+</tr>
+<tr>
+<td align="left"><code>[DisallowMultipleComponent]</code></td>
+<td align="left">禁止重复组件</td>
+<td align="left">当组件需要只能存在一个的时候可以使用此特性, 强制特定组件在同一个游戏物体上只能添加一个</td>
+</tr>
+<tr>
+<td align="left"><code>[ExecuteInEditMode]</code></td>
+<td align="left">使脚本在编辑器模式下也能运行</td>
+<td align="left">目前还没用到过~ 😂</td>
+</tr>
+<tr>
+<td align="left"><code>[SelectionBase]</code></td>
+<td align="left">修改 Scene 窗口中物体的默认选中</td>
+<td align="left">有时候我们在 Scene 窗口中, 通过单击看到的物体查找它在 Hierarchy 面板中的位置, 但是我们这个物体是没有外观的, 他的子物体有外观, 这时候就可以将此物体的一个组件使用此特性修饰, 当单击有外观的子物体时, 定位的不是子物体, 而是我们想要的那个没有外观的物体</td>
+</tr>
+<tr>
+<td align="left"><code>[CanEditMultipleObjects]</code></td>
+<td align="left">多选编辑</td>
+<td align="left">让游戏物体可以被多选同时编辑</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/donate/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/unity/unity_others.html" title="Unity 中的小技巧">https://kuroha.vip/unity/unity_others.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/followme/wechat.png">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Unity/" rel="tag"><i class="fa fa-tag"></i> Unity</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/csharp/csharp_ienumerator.html" rel="prev" title="CSharp 迭代器">
+                  <i class="fa fa-angle-left"></i> CSharp 迭代器
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/csharp/csharp_garbagecollect.html" rel="next" title="CSharp 垃圾回收">
+                  CSharp 垃圾回收 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">143k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:39</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>

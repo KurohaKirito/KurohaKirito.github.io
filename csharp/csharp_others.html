@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="整理一下 csharp 中的一些语法糖和一些零碎的知识, 梳理知识体系, 加深记忆.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="csharp 语法糖">
+<meta property="og:url" content="https://kuroha.vip/csharp/csharp_others.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="整理一下 csharp 中的一些语法糖和一些零碎的知识, 梳理知识体系, 加深记忆.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/images/csharp/others/preprocessor_line.png">
+<meta property="article:published_time" content="2020-10-23T08:38:09.000Z">
+<meta property="article:modified_time" content="2024-01-05T06:54:36.933Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="编程基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/images/csharp/others/preprocessor_line.png">
+
+
+<link rel="canonical" href="https://kuroha.vip/csharp/csharp_others.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/csharp/csharp_others.html","path":"csharp/csharp_others.html","title":"csharp 语法糖"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>csharp 语法糖 | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">68</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">31</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫"><a href="/catch_the_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#async-%E5%92%8C-await-%E5%92%8C-Wait"><span class="nav-number">2.</span> <span class="nav-text">async 和 await 和 Wait()</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#async-void-Function"><span class="nav-number">2.1.</span> <span class="nav-text">async void Function()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E6%8C%87%E5%AE%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%A9%B6%E7%AB%9F%E6%98%AF%E4%BD%BF%E7%94%A8-Contains-%E8%BF%98%E6%98%AF-IndexOf"><span class="nav-number">3.</span> <span class="nav-text">判断字符串中是否包含指定字符串究竟是使用 Contains 还是 IndexOf ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#string-%E4%B8%80%E4%B8%AA%E6%8C%89%E5%80%BC%E7%B1%BB%E5%9E%8B%E8%A7%84%E5%88%99%E5%A4%84%E7%90%86%E7%9A%84%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">string 一个按值类型规则处理的引用类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#const-%E5%92%8C-readonly-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.</span> <span class="nav-text">const 和 readonly 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E5%99%A8"><span class="nav-number">6.</span> <span class="nav-text">索引器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E4%B8%AD%E5%AE%9E%E7%8E%B0%E7%B4%A2%E5%BC%95%E5%99%A8"><span class="nav-number">6.1.</span> <span class="nav-text">如何在自定义类中实现索引器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E5%99%A8%E5%AE%9E%E4%BE%8B"><span class="nav-number">6.2.</span> <span class="nav-text">索引器实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%AB%E5%90%8D"><span class="nav-number">7.</span> <span class="nav-text">别名</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%AB%E5%90%8D%E7%9A%84%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%99"><span class="nav-number">7.1.</span> <span class="nav-text">别名的语法规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%AB%E5%90%8D%E5%AE%9E%E4%BE%8B"><span class="nav-number">7.2.</span> <span class="nav-text">别名实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="nav-number">8.</span> <span class="nav-text">运算符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E7%9A%84%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%99"><span class="nav-number">8.1.</span> <span class="nav-text">运算符重载的语法规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%E5%AE%9E%E4%BE%8B"><span class="nav-number">8.2.</span> <span class="nav-text">运算符重载实例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%92%8C"><span class="nav-number">9.</span> <span class="nav-text">? 和 ??</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E7%A9%BA-Nullable-%E7%B1%BB%E5%9E%8B"><span class="nav-number">9.1.</span> <span class="nav-text">? 可空 (Nullable) 类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nullable-%E7%B1%BB%E5%9E%8B%E5%8F%98%E9%87%8F%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">9.2.</span> <span class="nav-text">Nullable 类型变量的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E7%A9%BA%E5%88%A4%E6%96%AD"><span class="nav-number">9.3.</span> <span class="nav-text">?? 为空判断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">9.4.</span> <span class="nav-text">?? 的使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4"><span class="nav-number">10.</span> <span class="nav-text">预处理指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%99"><span class="nav-number">10.1.</span> <span class="nav-text">语法规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E9%A2%84%E5%A4%84%E7%90%86%E6%8C%87%E4%BB%A4"><span class="nav-number">10.2.</span> <span class="nav-text">常用预处理指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E5%AE%9A%E4%B9%89"><span class="nav-number">10.2.1.</span> <span class="nav-text">符号定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E5%88%86%E6%94%AF"><span class="nav-number">10.2.2.</span> <span class="nav-text">条件分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E8%BE%93%E5%87%BA"><span class="nav-number">10.2.3.</span> <span class="nav-text">信息输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%A7%E7%BA%B2%E7%AE%A1%E7%90%86"><span class="nav-number">10.2.4.</span> <span class="nav-text">大纲管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E6%8E%A7%E5%88%B6"><span class="nav-number">10.2.5.</span> <span class="nav-text">信息控制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">11.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/avatar/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="dGVuY2VudDovL0FkZENvbnRhY3QvP2Zyb21JZD00NSZmcm9tU3ViSWQ9MSZzdWJjbWQ9YWxsJnVpbj0xODMyNjEzMDAx" title="QQ → tencent:&#x2F;&#x2F;AddContact&#x2F;?fromId&#x3D;45&amp;fromSubId&#x3D;1&amp;subcmd&#x3D;all&amp;uin&#x3D;1832613001"><i class="fab fa-qq fa-fw"></i>QQ</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://kuroha.vip/images/weixin.png" title="WeChat → https:&#x2F;&#x2F;kuroha.vip&#x2F;images&#x2F;weixin.png" rel="noopener me"><i class="fab fa-weixin fa-fw"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9ub2FoYXBwcy5naXRodWIuaW8v" title="https:&#x2F;&#x2F;noahapps.github.io&#x2F;">Noah</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/csharp/csharp_others.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="csharp 语法糖 | 二次元游宅客">
+      <meta itemprop="description" content="整理一下 csharp 中的一些语法糖和一些零碎的知识, 梳理知识体系, 加深记忆.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          csharp 语法糖
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-10-23 16:38:09" itemprop="dateCreated datePublished" datetime="2020-10-23T16:38:09+08:00">2020-10-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-01-05 14:54:36" itemprop="dateModified" datetime="2024-01-05T14:54:36+08:00">2024-01-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CSharp/" itemprop="url" rel="index"><span itemprop="name">CSharp</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">整理一下 csharp 中的一些语法糖和一些零碎的知识, 梳理知识体系, 加深记忆.</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>之前在写一些自定义类的时候, 想让其他类比较方便地访问自定义类中的数据或者方法, 就想到了索引器, 还有一些其他的可以提高自定义类实用性或者提高程序易读性的 csharp 语法, 现在已经用了一段时间了, 写一篇博客, 回忆一下, 总结一下.</p>
+<h1 id="async-和-await-和-Wait"><a href="#async-和-await-和-Wait" class="headerlink" title="async 和 await 和 Wait()"></a>async 和 await 和 Wait()</h1><p>task.Wait() 为同步等待, 阻塞线程, 需要等待 task 执行完毕</p>
+<p>async 标识方法为异步方法, 一般和 await 配合使用</p>
+<p>await 为异步等待, 不阻塞线程, 只能在 &#39;async&#39; 修饰符标记的方法中使用</p>
+<h2 id="async-void-Function"><a href="#async-void-Function" class="headerlink" title="async void Function()"></a>async void Function()</h2><p>由于返回 void, 所以方法无法被异步等待, 即可以终止 async&#x2F;await 的传染, 像普通方法一样直接调用: <code>Function();</code></p>
+<p>如果外部需要异步等待, 则不能返回 void, 至少需要返回 Task, 外部调用时使用 await 进行异步等待</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 同步等待, 阻塞线程</span></span><br><span class="line">    Sync();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 异步执行, 会直接执行 AsyncTask(); 不会等待</span></span><br><span class="line">    Async_Void();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// warning : 由于此调用不会等待, 因此在此调用完成之前将会继续执行当前方法. 请考虑将 &quot;await&quot; 运算符应用于调用结果</span></span><br><span class="line">    Async_Task();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// error : 只能在使用 &#x27;async&#x27; 修饰符标记的方法或 lambda 中使用&#x27;await&#x27;</span></span><br><span class="line">    <span class="keyword">await</span> Async_Task();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Sync</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> task = Task.Run(() =&gt; &#123; &#125;);</span><br><span class="line">    task.Wait();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">async</span> <span class="keyword">void</span> <span class="title">Async_Void</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> task = Task.Run(() =&gt; &#123; &#125;);</span><br><span class="line">    <span class="keyword">await</span> task;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">async</span> Task <span class="title">Async_Task</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> task = Task.Run(() =&gt; &#123; &#125;);</span><br><span class="line">    <span class="keyword">await</span> task;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="判断字符串中是否包含指定字符串究竟是使用-Contains-还是-IndexOf"><a href="#判断字符串中是否包含指定字符串究竟是使用-Contains-还是-IndexOf" class="headerlink" title="判断字符串中是否包含指定字符串究竟是使用 Contains 还是 IndexOf ?"></a>判断字符串中是否包含指定字符串究竟是使用 Contains 还是 IndexOf ?</h1><p>引用自 willingtolove 大佬的博客: <span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vd2lsbGluZ3RvbG92ZS9wLzk3ODI1MzMuaHRtbCNfbGFiZWwyXzI=">判断字符串中是否包含指定字符串<i class="fa fa-external-link-alt"></i></span></p>
+<blockquote>
+<ul>
+<li><p>当不区分大小写时, <code>string.IndexOf</code> 方法的效率明显高于 string.Contains 方法;</p>
+</li>
+<li><p>当区分大小写时, <code>string.Contains</code> 方法的效率明显高于 string.IndexOf 方法;</p>
+</li>
+<li><p>如果判断的是中文, 没有大小写之分, <code>string.Contains</code> 方法的效率更高;</p>
+</li>
+</ul>
+</blockquote>
+<h1 id="string-一个按值类型规则处理的引用类型"><a href="#string-一个按值类型规则处理的引用类型" class="headerlink" title="string 一个按值类型规则处理的引用类型"></a>string 一个按值类型规则处理的引用类型</h1><ol>
+<li><p>string 是引用类型.</p>
+</li>
+<li><p>string 具有不变性, 一旦 string 被创建, 其中的任何字符都不允许改变.</p>
+</li>
+<li><p>string 重新赋值时, 会建立一个新的 string 对象, 并使指针指向这个新的 string 对象.</p>
+</li>
+<li><p>如果需要多次修改 string 的值, 应该使用 StringBuilder.</p>
+</li>
+</ol>
+<h1 id="const-和-readonly-的区别"><a href="#const-和-readonly-的区别" class="headerlink" title="const 和 readonly 的区别"></a>const 和 readonly 的区别</h1><p>const 和 readonly 两者在使用上有些相似, 但其本质却又完全不同.</p>
+<ol>
+<li><p>const 通常叫做: <font color='red'><strong>静态常量</strong></font> 或者 <font color='red'><strong>编译时常量</strong></font>, readonly 通常叫做: <font color='red'><strong>动态常量</strong></font> 或者 <font color='red'><strong>运行时常量</strong></font>.</p>
+</li>
+<li><p>const 只能修饰 <font color='red'><strong>基元类型, 字符串, 枚举</strong></font> , 不允许修饰结构体.</p>
+<p> [<strong>注</strong>] const 的值必须在编译阶段被唯一确定, 如果 const 修饰的是引用类型 (string 除外), 则只能被初始化为 null. 又因为 const 的值不可被修改, 所以 null 便没有任何意义, 即 const 修饰引用类型虽然编译器不会报错, 但是没有任何实际意义.</p>
+</li>
+<li><p>const 使用表达式进行初始化时, 表达式中的所有值都必须能够在编译阶段被唯一确定.</p>
+</li>
+<li><p>const 修饰的值会隐式使用 static 修饰, 因此只能通过类名访问, 同时 const 不可以显式使用 static 修饰.</p>
+</li>
+<li><p>const 比 readonly 更高效, 但灵活性差. const 常用于定义永不改变且完全唯一的变量, 如圆周率 π, 真空中光速 с, 普朗克常数 h, 基本电荷 e, 电子静止质量和阿伏伽德罗常数等.</p>
+</li>
+<li><p>最重要的一点, const 类似于 C 语言中的 define, 实际是<strong>没有内存地址</strong>的, 也就是<strong>不占用内存</strong>, const 会在编译时被它的值所取代.</p>
+</li>
+<li><p>readonly 通常和 static 搭配使用, 即 <code>static readonly</code>, 以代替灵活性不足的 const.</p>
+</li>
+<li><p>readonly 只能修饰类变量, 不能修饰方法内的局部变量. const 没有此限制.</p>
+</li>
+<li><p>const 必须在定义时进行初始化, 且之后不可再次赋值. 而 readonly 在定义时可以进行初始化, 同时在构造函数中也可以进行赋值, 因此当使用不同的构造函数来创建实例时, readonly 的值可能不同, 但除此以外不可再次赋值.</p>
+</li>
+<li><p>readonly 修饰的引用类型, 只是引用本身不可被修改, 其内部的成员变量依旧可以被修改!</p>
+</li>
+</ol>
+<h1 id="索引器"><a href="#索引器" class="headerlink" title="索引器"></a>索引器</h1><p>索引器语法可以让自定义类像数组一样, 可以使用索引来直接访问其中的数据, 这样外部类在取用我们内部数据的时候就很方便了.</p>
+<h2 id="如何在自定义类中实现索引器"><a href="#如何在自定义类中实现索引器" class="headerlink" title="如何在自定义类中实现索引器"></a>如何在自定义类中实现索引器</h2><ol>
+<li><p>csharp 中需要使用 <code>getter</code> 和 <code>setter</code> 来实现索引器.</p>
+</li>
+<li><p>索引器的名称是固定的, 只能是 <code>this</code>.</p>
+</li>
+<li><p>建立索引器时, 访问限制通常都设置为 <code>public</code>, 虽然语法上并没有任何限制, 但是除非是仅内部使用, 否则这个索引器没有任何意义~</p>
+</li>
+<li><p>索引器也具有返回值和参数值, 返回值和方法的写法是完全一致的, 但是索引器的参数是使用方括号 <font color='red'><strong>[]</strong></font> 包起来的, 这一点要注意!</p>
+</li>
+<li><p>索引器的返回值和参数值并没有特殊要求, 不仅仅可以是 <code>int</code> 类型, 其他类型也可以.</p>
+</li>
+<li><p>索引器也可以重载, 在一个类中编写多个不同参数的索引器, 方便外部调用.</p>
+</li>
+</ol>
+<h2 id="索引器实例"><a href="#索引器实例" class="headerlink" title="索引器实例"></a>索引器实例</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">IndexerTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">struct</span> Vector2</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">int</span> x, y;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Vector2</span>(<span class="params"><span class="built_in">int</span> x, <span class="built_in">int</span> y</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">this</span>.x = x;</span><br><span class="line">            <span class="keyword">this</span>.y = y;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">enum</span> EM_Direction</span><br><span class="line">    &#123;</span><br><span class="line">        Up, Down, Left, Right</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            IndexerDirection indexer = <span class="keyword">new</span> IndexerDirection();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 需要依次操作四个方向时, 可以直接使用 for 循环, 索引为 int 类型</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(indexer[i].x + <span class="string">&quot;, &quot;</span> + indexer[i].y);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 单独操作特定方向时, 可以使用 枚举 作为索引</span></span><br><span class="line">            Console.WriteLine(indexer[EM_Direction.Up].x + <span class="string">&quot;, &quot;</span> + indexer[EM_Direction.Up].y);</span><br><span class="line"></span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> 方向索引器</span></span><br><span class="line">    <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title">IndexerDirection</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> Vector2 up = <span class="keyword">new</span> Vector2(<span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">private</span> Vector2 down = <span class="keyword">new</span> Vector2(<span class="number">0</span>, <span class="number">-1</span>);</span><br><span class="line">        <span class="keyword">private</span> Vector2 left = <span class="keyword">new</span> Vector2(<span class="number">-1</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">private</span> Vector2 right = <span class="keyword">new</span> Vector2(<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> Vector2 <span class="keyword">this</span>[EM_Direction index]</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">get</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">switch</span> (index)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">case</span> EM_Direction.Up:</span><br><span class="line">                        <span class="keyword">return</span> up;</span><br><span class="line">                    <span class="keyword">case</span> EM_Direction.Down:</span><br><span class="line">                        <span class="keyword">return</span> down;</span><br><span class="line">                    <span class="keyword">case</span> EM_Direction.Left:</span><br><span class="line">                        <span class="keyword">return</span> left;</span><br><span class="line">                    <span class="keyword">case</span> EM_Direction.Right:</span><br><span class="line">                        <span class="keyword">return</span> right;</span><br><span class="line">                    <span class="literal">default</span>:</span><br><span class="line">                        <span class="keyword">return</span> up;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">set</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">switch</span> (index)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">case</span> EM_Direction.Up:</span><br><span class="line">                        up = <span class="keyword">value</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> EM_Direction.Down:</span><br><span class="line">                        down = <span class="keyword">value</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> EM_Direction.Left:</span><br><span class="line">                        left = <span class="keyword">value</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> EM_Direction.Right:</span><br><span class="line">                        right = <span class="keyword">value</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="literal">default</span>:</span><br><span class="line">                        up = <span class="keyword">value</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">public</span> Vector2 <span class="keyword">this</span>[<span class="built_in">int</span> index]</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">get</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">switch</span> (index)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                        <span class="keyword">return</span> up;</span><br><span class="line">                    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                        <span class="keyword">return</span> down;</span><br><span class="line">                    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                        <span class="keyword">return</span> left;</span><br><span class="line">                    <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">                        <span class="keyword">return</span> right;</span><br><span class="line">                    <span class="literal">default</span>:</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">&quot;下标越界!&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">set</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">switch</span> (index)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">                        up = <span class="keyword">value</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">                        down = <span class="keyword">value</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">                        left = <span class="keyword">value</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">                        right = <span class="keyword">value</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    <span class="literal">default</span>:</span><br><span class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">&quot;下标越界!&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h1><p>这个语法我在另一篇博客 <a href="https://kuroha.vip/csharp/csharp_delegate_01.html">委托(一) 委托的基本用法</a> 的代码块中用过, 没想到长时间不用, 便忘得一干二净了...🙄</p>
+<h2 id="别名的语法规则"><a href="#别名的语法规则" class="headerlink" title="别名的语法规则"></a>别名的语法规则</h2><ol>
+<li><p>起别名的格式为: &quot; using 新名称 &#x3D; 类型; &quot;.</p>
+</li>
+<li><p>在命名空间外进行重命名时, 必须写被重命名类型的完整路径.</p>
+</li>
+<li><p>在命名空间内进行重命名时, 可以使用 using 引用简化路径.</p>
+</li>
+<li><p>&quot;重命名操作&quot; 只能在命名空间外部或者命名空间内部的最上方书写, 不能写在类, 方法等内部.</p>
+</li>
+</ol>
+<h2 id="别名实例"><a href="#别名实例" class="headerlink" title="别名实例"></a>别名实例</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> NumberDic = System.Collections.Generic.Dictionary&lt;<span class="built_in">int</span>, <span class="built_in">int</span>&gt;; <span class="comment">// 将 int int 类型的字典重命名为 NumberDic</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">RenameTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">using</span> StringDic = Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;; <span class="comment">// 将 string string 类型的字典重命名为 StringDic</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//using CharDic = Dictionary&lt;char, char&gt;; // 写在这里将编译错误</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 定义一个 NumberDic 实例</span></span><br><span class="line">            NumberDic numberDic = <span class="keyword">new</span> NumberDic</span><br><span class="line">            &#123;</span><br><span class="line">                &#123; <span class="number">1</span>, <span class="number">10000</span> &#125;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 定义一个 StringDic 实例</span></span><br><span class="line">            StringDic stringDic = <span class="keyword">new</span> StringDic</span><br><span class="line">            &#123;</span><br><span class="line">                &#123; <span class="string">&quot;1&quot;</span>, <span class="string">&quot;10000&quot;</span> &#125;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            Console.WriteLine(numberDic[<span class="number">1</span>]);</span><br><span class="line">            Console.WriteLine(stringDic[<span class="string">&quot;1&quot;</span>]);</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="运算符重载"><a href="#运算符重载" class="headerlink" title="运算符重载"></a>运算符重载</h1><p>在自定义类中实现常用运算符的重载后, 外部进行变量间运算时就很方便了. 最常见的重载运算符就是相等运算符 &#x3D;&#x3D; 了.</p>
+<h2 id="运算符重载的语法规则"><a href="#运算符重载的语法规则" class="headerlink" title="运算符重载的语法规则"></a>运算符重载的语法规则</h2><ol>
+<li><p>&quot;重载&quot; 一词便决定了只能重写已有的运算符, 不能自创运算符.</p>
+</li>
+<li><p>并不是所有的运算符都可以重载, 如赋值运算符不能被重载.</p>
+</li>
+<li><p>必须使用 <code>public static 返回值类型 operator 运算符 () &#123; &#125; </code> 的格式来重载运算符.</p>
+</li>
+<li><p>参数的数量必须和运算符原本的参数数量一致.</p>
+</li>
+<li><p>某些运算符必须成对重载. 像大于 &#39;&gt;&#39; 和小于 &#39;&lt;&#39;.</p>
+</li>
+</ol>
+<h2 id="运算符重载实例"><a href="#运算符重载实例" class="headerlink" title="运算符重载实例"></a>运算符重载实例</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">OperatorTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            Player a = <span class="keyword">new</span> Player()</span><br><span class="line">            &#123;</span><br><span class="line">                id = <span class="string">&quot;001&quot;</span>,</span><br><span class="line">                name = <span class="string">&quot;Kirito&quot;</span>,</span><br><span class="line">                email = <span class="string">&quot;Kirito@Kirito.com&quot;</span>,</span><br><span class="line">                level = <span class="number">78</span>,</span><br><span class="line">                hp = <span class="number">170000</span>,</span><br><span class="line">                mp = <span class="number">8000</span></span><br><span class="line">            &#125;;</span><br><span class="line">            Player b = <span class="keyword">new</span> Player()</span><br><span class="line">            &#123;</span><br><span class="line">                id = <span class="string">&quot;002&quot;</span>,</span><br><span class="line">                name = <span class="string">&quot;Asuna&quot;</span>,</span><br><span class="line">                email = <span class="string">&quot;Asuna@Asuna.com&quot;</span>,</span><br><span class="line">                level = <span class="number">76</span>,</span><br><span class="line">                hp = <span class="number">150000</span>,</span><br><span class="line">                mp = <span class="number">170000</span></span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            Player c = a + b;</span><br><span class="line">            Console.WriteLine(c.id);</span><br><span class="line">            Console.WriteLine(c.name);</span><br><span class="line">            Console.WriteLine(c.email);</span><br><span class="line">            Console.WriteLine(c.level);</span><br><span class="line">            Console.WriteLine(c.hp);</span><br><span class="line">            Console.WriteLine(c.mp);</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">struct</span> Player</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">string</span> id;</span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">string</span> name;</span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">string</span> email;</span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">int</span> level;</span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">int</span> hp;</span><br><span class="line">        <span class="keyword">public</span> <span class="built_in">int</span> mp;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 重载运算符 +</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> Player <span class="keyword">operator</span> + (Player a, Player b)</span><br><span class="line">        &#123;</span><br><span class="line">            Player player = <span class="keyword">new</span> Player</span><br><span class="line">            &#123;</span><br><span class="line">                id = a.id,</span><br><span class="line">                name = a.name,</span><br><span class="line">                email = a.email,</span><br><span class="line">                level = a.level + b.level,</span><br><span class="line">                hp = a.hp + b.hp,</span><br><span class="line">                mp = a.mp + b.mp</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> player;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 重载运算符 -</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> Player <span class="keyword">operator</span> - (Player a, Player b)</span><br><span class="line">        &#123;</span><br><span class="line">            Player player = <span class="keyword">new</span> Player</span><br><span class="line">            &#123;</span><br><span class="line">                id = a.id,</span><br><span class="line">                name = a.name,</span><br><span class="line">                email = a.email,</span><br><span class="line">                level = a.level - b.level,</span><br><span class="line">                hp = a.hp - b.hp,</span><br><span class="line">                mp = a.mp - b.mp</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> player;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="和"><a href="#和" class="headerlink" title="? 和 ??"></a>? 和 ??</h1><h2 id="可空-Nullable-类型"><a href="#可空-Nullable-类型" class="headerlink" title="? 可空 (Nullable) 类型"></a>? 可空 (Nullable) 类型</h2><p>如果编程时有一种特殊的需求, 比如接收一个返回值, 这个返回值在运算有效时返回 int 类型, 但是在运算无效时返回 null 类型, 此时就可以使用 csharp 中的 Nullable 类型来接收. 单问号就是做这个的.</p>
+<p>在 int, double, bool 等无法直接赋值为 null 的数据类型后面加一个 ? 所定义出来的变量便可以赋值为 null.</p>
+<h2 id="Nullable-类型变量的定义"><a href="#Nullable-类型变量的定义" class="headerlink" title="Nullable 类型变量的定义"></a>Nullable 类型变量的定义</h2><p><font color='red'><strong>?</strong> 可以紧跟在类型后面, 也可以不紧跟.</font></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> ? intNullable = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">bool</span> ? boolNullable = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">float</span>? floatNullable = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">double</span>? doubleNullable = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="为空判断"><a href="#为空判断" class="headerlink" title="?? 为空判断"></a>?? 为空判断</h2><p>csharp 提供了一个双问号运算符来判断表达式是否为空, 如果为空则返回 ?? 后面的值, 如果不为空, 则返回自身.</p>
+<h2 id="的使用"><a href="#的使用" class="headerlink" title="?? 的使用"></a>?? 的使用</h2><p>下方代码段中, 如果 intNullable 为 null, 则打印数字 0, 不是 null, 则打印 intNullable 自身.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span>? intNullable = <span class="literal">null</span>;</span><br><span class="line">Console.WriteLine(intNullable ?? <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<h1 id="预处理指令"><a href="#预处理指令" class="headerlink" title="预处理指令"></a>预处理指令</h1><p>预处理指令编写的逻辑是, 让编译器在正式编译代码之前, 对代码进行处理.</p>
+<h2 id="语法规则"><a href="#语法规则" class="headerlink" title="语法规则"></a>语法规则</h2><ol>
+<li><p>预处理指令必须以 <font color='red'><strong>#</strong></font> 开头.</p>
+</li>
+<li><p>预处理指令必须位于行首.</p>
+</li>
+<li><p>预处理执行不是语句, 不以分号 &#39;;&#39; 结尾.</p>
+</li>
+</ol>
+<h2 id="常用预处理指令"><a href="#常用预处理指令" class="headerlink" title="常用预处理指令"></a>常用预处理指令</h2><h3 id="符号定义"><a href="#符号定义" class="headerlink" title="符号定义"></a>符号定义</h3><table>
+<thead>
+<tr>
+<th align="left">预处理指令</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">#define</td>
+<td align="left">定义符号</td>
+</tr>
+<tr>
+<td align="left">#undef</td>
+<td align="left">取消定义符号</td>
+</tr>
+</tbody></table>
+<h3 id="条件分支"><a href="#条件分支" class="headerlink" title="条件分支"></a>条件分支</h3><table>
+<thead>
+<tr>
+<th align="left">预处理指令</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">#if</td>
+<td align="left">条件指令的开始符号, 判断特定符号是否被定义</td>
+</tr>
+<tr>
+<td align="left">#elif</td>
+<td align="left">创建复合条件指令</td>
+</tr>
+<tr>
+<td align="left">#else</td>
+<td align="left">创建复合条件指令</td>
+</tr>
+<tr>
+<td align="left">#endif</td>
+<td align="left">条件指令的结束符号</td>
+</tr>
+</tbody></table>
+<h3 id="信息输出"><a href="#信息输出" class="headerlink" title="信息输出"></a>信息输出</h3><table>
+<thead>
+<tr>
+<th align="left">预处理指令</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">#warning</td>
+<td align="left">从代码的指定位置生成一个警告</td>
+</tr>
+<tr>
+<td align="left">#error</td>
+<td align="left">从代码的指定位置生成一个错误</td>
+</tr>
+</tbody></table>
+<h3 id="大纲管理"><a href="#大纲管理" class="headerlink" title="大纲管理"></a>大纲管理</h3><table>
+<thead>
+<tr>
+<th align="left">预处理指令</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">#region</td>
+<td align="left">指定一个可折叠的代码块</td>
+</tr>
+<tr>
+<td align="left">#endregion</td>
+<td align="left">标识 #region 结束</td>
+</tr>
+</tbody></table>
+<h3 id="信息控制"><a href="#信息控制" class="headerlink" title="信息控制"></a>信息控制</h3><table>
+<thead>
+<tr>
+<th align="left">预处理指令</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">#line</td>
+<td align="left">修改编译器输出<font color='red'><strong>错误和警告</strong></font>的行数, 文件名</td>
+</tr>
+<tr>
+<td align="left">#pragma</td>
+<td align="left">抑制或还原指定的编译<font color='red'><strong>警告</strong></font></td>
+</tr>
+</tbody></table>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Exercise</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">line</span> 200 &quot;boss.cs&quot;</span></span><br><span class="line"><span class="meta">#<span class="keyword">warning</span> 这里其实是 Program.cs 文件的第 6 行!</span></span><br><span class="line"><span class="meta">#<span class="keyword">line</span> default</span></span><br><span class="line"><span class="meta">#<span class="keyword">error</span> 这里其实是 Program.cs 文件的第 8 行!</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>比如上面的代码段在编译时产生的警告和错误信息是:</p>
+<p><img data-src="/images/csharp/others/preprocessor_line.png" alt="line 命令"></p>
+<p>可以看到警告信息的文件名被修改为了 boss.cs, 行号变成了 200; 而错误信息的文件名和行号都是正确的.</p>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cucnVub29iLmNvbS9jc2hhcnAvY3NoYXJwLW9wZXJhdG9yLW92ZXJsb2FkaW5nLmh0bWw=">C# 运算符重载<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cucnVub29iLmNvbS9jc2hhcnAvY3NoYXJwLXByZXByb2Nlc3Nvci1kaXJlY3RpdmVzLmh0bWw=">C# 预处理指令<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoaW5lSG9vL2FydGljbGUvZGV0YWlscy81MjU2Nzgx">const与readonly的区别<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/donate/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/csharp/csharp_others.html" title="csharp 语法糖">https://kuroha.vip/csharp/csharp_others.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/followme/wechat.png">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" rel="tag"><i class="fa fa-tag"></i> 编程基础</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/unity/unity_tile_border_line.html" rel="prev" title="Unity TileMap 瓦片与瓦片之间的线条">
+                  <i class="fa fa-angle-left"></i> Unity TileMap 瓦片与瓦片之间的线条
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/unity/unity_coordinate_system.html" rel="next" title="Unity 中的坐标系">
+                  Unity 中的坐标系 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">143k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">8:39</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>
