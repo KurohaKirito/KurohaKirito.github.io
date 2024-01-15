@@ -28,7 +28,7 @@
 <meta property="og:description" content="重构代码时应当遵循或可供参考的一些准则">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-05T06:49:39.000Z">
-<meta property="article:modified_time" content="2024-01-05T07:39:58.010Z">
+<meta property="article:modified_time" content="2024-01-09T11:24:58.930Z">
 <meta property="article:author" content="Kuroha">
 <meta property="article:tag" content="Program">
 <meta name="twitter:card" content="summary">
@@ -162,7 +162,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">移动方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">提取方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E5%AD%97%E6%AE%B5%E7%9A%84%E5%8D%87%E7%BA%A7%E5%92%8C%E9%99%8D%E7%BA%A7"><span class="nav-number">3.</span> <span class="nav-text">方法以及字段的升级和降级</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8D%87%E7%BA%A7%E6%97%B6%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="nav-number">3.1.</span> <span class="nav-text">方法升级时的注意点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Flags-%E4%BC%98%E5%8C%96%E5%A4%9A-bool-%E5%8F%82%E6%95%B0%E7%9A%84%E6%83%85%E5%86%B5%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%8E%B0%E6%9E%9A%E4%B8%BE%E5%A4%9A%E9%80%89"><span class="nav-number">4.</span> <span class="nav-text">使用 [Flags] 优化多 bool 参数的情况以及实现枚举多选</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%86%E5%8F%82%E6%95%B0%E6%95%B4%E5%90%88%E4%B8%BA%E7%BB%93%E6%9E%84%E6%88%96%E7%B1%BB%E6%9D%A5%E5%87%8F%E5%B0%91%E5%8F%82%E6%95%B0%E7%9A%84%E6%95%B0%E9%87%8F"><span class="nav-number">5.</span> <span class="nav-text">将参数整合为结构或类来减少参数的数量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8C%BA%E5%88%86%E7%BB%A7%E6%89%BF%E5%92%8C%E5%A7%94%E6%89%98"><span class="nav-number">6.</span> <span class="nav-text">区分继承和委托</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E6%8E%A5%E5%8F%A3"><span class="nav-number">7.</span> <span class="nav-text">提取接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E8%A7%A3%E4%BE%9D%E8%B5%96-%E8%A7%A3%E9%99%A4%E4%BE%9D%E8%B5%96"><span class="nav-number">8.</span> <span class="nav-text">分解依赖 (解除依赖)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SRP-%E5%8E%9F%E5%88%99-%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99"><span class="nav-number">9.</span> <span class="nav-text">SRP 原则 (单一职责原则)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">10.</span> <span class="nav-text"></span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UML-%E7%B1%BB%E5%9B%BE%E5%85%B3%E7%B3%BB"><span class="nav-number">1.</span> <span class="nav-text">UML 类图关系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E5%92%8C%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.1.</span> <span class="nav-text">继承和实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96"><span class="nav-number">1.2.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%9A%E5%90%88%E5%92%8C%E7%BB%84%E5%90%88"><span class="nav-number">1.3.</span> <span class="nav-text">聚合和组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E8%81%94"><span class="nav-number">1.4.</span> <span class="nav-text">关联</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">移动方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">提取方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E4%BB%A5%E5%8F%8A%E5%AD%97%E6%AE%B5%E7%9A%84%E5%8D%87%E7%BA%A7%E5%92%8C%E9%99%8D%E7%BA%A7"><span class="nav-number">4.</span> <span class="nav-text">方法以及字段的升级和降级</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%8D%87%E7%BA%A7%E6%97%B6%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="nav-number">4.1.</span> <span class="nav-text">方法升级时的注意点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Flags-%E4%BC%98%E5%8C%96%E5%A4%9A-bool-%E5%8F%82%E6%95%B0%E7%9A%84%E6%83%85%E5%86%B5%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%8E%B0%E6%9E%9A%E4%B8%BE%E5%A4%9A%E9%80%89"><span class="nav-number">5.</span> <span class="nav-text">使用 [Flags] 优化多 bool 参数的情况以及实现枚举多选</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%86%E5%8F%82%E6%95%B0%E6%95%B4%E5%90%88%E4%B8%BA%E7%BB%93%E6%9E%84%E6%88%96%E7%B1%BB%E6%9D%A5%E5%87%8F%E5%B0%91%E5%8F%82%E6%95%B0%E7%9A%84%E6%95%B0%E9%87%8F"><span class="nav-number">6.</span> <span class="nav-text">将参数整合为结构或类来减少参数的数量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8C%BA%E5%88%86%E7%BB%A7%E6%89%BF%E5%92%8C%E5%A7%94%E6%89%98"><span class="nav-number">7.</span> <span class="nav-text">区分继承和委托</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E6%8E%A5%E5%8F%A3"><span class="nav-number">8.</span> <span class="nav-text">提取接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E8%A7%A3%E4%BE%9D%E8%B5%96-%E8%A7%A3%E9%99%A4%E4%BE%9D%E8%B5%96"><span class="nav-number">9.</span> <span class="nav-text">分解依赖 (解除依赖)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SRP-%E5%8E%9F%E5%88%99-%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99"><span class="nav-number">10.</span> <span class="nav-text">SRP 原则 (单一职责原则)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E5%9F%BA%E7%B1%BB"><span class="nav-number">11.</span> <span class="nav-text">提取基类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E5%AD%90%E7%B1%BB"><span class="nav-number">12.</span> <span class="nav-text">提取子类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A7%BB%E9%99%A4%E4%B8%8A%E5%B8%9D%E7%B1%BB-%E5%85%A8%E8%83%BD%E7%B1%BB"><span class="nav-number">13.</span> <span class="nav-text">移除上帝类 (全能类)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A7%BB%E9%99%A4%E4%B8%AD%E9%97%B4%E7%B1%BB-%E8%BF%87%E5%BA%A6%E4%BD%BF%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">14.</span> <span class="nav-text">移除中间类 (过度使用设计模式)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E6%80%81%E4%BB%A3%E6%9B%BF%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD-%E5%B0%86%E5%8F%98%E5%8C%96%E4%B8%8B%E6%94%BE%E5%88%B0%E5%AD%90%E7%B1%BB%E4%B8%AD"><span class="nav-number">15.</span> <span class="nav-text">多态代替条件判断 (将变化下放到子类中)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A5%91%E7%BA%A6%E8%AE%BE%E8%AE%A1"><span class="nav-number">16.</span> <span class="nav-text">契约设计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IEnumerable-%E6%9B%BF%E6%8D%A2-IList"><span class="nav-number">17.</span> <span class="nav-text">IEnumerable 替换 IList</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Job-System"><span class="nav-number">18.</span> <span class="nav-text">Job System</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -289,9 +289,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-01-05 14:49:39 / 修改时间：15:39:58" itemprop="dateCreated datePublished" datetime="2024-01-05T14:49:39+08:00">2024-01-05</time>
+      <time title="创建时间：2024-01-05 14:49:39" itemprop="dateCreated datePublished" datetime="2024-01-05T14:49:39+08:00">2024-01-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-01-09 19:24:58" itemprop="dateModified" datetime="2024-01-09T19:24:58+08:00">2024-01-09</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -310,14 +316,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>572</span>
+      <span>1.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>6 分钟</span>
     </span>
 </div>
 
@@ -328,7 +334,18 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="移动方法"><a href="#移动方法" class="headerlink" title="移动方法"></a>移动方法</h1><p>当某个类的方法实现的功能更多地适用于另外一个类, 且符合它的语义时, 应将该方法移动到另外一个类.</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="UML-类图关系"><a href="#UML-类图关系" class="headerlink" title="UML 类图关系"></a>UML 类图关系</h1><p>UML 类图中大致有 6 种关系: <strong>继承和实现</strong>; <strong>依赖</strong>; <strong>聚合和组合</strong>; <strong>关联</strong>;</p>
+<h2 id="继承和实现"><a href="#继承和实现" class="headerlink" title="继承和实现"></a>继承和实现</h2><p>类继承类, 接口继承接口, 类实现接口</p>
+<p>继承和实现都是使用 <strong>空心三角箭头</strong> 来表示, 不同的是继承为实线, 实现为虚线</p>
+<h2 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h2><p>当一个对象需要调用另外一个对象的方法去完成某些工作时, 就构成了依赖关系</p>
+<p>依赖关系使用 <strong>虚线箭头</strong> 来表示</p>
+<h2 id="聚合和组合"><a href="#聚合和组合" class="headerlink" title="聚合和组合"></a>聚合和组合</h2><p>聚合和组合描述的都是包含关系</p>
+<p>聚合描述的主体和部分是可以分离的, 也可以用 has a 表示, 比如部门和雇工, 即使没有雇工, 部门也依然存在</p>
+<p>组合描述的主体和部分是不可分离的, 也可以用 is a 表示, 比如墙体和砖头, 如果没有了砖头, 墙体也就不存在了</p>
+<p>聚合和组合都是使用 <strong>扁平菱形箭头</strong> 表示的, 不同的是聚合是空心, 组合是实心</p>
+<h2 id="关联"><a href="#关联" class="headerlink" title="关联"></a>关联</h2><p>对象之间既不是依赖, 也不是聚合, 组合的关系, 那就是关联的关系, 比如老师和学生, 他们既不是依赖, 也不是包含</p>
+<p>关联关系直接使用 <strong>直线</strong> 表示</p>
+<h1 id="移动方法"><a href="#移动方法" class="headerlink" title="移动方法"></a>移动方法</h1><p>当某个类的方法实现的功能更多地适用于另外一个类, 且符合它的语义时, 应将该方法移动到另外一个类.</p>
 <h1 id="提取方法"><a href="#提取方法" class="headerlink" title="提取方法"></a>提取方法</h1><p>如果一个方法包含多个逻辑, 我们应将每个逻辑提取出来, 并确保每个方法只做一件事情.</p>
 <h1 id="方法以及字段的升级和降级"><a href="#方法以及字段的升级和降级" class="headerlink" title="方法以及字段的升级和降级"></a>方法以及字段的升级和降级</h1><p>升级方法：当子类的方法描述了相同的行为时, 应将这样的方法提升到基类.<br>降级方法：在基类中的行为仅和个别子类相关时, 应将这样的行为降低到子类.<br>升级字段：当子类中的字段描述着相同的信息时, 应将这样的字段提升到基类.<br>降级字段：当基类中的字段仅仅用于个别子类时, 应将这样的字段降低到子类.</p>
 <h2 id="方法升级时的注意点"><a href="#方法升级时的注意点" class="headerlink" title="方法升级时的注意点"></a>方法升级时的注意点</h2><ol>
@@ -345,7 +362,31 @@
 <p>想要解除掉 A 对 B 的依赖, 可以将 C 方法使用接口进行包装</p>
 <p>A 仅依赖于这个包装, 而 B 是此包装的其中一个具体实现, 这样 A 就不会直接依赖于 B 了</p>
 <h1 id="SRP-原则-单一职责原则"><a href="#SRP-原则-单一职责原则" class="headerlink" title="SRP 原则 (单一职责原则)"></a>SRP 原则 (单一职责原则)</h1><p>每个类, 接口都只定义单一的职责, 定义要清晰明确</p>
-<h1 id=""><a href="#" class="headerlink" title=""></a></h1>
+<h1 id="提取基类"><a href="#提取基类" class="headerlink" title="提取基类"></a>提取基类</h1><p>当不止有一个类具有相同功能的时候, 应该提取出一个基类, 将相同的功能放在基类中</p>
+<p>这个相同的功能必须每一个子类都具有, 但不要求每个子类此功能的逻辑完全相同, 即赋予子类重写该功能的权限</p>
+<h1 id="提取子类"><a href="#提取子类" class="headerlink" title="提取子类"></a>提取子类</h1><p>当基类中的某个功能或者属性不是所有子类所共有的, 那么需要将这些方法或属性下放到子类中</p>
+<h1 id="移除上帝类-全能类"><a href="#移除上帝类-全能类" class="headerlink" title="移除上帝类 (全能类)"></a>移除上帝类 (全能类)</h1><p>为了提升代码的易读性以及降低修改代码的成本, 需要移除掉臃肿的上帝类</p>
+<h1 id="移除中间类-过度使用设计模式"><a href="#移除中间类-过度使用设计模式" class="headerlink" title="移除中间类 (过度使用设计模式)"></a>移除中间类 (过度使用设计模式)</h1><p>过度使用设计模式的时候, 可能会出现中间设计了一些过度层的情况, 这些层级中的代码几乎没有任何作用, 只是重复了一些底层的逻辑而已, 这部分类就可以移除掉</p>
+<h1 id="多态代替条件判断-将变化下放到子类中"><a href="#多态代替条件判断-将变化下放到子类中" class="headerlink" title="多态代替条件判断 (将变化下放到子类中)"></a>多态代替条件判断 (将变化下放到子类中)</h1><p>提取管理器中的 <strong>变化</strong> 到基类或者接口中, 让管理器中的变化消失, 以子类中对基类或接口的不同实现来体现 <strong>变化</strong></p>
+<p>重构前的代码:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title">Customer</span> &#123; &#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Employee</span> : <span class="title">Customer</span> &#123; &#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NonEmployee</span> : <span class="title">Customer</span> &#123; &#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">OrderProcessor</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">decimal</span> <span class="title">ProcessOrder</span>(<span class="params">Customer customer, IEnumerable&lt;Product&gt; products</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> orderTotal = products.Sum(p =&gt; p.Price);</span><br><span class="line">        <span class="keyword">var</span> customerType = customer.GetType();</span><br><span class="line">        <span class="keyword">if</span> (customerType == <span class="keyword">typeof</span>(Employee))</span><br><span class="line">        &#123;</span><br><span class="line">            orderTotal -= orderTotal * <span class="number">0.15</span>m;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (customerType == <span class="keyword">typeof</span>(NonEmployee))</span><br><span class="line">        &#123;</span><br><span class="line">            orderTotal -= orderTotal * <span class="number">0.05</span>m;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> orderTotal;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重构后的代码:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">Customer</span> &#123; <span class="built_in">decimal</span> DiscountPercentage &#123; <span class="keyword">get</span>; &#125; &#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Employee</span> : <span class="title">Customer</span> &#123; <span class="keyword">public</span> <span class="built_in">decimal</span> DiscountPercentage =&gt; <span class="number">0.15</span>m; &#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">NonEmployee</span> : <span class="title">Customer</span> &#123; <span class="keyword">public</span> <span class="built_in">decimal</span> DiscountPercentage =&gt; <span class="number">0.05</span>m; &#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">OrderProcessor</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">decimal</span> <span class="title">ProcessOrder</span>(<span class="params">Customer customer, IEnumerable&lt;Product&gt; products</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> orderTotal = products.Sum(p =&gt; p.Price);</span><br><span class="line">        orderTotal -= orderTotal * customer.DiscountPercentage;</span><br><span class="line">        <span class="keyword">return</span> orderTotal;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="契约设计"><a href="#契约设计" class="headerlink" title="契约设计"></a>契约设计</h1><p>在逻辑开始之前使用断言对参数的合法性进行判断</p>
+<p>在逻辑结束之前使用断言对返回值的合法性进行判断</p>
+<h1 id="IEnumerable-替换-IList"><a href="#IEnumerable-替换-IList" class="headerlink" title="IEnumerable 替换 IList"></a>IEnumerable<T> 替换 IList<T></h1><p><strong>IList<T></strong> 和 <strong>IEnumerable<T></strong> 都可以遍历集合的元素</p>
+<p>IList<T> 拥有集合的所有操作方法, 包括集合元素的增加, 修改和删除</p>
+<p>而IEnumerable<T>则只有一个GetEnumerator方法（扩展方法除外），它返回一个可用于循环访问集合的IEnumerator<T>对象。</p>
+<h1 id="Job-System"><a href="#Job-System" class="headerlink" title="Job System"></a>Job System</h1><p>Job System 如何避免资源竞争</p>
+<blockquote>
+<p>Job System 通过给每一个需要操作数据的 Job 一份数据拷贝而不是主线程中的数据引用来避免这个问题, 拷贝和原本的数据独立, 从而排除了资源竞争</p>
+<p>Job System 拷贝数据的方式决定了一个 Job 只能访问<strong>可位块传输</strong>的数据类型(blitable data types), 这种数据类型在托管代码和原生代码之间进行传递的时候不需要类型转换</p>
+<p>安全性系统中拷贝数据的缺点是单个 Job 的计算结果是与外部隔离的, 为了突破这个限制需要把结果放在共享内存 NativeContainer 中</p>
+<p>NativeContainer 是一种托管的数据类型, 包括一个指向非托管分配内存的指针, NativeContainer 使得一个 Job 可以访问和主线程共享的数据, 而不是在一份拷贝</p>
+</blockquote>
+
     </div>
 
     
@@ -477,14 +518,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">143k</span>
+    <span title="站点总字数">144k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:39</span>
+    <span title="站点阅读时长">8:43</span>
   </span>
 </div>
 
