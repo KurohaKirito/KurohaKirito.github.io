@@ -1,3 +1,15 @@
-User-agent:Baiduspider
-Disallow:/
-Sitemap: https://kuroha.vip/sitemap.xml
+# 百度
+User-agent: Baiduspider
+Disallow: /about/index.html
+Disallow: /categories/index.html
+Disallow: /catch_the_cat/index.html
+Disallow: /tags/index.html
+Sitemap: https://kuroha.vip/sitemap.txt
+
+# 谷歌
+User-agent: Googlebot
+Disallow: /about/index.html
+Disallow: /categories/index.html
+Disallow: /catch_the_cat/index.html
+Disallow: /tags/index.html
+Sitemap: https://kuroha.vip/sitemap.txt
