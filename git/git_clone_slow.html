@@ -28,7 +28,7 @@
 <meta property="og:description" content="克隆 Git 仓库的时候真的急死人, 20KB 简直了, 下载 zip 倒是很快, 但是 zip 中没有 git 目录树啊, 就很烦...😖">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-05-09T13:08:24.000Z">
-<meta property="article:modified_time" content="2023-05-09T13:15:41.525Z">
+<meta property="article:modified_time" content="2024-03-23T14:22:25.537Z">
 <meta property="article:author" content="Kuroha">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
@@ -111,7 +111,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">69</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">32</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫"><a href="/catch_the_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">48</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">23</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -162,14 +162,14 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E4%BB%A3%E7%90%86%E7%AB%AF%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">查看代理端口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-git-%E4%BB%A3%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">设置 git 代理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E4%BB%A3%E7%90%86%E6%98%AF%E5%90%A6%E8%AE%BE%E7%BD%AE%E6%AD%A3%E7%A1%AE"><span class="nav-number">4.</span> <span class="nav-text">检查代理是否设置正确</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-https-%E9%93%BE%E6%8E%A5%E5%85%8B%E9%9A%86%E9%A1%B9%E7%9B%AE"><span class="nav-number">5.</span> <span class="nav-text">通过 https 链接克隆项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E5%90%8E%E5%A6%82%E6%9E%9C%E4%B8%8D%E6%94%BE%E5%BF%83%E5%8F%AF%E4%BB%A5%E6%8A%8A%E4%BB%A3%E7%90%86%E5%85%B3%E6%8E%89"><span class="nav-number">6.</span> <span class="nav-text">最后如果不放心可以把代理关掉</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9C%81%E6%B5%81%E7%89%88"><span class="nav-number">1.</span> <span class="nav-text">省流版</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E4%BB%A3%E7%90%86%E7%AB%AF%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text">查看代理端口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-git-%E4%BB%A3%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">设置 git 代理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E4%BB%A3%E7%90%86%E6%98%AF%E5%90%A6%E8%AE%BE%E7%BD%AE%E6%AD%A3%E7%A1%AE"><span class="nav-number">5.</span> <span class="nav-text">检查代理是否设置正确</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-https-%E9%93%BE%E6%8E%A5%E5%85%8B%E9%9A%86%E9%A1%B9%E7%9B%AE"><span class="nav-number">6.</span> <span class="nav-text">通过 https 链接克隆项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E5%90%8E%E5%A6%82%E6%9E%9C%E4%B8%8D%E6%94%BE%E5%BF%83%E5%8F%AF%E4%BB%A5%E6%8A%8A%E4%BB%A3%E7%90%86%E5%85%B3%E6%8E%89"><span class="nav-number">7.</span> <span class="nav-text">最后如果不放心可以把代理关掉</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Kuroha"
-      src="/images/avatar/avatar.gif">
+      src="/images/about/avatar.gif">
   <p class="site-author-name" itemprop="name">Kuroha</p>
   <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
 </div>
@@ -177,18 +177,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -198,13 +198,7 @@
         <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
       </span>
       <span class="links-of-author-item">
-        <span class="exturl" data-url="dGVuY2VudDovL0FkZENvbnRhY3QvP2Zyb21JZD00NSZmcm9tU3ViSWQ9MSZzdWJjbWQ9YWxsJnVpbj0xODMyNjEzMDAx" title="QQ → tencent:&#x2F;&#x2F;AddContact&#x2F;?fromId&#x3D;45&amp;fromSubId&#x3D;1&amp;subcmd&#x3D;all&amp;uin&#x3D;1832613001"><i class="fab fa-qq fa-fw"></i>QQ</span>
-      </span>
-      <span class="links-of-author-item">
         <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://kuroha.vip/images/weixin.png" title="WeChat → https:&#x2F;&#x2F;kuroha.vip&#x2F;images&#x2F;weixin.png" rel="noopener me"><i class="fab fa-weixin fa-fw"></i>WeChat</a>
       </span>
       <span class="links-of-author-item">
         <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
@@ -239,9 +233,6 @@
             <li class="links-of-blogroll-item">
               <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
             </li>
-            <li class="links-of-blogroll-item">
-              <span class="exturl" data-url="aHR0cHM6Ly9ub2FoYXBwcy5naXRodWIuaW8v" title="https:&#x2F;&#x2F;noahapps.github.io&#x2F;">Noah</span>
-            </li>
         </ul>
       </div>
     </div>
@@ -264,7 +255,7 @@
     <link itemprop="mainEntityOfPage" href="https://kuroha.vip/git/git_clone_slow.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar/avatar.gif">
+      <meta itemprop="image" content="/images/about/avatar.gif">
       <meta itemprop="name" content="Kuroha">
     </span>
 
@@ -289,9 +280,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-05-09 21:08:24 / 修改时间：21:15:41" itemprop="dateCreated datePublished" datetime="2023-05-09T21:08:24+08:00">2023-05-09</time>
+      <time title="创建时间：2023-05-09 21:08:24" itemprop="dateCreated datePublished" datetime="2023-05-09T21:08:24+08:00">2023-05-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-23 22:22:25" itemprop="dateModified" datetime="2024-03-23T22:22:25+08:00">2024-03-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -310,7 +307,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>157</span>
+      <span>184</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -330,6 +327,10 @@
     
     <div class="post-body" itemprop="articleBody"><span id="more"></span>
 
+<h1 id="省流版"><a href="#省流版" class="headerlink" title="省流版"></a>省流版</h1><ul>
+<li>设置 remote 必须使用 https 链接</li>
+<li>使用命令指定 git 代理的 IP 和 端口</li>
+</ul>
 <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>此方案需要代理, 不会有人还没有代理吧? 不会吧不会吧? [赶紧溜....]</p>
 <h1 id="查看代理端口"><a href="#查看代理端口" class="headerlink" title="查看代理端口"></a>查看代理端口</h1><p>查看自己的 SS, SSR, Clash 等代理软件的端口, 我这里的是 <kb>1080</kb></p>
 <h1 id="设置-git-代理"><a href="#设置-git-代理" class="headerlink" title="设置 git 代理"></a>设置 git 代理</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.proxy http://127.0.0.1:1080</span><br></pre></td></tr></table></figure>
@@ -359,7 +360,7 @@
   </button>
   <div class="post-reward">
       <div>
-        <img src="/images/donate/alipay.png" alt="Kuroha 支付宝">
+        <img src="/images/about/alipay.png" alt="Kuroha 支付宝">
         <span>支付宝</span>
       </div>
 
@@ -389,44 +390,12 @@
   <div class="social-list">
 
       <div class="social-item">
-          <a target="_blank" class="social-link" href="https://twitter.com/KurohaKirito">
-            <span class="icon">
-              <i class="fab fa-twitter"></i>
-            </span>
-
-            <span class="label">Twitter</span>
-          </a>
-      </div>
-
-      <div class="social-item">
           <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
             <span class="icon">
               <i class="fab fa-telegram"></i>
             </span>
 
             <span class="label">Telegram</span>
-          </a>
-      </div>
-
-      <div class="social-item">
-          <span class="social-link">
-            <span class="icon">
-              <i class="fab fa-weixin"></i>
-            </span>
-
-            <span class="label">WeChat</span>
-          </span>
-
-          <img class="social-item-img" src="/images/followme/wechat.png">
-      </div>
-
-      <div class="social-item">
-          <a target="_blank" class="social-link" href="/atom.xml">
-            <span class="icon">
-              <i class="fa fa-rss"></i>
-            </span>
-
-            <span class="label">RSS</span>
           </a>
       </div>
   </div>
@@ -445,8 +414,8 @@
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/diary/prove.html" rel="next" title="健身记录">
-                  健身记录 <i class="fa fa-angle-right"></i>
+                <a href="/unity_editor/unity_editor_odin.html" rel="next" title="Unity Plugins Odin">
+                  Unity Plugins Odin <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
@@ -479,14 +448,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">146k</span>
+    <span title="站点总字数">95k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:50</span>
+    <span title="站点阅读时长">5:46</span>
   </span>
 </div>
 

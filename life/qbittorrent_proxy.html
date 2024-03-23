@@ -27,11 +27,19 @@
 <meta property="og:site_name" content="二次元游宅客">
 <meta property="og:description" content="最近在研究使用 QB, 恰好发现可以用来追番, 正好搭配 Jellyfin 食用, 完美 ~">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/images/life/qbittorrent1.png">
+<meta property="og:image" content="https://kuroha.vip/images/life/qbittorrent3.png">
+<meta property="og:image" content="https://kuroha.vip/images/life/qbittorrent4.png">
+<meta property="og:image" content="https://kuroha.vip/images/life/qbittorrent2.png">
+<meta property="og:image" content="https://kuroha.vip/images/life/qbittorrent5.png">
+<meta property="og:image" content="https://kuroha.vip/images/life/qbittorrent6.png">
+<meta property="og:image" content="https://kuroha.vip/images/life/qbittorrent7.png">
 <meta property="article:published_time" content="2024-01-17T03:06:35.668Z">
-<meta property="article:modified_time" content="2024-01-22T03:35:51.520Z">
+<meta property="article:modified_time" content="2024-03-23T16:46:47.102Z">
 <meta property="article:author" content="Kuroha">
 <meta property="article:tag" content="QBittorrent">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/images/life/qbittorrent1.png">
 
 
 <link rel="canonical" href="https://kuroha.vip/life/qbittorrent_proxy.html">
@@ -111,7 +119,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">69</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">32</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">15</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫"><a href="/catch_the_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">48</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">23</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -162,14 +170,14 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">下载安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%9C%9C%E6%9F%91%E8%AE%A1%E5%88%92"><span class="nav-number">2.</span> <span class="nav-text">蜜柑计划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QBitTorrent-%E8%AE%BE%E7%BD%AE%E4%B9%8B-%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">QBitTorrent 设置之 &quot;代理服务器&quot;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E4%BB%A3%E7%90%86%E6%9F%A5%E6%89%BE%E4%B8%BB%E6%9C%BA%E5%90%8D"><span class="nav-number">3.1.</span> <span class="nav-text">通过代理查找主机名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A4%E8%AF%81"><span class="nav-number">3.1.1.</span> <span class="nav-text">认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9-BitTorrent-%E7%9B%AE%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86"><span class="nav-number">3.1.2.</span> <span class="nav-text">对 BitTorrent 目的使用代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%94%A8%E6%88%B7%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.1.3.</span> <span class="nav-text">使用代理服务器进行用户连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9-RSS-%E7%9B%AE%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">对 RSS 目的使用代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E5%B8%B8%E8%A7%84%E7%9B%AE%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86"><span class="nav-number">3.3.</span> <span class="nav-text">对常规目的使用代理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QBitTorrent-%E8%AE%BE%E7%BD%AE%E4%B9%8B-RSS-%E8%AE%A2%E9%98%85"><span class="nav-number">4.</span> <span class="nav-text">QBitTorrent 设置之 &quot;RSS 订阅&quot;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QBitTorrent-%E8%AE%BE%E7%BD%AE%E4%B9%8B-%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BD"><span class="nav-number">5.</span> <span class="nav-text">QBitTorrent 设置之 &quot;自动下载&quot;</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">下载安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%9C%9C%E6%9F%91%E8%AE%A1%E5%88%92"><span class="nav-number">2.</span> <span class="nav-text">蜜柑计划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QBitTorrent-%E8%AE%BE%E7%BD%AE%E4%B9%8B-%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">QBitTorrent 设置之 &quot;代理服务器&quot;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E4%BB%A3%E7%90%86%E6%9F%A5%E6%89%BE%E4%B8%BB%E6%9C%BA%E5%90%8D"><span class="nav-number">3.1.</span> <span class="nav-text">通过代理查找主机名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A4%E8%AF%81"><span class="nav-number">3.1.1.</span> <span class="nav-text">认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9-BitTorrent-%E7%9B%AE%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86"><span class="nav-number">3.1.2.</span> <span class="nav-text">对 BitTorrent 目的使用代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%BF%9B%E8%A1%8C%E7%94%A8%E6%88%B7%E8%BF%9E%E6%8E%A5"><span class="nav-number">3.1.3.</span> <span class="nav-text">使用代理服务器进行用户连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9-RSS-%E7%9B%AE%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">对 RSS 目的使用代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E5%B8%B8%E8%A7%84%E7%9B%AE%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86"><span class="nav-number">3.3.</span> <span class="nav-text">对常规目的使用代理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QBitTorrent-%E8%AE%BE%E7%BD%AE%E4%B9%8B-RSS-%E8%AE%A2%E9%98%85"><span class="nav-number">4.</span> <span class="nav-text">QBitTorrent 设置之 &quot;RSS 订阅&quot;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#QBitTorrent-%E8%AE%BE%E7%BD%AE%E4%B9%8B-%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BD"><span class="nav-number">5.</span> <span class="nav-text">QBitTorrent 设置之 &quot;自动下载&quot;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0-RSS-%E8%AE%A2%E9%98%85"><span class="nav-number">6.</span> <span class="nav-text">添加 RSS 订阅</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E5%90%88-Jellyfin-%E4%BB%A5%E5%8F%8A-MPV-%E9%A3%9F%E7%94%A8%E6%9B%B4%E4%BD%B3"><span class="nav-number">7.</span> <span class="nav-text">配合 Jellyfin 以及 MPV 食用更佳</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
           <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="Kuroha"
-      src="/images/avatar/avatar.gif">
+      src="/images/about/avatar.gif">
   <p class="site-author-name" itemprop="name">Kuroha</p>
   <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
 </div>
@@ -177,18 +185,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -198,13 +206,7 @@
         <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
       </span>
       <span class="links-of-author-item">
-        <span class="exturl" data-url="dGVuY2VudDovL0FkZENvbnRhY3QvP2Zyb21JZD00NSZmcm9tU3ViSWQ9MSZzdWJjbWQ9YWxsJnVpbj0xODMyNjEzMDAx" title="QQ → tencent:&#x2F;&#x2F;AddContact&#x2F;?fromId&#x3D;45&amp;fromSubId&#x3D;1&amp;subcmd&#x3D;all&amp;uin&#x3D;1832613001"><i class="fab fa-qq fa-fw"></i>QQ</span>
-      </span>
-      <span class="links-of-author-item">
         <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://kuroha.vip/images/weixin.png" title="WeChat → https:&#x2F;&#x2F;kuroha.vip&#x2F;images&#x2F;weixin.png" rel="noopener me"><i class="fab fa-weixin fa-fw"></i>WeChat</a>
       </span>
       <span class="links-of-author-item">
         <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
@@ -239,9 +241,6 @@
             <li class="links-of-blogroll-item">
               <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
             </li>
-            <li class="links-of-blogroll-item">
-              <span class="exturl" data-url="aHR0cHM6Ly9ub2FoYXBwcy5naXRodWIuaW8v" title="https:&#x2F;&#x2F;noahapps.github.io&#x2F;">Noah</span>
-            </li>
         </ul>
       </div>
     </div>
@@ -264,7 +263,7 @@
     <link itemprop="mainEntityOfPage" href="https://kuroha.vip/life/qbittorrent_proxy.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar/avatar.gif">
+      <meta itemprop="image" content="/images/about/avatar.gif">
       <meta itemprop="name" content="Kuroha">
     </span>
 
@@ -297,7 +296,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-01-22 11:35:51" itemprop="dateModified" datetime="2024-01-22T11:35:51+08:00">2024-01-22</time>
+      <time title="修改时间：2024-03-24 00:46:47" itemprop="dateModified" datetime="2024-03-24T00:46:47+08:00">2024-03-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -316,7 +315,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>275</span>
+      <span>352</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -339,9 +338,11 @@
 <h1 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h1><p>先下载安装一下 QBitTorrent, 喜欢折腾的话也可以再下载一下自己喜欢的主题</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly93d3cucWJpdHRvcnJlbnQub3JnL2Rvd25sb2Fk">QBitTorrent<i class="fa fa-external-link-alt"></i></span></p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3FiaXR0b3JyZW50L3FCaXR0b3JyZW50L3dpa2kvTGlzdC1vZi1rbm93bi1xQml0dG9ycmVudC10aGVtZXM=">QBitTorrent Theme<i class="fa fa-external-link-alt"></i></span></p>
-<h1 id="蜜柑计划"><a href="#蜜柑计划" class="headerlink" title="蜜柑计划"></a>蜜柑计划</h1><p>RSS 订阅集合, 傻瓜式使用难度, 就不说明了</p>
+<p><img data-src="/images/life/qbittorrent1.png" alt="自定义主题"></p>
+<h1 id="蜜柑计划"><a href="#蜜柑计划" class="headerlink" title="蜜柑计划"></a>蜜柑计划</h1><p>RSS 订阅集合, 傻瓜式使用难度, 只说明一点, 不会获取 RSS 链接的话, 直接在 RSS 图标上打开右键菜单, 点击<code>复制链接</code>即可</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9taWthbmFuaS5tZS8=">蜜柑计划<i class="fa fa-external-link-alt"></i></span></p>
-<h1 id="QBitTorrent-设置之-代理服务器"><a href="#QBitTorrent-设置之-代理服务器" class="headerlink" title="QBitTorrent 设置之 &quot;代理服务器&quot;"></a>QBitTorrent 设置之 &quot;代理服务器&quot;</h1><p>打开 &quot;设置&quot;, 找到 &quot;连接&quot; 项, 其中有一个 &quot;代理服务器&quot; 的子项目</p>
+<h1 id="QBitTorrent-设置之-代理服务器"><a href="#QBitTorrent-设置之-代理服务器" class="headerlink" title="QBitTorrent 设置之 &quot;代理服务器&quot;"></a>QBitTorrent 设置之 &quot;代理服务器&quot;</h1><p><img data-src="/images/life/qbittorrent3.png" alt="自定义主题"></p>
+<p>打开 &quot;设置&quot;, 找到 &quot;连接&quot; 项, 其中有一个 &quot;代理服务器&quot; 的子项目</p>
 <p>&quot;类型主机端口&quot; 一栏按照自己的代理设置进行填写, 例如: 类型选择 &quot;HTTP&quot;, 主机填写 &quot;127.0.0.1&quot;, 端口填写 &quot;1080&quot;</p>
 <h2 id="通过代理查找主机名"><a href="#通过代理查找主机名" class="headerlink" title="通过代理查找主机名"></a>通过代理查找主机名</h2><p>由于之前的蜜柑计划需要翻墙, 所以必须勾选</p>
 <h3 id="认证"><a href="#认证" class="headerlink" title="认证"></a>认证</h3><p>一般不需要勾选</p>
@@ -349,8 +350,14 @@
 <h3 id="使用代理服务器进行用户连接"><a href="#使用代理服务器进行用户连接" class="headerlink" title="使用代理服务器进行用户连接"></a>使用代理服务器进行用户连接</h3><p>一般不需要勾选</p>
 <h2 id="对-RSS-目的使用代理"><a href="#对-RSS-目的使用代理" class="headerlink" title="对 RSS 目的使用代理"></a>对 RSS 目的使用代理</h2><p>建议勾选</p>
 <h2 id="对常规目的使用代理"><a href="#对常规目的使用代理" class="headerlink" title="对常规目的使用代理"></a>对常规目的使用代理</h2><p>建议勾选</p>
-<h1 id="QBitTorrent-设置之-RSS-订阅"><a href="#QBitTorrent-设置之-RSS-订阅" class="headerlink" title="QBitTorrent 设置之 &quot;RSS 订阅&quot;"></a>QBitTorrent 设置之 &quot;RSS 订阅&quot;</h1><p>在 RSS 设置项中勾选 &quot;启用获取 RSS 订阅&quot;</p>
+<h1 id="QBitTorrent-设置之-RSS-订阅"><a href="#QBitTorrent-设置之-RSS-订阅" class="headerlink" title="QBitTorrent 设置之 &quot;RSS 订阅&quot;"></a>QBitTorrent 设置之 &quot;RSS 订阅&quot;</h1><p><img data-src="/images/life/qbittorrent4.png" alt="自定义主题"></p>
+<p>在 RSS 设置项中勾选 &quot;启用获取 RSS 订阅&quot;</p>
 <h1 id="QBitTorrent-设置之-自动下载"><a href="#QBitTorrent-设置之-自动下载" class="headerlink" title="QBitTorrent 设置之 &quot;自动下载&quot;"></a>QBitTorrent 设置之 &quot;自动下载&quot;</h1><p>在 RSS 设置项中勾选 &quot;启用 RSS Torrent 自动下载&quot;</p>
+<h1 id="添加-RSS-订阅"><a href="#添加-RSS-订阅" class="headerlink" title="添加 RSS 订阅"></a>添加 RSS 订阅</h1><p><img data-src="/images/life/qbittorrent2.png" alt="自定义主题"></p>
+<h1 id="配合-Jellyfin-以及-MPV-食用更佳"><a href="#配合-Jellyfin-以及-MPV-食用更佳" class="headerlink" title="配合 Jellyfin 以及 MPV 食用更佳"></a>配合 Jellyfin 以及 MPV 食用更佳</h1><p>下面是我现在的配置</p>
+<p><img data-src="/images/life/qbittorrent5.png" alt="Jellyfin"></p>
+<p><img data-src="/images/life/qbittorrent6.png" alt="Jellyfin"></p>
+<p><img data-src="/images/life/qbittorrent7.png" alt="Jellyfin"></p>
 
     </div>
 
@@ -366,7 +373,7 @@
   </button>
   <div class="post-reward">
       <div>
-        <img src="/images/donate/alipay.png" alt="Kuroha 支付宝">
+        <img src="/images/about/alipay.png" alt="Kuroha 支付宝">
         <span>支付宝</span>
       </div>
 
@@ -396,44 +403,12 @@
   <div class="social-list">
 
       <div class="social-item">
-          <a target="_blank" class="social-link" href="https://twitter.com/KurohaKirito">
-            <span class="icon">
-              <i class="fab fa-twitter"></i>
-            </span>
-
-            <span class="label">Twitter</span>
-          </a>
-      </div>
-
-      <div class="social-item">
           <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
             <span class="icon">
               <i class="fab fa-telegram"></i>
             </span>
 
             <span class="label">Telegram</span>
-          </a>
-      </div>
-
-      <div class="social-item">
-          <span class="social-link">
-            <span class="icon">
-              <i class="fab fa-weixin"></i>
-            </span>
-
-            <span class="label">WeChat</span>
-          </span>
-
-          <img class="social-item-img" src="/images/followme/wechat.png">
-      </div>
-
-      <div class="social-item">
-          <a target="_blank" class="social-link" href="/atom.xml">
-            <span class="icon">
-              <i class="fa fa-rss"></i>
-            </span>
-
-            <span class="label">RSS</span>
           </a>
       </div>
   </div>
@@ -447,11 +422,14 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/program/refactoring.html" rel="prev" title="重构的思路">
-                  <i class="fa fa-angle-left"></i> 重构的思路
+                <a href="/computer/computer_adb.html" rel="prev" title="工作中常用的一些 ADB 命令">
+                  <i class="fa fa-angle-left"></i> 工作中常用的一些 ADB 命令
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/program/regular_common.html" rel="next" title="使用正则表达式捕获分组并使用分组">
+                  使用正则表达式捕获分组并使用分组 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -483,14 +461,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">146k</span>
+    <span title="站点总字数">95k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">8:50</span>
+    <span title="站点阅读时长">5:46</span>
   </span>
 </div>
 
