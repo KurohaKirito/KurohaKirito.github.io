@@ -20,28 +20,26 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="记录一下刚学会的使用正则表达式来捕获分组并使用分组">
-<meta property="og:type" content="article">
-<meta property="og:title" content="使用正则表达式捕获分组并使用分组">
-<meta property="og:url" content="https://kuroha.vip/program/regular_common.html">
+    <meta name="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+<meta property="og:type" content="website">
+<meta property="og:title" content="二次元游宅客">
+<meta property="og:url" content="https://kuroha.vip/page/4/index.html">
 <meta property="og:site_name" content="二次元游宅客">
-<meta property="og:description" content="记录一下刚学会的使用正则表达式来捕获分组并使用分组">
+<meta property="og:description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-23T14:57:15.000Z">
-<meta property="article:modified_time" content="2024-03-28T07:29:16.775Z">
 <meta property="article:author" content="Kuroha">
-<meta property="article:tag" content="Program">
+<meta property="article:tag" content="Unity,游戏,二次元,Kuroha,宅男,极客">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://kuroha.vip/program/regular_common.html">
+<link rel="canonical" href="https://kuroha.vip/page/4/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/program/regular_common.html","path":"program/regular_common.html","title":"使用正则表达式捕获分组并使用分组"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"page/4/index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>使用正则表达式捕获分组并使用分组 | 二次元游宅客</title>
+<title>二次元游宅客 - 一个热爱二次元和游戏开发的宅极客!</title>
   
 
 
@@ -95,7 +93,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">二次元游宅客</p>
+      <h1 class="site-title">二次元游宅客</h1>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
@@ -149,7 +147,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -162,7 +160,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8D%95%E8%8E%B7%E7%AC%A6%E5%8F%B7-%E4%BB%A5%E5%8F%8A-%E6%8D%95%E8%8E%B7%E5%90%8E%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">捕获符号 以及 捕获后的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8D%95%E8%8E%B7%E6%9D%A5%E5%AE%9E%E7%8E%B0%E5%AD%97%E7%AC%A6%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E6%8D%A2"><span class="nav-number">2.</span> <span class="nav-text">使用捕获来实现字符大小写转换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">一些常用的表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E8%83%BD%E5%8C%85%E5%90%AB%E6%9F%90%E4%BA%9B%E5%AD%97%E7%AC%A6"><span class="nav-number">3.1.</span> <span class="nav-text">不能包含某些字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E8%A1%8C%E4%B8%AD%E4%B8%8D%E8%83%BD%E5%8C%85%E5%90%AB%E6%9F%90%E4%BA%9B%E8%AF%8D%E6%B1%87"><span class="nav-number">3.2.</span> <span class="nav-text">整行中不能包含某些词汇</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E8%A1%8C%E5%8F%AA%E7%94%B1%E6%9F%90%E4%BA%9B%E5%AD%97%E7%AC%A6%E6%9E%84%E6%88%90"><span class="nav-number">3.3.</span> <span class="nav-text">整行只由某些字符构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E8%A1%8C%E5%8F%AA%E7%94%B1%E6%9F%90%E4%BA%9B%E8%AF%8D%E6%B1%87%E6%9E%84%E6%88%90"><span class="nav-number">3.4.</span> <span class="nav-text">整行只由某些词汇构成</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -241,18 +238,17 @@
 
     </div>
 
-    <div class="main-inner post posts-expand">
+    <div class="main-inner index posts-expand">
 
-
-  
+    
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/program/regular_common.html">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/hexo/hexo_blog.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/about/avatar.gif">
@@ -265,13 +261,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="使用正则表达式捕获分组并使用分组 | 二次元游宅客">
-      <meta itemprop="description" content="记录一下刚学会的使用正则表达式来捕获分组并使用分组">
+      <meta itemprop="name" content="undefined | 二次元游宅客">
+      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          使用正则表达式捕获分组并使用分组
-        </h1>
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/hexo/hexo_blog.html" class="post-title-link" itemprop="url">Hexo + Github Pages 搭建个人博客</a>
+        </h2>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -281,14 +277,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2024-03-23 22:57:15" itemprop="dateCreated datePublished" datetime="2024-03-23T22:57:15+08:00">2024-03-23</time>
+      <time title="创建时间：2019-07-17 22:10:05" itemprop="dateCreated datePublished" datetime="2019-07-17T22:10:05+08:00">2019-07-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-28 15:29:16" itemprop="dateModified" datetime="2024-03-28T15:29:16+08:00">2024-03-28</time>
+      <time title="修改时间：2024-01-05 14:55:18" itemprop="dateModified" datetime="2024-01-05T14:55:18+08:00">2024-01-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -296,7 +292,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+          <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
         </span>
     </span>
 
@@ -307,81 +303,34 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>526</span>
+      <span>2.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>8 分钟</span>
     </span>
 </div>
 
-            <div class="post-description">记录一下刚学会的使用正则表达式来捕获分组并使用分组</div>
         </div>
       </header>
 
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="捕获符号-以及-捕获后的使用"><a href="#捕获符号-以及-捕获后的使用" class="headerlink" title="捕获符号 以及 捕获后的使用"></a>捕获符号 以及 捕获后的使用</h1><p>最常使用的场景是: 需要使用正则表达式进行替换, 但是同时需要使用到正则表达式所匹配到的内容, 这时候就需要用到分组了, 举个非常简单的栗子🌰, 将下面的代码段一替换为代码段二</p>
-<p><strong>代码段一</strong></p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> tempTool001 = <span class="keyword">new</span> RefCleanerController();</span><br><span class="line"><span class="keyword">var</span> tempTool002 = <span class="keyword">new</span> TextureAnalysis();</span><br><span class="line"><span class="keyword">var</span> tempTool003 = <span class="keyword">new</span> MeshAnalysis();</span><br><span class="line"><span class="keyword">var</span> tempTool004 = <span class="keyword">new</span> ProfilerTool();</span><br><span class="line"><span class="keyword">var</span> tempTool005 = <span class="keyword">new</span> AnimeClipCompress();</span><br><span class="line"><span class="keyword">var</span> tempTool006 = <span class="keyword">new</span> BrokenAssetChecker();</span><br><span class="line"><span class="keyword">var</span> tempTool007 = <span class="keyword">new</span> RefCleanerMat();</span><br><span class="line"><span class="keyword">var</span> tempTool008 = <span class="keyword">new</span> PreCombineMesh();</span><br><span class="line"><span class="keyword">var</span> tempTool009 = <span class="keyword">new</span> MeshUVViewer();</span><br><span class="line"><span class="keyword">var</span> tempTool010 = <span class="keyword">new</span> PreStaticBatches();</span><br><span class="line"><span class="keyword">var</span> tempTool011 = <span class="keyword">new</span> GuidFinder();</span><br><span class="line"><span class="keyword">var</span> tempTool012 = <span class="keyword">new</span> AssetOperateTool();</span><br><span class="line"><span class="keyword">var</span> tempTool013 = <span class="keyword">new</span> AssetRenameTool();</span><br><span class="line"><span class="keyword">var</span> tempTool014 = <span class="keyword">new</span> SoCreator();</span><br><span class="line"><span class="keyword">var</span> tempTool015 = <span class="keyword">new</span> LODBatchTool();</span><br><span class="line"><span class="keyword">var</span> tempTool016 = <span class="keyword">new</span> MissingChecker();</span><br><span class="line"><span class="keyword">var</span> tempTool017 = <span class="keyword">new</span> RemoveRepeatCharacter();</span><br><span class="line"><span class="keyword">var</span> tempTool018 = <span class="keyword">new</span> About();</span><br></pre></td></tr></table></figure>
-
-<p><strong>代码段二</strong></p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">AddTool&lt;RefCleanerController&gt;();</span><br><span class="line">AddTool&lt;TextureAnalysis&gt;();</span><br><span class="line">AddTool&lt;MeshAnalysis&gt;();</span><br><span class="line">AddTool&lt;ProfilerTool&gt;();</span><br><span class="line">AddTool&lt;AnimeClipCompress&gt;();</span><br><span class="line">AddTool&lt;BrokenAssetChecker&gt;();</span><br><span class="line">AddTool&lt;RefCleanerMat&gt;();</span><br><span class="line">AddTool&lt;PreCombineMesh&gt;();</span><br><span class="line">AddTool&lt;MeshUVViewer&gt;();</span><br><span class="line">AddTool&lt;PreStaticBatches&gt;();</span><br><span class="line">AddTool&lt;GuidFinder&gt;();</span><br><span class="line">AddTool&lt;AssetOperateTool&gt;();</span><br><span class="line">AddTool&lt;AssetRenameTool&gt;();</span><br><span class="line">AddTool&lt;SoCreator&gt;();</span><br><span class="line">AddTool&lt;LODBatchTool&gt;();</span><br><span class="line">AddTool&lt;MissingChecker&gt;();</span><br><span class="line">AddTool&lt;RemoveRepeatCharacter&gt;();</span><br><span class="line">AddTool&lt;About&gt;();</span><br></pre></td></tr></table></figure>
-
-<p>在不使用多行编辑的情况下, 想一步将代码段一替换为代码段二还是很麻烦的, 基本都是花费好几步才能完成, 但是使用捕获就不一样了</p>
-<p>搜索栏填写 : <code>.*new (\w+).*</code></p>
-<p>替换栏填写 : <code>AddTool&lt;$1&gt;();</code></p>
-<p>其中使用 <strong>$数字</strong> 来引用正则中匹配到的内容, 在第几个 () 中就是第几组, 序号从 1 开始</p>
-<h1 id="使用捕获来实现字符大小写转换"><a href="#使用捕获来实现字符大小写转换" class="headerlink" title="使用捕获来实现字符大小写转换"></a>使用捕获来实现字符大小写转换</h1><blockquote>
-<p>\l 首字母变小写, \u 首字母变大写</p>
-<p>\L 字符串变小写, \U 字符串变大写</p>
-</blockquote>
-<p>还是以上面的字符串举例, 搜索栏依旧填写: <code>^var .*new (\w+).*</code>, 替换栏中输入: <code>\U$1</code>, 最终的结果便是:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">REFCLEANERCONTROLLER</span><br><span class="line">TEXTUREANALYSIS</span><br><span class="line">MESHANALYSIS</span><br><span class="line">PROFILERTOOL</span><br><span class="line">ANIMECLIPCOMPRESS</span><br><span class="line">BROKENASSETCHECKER</span><br><span class="line">REFCLEANERMAT</span><br><span class="line">PRECOMBINEMESH</span><br><span class="line">MESHUVVIEWER</span><br><span class="line">PRESTATICBATCHES</span><br><span class="line">GUIDFINDER</span><br><span class="line">ASSETOPERATETOOL</span><br><span class="line">ASSETRENAMETOOL</span><br><span class="line">SOCREATOR</span><br><span class="line">LODBATCHTOOL</span><br><span class="line">MISSINGCHECKER</span><br><span class="line">REMOVEREPEATCHARACTER</span><br><span class="line">ABOUT</span><br></pre></td></tr></table></figure>
-
-<h1 id="一些常用的表达式"><a href="#一些常用的表达式" class="headerlink" title="一些常用的表达式"></a>一些常用的表达式</h1><h2 id="不能包含某些字符"><a href="#不能包含某些字符" class="headerlink" title="不能包含某些字符"></a>不能包含某些字符</h2><ul>
-<li><p>整行中不包含汉字</p>
-<p>  <code>^[^\u4e00-\u9fa5]+$</code></p>
-</li>
-<li><p>整行中不包含数字</p>
-<p>  <code>^[^\d]+$</code></p>
-</li>
-<li><p>整行中不包含字母</p>
-<p>  <code>^[^a-zA-Z]+$</code></p>
-</li>
-</ul>
-<h2 id="整行中不能包含某些词汇"><a href="#整行中不能包含某些词汇" class="headerlink" title="整行中不能包含某些词汇"></a>整行中不能包含某些词汇</h2><ul>
-<li><p>不包含 &quot;包含&quot;</p>
-<p>  <code>^(.(?!包含))*$</code></p>
-</li>
-<li><p>不包含 &quot;Collider&quot;</p>
-<p>  <code>^(.(?!Collider))*$</code></p>
-</li>
-<li><p>不包含 &quot;00&quot;</p>
-<p>  <code>^(.(?!00))*$</code></p>
-</li>
-</ul>
-<h2 id="整行只由某些字符构成"><a href="#整行只由某些字符构成" class="headerlink" title="整行只由某些字符构成"></a>整行只由某些字符构成</h2><ul>
-<li><p>纯汉字</p>
-<p>  <code>^[\u4e00-\u9fa5]+$</code></p>
-</li>
-<li><p>纯字母</p>
-<p>  <code>^[a-zA-Z]+$</code></p>
-</li>
-<li><p>纯数字</p>
-<p>  <code>^[\d]+$</code></p>
-</li>
-</ul>
-<h2 id="整行只由某些词汇构成"><a href="#整行只由某些词汇构成" class="headerlink" title="整行只由某些词汇构成"></a>整行只由某些词汇构成</h2><ul>
-<li><p>只有 Android, iOS, PC</p>
-<p>  <code>^((Android)|(iOS)|(PC))+$</code></p>
-</li>
-</ul>
-
+    <div class="post-body" itemprop="articleBody">
+          <p>最近一直在折腾个人博客, 对于我这个前端纯小白而言, 真是感慨万千.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/hexo/hexo_blog.html">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
     </div>
 
     
@@ -389,72 +338,8 @@
     
 
     <footer class="post-footer">
-          <div class="reward-container">
-  <div>请我一杯咖啡吧！</div>
-  <button>
-    赞赏
-  </button>
-  <div class="post-reward">
-      <div>
-        <img src="/images/about/alipay.png" alt="Kuroha 支付宝">
-        <span>支付宝</span>
-      </div>
-
-  </div>
-</div>
-
-          
-
-<div class="post-copyright">
-<ul>
-  <li class="post-copyright-author">
-      <strong>本文作者： </strong>Kuroha
-  </li>
-  <li class="post-copyright-link">
-      <strong>本文链接：</strong>
-      <a href="https://kuroha.vip/program/regular_common.html" title="使用正则表达式捕获分组并使用分组">https://kuroha.vip/program/regular_common.html</a>
-  </li>
-  <li class="post-copyright-license">
-      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
-          <div class="followme">
-  <span>欢迎关注我的其它发布渠道</span>
-
-  <div class="social-list">
-
-      <div class="social-item">
-          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
-            <span class="icon">
-              <i class="fab fa-telegram"></i>
-            </span>
-
-            <span class="label">Telegram</span>
-          </a>
-      </div>
-  </div>
-</div>
-
-          <div class="post-tags">
-              <a href="/tags/Program/" rel="tag"><i class="fa fa-tag"></i> Program</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/life/qbittorrent_proxy.html" rel="prev" title="QBittorrent 实现自动追番">
-                  <i class="fa fa-angle-left"></i> QBittorrent 实现自动追番
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/unity/unity_asmdef.html" rel="next" title="Unity 中自定义程序集的使用以及程序集的划分">
-                  Unity 中自定义程序集的使用以及程序集的划分 <i class="fa fa-angle-right"></i>
-                </a>
-            </div>
-          </div>
+        <div class="post-eof"></div>
+      
     </footer>
   </article>
 </div>
@@ -462,7 +347,9 @@
 
 
 
-
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+  </nav>
 
 </div>
   </main>
