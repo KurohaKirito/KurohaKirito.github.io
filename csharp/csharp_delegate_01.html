@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="委托的基本用法.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="委托(一) 委托的基本用法">
+<meta property="og:url" content="https://kuroha.vip/csharp/csharp_delegate_01.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="委托的基本用法.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/images/csharp/delegate.png">
+<meta property="article:published_time" content="2020-09-18T01:15:54.000Z">
+<meta property="article:modified_time" content="2025-01-20T03:05:14.117Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="编程基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/images/csharp/delegate.png">
+
+
+<link rel="canonical" href="https://kuroha.vip/csharp/csharp_delegate_01.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/csharp/csharp_delegate_01.html","path":"csharp/csharp_delegate_01.html","title":"委托(一) 委托的基本用法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>委托(一) 委托的基本用法 | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">47</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">23</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AC%E6%96%87%E9%87%8D%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">本文重点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#delegate"><span class="nav-number">2.</span> <span class="nav-text">delegate</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#System-String-string-%E5%92%8C-System-Delegate-delegate"><span class="nav-number">3.</span> <span class="nav-text">System.String - string 和 System.Delegate - delegate</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%A6%84%E5%A6%82%E4%BD%95%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E5%A7%94%E6%89%98%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">🦄如何定义一个委托类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%90%AC%E5%A6%82%E4%BD%95%E5%AE%9E%E4%BE%8B%E5%8C%96%E5%87%BA%E4%B8%80%E4%B8%AA%E5%A7%94%E6%89%98%E5%AE%9E%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text">🐬如何实例化出一个委托实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8C%B4%E5%A6%82%E4%BD%95%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%80%E4%B8%AA%E5%A7%94%E6%89%98%E5%AE%9E%E4%BE%8B"><span class="nav-number">6.</span> <span class="nav-text">🌴如何初始化一个委托实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%B0%83%E7%94%A8%E5%A7%94%E6%89%98"><span class="nav-number">7.</span> <span class="nav-text">如何调用委托</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A7%94%E6%89%98%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%E7%A4%BA%E4%BE%8B-%E9%9D%9E%E9%9D%99%E6%80%81"><span class="nav-number">8.</span> <span class="nav-text">委托基本用法示例 (非静态)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A7%94%E6%89%98%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95%E7%A4%BA%E4%BE%8B-%E9%9D%99%E6%80%81"><span class="nav-number">9.</span> <span class="nav-text">委托基本用法示例 (静态)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Action-%E5%92%8C-Func"><span class="nav-number">10.</span> <span class="nav-text">Action 和 Func</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Action"><span class="nav-number">10.1.</span> <span class="nav-text">Action</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Func"><span class="nav-number">10.2.</span> <span class="nav-text">Func</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">11.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">12.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/about/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/csharp/csharp_delegate_01.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="委托(一) 委托的基本用法 | 二次元游宅客">
+      <meta itemprop="description" content="委托的基本用法.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          委托(一) 委托的基本用法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-09-18 09:15:54" itemprop="dateCreated datePublished" datetime="2020-09-18T09:15:54+08:00">2020-09-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-20 11:05:14" itemprop="dateModified" datetime="2025-01-20T11:05:14+08:00">2025-01-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CSharp/" itemprop="url" rel="index"><span itemprop="name">CSharp</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">委托的基本用法.</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="本文重点"><a href="#本文重点" class="headerlink" title="本文重点"></a>本文重点</h1><ol>
+<li><p>delegate 和 Delegate 的区别</p>
+</li>
+<li><p>定义委托</p>
+</li>
+<li><p>实例化委托</p>
+</li>
+<li><p>Action 和 Func</p>
+</li>
+<li><p>委托的基本用法</p>
+</li>
+</ol>
+<h1 id="delegate"><a href="#delegate" class="headerlink" title="delegate"></a>delegate</h1><p><code>delegate</code> 是一个类型关键字, 和它类似的还有: <code>class</code>, <code>interface</code>, <code>enum</code> 等等. 这类关键字都是用来定义的, 而不是实例化的. 枚举类型使用 <code>enum</code> 进行定义, 委托类型使用 <code>delegate</code> 进行定义. 因此 <font color='red'><strong>delegate 不是类! 它只是一个类型关键字! 用来定义类型的.</strong></font></p>
+<h1 id="System-String-string-和-System-Delegate-delegate"><a href="#System-String-string-和-System-Delegate-delegate" class="headerlink" title="System.String - string 和 System.Delegate - delegate"></a>System.String - string 和 System.Delegate - delegate</h1><p>System.String 是 .Net 框架中的一个类, .Net 框架中包含多种编程语言, 其中 C# 语言中给 System.String 起了一个别名 string, 因此 <code>string str</code> 和 <code>System.String str</code> 是没有区别的, <code>string</code> 就是一个类, <code>string str</code> 这一个代码不是在定义类型, 而是在实例化对象. 但是 <code>delegate</code> 和 <code>System.Delegate</code> 的关系就不是这样了. <code>System.Delegate</code> 是一个类, 而 <code>delegate</code> 则是一个 <code>类型关键字</code>, 它是用来定义委托的, 就像 <code>class</code> 定义类, <code>struct</code> 定义结构体, <code>enum</code> 定义枚举一样, 这些关键字是同一个级次的, 但他们都不是类.</p>
+<p>如下图, String, string, Delegate 都可以调用类中的静态方法, 这是因为他们都是类, 但是 delegate 则不可以, 因为它仅仅只是一个类型关键字.</p>
+<p><img data-src="/images/csharp/delegate.png" alt="delegate"></p>
+<h1 id="🦄如何定义一个委托类型"><a href="#🦄如何定义一个委托类型" class="headerlink" title="🦄如何定义一个委托类型"></a>🦄如何定义一个委托类型</h1><ol>
+<li>使用 delegate 关键字</li>
+<li>指明待委托方法的两个特征: <code>1. 返回值 2. 参数</code></li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义委托类型, 返回值为: int, 参数为: (int, int)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">delegate</span> <span class="built_in">int</span> <span class="title">MyDelegate</span> (<span class="params"><span class="built_in">int</span> a, <span class="built_in">int</span> b</span>)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>[<strong>注</strong>] 其实 csharp 中已经有定义好的通用委托类型了, 基本无需自己定义委托类型.</p>
+<h1 id="🐬如何实例化出一个委托实例"><a href="#🐬如何实例化出一个委托实例" class="headerlink" title="🐬如何实例化出一个委托实例"></a>🐬如何实例化出一个委托实例</h1><p>实例化委托就是使用之前定义好的委托类型实例化出一个委托对象, 也叫做委托实例. 委托的实例化语法和类的实例化语法相同.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 实例化一个 MyDelegate 类型的委托对象, 此时还没有初始化</span></span><br><span class="line">MyDelegate myDelegate;</span><br></pre></td></tr></table></figure>
+
+<p>[<strong>注</strong>] 实例化委托时通常不再使用自己定义的委托类型, 而是使用 csharp 中已经定义好的通用委托类型 Action&lt;&gt; 和 Func&lt;&gt;.</p>
+<h1 id="🌴如何初始化一个委托实例"><a href="#🌴如何初始化一个委托实例" class="headerlink" title="🌴如何初始化一个委托实例"></a>🌴如何初始化一个委托实例</h1><ul>
+<li><p>方法 1: 使用 new 关键字初始化. 待委托方法作为参数传入.</p>
+</li>
+<li><p>方法 2: 直接使用符合特征的方法赋值.</p>
+</li>
+</ul>
+<p>[<strong>注</strong>] 待委托方法如果不是静态方法, 则必须是实例方法. 不能将未实例化的方法作为参数传入委托或对委托赋值.</p>
+<h1 id="如何调用委托"><a href="#如何调用委托" class="headerlink" title="如何调用委托"></a>如何调用委托</h1><ul>
+<li>方式 1: 调用委托和调用方法在代码写法上一致.</li>
+<li>方式 2: 调用 Invoke() 方法.</li>
+</ul>
+<h1 id="委托基本用法示例-非静态"><a href="#委托基本用法示例-非静态" class="headerlink" title="委托基本用法示例 (非静态)"></a>委托基本用法示例 (非静态)</h1><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CSharp 起别名的语法规则, 在 namespace 外部书写时必须写全部路径</span></span><br><span class="line"><span class="comment">// using Package = System.Collections.Generic.Dictionary&lt;string, int&gt;;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">MyDelegateTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// CSharp 起别名的语法规则, 在 namespace 内部书写的时候可以嵌套引用 namespace 外的 using</span></span><br><span class="line">    <span class="keyword">using</span> Package = Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">int</span>&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义一个委托类, 指明待委托方法的特征: 1. 返回值 (string) 2. 参数 (string, int, Package)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">delegate</span> <span class="built_in">string</span> <span class="title">DelegateBuy</span>(<span class="params"><span class="built_in">string</span> itemName, <span class="built_in">int</span> num, Package package</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 实例化 玩家包裹</span></span><br><span class="line">            Package package = <span class="keyword">new</span> Package();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 实例化 委托</span></span><br><span class="line">            <span class="comment">// 委托初始化时可以直接赋值, 也可以使用 new 关键字</span></span><br><span class="line">            <span class="comment">// 当 &quot;待委托方法&quot; 是非静态方法时, 只能传递待委托方法的实例作为参数, 因此这里必须实例化 Program, 并写 &quot;program.Buy&quot;, 不能只写 &quot;Buy&quot;.</span></span><br><span class="line">            Program program = <span class="keyword">new</span> Program();</span><br><span class="line">            DelegateBuy delegateBuy = program.Buy;</span><br><span class="line">            DelegateBuy delegateBuy2 = <span class="keyword">new</span> DelegateBuy(program.Buy);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 调用委托的写法和调用方法的写法一致</span></span><br><span class="line">            Console.WriteLine(delegateBuy(<span class="string">&quot;体力药水&quot;</span>, <span class="number">10</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy(<span class="string">&quot;体力药水&quot;</span>, <span class="number">25</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy2(<span class="string">&quot;魔力药水&quot;</span>, <span class="number">10</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy2(<span class="string">&quot;魔力药水&quot;</span>, <span class="number">5</span>, package));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 暂停</span></span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 待委托的方法</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;itemName&quot;&gt;</span>物品名称<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;num&quot;&gt;</span>物品数量<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;package&quot;&gt;</span>玩家包裹<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">Buy</span>(<span class="params"><span class="built_in">string</span> itemName, <span class="built_in">int</span> num, Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">int</span>&gt; package</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">string</span> str;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (package.ContainsKey(itemName))</span><br><span class="line">            &#123;</span><br><span class="line">                package[itemName] += num;</span><br><span class="line">                str = <span class="built_in">string</span>.Format(<span class="string">&quot;您又购买了&#123;0&#125;个&#123;1&#125;!&quot;</span>, num, itemName);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                package.Add(itemName, num);</span><br><span class="line">                str = <span class="built_in">string</span>.Format(<span class="string">&quot;您购买了&#123;0&#125;个&#123;1&#125;!&quot;</span>, num, itemName);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="委托基本用法示例-静态"><a href="#委托基本用法示例-静态" class="headerlink" title="委托基本用法示例 (静态)"></a>委托基本用法示例 (静态)</h1><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CSharp 起别名的语法规则, 在 namespace 外部书写时必须写全部路径</span></span><br><span class="line"><span class="comment">// using Package = System.Collections.Generic.Dictionary&lt;string, int&gt;;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">MyDelegateTest</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// CSharp 起别名的语法规则, 在 namespace 内部书写的时候可以嵌套引用 namespace 外的 using</span></span><br><span class="line">    <span class="keyword">using</span> Package = Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">int</span>&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 定义一个委托类, 指明待委托方法的特征: 1. 返回值 (string) 2. 参数 (string, int, Package)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">delegate</span> <span class="built_in">string</span> <span class="title">DelegateBuy</span>(<span class="params"><span class="built_in">string</span> itemName, <span class="built_in">int</span> num, Package package</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 实例化 玩家包裹</span></span><br><span class="line">            Package package = <span class="keyword">new</span> Package();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 实例化 委托</span></span><br><span class="line">            <span class="comment">// 当 &quot;待委托方法&quot; 是静态方法时, 可以直接将静态方法作为参数传递.</span></span><br><span class="line">            DelegateBuy delegateBuy = Program.Buy;</span><br><span class="line">            DelegateBuy delegateBuy2 = <span class="keyword">new</span> DelegateBuy(Program.Buy);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 调用委托的写法和调用方法的写法一致</span></span><br><span class="line">            Console.WriteLine(delegateBuy(<span class="string">&quot;体力药水&quot;</span>, <span class="number">10</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy(<span class="string">&quot;体力药水&quot;</span>, <span class="number">25</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy2(<span class="string">&quot;魔力药水&quot;</span>, <span class="number">10</span>, package));</span><br><span class="line">            Console.WriteLine(delegateBuy2(<span class="string">&quot;魔力药水&quot;</span>, <span class="number">5</span>, package));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 暂停</span></span><br><span class="line">            Console.ReadKey();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> 待委托的方法</span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;itemName&quot;&gt;</span>物品名称<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;num&quot;&gt;</span>物品数量<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;package&quot;&gt;</span>玩家包裹<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">string</span> <span class="title">Buy</span>(<span class="params"><span class="built_in">string</span> itemName, <span class="built_in">int</span> num, Dictionary&lt;<span class="built_in">string</span>, <span class="built_in">int</span>&gt; package</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">string</span> str;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (package.ContainsKey(itemName))</span><br><span class="line">            &#123;</span><br><span class="line">                package[itemName] += num;</span><br><span class="line">                str = <span class="built_in">string</span>.Format(<span class="string">&quot;您又购买了&#123;0&#125;个&#123;1&#125;!&quot;</span>, num, itemName);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                package.Add(itemName, num);</span><br><span class="line">                str = <span class="built_in">string</span>.Format(<span class="string">&quot;您购买了&#123;0&#125;个&#123;1&#125;!&quot;</span>, num, itemName);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> str;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Action-和-Func"><a href="#Action-和-Func" class="headerlink" title="Action 和 Func"></a>Action 和 Func</h1><p>在实例化委托的时候, 不仅仅可以使用自己定义的委托, 还可以使用 csharp 中已经定义好的两个泛型委托: <strong><code>Action&lt;&gt;</code></strong> 和 <strong><code>Func&lt;&gt;</code></strong> 来实例化 (强烈建议使用).</p>
+<h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><p><strong>Action&lt;&gt;</strong> 待委托的方法都是没有返回值的方法, 参数使用泛型进行指定.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Action a; <span class="comment">// 实例化出一个待委托方法特征为没有返回值, 没有参数的委托实例 a</span></span><br><span class="line">Action&lt;<span class="built_in">string</span>&gt; b; <span class="comment">// 实例化出一个待委托方法特征为没有返回值, 有一个 string 类型参数的委托实例 b</span></span><br><span class="line">Action&lt;<span class="built_in">string</span>, <span class="built_in">int</span>[]&gt; c; <span class="comment">// 实例化出一个待委托方法特征为没有返回值, 具有一个 string, 一个 int 数组参数的委托实例 c</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Func"><a href="#Func" class="headerlink" title="Func"></a>Func</h2><p><strong>Func&lt;&gt;</strong> 待委托的方法都是具有返回值的方法. 使用泛型来指定参数和返回值. 其中泛型中的最后一个类型为返回值的类型.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Func&lt;<span class="built_in">string</span>&gt; a; <span class="comment">// 实例化出一个待委托方法特征为没有参数, 返回值类型为 string 的委托实例 a</span></span><br><span class="line">Func&lt;<span class="built_in">string</span>, <span class="built_in">int</span>&gt; b; <span class="comment">// 实例化出一个待委托方法特征为有一个 string 类型的参数, 返回值为 int 类型的委托实例 b</span></span><br><span class="line">Func&lt;<span class="built_in">int</span>, <span class="built_in">string</span>, <span class="built_in">int</span>[]&gt; c; <span class="comment">// 实例化出一个待委托方法特征为有两个 类型分别为 int 和 string 类型的参数, 返回值为 int 数组类型的委托实例 c</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ol>
+<li><p>delegate 和 Delegate 的区别:</p>
+<p> Delegate 是类, delegate 是关键字.</p>
+</li>
+<li><p>定义委托</p>
+<p> 不再自定义委托, 使用 Action&lt;&gt; 和 Func&lt;&gt;.</p>
+</li>
+<li><p>实例化委托</p>
+<p> 使用泛型指明待委托方法的特征.</p>
+</li>
+<li><p>Action 和 Func</p>
+<p> Action&lt;&gt; 指明无返回值, Func&lt;&gt; 最后一个泛型类型指明返回值.</p>
+</li>
+<li><p>委托的基本用法</p>
+<p> 可以通过委托来调用方法.</p>
+</li>
+</ol>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8xMzMxNTkw">理解委托类型<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/about/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/csharp/csharp_delegate_01.html" title="委托(一) 委托的基本用法">https://kuroha.vip/csharp/csharp_delegate_01.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" rel="tag"><i class="fa fa-tag"></i> 编程基础</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/hexo/hexo_update.html" rel="prev" title="Hexo 3.9.0 + NexT 7.2.0 => Hexo 5.1.0 + NexT 8.0.0">
+                  <i class="fa fa-angle-left"></i> Hexo 3.9.0 + NexT 7.2.0 => Hexo 5.1.0 + NexT 8.0.0
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/csharp/csharp_delegate_02.html" rel="next" title="委托(二) 委托与 "回调和回调函数"">
+                  委托(二) 委托与 "回调和回调函数" <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">94k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">5:43</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>

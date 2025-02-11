@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="委托的初始化以及匿名方法和 Lambda, 还有多播委托!">
+<meta property="og:type" content="article">
+<meta property="og:title" content="委托(三) 委托的初始化">
+<meta property="og:url" content="https://kuroha.vip/csharp/csharp_delegate_03.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="委托的初始化以及匿名方法和 Lambda, 还有多播委托!">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-21T12:50:03.000Z">
+<meta property="article:modified_time" content="2025-01-20T03:05:14.117Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="编程基础">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://kuroha.vip/csharp/csharp_delegate_03.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/csharp/csharp_delegate_03.html","path":"csharp/csharp_delegate_03.html","title":"委托(三) 委托的初始化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>委托(三) 委托的初始化 | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">47</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">23</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%A7%94%E6%89%98%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">初始化委托对象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lambda"><span class="nav-number">2.</span> <span class="nav-text">Lambda</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E6%92%AD%E5%A7%94%E6%89%98"><span class="nav-number">3.</span> <span class="nav-text">多播委托</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/about/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/csharp/csharp_delegate_03.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="委托(三) 委托的初始化 | 二次元游宅客">
+      <meta itemprop="description" content="委托的初始化以及匿名方法和 Lambda, 还有多播委托!">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          委托(三) 委托的初始化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-09-21 20:50:03" itemprop="dateCreated datePublished" datetime="2020-09-21T20:50:03+08:00">2020-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-20 11:05:14" itemprop="dateModified" datetime="2025-01-20T11:05:14+08:00">2025-01-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CSharp/" itemprop="url" rel="index"><span itemprop="name">CSharp</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">委托的初始化以及匿名方法和 Lambda, 还有多播委托!</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="初始化委托对象"><a href="#初始化委托对象" class="headerlink" title="初始化委托对象"></a>初始化委托对象</h1><p>先定义一个委托类型, 然后使用定义的委托类型实例化一个委托对象.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个委托类型</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="built_in">delegate</span> <span class="built_in">string</span> <span class="title">MyDelegate</span>(<span class="params"><span class="built_in">int</span> a, <span class="built_in">int</span> b</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实例化一个 MyDelegate 类型的委托对象, 此时还没有初始化</span></span><br><span class="line">MyDelegate myDelegate;</span><br></pre></td></tr></table></figure>
+
+<p><code>MyDelegate myDelegate</code> 只是实例化出了一个空的委托对象, 没有内容, 必须对其初始化. 委托的初始化方式经历了几种变化:</p>
+<blockquote>
+<p>C# 1.0 中, 使用 &quot;在代码中其他位置定义函数&quot; 的方法, <strong>显式</strong>初始化委托.</p>
+<p>C# 2.0 引入了 <strong>匿名方法</strong> 的概念, 以一种可在委托调用中执行的 &quot;未命名内联语句块&quot; 的方式来初始化委托.</p>
+<p>C# 3.0 引入了 <strong>Lambda 表达式</strong> 或者 <strong>Lambda 语句块</strong>, 这是另一种匿名方法的书写形式, 但更具表现力并且更简练.</p>
+<p>通常, 面向 .NET Framework 3.5 或更高版本的应用程序应使用 Lambda (λ) 表达式或 Lambda 语句块来初始化委托.</p>
+</blockquote>
+<ol>
+<li>第一种: [C# 1.0] 写法上和初始化类一样, 使用 New 关键字.</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化 myDelegate 委托</span></span><br><span class="line">myDelegate = <span class="keyword">new</span> MyDelegate(program.Add);</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>第二种: [C# 1.0] 写法上和初始化值类型一样, 直接赋值.</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化 myDelegate (直接赋值)</span></span><br><span class="line">myDelegate = program.Add;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>第三种: [C# 2.0] 使用匿名方法的原始写法进行初始化</li>
+</ol>
+<p>匿名方法同样是使用 delegate 关键字定义 (强烈建议不再使用匿名方法, 了解即可, 转而使用 Lambda 表达式或 Lambda 语句块), 返回值无需特别指明, 只需使用 return 来指明返回值及其类型即可, 匿名方法参数的指明方式和普通方法的指明方式一致, 但是必须和委托定义时声明的方法签名吻合.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">myDelegate = <span class="built_in">delegate</span> (<span class="built_in">int</span> a, <span class="built_in">int</span> b)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> (a + b).ToString();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>第四种: [C# 3.0] 使用匿名方法的简化写法--Lambda 表达式或 Lambda 语句块进行初始化 (强烈建议使用!)</li>
+</ol>
+<p>Lambda 表达式和 Lambda 语句块也是委托初始化的一种手段, 它比匿名方法更为简洁, 而且不会混淆 (谁让委托类型的定义和匿名方法的定义使用同样的关键字的, 唉... 乱套了吧... 我瞎说的~~), 总之正如微软文档说的一样, 学习使用 lambda 表达式吧, 为什么呢? 因为如果你不会的话, 连别人的程序都看不懂啊😥</p>
+<h1 id="Lambda"><a href="#Lambda" class="headerlink" title="Lambda"></a>Lambda</h1><ol>
+<li><p>Lambda 的特征符号是: <code>=&gt;</code>. &#x3D;&gt; 符号的左边是参数, 使用小括号 ( ) 括起来, 右侧是语句或表达式, 当右侧是语句时, 必须使用大括号 { } 括起来, 当右侧是表达式时, 则不能带有大括号, 且表达式只能有一句.</p>
+</li>
+<li><p>Lambda 中右侧是语句时, 使用 return 语句来指明返回值及其类型, 返回值的类型必须符合委托的要求.</p>
+ <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Func&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt; funA = (<span class="built_in">int</span> x, <span class="built_in">int</span> y) =&gt; &#123; <span class="keyword">return</span> x + y; &#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Lambda 中参数的类型可以注明, 如上面的例子, 也可以省略, 如下面的例子.</p>
+ <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Func&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt; funB = (x, y) =&gt; &#123; <span class="keyword">return</span> x * y; &#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Lambda 中的参数, 当且仅当只有一个时, 小括号可以省略.</p>
+ <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Func&lt;<span class="built_in">int</span>, <span class="built_in">int</span>&gt; funC = x =&gt; &#123; <span class="keyword">return</span> x * <span class="number">2</span>; &#125;; <span class="comment">// 当且仅当只有一个时, 小括号可以省略.</span></span><br><span class="line"></span><br><span class="line">Func&lt;<span class="built_in">float</span>&gt; funD = () =&gt; &#123; <span class="keyword">return</span> <span class="number">3.1415926f</span>; &#125;; <span class="comment">// 零个参数时, 小括号不可以省略.</span></span><br><span class="line"></span><br><span class="line">Func&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt; funE = (x, y, z) =&gt; &#123; <span class="keyword">return</span> x * <span class="number">2</span> + y * <span class="number">3</span> + z * <span class="number">4</span>; &#125;; <span class="comment">// 两个及以上参数时, 小括号不可以省略.</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Lambda 中右侧是表达式时, 大括号必须去掉, 并且此时 <font color='red'><strong>return 也必须省略</strong></font>, 因为 return 是语句, 不是表达式.</p>
+ <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Func&lt;<span class="built_in">int</span>, <span class="built_in">int</span>, <span class="built_in">int</span>&gt; funF = (x, y) =&gt; x * y; <span class="comment">// 大括号和 return 必须同时存在, 或同时去掉.</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>大括号存在时, 大括号中只能写 <font color='red'><strong>语句</strong></font>. 此时称为: <strong>Lambda 语句块</strong>. 或者说当书写语句时, 必须用 <font color='red'><strong>语句块符号 { }</strong></font> 括起来.</p>
+</li>
+<li><p>大括号不存在时, 则只能写 <font color='red'><strong>表达式</strong></font>, 并且 <font color='red'><strong>表达式只能写一句</strong></font> . 此时称为: <strong>Lambda 表达式</strong>.</p>
+ <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">myDelegate = (a, b) =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> (a + b).ToString();</span><br><span class="line">&#125;; <span class="comment">// Lambda 语句块</span></span><br><span class="line"></span><br><span class="line">Action action = () =&gt; Console.WriteLine(<span class="string">&quot;action&quot;</span>); <span class="comment">// Lambda 表达式</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="多播委托"><a href="#多播委托" class="headerlink" title="多播委托"></a>多播委托</h1><p>前面讲了委托的四种初始化方式全部都是使用了 <strong><code>=</code></strong> 运算符, 其实委托还可以通过 <strong><code>+= -=</code></strong> 运算符进行注册和取消注册, 而且可以实现多播委托.</p>
+<ul>
+<li><p>多播委托: <font color='red'><strong>一个委托实例一次性委托多个实例方法, 调用委托时会依次调用所有被委托的方法</strong></font>.</p>
+</li>
+<li><p><font color='red'><strong>委托不仅仅可以 (取消) 注册方法, 也可以 (取消) 注册委托</strong></font>!</p>
+</li>
+</ul>
+<p>下表是 <strong><code>+</code></strong> 和 <strong><code>-</code></strong> 的运算规则:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Expression</th>
+<th align="left">Result</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">null + d1</td>
+<td align="left">d1</td>
+</tr>
+<tr>
+<td align="left">d1 + null</td>
+<td align="left">d1</td>
+</tr>
+<tr>
+<td align="left">d1 + d2</td>
+<td align="left">[d1, d2]</td>
+</tr>
+<tr>
+<td align="left">d1 + [d2, d3]</td>
+<td align="left">[d1, d2, d3]</td>
+</tr>
+<tr>
+<td align="left">[d1, d2] + [d2, d3]</td>
+<td align="left">[d1, d2, d2, d3]</td>
+</tr>
+<tr>
+<td align="left">[d1, d2] - d1</td>
+<td align="left">d2</td>
+</tr>
+<tr>
+<td align="left">[d1, d2] - d2</td>
+<td align="left">d1</td>
+</tr>
+<tr>
+<td align="left">[d1, d2, d1] - d1</td>
+<td align="left">[d1, d2]</td>
+</tr>
+<tr>
+<td align="left">[d1, d2, d3] - [d1, d2]</td>
+<td align="left">d3</td>
+</tr>
+<tr>
+<td align="left">[d1, d2, d3] - [d2, d1]</td>
+<td align="left">[d1, d2, d3]</td>
+</tr>
+<tr>
+<td align="left">[d1, d2, d3, d1, d2] - [d1, d2]</td>
+<td align="left">[d1, d2, d3]</td>
+</tr>
+<tr>
+<td align="left">[d1, d2] - [d1, d2]</td>
+<td align="left">null</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/about/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/csharp/csharp_delegate_03.html" title="委托(三) 委托的初始化">https://kuroha.vip/csharp/csharp_delegate_03.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" rel="tag"><i class="fa fa-tag"></i> 编程基础</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/csharp/csharp_delegate_02.html" rel="prev" title="委托(二) 委托与 "回调和回调函数"">
+                  <i class="fa fa-angle-left"></i> 委托(二) 委托与 "回调和回调函数"
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/csharp/csharp_parameter.html" rel="next" title="存储类型和传递方式">
+                  存储类型和传递方式 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">94k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">5:43</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>

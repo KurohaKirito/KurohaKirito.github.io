@@ -1,0 +1,3 @@
+# 谷歌
+User-agent: Googlebot
+Sitemap: https://kuroha.vip/sitemap.txt

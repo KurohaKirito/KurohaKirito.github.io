@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="最近在开发一个工具套件, 想把套件独立出来并设置好程序集, 于是研究了一下自定义程序集相关的事情">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity 中自定义程序集的使用以及程序集的划分">
+<meta property="og:url" content="https://kuroha.vip/unity/unity_asmdef.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="最近在开发一个工具套件, 想把套件独立出来并设置好程序集, 于是研究了一下自定义程序集相关的事情">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/images/unity/asmdef1.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity/asmdef2.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity/asmdef3.png">
+<meta property="article:published_time" content="2024-03-23T17:14:47.000Z">
+<meta property="article:modified_time" content="2025-01-20T03:05:14.124Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="Unity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/images/unity/asmdef1.png">
+
+
+<link rel="canonical" href="https://kuroha.vip/unity/unity_asmdef.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/unity/unity_asmdef.html","path":"unity/unity_asmdef.html","title":"Unity 中自定义程序集的使用以及程序集的划分"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Unity 中自定义程序集的使用以及程序集的划分 | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">47</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">23</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%98%E6%96%B9%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">官方说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E9%9B%86%E7%9A%84%E5%88%92%E5%88%86"><span class="nav-number">2.</span> <span class="nav-text">程序集的划分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E5%AE%9A%E4%B9%89%E7%A8%8B%E5%BA%8F%E9%9B%86-Predefined-assembly"><span class="nav-number">2.1.</span> <span class="nav-text">预定义程序集 (Predefined assembly)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E7%BC%96%E8%AF%91%E7%A8%8B%E5%BA%8F%E9%9B%86-Precompiled-assembly"><span class="nav-number">2.2.</span> <span class="nav-text">预编译程序集 (Precompiled assembly)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%A8%8B%E5%BA%8F%E9%9B%86-Project-assembly"><span class="nav-number">2.3.</span> <span class="nav-text">自定义程序集 (Project assembly)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E7%A8%8B%E5%BA%8F%E9%9B%86"><span class="nav-number">3.</span> <span class="nav-text">为什么要使用自定义程序集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%90%94%E5%8E%9F%E5%9B%A0%E4%B8%80-%E5%8F%AF%E4%BB%A5%E9%9D%9E%E5%B8%B8%E6%9C%89%E6%95%88%E4%B8%94%E6%98%8E%E7%A1%AE%E5%9C%B0%E5%88%92%E5%88%86%E4%BB%A3%E7%A0%81%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB"><span class="nav-number">3.1.</span> <span class="nav-text">🐔原因一 : 可以非常有效且明确地划分代码之间的依赖关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A6%84%E5%8E%9F%E5%9B%A0%E4%BA%8C-%E6%96%B9%E4%BE%BF%E5%AE%9E%E7%8E%B0%E9%80%BB%E8%BE%91%E7%9A%84%E7%83%AD%E6%9B%B4%E6%96%B0"><span class="nav-number">3.2.</span> <span class="nav-text">🦄原因二 : 方便实现逻辑的热更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%91%BD%E5%8E%9F%E5%9B%A0%E4%B8%89-%E5%BC%80%E5%8F%91%E6%97%B6%E5%8A%A0%E5%BF%AB%E4%BB%A3%E7%A0%81%E7%BC%96%E8%AF%91%E9%80%9F%E5%BA%A6"><span class="nav-number">3.3.</span> <span class="nav-text">👽原因三 : 开发时加快代码编译速度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%88%92%E5%88%86%E7%A8%8B%E5%BA%8F%E9%9B%86"><span class="nav-number">4.</span> <span class="nav-text">如何划分程序集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E9%9B%86%E6%96%87%E4%BB%B6%E7%9A%84%E9%80%89%E9%A1%B9%E8%A7%A3%E9%87%8A"><span class="nav-number">5.</span> <span class="nav-text">程序集文件的选项解释</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Allow-unsafe-Code"><span class="nav-number">5.1.</span> <span class="nav-text">Allow &#39;unsafe&#39; Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Auto-Referenced"><span class="nav-number">5.2.</span> <span class="nav-text">Auto Referenced</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#No-Engine-References"><span class="nav-number">5.3.</span> <span class="nav-text">No Engine References</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Root-Namespace"><span class="nav-number">5.4.</span> <span class="nav-text">Root Namespace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Assembly-Definition-References"><span class="nav-number">5.5.</span> <span class="nav-text">Assembly Definition References</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Override-References"><span class="nav-number">5.6.</span> <span class="nav-text">Override References</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Platforms"><span class="nav-number">5.7.</span> <span class="nav-text">Platforms</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Define-Constraints"><span class="nav-number">5.8.</span> <span class="nav-text">Define Constraints</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E5%BC%95%E7%94%A8"><span class="nav-number">6.</span> <span class="nav-text">循环引用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E4%B8%BE%E4%BE%8B"><span class="nav-number">7.</span> <span class="nav-text">设置举例</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/about/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/unity/unity_asmdef.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Unity 中自定义程序集的使用以及程序集的划分 | 二次元游宅客">
+      <meta itemprop="description" content="最近在开发一个工具套件, 想把套件独立出来并设置好程序集, 于是研究了一下自定义程序集相关的事情">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity 中自定义程序集的使用以及程序集的划分
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-03-24 01:14:47" itemprop="dateCreated datePublished" datetime="2024-03-24T01:14:47+08:00">2024-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-20 11:05:14" itemprop="dateModified" datetime="2025-01-20T11:05:14+08:00">2025-01-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">最近在开发一个工具套件, 想把套件独立出来并设置好程序集, 于是研究了一下自定义程序集相关的事情</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="官方说明"><a href="#官方说明" class="headerlink" title="官方说明"></a>官方说明</h1><p>先引用一下官方自己对自定义程序集的解释, 官方手册中的说明已经非常详细了, 下面是手册链接</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVuaXR5M2QuY29tL01hbnVhbC9TY3JpcHRDb21waWxhdGlvbkFzc2VtYmx5RGVmaW5pdGlvbkZpbGVzLmh0bWw=">Assembly<i class="fa fa-external-link-alt"></i></span></p>
+<p>手册上已经有的我就不重复赘述了, 说明一下我在使用过程中的一些经验</p>
+<h1 id="程序集的划分"><a href="#程序集的划分" class="headerlink" title="程序集的划分"></a>程序集的划分</h1><p>程序集划分为: <code>预定义程序集</code> 和 <code>预编译程序集</code> 和 <code>自定义程序集</code></p>
+<h2 id="预定义程序集-Predefined-assembly"><a href="#预定义程序集-Predefined-assembly" class="headerlink" title="预定义程序集 (Predefined assembly)"></a>预定义程序集 (Predefined assembly)</h2><p>预定义程序集指的是 Unity 引擎自己预先定义好的一些程序集, 比如项目代码会生成的 <code>Assembly-CSharp</code> 和 <code>Assembly-CSharp-Editor</code>, 还有引擎程序集, 比如 <code>UnityEngine</code>, <code>UnityEditor</code> 等</p>
+<h2 id="预编译程序集-Precompiled-assembly"><a href="#预编译程序集-Precompiled-assembly" class="headerlink" title="预编译程序集 (Precompiled assembly)"></a>预编译程序集 (Precompiled assembly)</h2><p>手册原文解释</p>
+<blockquote>
+<p>A precompiled assembly is a library compiled outside your Unity Project.</p>
+</blockquote>
+<p>很字面意思, 即在 Unity 项目外预先编译好的程序集, 例如 <code>DoTween.dll</code></p>
+<h2 id="自定义程序集-Project-assembly"><a href="#自定义程序集-Project-assembly" class="headerlink" title="自定义程序集 (Project assembly)"></a>自定义程序集 (Project assembly)</h2><p>只有使用 <strong>自定义程序集文件</strong> 所定义的程序集才是自定义程序集, 在官方手册中被称为 <code>Project assembly</code></p>
+<h1 id="为什么要使用自定义程序集"><a href="#为什么要使用自定义程序集" class="headerlink" title="为什么要使用自定义程序集"></a>为什么要使用自定义程序集</h1><h2 id="🐔原因一-可以非常有效且明确地划分代码之间的依赖关系"><a href="#🐔原因一-可以非常有效且明确地划分代码之间的依赖关系" class="headerlink" title="🐔原因一 : 可以非常有效且明确地划分代码之间的依赖关系"></a>🐔原因一 : 可以非常有效且明确地划分代码之间的依赖关系</h2><p>不使用自定义程序集划分, 代码会被编译到 <code>Assembly-CSharp.dll</code> 中, 所有的代码都在一个程序集中 (不考虑编辑器代码, 不要鸡蛋里挑骨头), 那么所有的代码之间都可以相互引用, 并且没有任何限制, 在如今 IDE 都可以自动补全命名空间的情况下, 使用命名空间来区分完全不现实, 命名空间目前基本就一个作用了, 让类的命名不再那么小心翼翼, 可以使用重名类, 不在一个空间下就行了</p>
+<p>使用自定义程序集来手动划分代码所属程序集, 解开 <code>游戏框架</code> - <code>逻辑模块</code> - <code>插件</code> - <code>开发库</code> 之间的耦合; 同时因为程序集之间如果不明确引用的话, 在代码中是无法使用的, 可以有效防止新手程序员乱写, 这种规范性问题如果仅仅靠程序员的能力来自觉维护是不可能的</p>
+<h2 id="🦄原因二-方便实现逻辑的热更新"><a href="#🦄原因二-方便实现逻辑的热更新" class="headerlink" title="🦄原因二 : 方便实现逻辑的热更新"></a>🦄原因二 : 方便实现逻辑的热更新</h2><p>可以手动划分出热更程序集, 用于热更新</p>
+<h2 id="👽原因三-开发时加快代码编译速度"><a href="#👽原因三-开发时加快代码编译速度" class="headerlink" title="👽原因三 : 开发时加快代码编译速度"></a>👽原因三 : 开发时加快代码编译速度</h2><p>这个是手册中就提到的事情, 通过有效划分程序集, 可以实现当修改了上层程序集的代码时, 编译时只会重新编译代码所属的程序集, 节省编译时间, 当然这一点的实现需要合理的程序集划分, 因为当程序集重新编译时, 引用了此程序集的程序集也需要重新编译</p>
+<p>以下面的图为例, 当仅仅修改了 <code>main.dll</code> 中的代码时, 那么只有 <code>main.dll</code> 会进行重新编译</p>
+<p>但是如果修改了 <code>Library.dll</code> 中的代码, 那么 <code>Main.dll</code>, <code>Stuff.dll</code>, <code>Library.dll</code> 三个程序集都需要重新编译, 因此合理的程序集划分非常重要</p>
+<p><img data-src="/images/unity/asmdef1.png" alt="程序集划分"></p>
+<h1 id="如何划分程序集"><a href="#如何划分程序集" class="headerlink" title="如何划分程序集"></a>如何划分程序集</h1><p>程序集的划分要参考上面所说的 3 个目的去划分, 都需要结合实际项目说明, 这里举例子的话就只说明一些最基本的划分底限, 也就是绝对需要遵守的规则</p>
+<ul>
+<li><font color=red><strong>不使用 Assembly-CSharp 程序集</strong></font></li>
+</ul>
+<p>这里的意思并不是说要删除掉这个程序集, 而是需要控制项目中的代码全部使用自定义程序集来划分, 任何项目代码都不许被编译到主程序集中.</p>
+<p>这里的项目代码指的也只是项目开发中自己所编写的代码, 像很多插件库, 他们一般有自己的程序集划分, 但是也可能没有啊, 这部分代码并不是我们自己开发的, 我们可以自己去给他划分程序集, 也可以不划分, 可以大致参考手册图片中的划分方式划分即可. (当然这个图也就仅供参考了)</p>
+<ul>
+<li><font color=red><strong>库, 框架, 工具集, 逻辑模块都需要单独设立程序集</strong></font></li>
+</ul>
+<p>开发时使用的开发库需要有自己的程序集, 包括框架, 工具集, 各个逻辑模块都需要有自己的程序集, 具体的划分就需要按照项目自己制定了</p>
+<h1 id="程序集文件的选项解释"><a href="#程序集文件的选项解释" class="headerlink" title="程序集文件的选项解释"></a>程序集文件的选项解释</h1><p>对 Unity 中程序集文件各个选项的进一步解释, 补充手册的不足, 下文中的 <code>此程序集</code> 都是指这个选项所归属的程序集</p>
+<h2 id="Allow-unsafe-Code"><a href="#Allow-unsafe-Code" class="headerlink" title="Allow &#39;unsafe&#39; Code"></a>Allow &#39;unsafe&#39; Code</h2><p>字面意思, 允许使用 &#39;unsafe&#39;, 不解释, 用到就勾, 用不到就不勾.</p>
+<p><font color=red><strong>Allow &#39;unsafe&#39; Code : 按需设置, 基本用不到</strong></font></p>
+<h2 id="Auto-Referenced"><a href="#Auto-Referenced" class="headerlink" title="Auto Referenced"></a>Auto Referenced</h2><p>这个是手册里面的解释</p>
+<blockquote>
+<p>Specify whether the predefined assemblies should reference this Project assembly.</p>
+</blockquote>
+<p>新手可能看起来有点晕, 我直接说明效果, 勾选选项后, 在 <code>Assembly-CSharp.dll</code> 中的代码才能引用此程序集中的代码, 不勾选的话是无法引用此程序集代码的</p>
+<p>这对于一些老项目而言非常有用, 因为老项目的代码基本都是在 <code>Assembly-CSharp.dll</code> 中, 这时候独立出来的一些自定义程序集就必须都勾选此选项, 让主程序集能够引用自己.</p>
+<p>而新项目如果根据上面的程序集划分准则划分程序集的话, 则不要勾选此选项, 而是在需要引用此程序集的地方手动设置引用</p>
+<p><font color=red><strong>Auto Referenced : 旧项目推荐勾选, 方便省事</strong></font></p>
+<p><font color=red><strong>Auto Referenced : 新项目一律不勾选</strong></font></p>
+<h2 id="No-Engine-References"><a href="#No-Engine-References" class="headerlink" title="No Engine References"></a>No Engine References</h2><p>字面意思, 如果程序集中的代码完全不需要使用 <code>UnityEditor</code> 和 <code>UnityEngine</code> 等引擎相关代码, 那就可以勾选</p>
+<p><font color=red><strong>No Engine References : 按需设置</strong></font></p>
+<h2 id="Root-Namespace"><a href="#Root-Namespace" class="headerlink" title="Root Namespace"></a>Root Namespace</h2><p>设置根命名空间的, 这个选项极其具有误导性, 上面的选项都是优化程序集设置的, 设置后或多或少都会对程序集造成影响, 但是这个选项不会, 是的, 你没有看错, <strong>这个选项不会对程序集造成任何影响! 这个选项不会对程序集造成任何影响! 这个选项不会对程序集造成任何影响!</strong></p>
+<p>这个选项的作用只是为了方便程序编写代码, 设置此选项后, 在此目录下新建代码文件, Unity 引擎会自动在代码中生成命名空间的代码, 仅此而已.</p>
+<p>另外说明一下, 这个只是一个代码自动生成的辅助功能, 不要以为这里设置了命名空间, 代码中就不需要写了, 不是的, 代码中自动生成的那行 namespace 可不能删除哦.</p>
+<p>最后再说一下, 只有通过 Unity 创建代码文件的时候才会生效, <strong>在 IDE 中此设置并没有效果</strong>!</p>
+<p><font color=red><strong>Root Namespace : 无所谓, 看你心情</strong></font></p>
+<h2 id="Assembly-Definition-References"><a href="#Assembly-Definition-References" class="headerlink" title="Assembly Definition References"></a>Assembly Definition References</h2><p>这个列表即设置此程序集需要引用的其他程序集, 包括<code>预定义程序集</code>和<code>其他自定义程序集</code>, 而预编译程序集的引用不在这里设置, 而是下面的 <code>Override References</code> 中设置</p>
+<p><font color=red><strong>Assembly Definition Referencess : 按需设置</strong></font></p>
+<h2 id="Override-References"><a href="#Override-References" class="headerlink" title="Override References"></a>Override References</h2><p>这个是对预编译程序集 (Precompiled assembly) 引用的设置, 不勾选的话, 此程序集会引用全部的预编译程序集, 勾选后则需要手动设置</p>
+<p><font color=red><strong>Override References : 旧项目推荐不勾选, 方便省事</strong></font></p>
+<p><font color=red><strong>Override References : 新项目一律勾选</strong></font></p>
+<h2 id="Platforms"><a href="#Platforms" class="headerlink" title="Platforms"></a>Platforms</h2><p>字面意思, 程序集的平台兼容性设置, 可以设置程序集仅在哪些平台上编译</p>
+<p><font color=red><strong>Platforms : 按需设置</strong></font></p>
+<h2 id="Define-Constraints"><a href="#Define-Constraints" class="headerlink" title="Define Constraints"></a>Define Constraints</h2><p>这个也很好理解, 宏控制, 代码编写中也经常使用类似的功能, 很有用.</p>
+<p>比如你写了一个库, 这个库可能只有在满足了某种条件下才能使用, 此时就可以使用宏来控制此程序集是否编译, 如果项目中没有此宏, 程序集是不会编译的, 可以放心大胆的放到项目中</p>
+<p><font color=red><strong>Define Constraints : 按需设置</strong></font></p>
+<h1 id="循环引用"><a href="#循环引用" class="headerlink" title="循环引用"></a>循环引用</h1><p>设置程序集引用关系的时候, 一定要避循环引用, 即 <code>A 引用 B, B 引用 A</code></p>
+<p>前面说过, 程序集重新编译时, 引用此程序集的程序集也会被触发重新编译, 那么 A 重新编译时, 触发了 B 重新编译, 然后 B 的重新编译又触发了 A 重新编译... 编译器: ? ? ? 你 TM 在搞我 ? ? ?</p>
+<p>不过设置了循环引用后, 引擎也会报错的, 所以注意一下就好</p>
+<h1 id="设置举例"><a href="#设置举例" class="headerlink" title="设置举例"></a>设置举例</h1><p><img data-src="/images/unity/asmdef2.png" alt="程序集划分"></p>
+<p><img data-src="/images/unity/asmdef3.png" alt="程序集划分"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/about/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/unity/unity_asmdef.html" title="Unity 中自定义程序集的使用以及程序集的划分">https://kuroha.vip/unity/unity_asmdef.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Unity/" rel="tag"><i class="fa fa-tag"></i> Unity</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/program/regular_common.html" rel="prev" title="使用正则表达式捕获分组并使用分组">
+                  <i class="fa fa-angle-left"></i> 使用正则表达式捕获分组并使用分组
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/program/regular_assert.html" rel="next" title="正则表达式 断言">
+                  正则表达式 断言 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">94k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">5:43</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>

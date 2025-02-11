@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Git 确实能满足版本管理时各种奇葩的要求😂">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 和 Fork">
+<meta property="og:url" content="https://kuroha.vip/git/git_learn.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="Git 确实能满足版本管理时各种奇葩的要求😂">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/images/git/file-struct.png">
+<meta property="og:image" content="https://kuroha.vip/images/git/account-1.png">
+<meta property="og:image" content="https://kuroha.vip/images/git/account-2.png">
+<meta property="og:image" content="https://kuroha.vip/images/git/local-repositories-1.png">
+<meta property="og:image" content="https://kuroha.vip/images/git/tabs-workspace-1.png">
+<meta property="og:image" content="https://kuroha.vip/images/git/tabs-workspace-2.png">
+<meta property="og:image" content="https://kuroha.vip/images/git/remote-repositories-1.png">
+<meta property="og:image" content="https://kuroha.vip/images/git/remote-repositories-2.png">
+<meta property="og:image" content="https://kuroha.vip/images/git/auto-fetch-1.png">
+<meta property="og:image" content="https://kuroha.vip/images/git/rebase-interactive-1.png">
+<meta property="og:image" content="https://kuroha.vip/images/git/git-squash-1.png">
+<meta property="og:image" content="https://kuroha.vip/images/git/reset-commit-1.png">
+<meta property="og:image" content="https://kuroha.vip/images/git/ignore_case.png">
+<meta property="article:published_time" content="2021-03-02T07:13:22.000Z">
+<meta property="article:modified_time" content="2025-01-20T03:05:14.120Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/images/git/file-struct.png">
+
+
+<link rel="canonical" href="https://kuroha.vip/git/git_learn.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/git/git_learn.html","path":"git/git_learn.html","title":"Git 和 Fork"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Git 和 Fork | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">47</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">23</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF-Windows"><span class="nav-number">1.</span> <span class="nav-text">用户信息 (Windows)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%BA%A7%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.</span> <span class="nav-text">系统级用户信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E7%BA%A7%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-number">1.2.</span> <span class="nav-text">全局级用户信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%93%E5%BA%93%E7%BA%A7%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-number">1.3.</span> <span class="nav-text">仓库级用户信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Git-%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">Git 版本控制结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#branch-name-%E5%92%8C-HEAD"><span class="nav-number">3.</span> <span class="nav-text">branch-name 和 HEAD</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Git-GitHub-%E5%92%8C-GitLab"><span class="nav-number">4.</span> <span class="nav-text">Git, GitHub 和 GitLab</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-%E5%91%BD%E4%BB%A4"><span class="nav-number">4.1.</span> <span class="nav-text">Git 命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%AF%B9%E5%BC%95%E7%94%A8-HEAD-position"><span class="nav-number">4.2.</span> <span class="nav-text">相对引用 (HEAD-position)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E5%BD%A2%E5%AE%A2%E6%88%B7%E7%AB%AF-Fork"><span class="nav-number">5.</span> <span class="nav-text">图形客户端 Fork</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E8%AE%BE%E7%BD%AE"><span class="nav-number">5.1.</span> <span class="nav-text">用户信息设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93"><span class="nav-number">5.2.</span> <span class="nav-text">添加本地仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%B7%A5%E4%BD%9C%E5%8C%BA"><span class="nav-number">5.3.</span> <span class="nav-text">多工作区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">5.4.</span> <span class="nav-text">添加远程仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Lunch"><span class="nav-number">5.5.</span> <span class="nav-text">Quick Lunch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fetch"><span class="nav-number">5.6.</span> <span class="nav-text">Fetch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pull"><span class="nav-number">5.7.</span> <span class="nav-text">Pull</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Push"><span class="nav-number">5.8.</span> <span class="nav-text">Push</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#checkout"><span class="nav-number">5.9.</span> <span class="nav-text">checkout</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C"><span class="nav-number">6.</span> <span class="nav-text">进阶操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cherry-pick"><span class="nav-number">6.1.</span> <span class="nav-text">cherry-pick</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rebase-interactive"><span class="nav-number">6.2.</span> <span class="nav-text">rebase interactive</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tags-describe"><span class="nav-number">6.3.</span> <span class="nav-text">tags &amp;&amp; describe</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%A4%84%E7%90%86"><span class="nav-number">7.</span> <span class="nav-text">问题处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%B6%88%E9%99%A4%E5%86%97%E4%BD%99%E6%8F%90%E4%BA%A4-Squash-Reset"><span class="nav-number">7.1.</span> <span class="nav-text">如何消除冗余提交 Squash &amp;&amp; Reset</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E4%BA%A7%E7%94%9F%E5%86%97%E4%BD%99%E6%8F%90%E4%BA%A4-commit-amend"><span class="nav-number">7.2.</span> <span class="nav-text">如何避免产生冗余提交 commit --amend</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BF%AE%E6%94%B9%E4%B9%8B%E5%89%8D%E6%8F%90%E4%BA%A4%E7%9A%84%E5%90%8C%E6%97%B6%E9%81%BF%E5%85%8D%E4%BA%A7%E7%94%9F%E5%86%97%E4%BD%99%E6%8F%90%E4%BA%A4"><span class="nav-number">7.3.</span> <span class="nav-text">如何修改之前提交的同时避免产生冗余提交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-merge-%E8%BF%98%E6%98%AF-rebase"><span class="nav-number">7.4.</span> <span class="nav-text">使用 merge 还是 rebase</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%9C%89%E6%95%88%E9%81%BF%E5%85%8D-git-%E6%96%87%E4%BB%B6%E4%BD%93%E7%A7%AF%E5%A2%9E%E5%A4%A7"><span class="nav-number">7.5.</span> <span class="nav-text">如何有效避免 .git 文件体积增大</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%AE%A9-Git-%E8%AF%86%E5%88%AB%E6%96%87%E4%BB%B6%E5%90%8D%E7%A7%B0%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%86%99%E5%8F%98%E5%8C%96"><span class="nav-number">7.6.</span> <span class="nav-text">如何让 Git 识别文件名称的大小写变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-Git-%E4%B8%AD%E6%96%87%E4%BB%B6%E7%9A%84%E4%BF%AE%E6%94%B9%E7%BA%AA%E5%BD%95%E4%BC%9A%E5%8F%91%E7%94%9F%E8%B7%B3%E8%B7%83-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%AC%E6%AC%A1%E7%9A%84%E4%BF%AE%E6%94%B9%E4%B8%8D%E6%98%AF%E4%BB%A5%E4%B8%8A%E6%AC%A1%E7%9A%84%E7%BB%93%E6%9E%9C%E4%B8%BA%E5%9F%BA%E5%87%86"><span class="nav-number">7.7.</span> <span class="nav-text">为什么 Git 中文件的修改纪录会发生跳跃 ? 为什么本次的修改不是以上次的结果为基准 ?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%96%87%E4%BB%B6%E4%B8%AD%E4%BC%9A%E6%AE%8B%E7%95%99%E5%86%B2%E7%AA%81%E6%8F%8F%E8%BF%B0%E6%96%87%E6%9C%AC"><span class="nav-number">8.</span> <span class="nav-text">为什么文件中会残留冲突描述文本 ?</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/about/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/git/git_learn.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Git 和 Fork | 二次元游宅客">
+      <meta itemprop="description" content="Git 确实能满足版本管理时各种奇葩的要求😂">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git 和 Fork
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-02 15:13:22" itemprop="dateCreated datePublished" datetime="2021-03-02T15:13:22+08:00">2021-03-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-20 11:05:14" itemprop="dateModified" datetime="2025-01-20T11:05:14+08:00">2025-01-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>23 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">Git 确实能满足版本管理时各种奇葩的要求😂</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<p>推荐一个 Git 的学习网站, 以游戏的方式来学习 Git. <span class="exturl" data-url="aHR0cHM6Ly9sZWFybmdpdGJyYW5jaGluZy5qcy5vcmcvP2xvY2FsZT16aF9DTg==">点我<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="用户信息-Windows"><a href="#用户信息-Windows" class="headerlink" title="用户信息 (Windows)"></a>用户信息 (Windows)</h1><p>Windows 系统的用户文件夹下有一个 <strong>.gitconfig</strong> 文件, 这个文件中存储了 git 的全局设置, 包括提交时的用户名以及邮件地址, 还可以设置一些 git 长命令的别名, 用于简化操作.</p>
+<p>Git 版本库中每一个 commit 节点都有一个提交者, 这个提交者<strong>默认</strong>就是用户文件夹下 <strong>.gitconfig</strong> 文件中配置的用户名和邮件地址. 但是如果不同的仓库需要不同的提交者怎么办呢?</p>
+<p>Git 版本库在所使用的提交者信息有 3 个层级, 分别是: <strong>仓库级 local</strong>, <strong>全局级 global</strong>, <strong>系统级 system</strong>.</p>
+<h2 id="系统级用户信息"><a href="#系统级用户信息" class="headerlink" title="系统级用户信息"></a>系统级用户信息</h2><p>系统级的配置文件是 <strong>Git安装目录&#x2F;etc&#x2F;gitconfig</strong> 文件, 这个文件中的配置优先级最低, 会被另外两个配置文件中的配置所覆盖.</p>
+<h2 id="全局级用户信息"><a href="#全局级用户信息" class="headerlink" title="全局级用户信息"></a>全局级用户信息</h2><p>全局级的配置文件是 <strong>用户文件夹&#x2F;.gitconfig</strong> 文件, 这是一个隐藏文件, 其中最重要的设置就是保存了默认的用户信息. 由于这里保存的是默认信息, 因此除非配置错误, 否则不要修改 <strong>.gitconfig</strong> 中的配置.</p>
+<h2 id="仓库级用户信息"><a href="#仓库级用户信息" class="headerlink" title="仓库级用户信息"></a>仓库级用户信息</h2><p>仓库级的配置文件是 <strong>仓库文件夹&#x2F;.get&#x2F;config</strong> 文件. 只要在这个文件中给你再次配置一个 <strong>[user]</strong> 信息便可以实现不同的仓库使用不同的提交者信息.</p>
+<h1 id="Git-版本控制结构"><a href="#Git-版本控制结构" class="headerlink" title="Git 版本控制结构"></a>Git 版本控制结构</h1><p>Git 在实现版本控制时的结构如下图:</p>
+<p><img data-src="/images/git/file-struct.png" alt="文件结构"></p>
+<p>其中的 <strong>Repository</strong>, <strong>Index</strong>, <strong>Workspace</strong> 为本地文件, <strong>Remote</strong> 是远程文件.</p>
+<p>在克隆远程仓库之后的整个文件夹就是我们的仓库目录, 其中除了 .git 文件夹以外的文件及文件夹称为工作区, 默认情况下, 同目录下的 .git 文件夹保存了这个仓库的版本提交信息.</p>
+<p>图中各个图标的解释:</p>
+<ul>
+<li>workspace: 工作区, 我们实质的项目文件.</li>
+<li>Repository: 本地的版本控制信息. 位于 .git 文件夹中, 其中保存了从开始进行版本控制以来所有的提交记录, 后面的暂存区也在这个文件夹中.</li>
+<li>Index: 暂存区, 我们所有改动在提交之前都必须先放到暂存区中. 也在 .git 文件夹中. Fork 软件中的 Stage 命令就是将改动保存到暂存区.</li>
+<li>Remote: 远程服务器上的文件.</li>
+</ul>
+<h1 id="branch-name-和-HEAD"><a href="#branch-name-和-HEAD" class="headerlink" title="branch-name 和 HEAD"></a>branch-name 和 HEAD</h1><p>branch-name 和 HEAD 都不是提交信息, 这两个都只是一个游标, 它们指向特定的节点.</p>
+<p><strong>HEAD</strong> 也称作 <strong>current branch</strong>, 是一个<strong>指向当前工作区所处位置</strong>的游标, 主要由 <code>checkout</code> 命令控制, HEAD 不仅可以指向分支名, 也可以直接指向某个提交节点.</p>
+<p>在签出本地仓库中的一个分支时, HEAD 便会指向这个分支名, 比如签出了 bugFix 分支, 则: <strong>HEAD-&gt;bugFix-&gt;bugFix-commit</strong>.</p>
+<p>在签出远程仓库中的一个分支时, HEAD 会变成<strong>分离状态</strong>, 比如签出了 bugFix 分支, 则: <strong>HEAD-&gt;bugFix-commit</strong>. 这样是为了保证用户必须在自己新建的本地分支上工作, 不能直接在远程分支上进行修改和提交, 生成 commit 节点.</p>
+<h1 id="Git-GitHub-和-GitLab"><a href="#Git-GitHub-和-GitLab" class="headerlink" title="Git, GitHub 和 GitLab"></a>Git, GitHub 和 GitLab</h1><p>Git 是一个分布式版本控制工具, 一个仓库所有的提交记录全部保存在 <strong>.git</strong> 文件夹中. 随着项目的开发, .git 文件夹的体积会越来越大.</p>
+<p>GitHub 是一个注重点为 <strong>开源</strong> 的代码托管网站, 他的特点就是仅支持 Git 作为版本控制工具, 并且提供了很多 Git 相关的便利操作, GitHub 和 Git 是完全不同的两个事物. 由于 GitHub 的注重点为开源, 因为对于开发闭源软件的团队而言, GitHub 就不适用了.</p>
+<p>GitLab 是一个面向企业团队的代码托管网站, 和 GitHub 非常相似, 最大的不同就是 GitLab 上的仓库是隐私的(现在 GitHub 也可以创建私有仓库了😂), 而且提供了更好的隐私权限管理工具, 适合公司的内部团队使用.</p>
+<h2 id="Git-命令"><a href="#Git-命令" class="headerlink" title="Git 命令"></a>Git 命令</h2><ul>
+<li><code>git init</code>: 创建一个初始的 git 版本库 (git 仓库).</li>
+<li><code>git add</code>: 将当前的改动提交至暂存区 (暂存区一般称为: <strong>stage</strong> 或 <strong>index</strong>).</li>
+<li><code>git commit</code>: 提交到本地版本库, 提交后会在本地版本库中会新增一个节点.</li>
+<li><code>git branch new-branch-name</code>: 在当前位置新建一个分支, 但是并不会立即签出到新的分支上.</li>
+<li><code>git branch new-branch-name HEAD-position</code> : 在指定位置新建一个分支, 不会立即签出到新的分支上.</li>
+<li><code>git branch -f branch-name HEAD-position</code>: 强制修改特定分支到指定的 HEAD 位置. 不会修改节点信息, 只会修改分支名 (<strong>分支名是一个游标</strong>).</li>
+<li><code>git checkout branch-name</code>: 签出到特定分支上, 修改 HEAD 指向指定的分支名.</li>
+<li><code>git checkout -b new-branch-name</code>: 在当前位置新建一个分支, 并签出到这个新分支上.</li>
+<li><code>git checkout -b new-branch-name HEAD-position</code>: 在指定的位置新建一个分支, 并签出到这个新分支上.</li>
+<li><code>git merge branch-name</code>: 将特定分支<strong>归并</strong>到当前分支中, 合并分支的一种方式, 提交树中会有明显的合并痕迹. <strong>归并模式</strong></li>
+<li><code>git rebase branch-name</code>: 将当前分支<strong>移动</strong>到特定分支中, 合并分支的另一种方式, 由于是直接移动, 所以被合并的分支会消失. <strong>移动模式</strong></li>
+<li><code>git rebase branch-name-a branch-name-b</code>: 将分支 b <strong>移动</strong>到分支 a 中.</li>
+<li><code>git reset branch-name^</code>: 将当前分支撤销一步提交, 具有 3 种撤销方式. <font color='red'>仅对本地有效</font> [<strong>推荐使用</strong>]</li>
+<li><code>git revert branch-name</code>: 将当前分支撤销一步提交. <font color='red'>本地和远程都有效</font> [<strong>不推荐使用</strong>]</li>
+</ul>
+<h2 id="相对引用-HEAD-position"><a href="#相对引用-HEAD-position" class="headerlink" title="相对引用 (HEAD-position)"></a>相对引用 (HEAD-position)</h2><ul>
+<li><code>git checkout branch-name^/~number</code>: 相对引用.<ul>
+<li><code>git checkout main^</code> : 将 HEAD 修改为 main 分支回退 1 次后的节点.</li>
+<li><code>git checkout bugFix~4</code> : 将 HEAD 修改为 bugFix 分支回退 4 次后的节点.</li>
+<li><code>git checkout HEAD^</code> : 将 HEAD 回退 1 次. <font color='red'>HEAD 必须大写</font></li>
+<li><code>git checkout HEAD~4</code> : 将 HEAD 回退 4 次.</li>
+</ul>
+</li>
+</ul>
+<h1 id="图形客户端-Fork"><a href="#图形客户端-Fork" class="headerlink" title="图形客户端 Fork"></a>图形客户端 Fork</h1><h2 id="用户信息设置"><a href="#用户信息设置" class="headerlink" title="用户信息设置"></a>用户信息设置</h2><p>在仓库名的右侧有一个设置按钮, 可以对自己提交时的用户信息进行设置.</p>
+<p><img data-src="/images/git/account-1.png" alt="用户信息"></p>
+<p>勾选 <strong>Use global git credentials</strong> 时会使用全局级设置, 在需要单独设置用户信息时, 需要取消勾选并设置自己的用户信息.</p>
+<p><img data-src="/images/git/account-2.png" alt="用户信息"></p>
+<h2 id="添加本地仓库"><a href="#添加本地仓库" class="headerlink" title="添加本地仓库"></a>添加本地仓库</h2><p>如果本地已经有仓库了, 可以将仓库直接添加到 Fork 中. 点击 <code>File-&gt;New Tab</code>, 打开一个新的标签页, 或者直接点击标签栏最右侧的 <strong>+</strong> 号也可以创建新 Tab 页.</p>
+<p><img data-src="/images/git/local-repositories-1.png" alt="本地仓库"></p>
+<p>将自己本地的仓库文件夹 (<strong>内部有一个 .git 文件夹的文件夹</strong>) 直接拖到 <strong>Repositories</strong> 处即可添加本地仓库. 另外还可以在 <strong>Repositories</strong> 处, 右键&#x3D;&gt;新建文件夹, 进行仓库的整理和归类. 双击添加的仓库即可打开仓库.</p>
+<h2 id="多工作区"><a href="#多工作区" class="headerlink" title="多工作区"></a>多工作区</h2><p>在 Fork 中每一个标签页 (Tab) 就是一个仓库的信息, 可以在一个窗口中打开多个仓库, 这样上方就会同时出现多个 Tab 页.</p>
+<p><img data-src="/images/git/tabs-workspace-1.png" alt="多标签页"></p>
+<p>但是不同的工作内容 (修复 Bug; 新增功能; 修改美术或音频资源) 可能需要用到不同的仓库, 不同的分支, 此时多标签页已经无法满足要求了.</p>
+<p>这个时候可以使用多工作区来解决. 在软件的右上角有一个 <strong>Workspaces</strong> 按钮可以对工作区进行设置. 这个按钮上显示的文字是当前工作区的名称.</p>
+<p><img data-src="/images/git/tabs-workspace-2.png" alt="多工作区"></p>
+<p>可以理解为一个窗口一个工作区, 不同的工作区中可以放不同的标签页, 并且可以很方便的来回切换. 具体的自己去配置一下试试吧.</p>
+<h2 id="添加远程仓库"><a href="#添加远程仓库" class="headerlink" title="添加远程仓库"></a>添加远程仓库</h2><p>在仓库的下方有 <strong>Branches</strong> 和 <strong>Remotes</strong>, Branches 里面的是本地仓库的分支情况, Remotes 则是远程仓库中的分支情况.</p>
+<p><img data-src="/images/git/remote-repositories-1.png" alt="远程仓库"></p>
+<p>Remotes 中可以配置多个远端仓库, 虽然只能同时引用其中的一个, 但是可以随时修改引用哪一个仓库. 这个引用 git 中叫做<strong>追踪关系(tracking)</strong>.</p>
+<p>在 <strong>Remotes</strong> 上右键, <strong>Add New Remote</strong>, 填入远程仓库的名称以及网络地址即可.</p>
+<p><img data-src="/images/git/remote-repositories-2.png" alt="远程仓库"></p>
+<p>本地的版本库信息 (也就是提交记录) 保存在本地仓库的 .git 文件夹内, 同样远端仓库的版本库信息保存在远端服务器的 .git 文件夹内. 添加远端服务器之后需要使用 <strong>Fetch</strong> 命令来拉取远程仓库中的版本信息, 拉取完之后就可以展开看到目前远端仓库中所有的分支了, 没有拉取的时候是没有左侧的三角号的, 也不能点击. 后面会说明 Fetch 命令, 当然你可以现在就跳转: <a href="#command-fetch">Fetch 命令</a></p>
+<h2 id="Quick-Lunch"><a href="#Quick-Lunch" class="headerlink" title="Quick Lunch"></a>Quick Lunch</h2><p>说一下上方的几个按钮, 首先是 Quick Launch, 这是一个快速操作入口, 点击后会弹出一个窗口, 里面有很多常用的操作可以快速执行, 找不到需要的操作时可以进行搜索.</p>
+<p><span id='command-fetch'></span></p>
+<h2 id="Fetch"><a href="#Fetch" class="headerlink" title="Fetch"></a>Fetch</h2><p>场景 1: 我们在刚来公司的时候克隆 (clone) 了远端仓库的所有内容, 此时我们本地仓库和远程仓库是一模一样的, 然后我们找到需要工作的分支, 新建分支开始工作, 工作了一周之后, 我们本地的 .git 版本库中新增了很多我们自己的提交, 但是你会发现整个的提交树中并没有这一周内其他人的提交情况, 因为其他人的提交情况全部保存在他们自己的电脑上或者他们 push 到了远端的 .git 文件夹内.</p>
+<p>场景 2: 我们在 Fork 上新加了一个远程仓库, 但是这个仓库的提交信息却没有任何显示, 怎么都找不到, 明明远程是有提交信息的.</p>
+<p>这时候就需要使用 <strong>fetch</strong> 了, 这个命令可以将远程仓库中的提交记录拉取到本地, 这样我们也就可以看到其他人的工作情况了. 在 Fork 软件中点击 Fetch, 选择要拉取哪个仓库的信息, 之后拉取即可.</p>
+<p>fetch 命令完成了很重要的两步:</p>
+<ul>
+<li>从远程仓库下载本地仓库中缺失的提交记录</li>
+<li>更新提交树中的远程分支游标</li>
+</ul>
+<p>[<strong>注</strong>]</p>
+<ul>
+<li><p>Fork 的默认配置中会自动进行 Fetch, 每次在打开一个标签页或者切换标签页的时候都会自动 Fetch, 我这里是选择了关闭这个自动 Fetch, 因为他让我失去了一部分掌控感, 还是自己需要 Fetch 的时候手动去 Fetch 一下更有实感! 😂</p>
+<p>  <img data-src="/images/git/auto-fetch-1.png" alt="自动-Fetch"></p>
+</li>
+<li><p>fetch 只是拉取一遍提交记录, 也就是软件界面中间部分的提交树信息, 所以一般在需要查看目前仓库的提交情况时使用这个命令, 另外因为 fetch 不会对文件做任何的改动, 所以基本上来说这个按钮可以随便点. 当设置了多个远程仓库的时候, 点击 fetch 需要选择拉取的仓库.</p>
+</li>
+</ul>
+<h2 id="Pull"><a href="#Pull" class="headerlink" title="Pull"></a>Pull</h2><p>pull 也是拉取远端服务器的数据, 和 fetch 不同的是, pull 在拉取之后会将刚刚拉取的节点合并到当前签出的分支上. 等于先执行 fetch 命令, 之后执行 merge 命令.</p>
+<p>应用场景: 我们签出了远程分支 origin&#x2F;feature, 一周后在本地进行了一次提交, 但是在这一周内 origin&#x2F;feature 分支在远程仓库上进行了新的提交, 此时就需要先拉取远程仓库的提交, 之后再将刚刚拉取的远程节点合并到我们的本地分支上. 要实现这个效果可以先执行 fetch 命令, 之后执行 merge 或者 rebase 命令, 也可以直接执行 pull 命令.</p>
+<table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">等效命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">pull</td>
+<td align="left">fetch + merge</td>
+</tr>
+<tr>
+<td align="left">pull --rebase</td>
+<td align="left">fetch + rebase</td>
+</tr>
+</tbody></table>
+<h2 id="Push"><a href="#Push" class="headerlink" title="Push"></a>Push</h2><p>Push 和 Pull 相反, Push 是将本地 .git 文件夹中的提交记录上传到远程服务器中. 比如要修改一个 Bug, 我们先找到 Bug 存在的分支, 之后新建一个分支开始工作, 工作过程中产生了很多的提交, 这些新的提交信息我们在本地都是可以清楚的看到的, 但是远程服务器中是没有这些提交信息的, 甚至连我们新建的那个分支都没有... 此时我们就可以使用 Push 命令将我们的工作情况上传上去. 第一次提交时由于我们是新建的分支, 远程版本库是没有的, 因此提交的时候软件会默认在远程版本库上新建一条同名的分支, 这是 Git 的默认操作, 我们不需要进行额外操作. 此时他人使用 Fetch 命令就可以看到我们的提交记录了.</p>
+<p>push 默认上传的时当前签出的分支, 可以使用参数将指定的分支进行上传.</p>
+<ul>
+<li><code>push remote-repository-name branch-name</code> : 将本地的 branch-name 分支上传到远程的 branch-name 分支. 此时本地分支和远程分支同名.</li>
+<li><code>push remote-repository-name local-branch-name:remote-branch-name</code> : 将本地的 local-branch-name 分支上传到远程的 remote-branch-name 分支. 此时本地分支和远程分支不同名, 并且 local-branch-name 也可以直接写一个节点. 记得本地位置和远程分支之间必须使用冒号 : 连接.</li>
+<li><code>push remote-repository-name :remote-branch-name</code> : 本地分支参数省略时, 此命令的效果是<strong>删除远程的 remote-branch-name 分支</strong>.</li>
+</ul>
+<h2 id="checkout"><a href="#checkout" class="headerlink" title="checkout"></a>checkout</h2><p>Checkout 是签出操作, 将当前仓库中的所有文件变成指定分支中的样子. 一旦签出, 我们的工作区就和分支中的完全相同, 因此在切换分支的时候必须对当前分支上所作的变动全部保存或者直接提交.</p>
+<h1 id="进阶操作"><a href="#进阶操作" class="headerlink" title="进阶操作"></a>进阶操作</h1><h2 id="cherry-pick"><a href="#cherry-pick" class="headerlink" title="cherry-pick"></a>cherry-pick</h2><p>cherry-pick 命令可以选择性地将提交树上其他分支的提交记录<strong>复制</strong>过来追加到 HEAD 上, 需要知道节点的 hash 值.</p>
+<p><code>cherry-pick node1-hash [node2-hash] [node3-hash]</code> : 将节点 1 2 3 转移到当前分支上.</p>
+<p>[<strong>注</strong>] <font color='red'>未合并的节点所作的改变将被丢弃</font>.</p>
+<p>在命令行中 cherry-pick 是这样使用的, 但是在 Fork 软件中怎么使用呢?</p>
+<p>场景想象: 我们在自己的工作分支上工作, 其中做了 5 次提交: a, b c d e, 这些提交中的 a, c, e 是真正有效的提交, 虽然 b, d 两次提交也作出了修改, 但是 b 中的修改全部都是 Debug 时用的测试代码, d 中的提交也全部都是 Print 时输出信息用的代码. 这些代码不需要合并到主分支上, 就是说这两次提交需要舍弃, 那么此时就可以使用 cherry-pick 了.</p>
+<p>首先将工作分支上的改动全部<strong>提交</strong>, 之后签出到要合并的<strong>主分支</strong>上, 如 develop 分支, 之后<strong>同时选中</strong>需要合并的 a, c, e 节点, 右键, 选择<strong>Cherry-pick...</strong> 就可以将 a, c, e <strong>复制</strong>到主分支上了. 由于 cherry-pick 是复制操, 所以我们自己的工作分支还是保持不变的, 后面可以选择是否进行删除操作.</p>
+<h2 id="rebase-interactive"><a href="#rebase-interactive" class="headerlink" title="rebase interactive"></a>rebase interactive</h2><p>命令格式: <code>git rebase -i HEAD-position</code></p>
+<p>直译为: <strong>交互式 rebase</strong>, 使用此命令会打开 UI 界面, 对指定范围的节点进行自定义操作, 下图中是所有可以做的操作.</p>
+<p><img data-src="/images/git/rebase-interactive-1.png" alt="交互式 rebase"></p>
+<p>和 cherry-pick 一样, 被舍弃 (Drop) 的节点中所做的改变也会被舍弃.</p>
+<p><code>git rebase -i HEAD~4</code> : 对当前节点以及前面的 3 个节点 (共 4 个节点) 进行自定义操作. 由于是<strong>移动</strong>模式, 所以被修改的节点会在原分支消失, 直接被移动到了主分支.</p>
+<h2 id="tags-describe"><a href="#tags-describe" class="headerlink" title="tags &amp;&amp; describe"></a>tags &amp;&amp; describe</h2><p>Git 中有一个标签功能 (<strong>里程碑</strong>功能). 标签(里程碑)的作用就是一个不可变的永久指针, 它指向最初定义它的位置. 当发布了一个全新版本, 或者进行了一个大型重构等都可以使用标签对那次重大提交打一个 &quot;标记&quot;.</p>
+<p><code>git tag tag-name node-name</code> : 在指定的节点上新建一个标签(里程碑).</p>
+<p>标签(里程碑)主要是用来定位, 可以使用 <code>git describe</code> 命令来进行定位, 命令返回的格式为: <strong>[tag-name]-[step-number]-[position-hash]</strong>.</p>
+<ul>
+<li><code>git describe</code> : 距离当前最近的里程碑到当前位置的提交次数. 假设当前节点 hash 为 c2, 是 v1 版本提交了 12 次后的结果, 则此命令返回: v1-12-c2.</li>
+<li><code>git describe main</code> : 距离 main 分支最近的里程碑到 main 分支的提交次数. 假设 main 分支 hash 为 c3, 是 v2 版本提交了 5 次后的结果, 则此命令返回: v2-5-c3.</li>
+<li><code>git describe develop</code> : 距离 develop 分支最近的里程碑到 develop 分支的提交次数. 假设 develop 分支 hash 为 c6, 是 v4 版本提交了 7 次后的结果, 则此命令返回: v4-7-c6.</li>
+</ul>
+<h1 id="问题处理"><a href="#问题处理" class="headerlink" title="问题处理"></a>问题处理</h1><h2 id="如何消除冗余提交-Squash-Reset"><a href="#如何消除冗余提交-Squash-Reset" class="headerlink" title="如何消除冗余提交 Squash &amp;&amp; Reset"></a>如何消除冗余提交 Squash &amp;&amp; Reset</h2><p>情景: 在工作时由于进行了多次不必要的提交, 所以提交树上产生了很多冗余的提交, 这对于强迫症来讲是坚决不能忍受的. 比如下图中在编写 Git 博客的时候产生了多次添加图片的冗余提交.</p>
+<p><img data-src="/images/git/git-squash-1.png" alt="冗余提交"></p>
+<ul>
+<li>方案1: 仅适应于本地仓库中的冗余提交, 一旦提交已经 Push 到了服务器上就不推荐使用这个方案了, 虽然理论上行得通, 但是容易出现冲突. 这个方案的想法是使用 Fork 上的 Squash (直译: <strong>压扁</strong>) 来压缩提交数量. 首先将目前工作区所有的改动保存并提交, 之后<strong>同时选中</strong>所有需要压缩的节点 (顺序选择, 不要挑着选, 不然可能会有冲突), 右键, 选择: <strong>Squash into Parent...</strong>, 在弹出的窗口中会出现操作的详情, 窗口左下角默认会勾选备份, 确认无误后就可以点击右下方 Rebase 压缩提交记录了.</li>
+</ul>
+<p>[<strong>注</strong>] 这个操作需要对操作树中的节点具有很强的掌控感, 节点选择多了一个都会导致后期合并起来出问题, 强烈建议使用此操作之前找个空仓库多练习几次.</p>
+<ul>
+<li>方案2: 仅适应于本地或者 Push 到服务器但是还没有合并的情况. 应该说<font color='red'>任何已经合并到主分支的提交都不能由非管理员进行回退!</font> 方案 2 的想法就是使用 Reset 回退提交. Reset 的回退有 3 种方式, 每个对应的参数以及效果见下图.</li>
+</ul>
+<p><img data-src="/images/git/reset-commit-1.png" alt="回退提交"></p>
+<p>使用 Reset 回退之后 Push 到远端时默认会报错, 因为将一个旧的提交去覆盖新的提交肯定不行, 此时就需要使用 <strong>强制提交</strong>, 强制覆盖掉远端的提交记录.</p>
+<h2 id="如何避免产生冗余提交-commit-amend"><a href="#如何避免产生冗余提交-commit-amend" class="headerlink" title="如何避免产生冗余提交 commit --amend"></a>如何避免产生冗余提交 commit --amend</h2><ol>
+<li><p>第一种方案: <code>git commit –amend</code> 命令在提交时不会生成新的提交记录, 而是直接修改当前 HEAD 指向的节点, 这样就不会产生冗余的提交记录了, 但是 Fork 软件中好像没有这个功能. (我没有找到)</p>
+</li>
+<li><p>第二种方案: 使用 Reset 命令先消除之前的无意义提交再重新提交, 回退时使用 Soft 方式即可. 完全掌控的情况下使用默认的 Mixed 方式也可以.</p>
+</li>
+<li><p>第三种方案: 使用 Stash 功能.(<strong>推荐</strong>)</p>
+<ul>
+<li>适用情景: 当前我们在 A 分支上正在非常聚精会神加高度专注地实现一个屌炸天的模块, 思如泉涌, 简直键盘如飞地在编写代码~~~~然后这时, 收到一封邮件反馈出一个 bug, 非常严重, 必须马上解决, 优先级为 0 !!! 于是, 我们需要立即签出到 B 分支上 checkout 新的分支进行工作, 但是我们那个屌炸天的功能还没完成怎么办? 如果直接提交的话就会出现一个无意义的提交啊!! 咋整??</li>
+<li>使用 stash 命令. Stash 命令用来保存当前工作进度, 会把暂存区和工作区的改动保存起来, 在提交树中会显示为一个抽屉(?或者箱子?), <strong>不会生成 commit 节点</strong>.</li>
+</ul>
+</li>
+</ol>
+<h2 id="如何修改之前提交的同时避免产生冗余提交"><a href="#如何修改之前提交的同时避免产生冗余提交" class="headerlink" title="如何修改之前提交的同时避免产生冗余提交"></a>如何修改之前提交的同时避免产生冗余提交</h2><p>场景: 当前在工作分支上有 3 次提交: a, b, c, 其中 b 提交仅仅只是提交了一个美术素材, 但是现在需要修改这个美术素材的分辨率, 怎么办? 虽然可以直接在当前位置修改然后再创建一个提交 d, 但是这样提交就乱套了.</p>
+<ol>
+<li><p>第一种方案: 使用 <code>rebase -i</code> 来调整 a, b, c 的提交顺序为: a, c, b, 之后使用 <code>commit --amend</code> 修改 b 提交, 最后再次使用 <code>rebase -i</code> 把提交顺序换回去. 但是这个方案中 rebase 很容易产生冲突, 所以弃用.</p>
+</li>
+<li><p>第二种方案: 首先使用 <code>cherry-pick</code> 将 b 单独取出来到一个新分支上, 之后在新分支上对 b 进行修改, 提交后为 b2, 然后将 b2, c 这两个提交  <code>cherry-pick</code> 到另一个新分支上, 之后使用这个新分支继续工作, 这样可以保证不会产生冲突. 最后那两个旧分支可以删除.</p>
+</li>
+</ol>
+<h2 id="使用-merge-还是-rebase"><a href="#使用-merge-还是-rebase" class="headerlink" title="使用 merge 还是 rebase"></a>使用 merge 还是 rebase</h2><p>先看一下 rebase 和 merge 相比时, rebase 的优缺点:</p>
+<ul>
+<li><p>rebase 的优点: rebase 使提交树变得很干净, 所有的提交都在一条线上, 不会保留工作时的分支记录.</p>
+</li>
+<li><p>rebase 的缺点: rebase 修改了提交树的历史, 比如, commit A 可以被 rebase 到 B 之后, 从提交树中看的话 A 中的工作是在 B 之后进行的, 但是实际上是在 B 之前.</p>
+</li>
+</ul>
+<p>因此如果没有这方面的规定的话, 使用 merge 还是 rebase 取决于个人爱好, 如果你喜欢保留所有的提交历史, 这样从提交树中看来浏览整个项目的发展历程, 那么你自然需要使用 merge, 如果你不喜欢那些历史性的分支, 而是喜欢看到一颗非常干净的提交树, 那么你自然需要使用 rebase. 这东西仁者见仁, 智者见智.</p>
+<h2 id="如何有效避免-git-文件体积增大"><a href="#如何有效避免-git-文件体积增大" class="headerlink" title="如何有效避免 .git 文件体积增大"></a>如何有效避免 .git 文件体积增大</h2><p>首先最重要的就是必须设置 .gitignore 文件, 这个是提交前必做的事项, 项目中全部的临时文件都不能上传到 Git 上, 其他的就是一句话概括: <font color='red'><strong>禁止提交大文件</strong></font>!</p>
+<p>当然这也太笼统了, 哈哈!</p>
+<p>Git 最害怕的就是无法进行内容修改比对的文件, 比如图片, 音频文件, 这些文件一旦修改了, Git 只能重新保存一份新的数据, 无法像文本文件, 代码文件那样仅保存改动信息, 因此这些文件如果提交到了 Git 上则需要确保不能进行频繁修改. 规避掉这一点就能有效避免 .git 文件夹体积过大.</p>
+<h2 id="如何让-Git-识别文件名称的大小写变化"><a href="#如何让-Git-识别文件名称的大小写变化" class="headerlink" title="如何让 Git 识别文件名称的大小写变化"></a>如何让 Git 识别文件名称的大小写变化</h2><p>Git 默认不区分文件名大小变化.</p>
+<p>首先我们创建一个文件叫 readme.txt, 编辑内容, 之后提交, 推送到远程仓库.</p>
+<p>然后我们在本地修改文件名为 Readme.txt, 之后再次提交, 但是此时会发现 Git 检测不到任何变化.</p>
+<p>原因是 Git 默认对于文件名大小写是不敏感的, 所以当我们仅修改了文件名的大小写时, Git 并没有检测到任何改动.</p>
+<p>解决方案: 在仓库目录中打开 Git 终端, 输入 <code>git config core.ignorecase false</code>, 回车即可.</p>
+<p>执行完之后在仓库级别的 (不明白看文章开头) 配置文件中就会多一行配置</p>
+<p><img data-src="/images/git/ignore_case.png" alt="ignoreCase"></p>
+<p>这样 Git 就可以不会再忽略大小写改动了.</p>
+<h2 id="为什么-Git-中文件的修改纪录会发生跳跃-为什么本次的修改不是以上次的结果为基准"><a href="#为什么-Git-中文件的修改纪录会发生跳跃-为什么本次的修改不是以上次的结果为基准" class="headerlink" title="为什么 Git 中文件的修改纪录会发生跳跃 ? 为什么本次的修改不是以上次的结果为基准 ?"></a>为什么 Git 中文件的修改纪录会发生跳跃 ? 为什么本次的修改不是以上次的结果为基准 ?</h2><p>一句话描述就是发生了<strong>舍弃</strong>操作, 把一部分修改舍弃了</p>
+<p>进行变基或者合并操作时, 修改的内容产生了冲突, 在解决冲突的时候直接舍弃掉了某一方的修改, 这样查看修改记录时就会发现出现了跳跃</p>
+<h1 id="为什么文件中会残留冲突描述文本"><a href="#为什么文件中会残留冲突描述文本" class="headerlink" title="为什么文件中会残留冲突描述文本 ?"></a>为什么文件中会残留冲突描述文本 ?</h1><p>这 TMD 绝对是某些人用了什么诡异的操作, 没有按照正规的变基流程进行变基, 怒!!!</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/about/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/git/git_learn.html" title="Git 和 Fork">https://kuroha.vip/git/git_learn.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Git/" rel="tag"><i class="fa fa-tag"></i> Git</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/unity/unity_load_assets.html" rel="prev" title="Unity 中的动态资源加载">
+                  <i class="fa fa-angle-left"></i> Unity 中的动态资源加载
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/unity_editor/unity_editor.html" rel="next" title="Unity 自定义编辑器">
+                  Unity 自定义编辑器 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">94k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">5:43</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="csharp 中, 变量有变量的存储类型, 参数有参数的传递方式, 明确区分两者是深度理解 csharp 的重要一环.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="存储类型和传递方式">
+<meta property="og:url" content="https://kuroha.vip/csharp/csharp_parameter.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="csharp 中, 变量有变量的存储类型, 参数有参数的传递方式, 明确区分两者是深度理解 csharp 的重要一环.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/images/csharp/parameter.png">
+<meta property="article:published_time" content="2020-09-28T08:10:45.000Z">
+<meta property="article:modified_time" content="2025-01-20T03:05:14.119Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="编程基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/images/csharp/parameter.png">
+
+
+<link rel="canonical" href="https://kuroha.vip/csharp/csharp_parameter.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/csharp/csharp_parameter.html","path":"csharp/csharp_parameter.html","title":"存储类型和传递方式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>存储类型和传递方式 | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">47</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">23</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E7%9A%84%E5%AD%98%E5%82%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">变量的存储类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E7%9A%84%E4%BC%A0%E9%80%92%E6%96%B9%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">参数的传递方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E7%A7%8D-%E5%AD%98%E5%82%A8-%E4%BC%A0%E9%80%92"><span class="nav-number">3.</span> <span class="nav-text">四种 &quot;存储--传递&quot;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%80%BC%E5%AD%98%E5%82%A8-%E5%80%BC%E4%BC%A0%E9%80%92"><span class="nav-number">3.1.</span> <span class="nav-text">值存储--值传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E5%AD%98%E5%82%A8-%E5%80%BC%E4%BC%A0%E9%80%92"><span class="nav-number">3.2.</span> <span class="nav-text">引用存储--值传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%80%BC%E5%AD%98%E5%82%A8-%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92"><span class="nav-number">3.3.</span> <span class="nav-text">值存储--引用传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E7%94%A8%E5%AD%98%E5%82%A8-%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92"><span class="nav-number">3.4.</span> <span class="nav-text">引用存储--引用传递</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ref-out-in"><span class="nav-number">4.</span> <span class="nav-text">ref, out, in</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8-ref"><span class="nav-number">4.1.</span> <span class="nav-text">什么时候用 ref ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8-out"><span class="nav-number">4.2.</span> <span class="nav-text">什么时候用 out ?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#in-%E4%BF%AE%E9%A5%B0%E7%AC%A6%E5%8F%88%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%E5%91%A2"><span class="nav-number">4.3.</span> <span class="nav-text">in 修饰符又有什么用呢?</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#params"><span class="nav-number">5.</span> <span class="nav-text">params</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">6.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/about/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/csharp/csharp_parameter.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="存储类型和传递方式 | 二次元游宅客">
+      <meta itemprop="description" content="csharp 中, 变量有变量的存储类型, 参数有参数的传递方式, 明确区分两者是深度理解 csharp 的重要一环.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          存储类型和传递方式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-09-28 16:10:45" itemprop="dateCreated datePublished" datetime="2020-09-28T16:10:45+08:00">2020-09-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-20 11:05:14" itemprop="dateModified" datetime="2025-01-20T11:05:14+08:00">2025-01-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/CSharp/" itemprop="url" rel="index"><span itemprop="name">CSharp</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">csharp 中, 变量有变量的存储类型, 参数有参数的传递方式, 明确区分两者是深度理解 csharp 的重要一环.</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="变量的存储类型"><a href="#变量的存储类型" class="headerlink" title="变量的存储类型"></a>变量的存储类型</h1><p>csharp 中的存储类型有两种, &quot;值存储&quot; 和 &quot;引用存储&quot;.</p>
+<ol>
+<li><p>引用存储类型是指在堆中存储变量的实际内容, 在栈中存储指向堆中实际内容的指针. 引用储存类型由这两部分组成.</p>
+</li>
+<li><p>值存储类型则是直接存储变量的实际内容, 不保存指向其的指针, 具体存储位置根据值类型的创建位置而定: 如果值类型是在一个方法中创建的, 那么它将跟随方法被压入栈内存中, 如果值类型是在一个引用类型内部创建的, 那么它将跟随这个引用类型存储在堆内存中.</p>
+</li>
+</ol>
+<h1 id="参数的传递方式"><a href="#参数的传递方式" class="headerlink" title="参数的传递方式"></a>参数的传递方式</h1><p>csharp 中的传递方式有两种, &quot;值传递&quot; 和 &quot;引用传递&quot;.</p>
+<ol>
+<li><p>引用传递就是指将变量本身直接作为参数传递到方法内部. 比如你买了一支冰激凌, 朋友是只馋猫, 于是你直接把冰激凌送给了她, 她吃完后, 你也就没有冰激凌了...</p>
+</li>
+<li><p>值传递就是指将变量复制一份, 然后将复制出来的副本传递到方法内部. 就像朋友也想吃的时候, 你去便利店又买了一支一模一样的冰激凌送给了她, 她吃完后, 你的冰激凌还是在自己手中的...自己的是自己的, 她的是她的.</p>
+</li>
+</ol>
+<p><strong>在默认情况下, CLR方法中传递参数的方式都是<font color='red'>值传递</font>! 即使变量采用的是引用存储.</strong></p>
+<h1 id="四种-存储-传递"><a href="#四种-存储-传递" class="headerlink" title="四种 &quot;存储--传递&quot;"></a>四种 &quot;存储--传递&quot;</h1><p>2 种存储类型在 2 种传递方式下就会诞生 4 种情况:</p>
+<h2 id="值存储-值传递"><a href="#值存储-值传递" class="headerlink" title="值存储--值传递"></a>值存储--值传递</h2><p>将一个值存储变量按照默认的传递方式传递就构成了 &quot;值存储--值传递&quot; 的情况.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Program program = <span class="keyword">new</span> Program();</span><br><span class="line"></span><br><span class="line">        <span class="built_in">int</span> param1 = <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">int</span> param2 = <span class="number">2</span>;</span><br><span class="line">        program.Edit(param1, param2);</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(<span class="string">&quot;param1=&#123;0&#125;, param2=&#123;1&#125;&quot;</span>, param1, param2);</span><br><span class="line">        Console.ReadKey();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Edit</span>(<span class="params"><span class="built_in">int</span> param1, <span class="built_in">int</span> param2</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        param1 = <span class="number">3</span>;</span><br><span class="line">        param2 = <span class="number">4</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中, 最终输出的还是:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">param1=<span class="number">1</span>, param2=<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="引用存储-值传递"><a href="#引用存储-值传递" class="headerlink" title="引用存储--值传递"></a>引用存储--值传递</h2><p>将一个引用存储的变量使用默认的传递方式传递就构成了 &quot;引用存储--值传递&quot; 的情况.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Program program = <span class="keyword">new</span> Program();</span><br><span class="line"></span><br><span class="line">        <span class="built_in">string</span> str = <span class="string">&quot;我是测试字符串!&quot;</span>;</span><br><span class="line"></span><br><span class="line">        program.Edit(str);</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(<span class="string">&quot;str=&#123;0&#125;&quot;</span>, str);</span><br><span class="line">        Console.ReadKey();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Edit</span>(<span class="params"><span class="built_in">string</span> str</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        str = <span class="string">&quot;我被修改了!&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中, 最终输出的还是:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str=我是测试字符串!</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Program program = <span class="keyword">new</span> Program();</span><br><span class="line"></span><br><span class="line">        Car car = <span class="keyword">new</span> Car(<span class="number">1000</span>, <span class="string">&quot;价值一千元的车&quot;</span>);</span><br><span class="line"></span><br><span class="line">        program.Edit(car);</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(<span class="string">&quot;price=&#123;0&#125;, name=&#123;1&#125;&quot;</span>, car.price, car.name);</span><br><span class="line">        Console.ReadKey();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Edit</span>(<span class="params">Car param</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        param = <span class="keyword">new</span> Car(<span class="number">10000</span>, <span class="string">&quot;价值一万元的车&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Car</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> price;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Car</span>(<span class="params"><span class="built_in">int</span> param1, <span class="built_in">string</span> param2</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        price = param1;</span><br><span class="line">        name = param2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中, 最终输出的还是:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">price=<span class="number">1000</span>, name=价值一千元的车</span><br></pre></td></tr></table></figure>
+
+<p>第一个例子中 param1 的值是 1, param2 的值是 2, 即使使用了 Edit() 方法进行修改, 这两个变量的值依旧没有变化; 第二个例子中, str 的值也没有发生改变; 第三个例子中, car 指向的是 &quot;价值为一千元的车&quot;, 之后使用了 Edit() 方法进行了修改, 但是 car 指向的还是那辆 &quot;价值为一千元的车&quot;, 对一万元的车视而不见! 由此可见, 值传递之后, 方法中修改的只是变量的副本, 并不会对原变量的值造成任何影响.</p>
+<p>[<strong>注</strong>] 第二个例子中的 <strong>car 变量的值</strong>和 car 所指向的 <strong>price 变量的值, name 变量的值</strong>完全是两码事!</p>
+<h2 id="值存储-引用传递"><a href="#值存储-引用传递" class="headerlink" title="值存储--引用传递"></a>值存储--引用传递</h2><p>之前提到过, <strong>在默认情况下, CLR方法中传递参数的方式都是<font color='red'>值传递</font>! 即使变量采用的是引用存储!</strong> csharp 既然提供了引用传递方式, 自然有其实现方式. <code>ref, in, out</code> 这三个修饰符就是用于修饰参数的, 3 个修饰符的差异先放一边, 只要知道被它们修饰后的参数将使用 &quot;引用传递&quot; 的方式进行传递就可以了.</p>
+<p>当值存储的变量作为参数传递时, 被 <code>ref, out, in</code> 修饰符修饰, 会使用引用传递方式进行传递, 就构成了 &quot;值存储--引用传递&quot; 的情况.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Program program = <span class="keyword">new</span> Program();</span><br><span class="line"></span><br><span class="line">        <span class="built_in">int</span> param1 = <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">int</span> param2 = <span class="number">2</span>;</span><br><span class="line">        program.Edit(<span class="keyword">ref</span> param1, <span class="keyword">ref</span> param2);</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(<span class="string">&quot;param1=&#123;0&#125;, param2=&#123;1&#125;&quot;</span>, param1, param2);</span><br><span class="line">        Console.ReadKey();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Edit</span>(<span class="params"><span class="keyword">ref</span> <span class="built_in">int</span> param1, <span class="keyword">ref</span> <span class="built_in">int</span> param2</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        param1 = <span class="number">3</span>;</span><br><span class="line">        param2 = <span class="number">4</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中, 最终输出的值就变成了:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">param1=<span class="number">3</span>, param2=<span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="引用存储-引用传递"><a href="#引用存储-引用传递" class="headerlink" title="引用存储--引用传递"></a>引用存储--引用传递</h2><p>当引用存储的变量作为参数传递时, 被 <code>ref, out, in</code> 修饰符修饰, 也会使用引用传递方式进行传递, 就构成了 &quot;引用存储--引用传递&quot; 的情况.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Program program = <span class="keyword">new</span> Program();</span><br><span class="line"></span><br><span class="line">        <span class="built_in">string</span> str = <span class="string">&quot;我是测试字符串!&quot;</span>;</span><br><span class="line"></span><br><span class="line">        program.Edit(<span class="keyword">ref</span> str);</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(<span class="string">&quot;str=&#123;0&#125;&quot;</span>, str);</span><br><span class="line">        Console.ReadKey();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Edit</span>(<span class="params"><span class="keyword">ref</span> <span class="built_in">string</span> str</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        str = <span class="string">&quot;我被修改了!&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中, 最终输出的值就变成了:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str=我被修改了!</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Program program = <span class="keyword">new</span> Program();</span><br><span class="line"></span><br><span class="line">        Car car = <span class="keyword">new</span> Car(<span class="number">1000</span>, <span class="string">&quot;价值一千元的车&quot;</span>);</span><br><span class="line"></span><br><span class="line">        program.Edit(<span class="keyword">ref</span> car);</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(<span class="string">&quot;price=&#123;0&#125;, name=&#123;1&#125;&quot;</span>, car.price, car.name);</span><br><span class="line">        Console.ReadKey();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Edit</span>(<span class="params"><span class="keyword">ref</span> Car param</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        param = <span class="keyword">new</span> Car(<span class="number">10000</span>, <span class="string">&quot;价值一万元的车&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Car</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">int</span> price;</span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">string</span> name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Car</span>(<span class="params"><span class="built_in">int</span> param1, <span class="built_in">string</span> param2</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        price = param1;</span><br><span class="line">        name = param2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的例子中, 最终输出的值就变成了:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">price=<span class="number">10000</span>, name=价值一万元的车</span><br></pre></td></tr></table></figure>
+
+<p>第一个例子中 param1 的值是 1, param2 的值是 2, 使用了 Edit() 方法修改后, 这两个变量的值就变成了 3 和 4; 第二个例子中, str 的值也被修改为了 &quot;我被修改了!&quot;; 第三个例子中, car 原本指向的是 &quot;价值为一千元的车&quot;, 之后使用了 Edit() 方法进行了修改, car 便指向了 &quot;价值为一万元的车&quot; ! 由此可见, 引用传递之后, 方法中修改的就是原变量的值.</p>
+<h1 id="ref-out-in"><a href="#ref-out-in" class="headerlink" title="ref, out, in"></a>ref, out, in</h1><p>这三个关键字都可以实现引用传递, 并且引用传递时, ref 和 out 还要求不仅需要在方法签名中声明参数为哪种引用传递, 在调用方法的时候也<strong>必须添加对应的修饰符</strong>, 从上面引用传递的举例中也可以看出, 在调用方法时, 参数中也必须注明 ref 和 out, 但是这三者有什么区别呢?</p>
+<h2 id="什么时候用-ref"><a href="#什么时候用-ref" class="headerlink" title="什么时候用 ref ?"></a>什么时候用 ref ?</h2><p>当你的目的是使用方法处理变量的值的时候, 就可以使用 ref 修饰符了. 因此 ref 有一个这样的语法规则:</p>
+<ul>
+<li>ref 修饰的参数在传递前必须已经初始化了.</li>
+</ul>
+<p>很明显, 这条规则进一步强调了 ref 的运用场景是: 我已经有一吨苹果了, 我现在需要将苹果送入造酒工厂, 让造酒工厂帮我处理这么多苹果! 所以前提是我们必须得先有苹果啊! 😅</p>
+<h2 id="什么时候用-out"><a href="#什么时候用-out" class="headerlink" title="什么时候用 out ?"></a>什么时候用 out ?</h2><p>当你的目的是使用方法造出一个东西的时候, 就可以使用 out 修饰符了. 因此 out 修饰符就没有必须先初始化的限制. 这也是其使用场景决定的: 比如现在造酒工厂已经把苹果酒制作好了, 那么我只需要将酒带回家就可以了, 并不需要提前准备什么.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Program program = <span class="keyword">new</span> Program();</span><br><span class="line"></span><br><span class="line">        program.Cook(<span class="keyword">out</span> <span class="built_in">string</span> food);</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(<span class="string">&quot;food=&#123;0&#125;&quot;</span>, food);</span><br><span class="line">        Console.ReadKey();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Cook</span>(<span class="params"><span class="keyword">out</span> <span class="built_in">string</span> food</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        food = <span class="string">&quot;早餐&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>比如上面的例子, Cook() 方法中的 food 变量并没有初始化, 依旧可以正常输出:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">food=早餐</span><br></pre></td></tr></table></figure>
+
+<h2 id="in-修饰符又有什么用呢"><a href="#in-修饰符又有什么用呢" class="headerlink" title="in 修饰符又有什么用呢?"></a>in 修饰符又有什么用呢?</h2><p>由上面可以就看出, ref 和 out 已经可以涵盖所有的情况了, 为什么还有一个 in 呢? in 自然也是有它的应用场景的.</p>
+<p>某一天你买了一幅名画, 十分贵重, 几乎花光了你至今为止所有的积蓄, 但是你的好朋友也想要看一下, 提出想要拿到自己家中好好观摩两天. 此时你心想, 使用 &quot;值传递&quot; 的方式吧, 就得复制一副相同的画, 虽然朋友也说了就算是复制品也可以, 但是请人再去临摹一份一模一样的, 这个开销太大了(对应程序中传递一个体积很大很大的值存储变量, 比如结构体变量, 复制一份的话, 内存占用就很高), 于是你还是决定直接将原画借给朋友看, 也就是 &quot;ref 引用传递&quot;, 但是心里始终是不放心啊, 万一朋友不小心把画作弄脏了, 弄丢了, 那自己这一辈子岂不凉凉了~</p>
+<p>于是在这个场景下就可以使用修饰符 <em>in</em> 了, 使用 in 修饰的引用传递, 在方法中只能使用参数值, 无法修改参数值. 这样就不用担心画作的安全问题了.</p>
+<p><img data-src="/images/csharp/parameter.png" alt="in 的作用"></p>
+<p>[<strong>注</strong>] ref 和 out 参数在方法调用时必须显式注明 ref 和 out, 否则编译器直接报错! 但是从上图中可以看出, 我在调用 Friend 方法的时候并没有显式注明 in, 也就是说 in 并没有这个要求, 但是还是建议养成注明引用传递的习惯!</p>
+<p>由此可见, 在程序中, in 关键字主要用于程序优化, 节省内存. 当然这里说的 in 只是参数修饰符 in, 自然不包括在 foreach 中的 in 啦~</p>
+<h1 id="params"><a href="#params" class="headerlink" title="params"></a>params</h1><p>使用 params 关键字可以指定采用数目可变的参数的方法参数, 因此当方法需要的参数个数无法确定的时候, 就可以使用 params 关键字.</p>
+<p>params 使用时具有诸多语法限制:</p>
+<ol>
+<li><p>params 修饰的参数类型必须是<font color='red'><strong>一维数组</strong></font>. 如果 params 修饰的不是一维数组, 直接发生编译错误;</p>
+</li>
+<li><p>在方法声明中 params 关键字修饰的参数之后不允许有任何其他参数;</p>
+</li>
+<li><p>在方法声明中只允许有一个 params 关键字.</p>
+</li>
+</ol>
+<p>调用具有 params 修饰参数的方法时，可以传入:</p>
+<ol>
+<li><p>一维数组元素类型的逗号分隔列表;</p>
+</li>
+<li><p>指定类型的一维数组;</p>
+</li>
+<li><p>无参数. 如果未发送任何参数, 则 params 列表长度为零.</p>
+</li>
+</ol>
+<p>[<strong>注</strong>]</p>
+<ol>
+<li><p>params 修饰的参数类型必须是一维数组, 但是这里的 &quot;一维数组&quot; 指代的并不仅仅是这种简单的一维数组 <code>int[]</code>, 任何类型的一维数组都可以, 包括交错数组: <code>int[][]</code>.</p>
+</li>
+<li><p>在方法声明中的 params 关键字之后不允许有任何其他参数, 就意味着 params 修饰的参数必须放在参数列表的最后一个, 同时也意味着只允许有一个 params 修饰的参数.</p>
+</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>()</span></span><br><span class="line">    &#123;</span><br><span class="line">        Program program = <span class="keyword">new</span> Program();</span><br><span class="line"></span><br><span class="line">        List&lt;<span class="built_in">string</span>&gt; appleList = <span class="keyword">new</span> List&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line">        appleList.Add(<span class="string">&quot;富士苹果&quot;</span>);</span><br><span class="line">        appleList.Add(<span class="string">&quot;红龙苹果&quot;</span>);</span><br><span class="line">        appleList.Add(<span class="string">&quot;香蕉苹果&quot;</span>);</span><br><span class="line">        <span class="comment">//......</span></span><br><span class="line">        appleList.Add(<span class="string">&quot;蜜脆苹果&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">string</span>[] apples = appleList.ToArray();</span><br><span class="line"></span><br><span class="line">        program.Factory();</span><br><span class="line">        program.Factory(<span class="string">&quot;富士苹果&quot;</span>, <span class="string">&quot;红龙苹果&quot;</span>);</span><br><span class="line">        program.Factory(<span class="string">&quot;富士苹果&quot;</span>, <span class="string">&quot;红龙苹果&quot;</span>, <span class="string">&quot;香蕉苹果&quot;</span>, <span class="string">&quot;蜜脆苹果&quot;</span>);</span><br><span class="line">        program.Factory(apples);</span><br><span class="line"></span><br><span class="line">        Console.ReadKey();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Factory</span>(<span class="params"><span class="keyword">params</span> <span class="built_in">string</span>[] apples</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">string</span> str_log = <span class="built_in">string</span>.Empty;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (apples.Length &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">foreach</span> (<span class="built_in">string</span> apple <span class="keyword">in</span> apples)</span><br><span class="line">            &#123;</span><br><span class="line">                str_log += apple + <span class="string">&quot;酒! &quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            str_log = <span class="string">&quot;请提供原材料!&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Console.WriteLine(str_log);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的例子输出的结果就是:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">请提供原材料!</span><br><span class="line">富士苹果酒! 红龙苹果酒!</span><br><span class="line">富士苹果酒! 红龙苹果酒! 香蕉苹果酒! 蜜脆苹果酒!</span><br><span class="line">富士苹果酒! 红龙苹果酒! 香蕉苹果酒! 蜜脆苹果酒!</span><br></pre></td></tr></table></figure>
+
+<p>可以看出调用方法时, 传递不定个数的参数以及一维数组都是可以的!</p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm1pY3Jvc29mdC5jb20vemgtY24vZG90bmV0L2NzaGFycC9sYW5ndWFnZS1yZWZlcmVuY2Uva2V5d29yZHMvcmVmI3Bhc3NpbmctYW4tYXJndW1lbnQtYnktcmVmZXJlbmNl">Microsoft Docs ref<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm1pY3Jvc29mdC5jb20vemgtY24vZG90bmV0L2NzaGFycC9sYW5ndWFnZS1yZWZlcmVuY2Uva2V5d29yZHMvcGFyYW1z">Microsoft Docs params<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/about/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/csharp/csharp_parameter.html" title="存储类型和传递方式">https://kuroha.vip/csharp/csharp_parameter.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" rel="tag"><i class="fa fa-tag"></i> 编程基础</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/csharp/csharp_delegate_03.html" rel="prev" title="委托(三) 委托的初始化">
+                  <i class="fa fa-angle-left"></i> 委托(三) 委托的初始化
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/unity/unity_proxy.html" rel="next" title="如何让 Unity 走代理?">
+                  如何让 Unity 走代理? <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">94k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">5:43</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>

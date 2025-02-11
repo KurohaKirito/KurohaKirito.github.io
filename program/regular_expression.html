@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="正则表达式, 一种被用于从文本中检索符合某些特定模式的文本.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初学正则表达式">
+<meta property="og:url" content="https://kuroha.vip/program/regular_expression.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="正则表达式, 一种被用于从文本中检索符合某些特定模式的文本.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/images/program/regular_expression_01.png">
+<meta property="og:image" content="https://kuroha.vip/images/program/regular_expression_02.png">
+<meta property="article:published_time" content="2020-08-17T14:35:23.000Z">
+<meta property="article:modified_time" content="2025-01-20T03:05:14.123Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="Program">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/images/program/regular_expression_01.png">
+
+
+<link rel="canonical" href="https://kuroha.vip/program/regular_expression.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/program/regular_expression.html","path":"program/regular_expression.html","title":"初学正则表达式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>初学正则表达式 | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">47</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">23</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">正则表达式?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%99%AE%E9%80%9A%E5%85%83%E5%AD%97%E7%AC%A6"><span class="nav-number">2.</span> <span class="nav-text">普通元字符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E9%9B%86"><span class="nav-number">3.</span> <span class="nav-text">字符集</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AC%A1%E6%95%B0%E9%99%90%E5%AE%9A%E7%AC%A6"><span class="nav-number">4.</span> <span class="nav-text">次数限定符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D%E7%AC%A6"><span class="nav-number">5.</span> <span class="nav-text">定位符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E5%90%8E%E7%BC%80%E9%80%BB%E8%BE%91-%E6%96%AD%E8%A8%80"><span class="nav-number">6.</span> <span class="nav-text">前后缀逻辑 (断言)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E5%90%8E%E7%BC%80%E9%80%BB%E8%BE%91%E7%BB%84%E4%BB%B6"><span class="nav-number">6.1.</span> <span class="nav-text">前后缀逻辑组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%BC%80%E9%80%BB%E8%BE%91-%E5%89%8D%E8%A1%8C%E6%96%AD%E8%A8%80"><span class="nav-number">6.2.</span> <span class="nav-text">前缀逻辑 (前行断言)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E7%BC%80%E9%80%BB%E8%BE%91-%E5%90%8E%E8%A1%8C%E6%96%AD%E8%A8%80"><span class="nav-number">6.3.</span> <span class="nav-text">后缀逻辑 (后行断言)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AD%94%E6%A1%88"><span class="nav-number">6.4.</span> <span class="nav-text">答案</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">7.</span> <span class="nav-text">修饰符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">8.</span> <span class="nav-text">C# 中的正则表达式</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/about/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/program/regular_expression.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="初学正则表达式 | 二次元游宅客">
+      <meta itemprop="description" content="正则表达式, 一种被用于从文本中检索符合某些特定模式的文本.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初学正则表达式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-08-17 22:35:23" itemprop="dateCreated datePublished" datetime="2020-08-17T22:35:23+08:00">2020-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-01-20 11:05:14" itemprop="dateModified" datetime="2025-01-20T11:05:14+08:00">2025-01-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Program/" itemprop="url" rel="index"><span itemprop="name">Program</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">正则表达式, 一种被用于从文本中检索符合某些特定模式的文本.</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式?"></a>正则表达式?</h1><blockquote>
+<p>正则表达式是一种被用于从文本中检索符合某些特定模式的文本, 英文为 &quot;Regular Expression&quot;, 缩写 &quot;regex&quot; 或者 &quot;regexp&quot;.</p>
+</blockquote>
+<ol>
+<li><p>正则表达式可以很简单的实现比较复杂的字符串匹配逻辑, 来快速地对用户输入施加限制条件.</p>
+</li>
+<li><p>在日常的文本编辑中, 正则表达式还可以快速的实现复杂的替换操作, 使得文本编辑省时省力.</p>
+</li>
+<li><p>正则表达式依赖于所处的环境, JavaScript, C#, Java, C++ 等不同的开发语言中以及 VSCode 等不同的文本编辑器下, 正则表达式的匹配规则会有一些细微的差别.</p>
+</li>
+<li><p>元字符不能写在字符集合 <code>[ ]</code> 的里面. <code>[ ]</code> 中的元字符全部会变为普通字符.</p>
+</li>
+</ol>
+<h1 id="普通元字符"><a href="#普通元字符" class="headerlink" title="普通元字符"></a>普通元字符</h1><table>
+<thead>
+<tr>
+<th align="center">元字符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">.</td>
+<td>表示一个除换行符以外的任意字符</td>
+</tr>
+<tr>
+<td align="center">()</td>
+<td><strong>字符组</strong>, 占位长度和字符串长度一致, 匹配其中的字符串或者逻辑</td>
+</tr>
+<tr>
+<td align="center">[ ]</td>
+<td><strong>字符集合</strong>, 默认占位长度为 1, 匹配集合中的任意一个字符, 可以使用范围符 <code>-</code> 来表示范围, 如: 0-9, a-z, A-Z 等</td>
+</tr>
+<tr>
+<td align="center">[^ ]</td>
+<td>否定字符集合, 默认占位长度为 1, 匹配集合中的所有字符以外的任意一个字符</td>
+</tr>
+<tr>
+<td align="center">|</td>
+<td>逻辑或</td>
+</tr>
+<tr>
+<td align="center">\</td>
+<td>转义符</td>
+</tr>
+</tbody></table>
+<h1 id="字符集"><a href="#字符集" class="headerlink" title="字符集"></a>字符集</h1><p>[<strong>注意</strong>] 字符集名称(<strong>大小写敏感</strong>), \w 和 \W 的含义完全相反.</p>
+<table>
+<thead>
+<tr>
+<th align="center">转义符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">\f</td>
+<td>匹配一个换页符</td>
+</tr>
+<tr>
+<td align="center">\n</td>
+<td>匹配一个换行符</td>
+</tr>
+<tr>
+<td align="center">\r</td>
+<td>匹配一个回车符</td>
+</tr>
+<tr>
+<td align="center">\t</td>
+<td>匹配一个制表符</td>
+</tr>
+<tr>
+<td align="center">\v</td>
+<td>匹配一个垂直制表符</td>
+</tr>
+<tr>
+<td align="center">\w</td>
+<td>匹配所有字母和数字的字符, 某些环境下也会匹配汉字</td>
+</tr>
+<tr>
+<td align="center">\W</td>
+<td>匹配非字母和数字的字符, 某些环境下汉字也会排除</td>
+</tr>
+<tr>
+<td align="center">\d</td>
+<td>匹配数字: <code>[0-9]</code></td>
+</tr>
+<tr>
+<td align="center">\D</td>
+<td>匹配非数字: <code>[^ 0-9]</code></td>
+</tr>
+<tr>
+<td align="center">\s</td>
+<td>匹配任何空白字符, 包括空格, 制表符, 换页符等</td>
+</tr>
+<tr>
+<td align="center">\S</td>
+<td>匹配非空格符</td>
+</tr>
+</tbody></table>
+<h1 id="次数限定符"><a href="#次数限定符" class="headerlink" title="次数限定符"></a>次数限定符</h1><p>写在一个特定的字符或者字符组 <code>()</code> 的后面, 控制字符或者字符组的出现次数.</p>
+<table>
+<thead>
+<tr>
+<th align="center">次数限定符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">*</td>
+<td>匹配前面的子表达式 0 次或多次</td>
+</tr>
+<tr>
+<td align="center">+</td>
+<td>匹配前面的子表达式 1 次或多次</td>
+</tr>
+<tr>
+<td align="center">?</td>
+<td>匹配前面的子表达式 0 次或 1 次, 或指明一个非贪婪限定符</td>
+</tr>
+<tr>
+<td align="center">{n}</td>
+<td>花括号, 匹配前面字符或字符组 n 次</td>
+</tr>
+<tr>
+<td align="center">{n,}</td>
+<td>花括号, 匹配前面字符或字符组至少 n 次</td>
+</tr>
+<tr>
+<td align="center">{n,m}</td>
+<td>花括号, 匹配前面字符或字符组至少 n 次, 但是不超过 m 次</td>
+</tr>
+</tbody></table>
+<h1 id="定位符"><a href="#定位符" class="headerlink" title="定位符"></a>定位符</h1><p>定位符表示字符所处的位置.</p>
+<table>
+<thead>
+<tr>
+<th align="center">定位符</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">^</td>
+<td>表示行的开始</td>
+</tr>
+<tr>
+<td align="center">$</td>
+<td>表示行的结束</td>
+</tr>
+<tr>
+<td align="center">\b</td>
+<td>匹配一个单词边界</td>
+</tr>
+<tr>
+<td align="center">\B</td>
+<td>非单词边界匹配</td>
+</tr>
+</tbody></table>
+<h1 id="前后缀逻辑-断言"><a href="#前后缀逻辑-断言" class="headerlink" title="前后缀逻辑 (断言)"></a>前后缀逻辑 (断言)</h1><p>Q1: 匹配字符串中以全角美元符开头的 &#39;12000.00&#39;</p>
+<p><code>12000.00 ￥12000.00 ＄12000.00</code></p>
+<p>Q2: 匹配字符串中以全角美元符结尾的 &#39;12000.00&#39;</p>
+<p><code>12000.00 12000.00￥ 12000.00＄</code></p>
+<p>上面的两个问题, 就可以通过在正则表达式中添加前后缀逻辑来解决. &#39;前后缀逻辑&#39; 是我自己起的名字, 方便自己记忆, 但是有的文章中叫作 &quot;断言&quot;, 有的文章中叫 &quot;预匹配&quot;, 我都感觉好别扭啊!</p>
+<p>[<strong>注</strong>] <font color='red'><strong>前后缀逻辑必须写在字符组 () 里面, 如: <code>(?&lt;=K)</code></strong></font>.</p>
+<h2 id="前后缀逻辑组件"><a href="#前后缀逻辑组件" class="headerlink" title="前后缀逻辑组件"></a>前后缀逻辑组件</h2><p>[<strong>注</strong>] 下面是前后缀逻辑实现时用到的字符, 不能直接使用, 这样拆开写只是为了容易理解! 切记不可直接使用!</p>
+<table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">?&lt;</td>
+<td>前缀描述符, 必须写在 &quot;被描述字符或字符组&quot; 的 <code>前面</code></td>
+</tr>
+<tr>
+<td align="center">?</td>
+<td>后缀描述符, 必须写在 &quot;被描述字符或字符组&quot; 的 <code>后面</code></td>
+</tr>
+<tr>
+<td align="center">&#x3D;</td>
+<td>是</td>
+</tr>
+<tr>
+<td align="center">!</td>
+<td>不是</td>
+</tr>
+</tbody></table>
+<h2 id="前缀逻辑-前行断言"><a href="#前缀逻辑-前行断言" class="headerlink" title="前缀逻辑 (前行断言)"></a>前缀逻辑 (前行断言)</h2><p><img data-src="/images/program/regular_expression_01.png" alt="前行断言"></p>
+<table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">(?&lt;&#x3D;)</td>
+<td><code>前缀为</code> 描述符</td>
+</tr>
+<tr>
+<td align="center">(?&lt;!)</td>
+<td><code>前缀不为</code> 描述符</td>
+</tr>
+</tbody></table>
+<p>[<strong>注</strong>] 前缀描述符必须写在 &quot;被描述字符或字符组&quot; 的 <code>前面</code> ! 切记 !</p>
+<p>示例:</p>
+<p><code>(?&lt;=K)[0-9]&#123;11&#125;</code>: 匹配以 &#39;K&#39; 为前缀的 11 位数字.</p>
+<p><code>(?&lt;!K)[0-9]&#123;11&#125;</code>: 匹配不以 &#39;K&#39; 为前缀的 11 位数字.</p>
+<h2 id="后缀逻辑-后行断言"><a href="#后缀逻辑-后行断言" class="headerlink" title="后缀逻辑 (后行断言)"></a>后缀逻辑 (后行断言)</h2><p><img data-src="/images/program/regular_expression_02.png" alt="后行断言"></p>
+<table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">(?&#x3D;)</td>
+<td><code>后缀为</code> 描述符</td>
+</tr>
+<tr>
+<td align="center">(?!)</td>
+<td><code>后缀不为</code> 描述符</td>
+</tr>
+</tbody></table>
+<p>[<strong>注</strong>] 后缀描述符必须写在 &quot;被描述字符或字符组&quot; 的 <code>后面</code> ! 切记 !</p>
+<p>示例:</p>
+<p><code>[\d]&#123;11&#125;(?=K)</code>: 匹配以 &#39;K&#39; 为后缀的 11 位数字.</p>
+<p><code>[\d]&#123;11&#125;(?!K)</code>: 匹配不以 &#39;K&#39; 为后缀的 11 位数字.</p>
+<h2 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h2><p>A1: <code>(?&lt;=＄)[\d.]+</code> <font color='red'>答案不唯一</font></p>
+<p>A2: <code>[\d.]+(?=＄)</code> <font color='red'>答案不唯一</font></p>
+<h1 id="修饰符"><a href="#修饰符" class="headerlink" title="修饰符"></a>修饰符</h1><p>会修改正则表达式的匹配模式, 可以以任意顺序或组合使用, 先将要修饰的整个正则表达式前后加一个 <code>/</code> 字符, 然后在后面的 <code>/</code> 字符后面加修饰符.</p>
+<table>
+<thead>
+<tr>
+<th align="center">标记</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">i</td>
+<td>不区分大小写: 将匹配设置为不区分大小写.</td>
+</tr>
+<tr>
+<td align="center">g</td>
+<td>全局搜索: 搜索整个输入字符串中的所有匹配.</td>
+</tr>
+<tr>
+<td align="center">m</td>
+<td>多行匹配: 会匹配输入字符串每一行.</td>
+</tr>
+</tbody></table>
+<p>示例:</p>
+<ul>
+<li><p><code>/(T|t)he/gi</code> : 全局搜索, 不区分大小写, 正则: <code>(T|t)he</code></p>
+</li>
+<li><p><code>/.(at)/g</code> : 全局搜索, 正则: <code>.(at)</code></p>
+</li>
+<li><p><code>/at(.)?$/gm</code> :全局搜索, 多行匹配, 正则: <code>at(.)?$</code></p>
+</li>
+</ul>
+<h1 id="C-中的正则表达式"><a href="#C-中的正则表达式" class="headerlink" title="C# 中的正则表达式"></a>C# 中的正则表达式</h1><ol>
+<li>全部匹配</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Text.RegularExpressions;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> content = <span class="string">&quot;content&quot;</span>;</span><br><span class="line">Regex regex = <span class="keyword">new</span> Regex(<span class="string">@&quot;[0-9]&#123;8&#125;&quot;</span>);</span><br><span class="line">MatchCollection matchs = regex.Matches(content);</span><br><span class="line"></span><br><span class="line"><span class="keyword">foreach</span> (Match match <span class="keyword">in</span> matchs)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">string</span>.IsNullOrEmpty(match.Value))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//TODO...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>匹配第一项</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Text.RegularExpressions;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> content = <span class="string">&quot;content&quot;</span>;</span><br><span class="line">Regex regex = <span class="keyword">new</span> Regex(<span class="string">@&quot;[0-9]&#123;8&#125;&quot;</span>);</span><br><span class="line">Match match = regex.Match(content);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="built_in">string</span>.IsNullOrEmpty(match.Value))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//TODO...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/about/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/program/regular_expression.html" title="初学正则表达式">https://kuroha.vip/program/regular_expression.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Program/" rel="tag"><i class="fa fa-tag"></i> Program</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/unity/unity_render_order.html" rel="prev" title="Unity - 2D 精灵 和 3D 物体的渲染顺序">
+                  <i class="fa fa-angle-left"></i> Unity - 2D 精灵 和 3D 物体的渲染顺序
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/hexo/hexo_update.html" rel="next" title="Hexo 3.9.0 + NexT 7.2.0 => Hexo 5.1.0 + NexT 8.0.0">
+                  Hexo 3.9.0 + NexT 7.2.0 => Hexo 5.1.0 + NexT 8.0.0 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">94k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">5:43</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>

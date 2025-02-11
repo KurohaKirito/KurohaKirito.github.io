@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="总结一些面向新手的 TextMeshPro 的使用注意事项">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向新手的TextMeshPro使用说明">
+<meta property="og:url" content="https://kuroha.vip/unity/unity_textmeshpro.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="总结一些面向新手的 TextMeshPro 的使用注意事项">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/images/unity/tmp1.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity/tmp2.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity/tmp3.png">
+<meta property="article:published_time" content="2025-01-20T07:34:06.000Z">
+<meta property="article:modified_time" content="2025-01-20T07:57:34.997Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="Unity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/images/unity/tmp1.png">
+
+
+<link rel="canonical" href="https://kuroha.vip/unity/unity_textmeshpro.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/unity/unity_textmeshpro.html","path":"unity/unity_textmeshpro.html","title":"面向新手的TextMeshPro使用说明"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>面向新手的TextMeshPro使用说明 | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">47</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">23</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TextMeshPro-%E5%92%8C-Text-%E6%95%88%E6%9E%9C%E4%B8%8A%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="nav-number">1.</span> <span class="nav-text">TextMeshPro 和 Text 效果上的不同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TextMeshPro-%E5%92%8C-Text-%E4%BD%BF%E7%94%A8%E4%B8%8A%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="nav-number">2.</span> <span class="nav-text">TextMeshPro 和 Text 使用上的不同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90-TMP-Font-Asset-%E5%91%A2"><span class="nav-number">3.</span> <span class="nav-text">如何生成 TMP_Font Asset 呢 ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%9F%E6%88%90-TMP-Font-Asset-%E7%9A%84%E6%97%B6%E5%80%99%E4%B8%BA%E4%BB%80%E4%B9%88-%E6%85%A2-%E8%80%8C%E4%B8%94%E6%98%AF-%E5%B7%A8%E6%85%A2"><span class="nav-number">4.</span> <span class="nav-text">生成 TMP_Font Asset 的时候为什么 &quot;慢&quot;, 而且是 &quot;巨慢&quot; ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%82%A3%E4%B9%88-Size-%E5%92%8C-Padding-%E8%AF%A5%E8%AE%BE%E7%BD%AE%E5%A4%9A%E5%A4%A7%E5%91%A2"><span class="nav-number">5.</span> <span class="nav-text">那么 Size 和 Padding 该设置多大呢 ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%BB%E9%9D%A2%E7%BC%A9%E5%B0%8F%E5%90%8E%E6%96%87%E5%AD%97%E6%9C%89-%E7%99%BD%E5%BA%95"><span class="nav-number">6.</span> <span class="nav-text">画面缩小后文字有 &quot;白底&quot; ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%A9%E5%AE%B6%E6%96%87%E6%9C%AC%E8%BE%93%E5%85%A5%E6%A1%86%E6%80%8E%E4%B9%88%E5%81%9A%E5%91%A2-%E5%9B%A0%E4%B8%BA%E6%88%91%E4%B8%8D%E5%8F%AF%E8%83%BD%E6%8F%90%E5%89%8D%E9%A2%84%E7%9F%A5%E7%8E%A9%E5%AE%B6%E8%BE%93%E5%85%A5%E5%93%AA%E4%BA%9B%E5%AD%97%E7%AC%A6%E5%91%80"><span class="nav-number">7.</span> <span class="nav-text">玩家文本输入框怎么做呢 ? 因为我不可能提前预知玩家输入哪些字符呀 ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E5%81%9A%E4%B8%80%E4%B8%AA%E5%8A%A8%E6%80%81%E5%AD%97%E4%BD%93%E5%91%A2"><span class="nav-number">8.</span> <span class="nav-text">怎么做一个动态字体呢 ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E4%BF%AE%E6%94%B9%E5%AD%97%E4%BD%93%E6%96%87%E4%BB%B6%E7%9A%84%E6%9D%90%E8%B4%A8%E5%B1%9E%E6%80%A7%E5%AE%9E%E7%8E%B0%E4%BA%86%E4%B8%80%E4%B8%AA%E6%95%88%E6%9E%9C-%E4%BD%86%E6%98%AF%E8%A6%81%E5%AE%9E%E7%8E%B0%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%95%88%E6%9E%9C%E6%80%8E%E4%B9%88%E5%8A%9E-%E9%9A%BE%E9%81%93%E8%A6%81%E5%86%8D%E5%88%9B%E5%BB%BA%E4%B8%80%E4%BB%BD%E5%AD%97%E4%BD%93%E8%B5%84%E6%BA%90%E5%90%97"><span class="nav-number">9.</span> <span class="nav-text">通过修改字体文件的材质属性实现了一个效果, 但是要实现另一个效果怎么办 ? 难道要再创建一份字体资源吗 ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BD%A9%E8%89%B2-emoji-%E5%AD%97%E7%AC%A6%E6%80%8E%E4%B9%88%E6%94%AF%E6%8C%81-%E8%A1%A8%E6%83%85%E5%8C%85%E6%80%8E%E4%B9%88%E6%94%AF%E6%8C%81-%E6%9C%89%E5%93%AA%E4%BA%9B%E5%8F%AF%E7%94%A8%E7%9A%84%E5%AF%8C%E6%96%87%E6%9C%AC%E6%A0%87%E7%AD%BE-%E6%B8%90%E5%8F%98%E6%95%88%E6%9E%9C%E6%80%8E%E4%B9%88%E6%94%AF%E6%8C%81"><span class="nav-number">10.</span> <span class="nav-text">彩色 emoji 字符怎么支持 ? 表情包怎么支持 ? 有哪些可用的富文本标签 ? 渐变效果怎么支持 ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93-%E9%A6%96%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84-TextMeshPro-%E7%9A%84%E4%B8%80%E8%88%AC%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF-%E5%90%8E%E9%9D%A2%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E5%A4%8D%E7%94%A8"><span class="nav-number">11.</span> <span class="nav-text">总结 : 首个项目的 TextMeshPro 的一般使用姿势 (后面的项目可以直接复用)</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/about/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/unity/unity_textmeshpro.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="面向新手的TextMeshPro使用说明 | 二次元游宅客">
+      <meta itemprop="description" content="总结一些面向新手的 TextMeshPro 的使用注意事项">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          面向新手的TextMeshPro使用说明
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-01-20 15:34:06 / 修改时间：15:57:34" itemprop="dateCreated datePublished" datetime="2025-01-20T15:34:06+08:00">2025-01-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">总结一些面向新手的 TextMeshPro 的使用注意事项</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="TextMeshPro-和-Text-效果上的不同"><a href="#TextMeshPro-和-Text-效果上的不同" class="headerlink" title="TextMeshPro 和 Text 效果上的不同"></a>TextMeshPro 和 Text 效果上的不同</h1><table>
+<thead>
+<tr>
+<th><strong>对比维度</strong></th>
+<th><strong>TextMeshPro</strong></th>
+<th><strong>Text</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>文本显示效果</strong></td>
+<td>高分辨率渲染，支持子像素定位，文本清晰锐利</td>
+<td>简单渲染，缩放时模糊、失真</td>
+</tr>
+<tr>
+<td><strong>富文本支持</strong></td>
+<td>支持复杂标签和自定义样式，功能丰富</td>
+<td>支持简单的富文本功能</td>
+</tr>
+<tr>
+<td><strong>字体支持</strong></td>
+<td>动态字体生成，自定义字体图集，支持多语言和复杂脚本</td>
+<td>静态字体支持，语言兼容性有限</td>
+</tr>
+<tr>
+<td><strong>高级排版功能</strong></td>
+<td>自动换行、字符间距、行间距、对齐方式等细节排版功能强大</td>
+<td>仅支持简单的排版设置</td>
+</tr>
+<tr>
+<td><strong>特效支持</strong></td>
+<td>内置渐变、描边、阴影等丰富特效</td>
+<td>需要手动实现特效，能力有限</td>
+</tr>
+<tr>
+<td><strong>性能</strong></td>
+<td>高效处理动态文本，支持材质合并优化渲染开销</td>
+<td>性能较低，处理大量动态文本时容易卡顿</td>
+</tr>
+<tr>
+<td><strong>API 功能</strong></td>
+<td>丰富的 API，支持复杂样式控制和动态生成</td>
+<td>API 功能少，只能满足简单文本操作</td>
+</tr>
+<tr>
+<td><strong>兼容性</strong></td>
+<td>需要额外的字体资源和材质设置，初次学习可能稍复杂</td>
+<td>内置 Unity 功能，使用简单</td>
+</tr>
+<tr>
+<td><strong>多语言支持</strong></td>
+<td>支持阿拉伯语、中文、日文等复杂文字布局</td>
+<td>对多语言支持有限，需手动调整</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>高质量文本显示，大型项目，UI 动态文本</td>
+<td>简单文本显示，小型项目，低复杂度 UI</td>
+</tr>
+</tbody></table>
+<h1 id="TextMeshPro-和-Text-使用上的不同"><a href="#TextMeshPro-和-Text-使用上的不同" class="headerlink" title="TextMeshPro 和 Text 使用上的不同"></a>TextMeshPro 和 Text 使用上的不同</h1><p>最大的使用差别就一个, TMP 有字体库的概念. Text 组件直接引用字体文件, 而 TMP 则是引用以字体文件为基础制作而成的 TMP_Font Asset 资源.</p>
+<h1 id="如何生成-TMP-Font-Asset-呢"><a href="#如何生成-TMP-Font-Asset-呢" class="headerlink" title="如何生成 TMP_Font Asset 呢 ?"></a>如何生成 TMP_Font Asset 呢 ?</h1><p>打开 Font Asset Creator 窗口, 放入字体文件, 选择会用到的字符集, 点击 Generate 即可生成. 如下图所示.</p>
+<p><img data-src="/images/unity/tmp1.png" alt="TMP 1"></p>
+<h1 id="生成-TMP-Font-Asset-的时候为什么-慢-而且是-巨慢"><a href="#生成-TMP-Font-Asset-的时候为什么-慢-而且是-巨慢" class="headerlink" title="生成 TMP_Font Asset 的时候为什么 &quot;慢&quot;, 而且是 &quot;巨慢&quot; ?"></a>生成 TMP_Font Asset 的时候为什么 &quot;慢&quot;, 而且是 &quot;巨慢&quot; ?</h1><p>提问 : 为什么我生成的时候很慢很慢呢? 一次要 30 分钟甚至几小时!</p>
+<p>回答 : 影响生成字符集时长的原因主要有 2 个</p>
+<ol>
+<li>字符的数量</li>
+</ol>
+<p>比如使用了常用汉字集这种几千字的集合, 大概需要几十秒, 下面是我电脑的数据: 4205 字, 可以看到, 生成时间耗费了 22 秒.</p>
+<p><img data-src="/images/unity/tmp2.png" alt="TMP 2"></p>
+<ol start="2">
+<li>Point Size 和 Padding 的设置</li>
+</ol>
+<p>当要生成几千字的字体资源时, Point Size 和 Padding 不要设置为 Auto, 字符数量少时可以使用来快速找到合适的数值.</p>
+<p>这个是让工具自动去调整 Point 以及 Padding 的大小, 这样工具会不断试错, 尝试一个值, 不行, 换下一个, 不行, 再换下一次, 还是不行, 再换 ... 如此往复 ... 因此 &quot;慢&quot; 是因为它生成了数次.</p>
+<p>只要固定 Point 和 Padding 的大小, 它就会仅生成一次, 消耗的时间就很少了.</p>
+<p>推荐一个常用的汉字集 : <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3d5LWx1a2UvVW5pdHktVGV4dE1lc2hQcm8tQ2hpbmVzZS1DaGFyYWN0ZXJzLVNldA==">跳转到 Github 汉字集<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="那么-Size-和-Padding-该设置多大呢"><a href="#那么-Size-和-Padding-该设置多大呢" class="headerlink" title="那么 Size 和 Padding 该设置多大呢 ?"></a>那么 Size 和 Padding 该设置多大呢 ?</h1><p>先放一下 TextMeshPro 的官方手册 : <span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVuaXR5M2QuY29tL1BhY2thZ2VzL2NvbS51bml0eS50ZXh0bWVzaHByb0A0LjAvbWFudWFsL0ZvbnRBc3NldHNDcmVhdG9yLmh0bWw=">TMP 4.0 手册<i class="fa fa-external-link-alt"></i></span></p>
+<p>手册中是这样写的, 对于 512 的图集, padding 为 5 就够用了.</p>
+<blockquote>
+<p>A padding of 5 is often fine for a 512x512 texture.</p>
+</blockquote>
+<p>那么其他的分辨率下该设置多少呢? 你自己看着办 ... (多去尝试) 当然也可以参考我上面截图中的, 我是 8192 * 4096 的图集, 用的是 12, 感觉还好, 即使是 &quot;加粗+描边&quot; 效果下也很平滑, 至少肉眼看不出啥瑕疵来.</p>
+<p>Padding 主要控制的就是字体显示效果, 原文是这么写的:</p>
+<blockquote>
+<p>The larger the padding, the smoother the transition, which allows for higher-quality rendering and larger effects, like thick outlines.</p>
+</blockquote>
+<p>意思就是这个值越大, 字体越平滑, 就越能支持更高质量的渲染和效果, 比如厚厚的描边.</p>
+<p>至于 Point Size 嘛 ... 参考我的截图吧, 我的游戏中有时候会用到 50 号甚至 60 号的文字, 感觉 Point Size 设置为 72 已经挺极限了, 再小的话显示就出问题了.</p>
+<h1 id="画面缩小后文字有-白底"><a href="#画面缩小后文字有-白底" class="headerlink" title="画面缩小后文字有 &quot;白底&quot; ?"></a>画面缩小后文字有 &quot;白底&quot; ?</h1><p>这个其实是 SP&#x2F;PD Ratio 值过小导致的. SP&#x2F;PD Ratio 数值就是 padding 和 point size 的比值, 用来描述各个字符之间空隙的大小, 空隙太小时便会出现白底的问题, 但是太大也不好, 浪费空间嘛.</p>
+<p>网上的说法是, 推荐最大 10%, 最小 4%, 但是我实测发现基本低于 10% 就会出现白底了, 所以我推荐的值为 12% 左右, 太小出现白底, 太大浪费空间, 自己通过手调 Point Size 和 Padding 来调整吧.</p>
+<p>这是别人的研究, 我也不确定文章会不会哪天就看不了了, 智障的 CSDN 会员! 且看且珍惜吧, 也不长, 主要意思就一个: SP&#x2F;PD Ratio 值过小过导致白底, 我都总结了. 它的文章里面就是写了原因的推测, 也只是推测, 这里是原文: <span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zNjcxOTYwNy9hcnRpY2xlL2RldGFpbHMvMTMwNDEyODY3">文字白底问题探讨<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="玩家文本输入框怎么做呢-因为我不可能提前预知玩家输入哪些字符呀"><a href="#玩家文本输入框怎么做呢-因为我不可能提前预知玩家输入哪些字符呀" class="headerlink" title="玩家文本输入框怎么做呢 ? 因为我不可能提前预知玩家输入哪些字符呀 ?"></a>玩家文本输入框怎么做呢 ? 因为我不可能提前预知玩家输入哪些字符呀 ?</h1><p>是的, 我们确实无法预知, 所以这里就要用到之前从来没有提到的另一个概念了 : 动态字体.</p>
+<p>我们之前创建的字体资源都是静态字体, 顾名思义, 静态字体的意思就是打包哪些字符就支持显示哪些字符, 没有打包的就不支持, 这也是为什么很多人一开始用 TMP 显示不了中文字符的原因.</p>
+<p>而动态字体中, 初始是没有任何字符的, 它是现用现做, 因此性能上就会差一些, 但是好处也是毋庸置疑的, 它能支持字体文件中全部字符.</p>
+<h1 id="怎么做一个动态字体呢"><a href="#怎么做一个动态字体呢" class="headerlink" title="怎么做一个动态字体呢 ?"></a>怎么做一个动态字体呢 ?</h1><p>直接引用手册原文</p>
+<blockquote>
+<p>Creating a dynamic font Asset<br>Empty font assets are dynamic by default. To create one:</p>
+<p>From Unity&#39;s main menu, choose &quot;Assets &gt; Create &gt; TextMeshPro &gt; Font Asset&quot; or press Ctrl&#x2F;Cmd + Shift + F12.<br>To make an existing font Asset dynamic:</p>
+<p>Select Asset and open it in the Inspector.</p>
+<p>Set the Generation Settings &gt; Atlas Population Mode property to Dynamic.</p>
+</blockquote>
+<h1 id="通过修改字体文件的材质属性实现了一个效果-但是要实现另一个效果怎么办-难道要再创建一份字体资源吗"><a href="#通过修改字体文件的材质属性实现了一个效果-但是要实现另一个效果怎么办-难道要再创建一份字体资源吗" class="headerlink" title="通过修改字体文件的材质属性实现了一个效果, 但是要实现另一个效果怎么办 ? 难道要再创建一份字体资源吗 ?"></a>通过修改字体文件的材质属性实现了一个效果, 但是要实现另一个效果怎么办 ? 难道要再创建一份字体资源吗 ?</h1><p>不需要再创建一份字体资源, 否则人都麻了... 只需要创建一份 Material Preset 即可, 如图操作</p>
+<p><img data-src="/images/unity/tmp3.png" alt="TMP 3"></p>
+<p>选中字体资源下的材质球, 仅选中即可, 然后点击 Inspector 面板上材质球的小菜单, 竖着的三个小点, 记得是材质球的菜单, 不是上面那个三个小点的菜单, 有两个, 千万别混了. 最后点击菜单中的 &quot;Create Material Preset&quot; 即可, 这样在 TextMeshPro 控件中的材质球选项处会自动多出选项供你选择.</p>
+<h1 id="彩色-emoji-字符怎么支持-表情包怎么支持-有哪些可用的富文本标签-渐变效果怎么支持"><a href="#彩色-emoji-字符怎么支持-表情包怎么支持-有哪些可用的富文本标签-渐变效果怎么支持" class="headerlink" title="彩色 emoji 字符怎么支持 ? 表情包怎么支持 ? 有哪些可用的富文本标签 ? 渐变效果怎么支持 ?"></a>彩色 emoji 字符怎么支持 ? 表情包怎么支持 ? 有哪些可用的富文本标签 ? 渐变效果怎么支持 ?</h1><p>这些目前我也还没开始大规模使用, 就尝试使用了一下表情包和标签而已, 具体的请直接查阅文档, 文档巨详细.</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVuaXR5M2QuY29tL1BhY2thZ2VzL2NvbS51bml0eS50ZXh0bWVzaHByb0A0LjAvbWFudWFsL0NvbG9yRW1vamlzLmh0bWw=">color emoji 支持 (字符表情)<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVuaXR5M2QuY29tL1BhY2thZ2VzL2NvbS51bml0eS50ZXh0bWVzaHByb0A0LjAvbWFudWFsL1Nwcml0ZXMuaHRtbA==">表情包支持 (图片表情)<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVuaXR5M2QuY29tL1BhY2thZ2VzL2NvbS51bml0eS50ZXh0bWVzaHByb0A0LjAvbWFudWFsL1JpY2hUZXh0Lmh0bWw=">富文本标签支持<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVuaXR5M2QuY29tL1BhY2thZ2VzL2NvbS51bml0eS50ZXh0bWVzaHByb0A0LjAvbWFudWFsL1N0eWxlU2hlZXRzLmh0bWw=">Style Sheet 支持<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVuaXR5M2QuY29tL1BhY2thZ2VzL2NvbS51bml0eS50ZXh0bWVzaHByb0A0LjAvbWFudWFsL0NvbG9yR3JhZGllbnRzLmh0bWw=">颜色渐变效果支持<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="总结-首个项目的-TextMeshPro-的一般使用姿势-后面的项目可以直接复用"><a href="#总结-首个项目的-TextMeshPro-的一般使用姿势-后面的项目可以直接复用" class="headerlink" title="总结 : 首个项目的 TextMeshPro 的一般使用姿势 (后面的项目可以直接复用)"></a>总结 : 首个项目的 TextMeshPro 的一般使用姿势 (后面的项目可以直接复用)</h1><ol>
+<li><p>选择各个语种: 英文、日文、韩文、中文等要使用的字体, 可用即可, 后期再正式选择. 一般每种语种都要单独选择, 支持多个语种的字体一般除了主语种外的其他语种字符都不好看.</p>
+</li>
+<li><p>对各个字体文件创建动态字体资源, 直接使用动态的, 因为具体要用到哪些字符还没有完全确定, 静态的也不好做.</p>
+</li>
+<li><p>将动态字体中收集的字符进行分类: 英文、数字、符号、日文、韩文、中文、数学符号等等, 分别创建对应的 txt 文件.</p>
+</li>
+<li><p>选择一个主字体, 比如中文, 然后将 ASCII、日文、韩文 作为 CallBack 设置. 如果字母和数字想使用不同的字体, 可以在步骤 3 那里详细进行拆分, 分别设置 CallBack, 比如英文用 A 数字字体, 中文用 B 数字字体等.</p>
+</li>
+<li><p>记得 CallBack 的最后必须设置上一个多语种的动态字体, 推荐开源的阿里巴巴普惠体3.0, 尤其是需要玩家输入昵称或者显示外部文本的地方, 更是必须使用动态字体 : <span class="exturl" data-url="aHR0cHM6Ly9mb250cy5hbGliYWJhZ3JvdXAuY29tLw==">阿里巴巴普惠体3.0<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+<li><p>无穷, 无限, 积分等数学符号可以使用支持数学符号的字体解决 : <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0xpdHRsZU5ld3Rvbi9SZXBsYWNlX01hdGhUeXBl">数学字符字体<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/about/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/unity/unity_textmeshpro.html" title="面向新手的TextMeshPro使用说明">https://kuroha.vip/unity/unity_textmeshpro.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Unity/" rel="tag"><i class="fa fa-tag"></i> Unity</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/unity_editor/unity_editor_odin.html" rel="prev" title="Unity Plugins Odin">
+                  <i class="fa fa-angle-left"></i> Unity Plugins Odin
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/unity/unity_android.html" rel="next" title="在 Unity 中实现 Android 分享文本、图片、文件功能">
+                  在 Unity 中实现 Android 分享文本、图片、文件功能 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">94k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">5:43</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>
