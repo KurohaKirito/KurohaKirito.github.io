@@ -20,31 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="第一次需要在脚本中修改 RectTransform 来控制 UI 的大小和尺寸, 由于不熟悉 RectTransform, 着实头疼了好久...">
+    <meta name="description" content="CSharp 中的 Path 类可以很方便地处理各种目录相关的逻辑, 统计成表格, 方便查阅">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Unity 在脚本中修改 UGUI 中 UI 的位置和尺寸">
-<meta property="og:url" content="https://kuroha.vip/unity/unity_rect_transform.html">
+<meta property="og:title" content="CSharp 中的 Path 类">
+<meta property="og:url" content="https://kuroha.vip/csharp/csharp_path.html">
 <meta property="og:site_name" content="二次元游宅客">
-<meta property="og:description" content="第一次需要在脚本中修改 RectTransform 来控制 UI 的大小和尺寸, 由于不熟悉 RectTransform, 着实头疼了好久...">
+<meta property="og:description" content="CSharp 中的 Path 类可以很方便地处理各种目录相关的逻辑, 统计成表格, 方便查阅">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kuroha.vip/images/unity/rectTransform.png">
-<meta property="article:published_time" content="2020-11-17T09:24:31.000Z">
-<meta property="article:modified_time" content="2025-01-20T03:05:14.125Z">
+<meta property="article:published_time" content="2025-02-18T07:40:07.000Z">
+<meta property="article:modified_time" content="2025-02-17T07:52:26.500Z">
 <meta property="article:author" content="Kuroha">
-<meta property="article:tag" content="Unity">
-<meta property="article:tag" content="UGUI">
+<meta property="article:tag" content="编程基础">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kuroha.vip/images/unity/rectTransform.png">
 
 
-<link rel="canonical" href="https://kuroha.vip/unity/unity_rect_transform.html">
+<link rel="canonical" href="https://kuroha.vip/csharp/csharp_path.html">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/unity/unity_rect_transform.html","path":"unity/unity_rect_transform.html","title":"Unity 在脚本中修改 UGUI 中 UI 的位置和尺寸"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/csharp/csharp_path.html","path":"csharp/csharp_path.html","title":"CSharp 中的 Path 类"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Unity 在脚本中修改 UGUI 中 UI 的位置和尺寸 | 二次元游宅客</title>
+<title>CSharp 中的 Path 类 | 二次元游宅客</title>
   
 
 
@@ -165,7 +162,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8C%B4-%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">🌴 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8C%BE-RectTransform"><span class="nav-number">2.</span> <span class="nav-text">🌾 RectTransform</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%A6%84-%E8%84%9A%E6%9C%AC%E6%8E%A7%E5%88%B6-RectTransform"><span class="nav-number">3.</span> <span class="nav-text">🦄 脚本控制 RectTransform</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Right-%E5%92%8C-Top"><span class="nav-number">3.1.</span> <span class="nav-text">Right 和 Top</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Left-%E5%92%8C-Bottom"><span class="nav-number">3.2.</span> <span class="nav-text">Left 和 Bottom</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PosX-%E5%92%8C-PosY"><span class="nav-number">3.3.</span> <span class="nav-text">PosX 和 PosY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Width-%E5%92%8C-Height"><span class="nav-number">3.4.</span> <span class="nav-text">Width 和 Height</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%90%AC-%E5%B1%9E%E6%80%A7%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-number">4.</span> <span class="nav-text">🐬 属性之间的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#anchoredPosition-%E5%92%8C-pivot-offsetMin-offsetMax"><span class="nav-number">4.1.</span> <span class="nav-text">anchoredPosition 和 pivot, offsetMin, offsetMax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sizeDelta-%E5%92%8C-offsetMin-offsetMax"><span class="nav-number">4.2.</span> <span class="nav-text">sizeDelta 和 offsetMin, offsetMax</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E5%9B%BE"><span class="nav-number">5.</span> <span class="nav-text">总结图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">6.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">属性</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -255,7 +252,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/unity/unity_rect_transform.html">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/csharp/csharp_path.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/about/avatar.gif">
@@ -268,12 +265,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Unity 在脚本中修改 UGUI 中 UI 的位置和尺寸 | 二次元游宅客">
-      <meta itemprop="description" content="第一次需要在脚本中修改 RectTransform 来控制 UI 的大小和尺寸, 由于不熟悉 RectTransform, 着实头疼了好久...">
+      <meta itemprop="name" content="CSharp 中的 Path 类 | 二次元游宅客">
+      <meta itemprop="description" content="CSharp 中的 Path 类可以很方便地处理各种目录相关的逻辑, 统计成表格, 方便查阅">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Unity 在脚本中修改 UGUI 中 UI 的位置和尺寸
+          CSharp 中的 Path 类
         </h1>
 
         <div class="post-meta-container">
@@ -284,14 +281,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2020-11-17 17:24:31" itemprop="dateCreated datePublished" datetime="2020-11-17T17:24:31+08:00">2020-11-17</time>
+      <time title="创建时间：2025-02-18 15:40:07" itemprop="dateCreated datePublished" datetime="2025-02-18T15:40:07+08:00">2025-02-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-01-20 11:05:14" itemprop="dateModified" datetime="2025-01-20T11:05:14+08:00">2025-01-20</time>
+      <time title="修改时间：2025-02-17 15:52:26" itemprop="dateModified" datetime="2025-02-17T15:52:26+08:00">2025-02-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -299,7 +296,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+          <a href="/categories/CSharp/" itemprop="url" rel="index"><span itemprop="name">CSharp</span></a>
         </span>
     </span>
 
@@ -310,18 +307,18 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>406</span>
+      <span>434</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
-            <div class="post-description">第一次需要在脚本中修改 RectTransform 来控制 UI 的大小和尺寸, 由于不熟悉 RectTransform, 着实头疼了好久...</div>
+            <div class="post-description">CSharp 中的 Path 类可以很方便地处理各种目录相关的逻辑, 统计成表格, 方便查阅</div>
         </div>
       </header>
 
@@ -330,114 +327,139 @@
     
     <div class="post-body" itemprop="articleBody"><span id="more"></span>
 
-<h1 id="🌴-前言"><a href="#🌴-前言" class="headerlink" title="🌴 前言"></a>🌴 前言</h1><p>在制作魔剑镇魂曲的对话框系统时, 在对话框的后面要显示当前人物的立绘图片, 这里的立绘图片我用的是 UGUI 里面的 Image 组件, 使用的位置组件就不再是 Transform, 而是继承自它的 RectTransform 组件, 但怎么用呢?</p>
-<h1 id="🌾-RectTransform"><a href="#🌾-RectTransform" class="headerlink" title="🌾 RectTransform"></a>🌾 RectTransform</h1><p>强烈推荐一篇博客: <span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9kYmVmYTc0NmU1MGQ=">Unity进阶技巧 - RectTransform详解<i class="fa fa-external-link-alt"></i></span> 看完这篇博客, RectTransform 组件就基本明白了, 这里不再赘述.</p>
-<h1 id="🦄-脚本控制-RectTransform"><a href="#🦄-脚本控制-RectTransform" class="headerlink" title="🦄 脚本控制 RectTransform"></a>🦄 脚本控制 RectTransform</h1><p>在 Inspector 面板中我们关注的数值:</p>
-<table>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><table>
 <thead>
 <tr>
-<th align="left">数值名</th>
-<th align="left">备注</th>
+<th align="left">API</th>
+<th align="left">作用</th>
+<th align="left">示例</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">Top</td>
-<td align="left">顶部距离</td>
+<td align="left">Path.Combine()</td>
+<td align="left">连接多个路径字符串, 自动处理路径分隔符</td>
+<td align="left">Path.Combine(&quot;C:\Folder&quot;, &quot;SubFolder&quot;, &quot;file.txt&quot;) &#x2F;&#x2F; C:\Folder\SubFolder\file.txt</td>
 </tr>
 <tr>
-<td align="left">Bottom</td>
-<td align="left">底部距离</td>
+<td align="left">Path.TryJoin()</td>
+<td align="left">尝试连接多个路径字符串, 返回 bool 表示是否成功</td>
+<td align="left">Path.TryJoin(&quot;C:\Folder&quot;, &quot;file.txt&quot;, out string result) &#x2F;&#x2F; true, result &#x3D; &quot;C:\Folder\file.txt&quot;</td>
 </tr>
 <tr>
-<td align="left">Left</td>
-<td align="left">左侧距离</td>
+<td align="left">Path.Join()</td>
+<td align="left">连接多个路径字符串, 不检查路径是否有效</td>
+<td align="left">Path.Join(&quot;C:\Folder&quot;, &quot;SubFolder&quot;, &quot;file.txt&quot;) &#x2F;&#x2F; C:\Folder\SubFolder\file.txt</td>
 </tr>
 <tr>
-<td align="left">Right</td>
-<td align="left">右侧距离</td>
+<td align="left">Path.ChangeExtension()</td>
+<td align="left">更改文件扩展名</td>
+<td align="left">Path.ChangeExtension(&quot;file.txt&quot;, &quot;.jpg&quot;) &#x2F;&#x2F; file.jpg</td>
 </tr>
 <tr>
-<td align="left">PosX</td>
-<td align="left">位置坐标 X</td>
+<td align="left">Path.GetExtension()</td>
+<td align="left">获取文件的扩展名</td>
+<td align="left">Path.GetExtension(&quot;file.txt&quot;) &#x2F;&#x2F; .txt</td>
 </tr>
 <tr>
-<td align="left">PosY</td>
-<td align="left">位置坐标 Y</td>
+<td align="left">Path.HasExtension()</td>
+<td align="left">判断路径是否包含扩展名</td>
+<td align="left">Path.HasExtension(&quot;file.txt&quot;) &#x2F;&#x2F; true</td>
 </tr>
 <tr>
-<td align="left">Width</td>
-<td align="left">宽度</td>
+<td align="left">Path.GetDirectoryName()</td>
+<td align="left">获取目录部分 (去除文件名)</td>
+<td align="left">Path.GetDirectoryName(&quot;C:\Folder\file.txt&quot;) &#x2F;&#x2F; C:\Folder</td>
 </tr>
 <tr>
-<td align="left">Height</td>
-<td align="left">高度</td>
+<td align="left">Path.GetFileName()</td>
+<td align="left">获取文件名 (包含扩展名)</td>
+<td align="left">Path.GetFileName(&quot;C:\Folder\file.txt&quot;) &#x2F;&#x2F; file.txt</td>
+</tr>
+<tr>
+<td align="left">Path.GetFileNameWithoutExtension()</td>
+<td align="left">获取文件名 (不含扩展名)</td>
+<td align="left">Path.GetFileNameWithoutExtension(&quot;C:\Folder\file.txt&quot;) &#x2F;&#x2F; file</td>
+</tr>
+<tr>
+<td align="left">Path.GetTempFileName()</td>
+<td align="left">生成一个唯一的临时文件路径 (会创建空文件)</td>
+<td align="left">Path.GetTempFileName() &#x2F;&#x2F; C:\Users...\AppData\Local\Temp\tmp1234.tmp</td>
+</tr>
+<tr>
+<td align="left">Path.GetRandomFileName()</td>
+<td align="left">生成一个随机文件名 (不会创建文件)</td>
+<td align="left">Path.GetRandomFileName() &#x2F;&#x2F; eg. &quot;ax1b2c.tmp&quot;</td>
+</tr>
+<tr>
+<td align="left">Path.GetFullPath()</td>
+<td align="left">获取绝对路径</td>
+<td align="left">Path.GetFullPath(&quot;file.txt&quot;) &#x2F;&#x2F; C:\CurrentDirectory\file.txt</td>
+</tr>
+<tr>
+<td align="left">Path.GetTempPath()</td>
+<td align="left">获取系统的临时文件夹路径</td>
+<td align="left">Path.GetTempPath() &#x2F;&#x2F; C:\Users...\AppData\Local\Temp\</td>
+</tr>
+<tr>
+<td align="left">Path.GetRelativePath()</td>
+<td align="left">获取相对路径</td>
+<td align="left">Path.GetRelativePath(&quot;C:\Folder&quot;, &quot;C:\Folder\SubFolder\file.txt&quot;) &#x2F;&#x2F; SubFolder\file.txt</td>
+</tr>
+<tr>
+<td align="left">Path.GetPathRoot()</td>
+<td align="left">获取路径的根目录部分</td>
+<td align="left">Path.GetPathRoot(&quot;C:\Folder\file.txt&quot;) &#x2F;&#x2F; C:\</td>
+</tr>
+<tr>
+<td align="left">Path.IsPathRooted()</td>
+<td align="left">判断路径是否包含根目录 (绝对路径)</td>
+<td align="left">Path.IsPathRooted(&quot;C:\Folder\file.txt&quot;) &#x2F;&#x2F; true</td>
+</tr>
+<tr>
+<td align="left">Path.IsPathFullyQualified()</td>
+<td align="left">判断路径是否是完整路径 (不包含相对部分)</td>
+<td align="left">Path.IsPathFullyQualified(&quot;C:\Folder\file.txt&quot;) &#x2F;&#x2F; true</td>
+</tr>
+<tr>
+<td align="left">Path.GetInvalidPathChars()</td>
+<td align="left">获取路径中无效的字符数组</td>
+<td align="left">Path.GetInvalidPathChars()</td>
+</tr>
+<tr>
+<td align="left">Path.GetInvalidFileNameChars()</td>
+<td align="left">获取文件名中无效的字符数组</td>
+<td align="left">Path.GetInvalidFileNameChars()</td>
 </tr>
 </tbody></table>
-<p>在脚本中, RectTransform 下可以获取的属性值, 同时我也列出了这些值和 Inspector 面板中数值的关系.</p>
-<table>
+<h1 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h1><table>
 <thead>
 <tr>
-<th align="left">名称</th>
-<th align="left">类型</th>
-<th align="left">备注</th>
+<th align="left">API</th>
+<th align="left">作用</th>
+<th align="left">示例</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">anchoredPosition</td>
-<td align="left">Vector2 : (anchoredPosition.x, anchoredPosition.y)</td>
-<td align="left">(PosX, PosY)</td>
+<td align="left">Path.PathSeparator</td>
+<td align="left">获取环境变量路径分隔符 (Windows ;Linux :)</td>
+<td align="left">Path.PathSeparator &#x2F;&#x2F; ;</td>
 </tr>
 <tr>
-<td align="left">anchorMin</td>
-<td align="left">Vector2 : (anchorMin.x, anchorMin.y)</td>
-<td align="left"></td>
+<td align="left">Path.DirectorySeparatorChar</td>
+<td align="left">获取目录分隔符 (Windows \ Linux &#x2F;)</td>
+<td align="left">Path.DirectorySeparatorChar &#x2F;&#x2F; \</td>
 </tr>
 <tr>
-<td align="left">anchorMax</td>
-<td align="left">Vector2 : (anchorMax.x, anchorMax.y)</td>
-<td align="left"></td>
+<td align="left">Path.VolumeSeparatorChar</td>
+<td align="left">获取磁盘卷分隔符 (Windows : Linux 不存在)</td>
+<td align="left">Path.VolumeSeparatorChar &#x2F;&#x2F; :</td>
 </tr>
 <tr>
-<td align="left">offsetMin</td>
-<td align="left">Vector2 : (offsetMin.x, offsetMin.y)</td>
-<td align="left">(Left, Bottom)</td>
-</tr>
-<tr>
-<td align="left">offsetMax</td>
-<td align="left">Vector2 : (offsetMax.x, offsetMax.y)</td>
-<td align="left">(-Right, -Top)</td>
-</tr>
-<tr>
-<td align="left">sizeDelta</td>
-<td align="left">Vector2 : (sizeDelta.x, sizeDelta.y)</td>
-<td align="left">(Width, Height)</td>
-</tr>
-<tr>
-<td align="left">pivot</td>
-<td align="left">Vector2 : (pivot.x, pivot.y)</td>
-<td align="left"></td>
+<td align="left">Path.AltDirectorySeparatorChar</td>
+<td align="left">获取备用的目录分隔符 (Windows &#x2F; 与 \ 等价)</td>
+<td align="left">Path.AltDirectorySeparatorChar &#x2F;&#x2F; &#x2F;</td>
 </tr>
 </tbody></table>
-<p>在脚本中如何修改数值. 下面的代码中, 如果需要某个值不变, 直接赋予原值即可.</p>
-<h2 id="Right-和-Top"><a href="#Right-和-Top" class="headerlink" title="Right 和 Top"></a>Right 和 Top</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">float</span> customTopValue = <span class="number">1.0f</span>;</span><br><span class="line"><span class="built_in">float</span> customRightValue = <span class="number">1.0f</span>;</span><br><span class="line">GetComponent&lt;RectTransform&gt;().offsetMax = <span class="keyword">new</span> Vector2(-customRightValue, -customTopValue);</span><br></pre></td></tr></table></figure>
-
-<h2 id="Left-和-Bottom"><a href="#Left-和-Bottom" class="headerlink" title="Left 和 Bottom"></a>Left 和 Bottom</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">float</span> customBottomValue = <span class="number">2.0f</span>;</span><br><span class="line"><span class="built_in">float</span> customLeftValue = <span class="number">2.0f</span>;</span><br><span class="line">GetComponent&lt;RectTransform&gt;().offsetMin = <span class="keyword">new</span> Vector2(customLeftValue, customBottomValue);</span><br></pre></td></tr></table></figure>
-
-<h2 id="PosX-和-PosY"><a href="#PosX-和-PosY" class="headerlink" title="PosX 和 PosY"></a>PosX 和 PosY</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">float</span> customPosXValue = <span class="number">3.0f</span>;</span><br><span class="line"><span class="built_in">float</span> customPosYValue = <span class="number">3.0f</span>;</span><br><span class="line">GetComponent&lt;RectTransform&gt;().anchoredPosition = <span class="keyword">new</span> Vector2(customPosXValue, customPosYValue);</span><br></pre></td></tr></table></figure>
-
-<h2 id="Width-和-Height"><a href="#Width-和-Height" class="headerlink" title="Width 和 Height"></a>Width 和 Height</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">float</span> customWidthValue = <span class="number">4.0f</span>;</span><br><span class="line"><span class="built_in">float</span> customHeightValue = <span class="number">4.0f</span>;</span><br><span class="line">GetComponent&lt;RectTransform&gt;().sizeDelta = <span class="keyword">new</span> Vector2(customWidthValue, customHeightValue);</span><br></pre></td></tr></table></figure>
-
-<h1 id="🐬-属性之间的关系"><a href="#🐬-属性之间的关系" class="headerlink" title="🐬 属性之间的关系"></a>🐬 属性之间的关系</h1><h2 id="anchoredPosition-和-pivot-offsetMin-offsetMax"><a href="#anchoredPosition-和-pivot-offsetMin-offsetMax" class="headerlink" title="anchoredPosition 和 pivot, offsetMin, offsetMax"></a>anchoredPosition 和 pivot, offsetMin, offsetMax</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">anchoredPosition = ((Vector2.one - pivot) * offsetMin) + (pivot * offsetMax);</span><br></pre></td></tr></table></figure>
-
-<h2 id="sizeDelta-和-offsetMin-offsetMax"><a href="#sizeDelta-和-offsetMin-offsetMax" class="headerlink" title="sizeDelta 和 offsetMin, offsetMax"></a>sizeDelta 和 offsetMin, offsetMax</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sizeDelta = offsetMax - offsetMin;</span><br></pre></td></tr></table></figure>
-
-<h1 id="总结图"><a href="#总结图" class="headerlink" title="总结图"></a>总结图</h1><p><img data-src="/images/unity/rectTransform.png" alt="RectTransform"></p>
-<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><ul>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC9kYmVmYTc0NmU1MGQ=">Unity进阶技巧 - RectTransform详解<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20vbnNreS9wLzUwNDUyMDEuaHRtbA==">修改RectTransform的值<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ul>
 
     </div>
 
@@ -469,7 +491,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://kuroha.vip/unity/unity_rect_transform.html" title="Unity 在脚本中修改 UGUI 中 UI 的位置和尺寸">https://kuroha.vip/unity/unity_rect_transform.html</a>
+      <a href="https://kuroha.vip/csharp/csharp_path.html" title="CSharp 中的 Path 类">https://kuroha.vip/csharp/csharp_path.html</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -495,22 +517,18 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/Unity/" rel="tag"><i class="fa fa-tag"></i> Unity</a>
-              <a href="/tags/UGUI/" rel="tag"><i class="fa fa-tag"></i> UGUI</a>
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" rel="tag"><i class="fa fa-tag"></i> 编程基础</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/unity/unity_coordinate_system.html" rel="prev" title="Unity 中的坐标系">
-                  <i class="fa fa-angle-left"></i> Unity 中的坐标系
+                <a href="/unity/unity_windows_import.html" rel="prev" title="在 Unity 中实现 Windows 选择文件">
+                  <i class="fa fa-angle-left"></i> 在 Unity 中实现 Windows 选择文件
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/csharp/csharp_delegate_04.html" rel="next" title="委托(四) "委托与事件的区别" 以及 "观察者模式"">
-                  委托(四) "委托与事件的区别" 以及 "观察者模式" <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>

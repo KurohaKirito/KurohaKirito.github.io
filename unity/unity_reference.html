@@ -27,8 +27,9 @@
 <meta property="og:site_name" content="二次元游宅客">
 <meta property="og:description" content="Unity 依赖查询很方便, 引擎自身提供了, 但是被引用关系怎么查询呢?">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kuroha.vip/images/unity/unity_reference11.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity/unity_reference1.png">
 <meta property="og:image" content="https://kuroha.vip/images/unity/unity_reference2.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity/unity_reference3.png">
 <meta property="og:image" content="https://kuroha.vip/images/unity/unity_reference4.png">
 <meta property="og:image" content="https://kuroha.vip/images/unity/unity_reference5.png">
 <meta property="og:image" content="https://kuroha.vip/images/unity/unity_reference6.png">
@@ -39,12 +40,12 @@
 <meta property="og:image" content="https://kuroha.vip/images/unity/unity_reference9.png">
 <meta property="og:image" content="https://kuroha.vip/images/unity/unity_reference10.png">
 <meta property="article:published_time" content="2023-04-21T07:17:09.000Z">
-<meta property="article:modified_time" content="2025-01-20T03:05:14.126Z">
+<meta property="article:modified_time" content="2025-02-17T08:30:31.419Z">
 <meta property="article:author" content="Kuroha">
 <meta property="article:tag" content="Unity">
 <meta property="article:tag" content="Reference">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kuroha.vip/images/unity/unity_reference11.png">
+<meta name="twitter:image" content="https://kuroha.vip/images/unity/unity_reference1.png">
 
 
 <link rel="canonical" href="https://kuroha.vip/unity/unity_reference.html">
@@ -124,7 +125,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">48</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">23</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">49</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">23</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -190,7 +191,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -301,7 +302,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-01-20 11:05:14" itemprop="dateModified" datetime="2025-01-20T11:05:14+08:00">2025-01-20</time>
+      <time title="修改时间：2025-02-17 16:30:31" itemprop="dateModified" datetime="2025-02-17T16:30:31+08:00">2025-02-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -363,13 +364,13 @@
 <p>最后汇总结果就可以了, 其中关键的点在于要使用多线程来加快读取 text 以及遍历查询的速度, 否则效率将会非常低</p>
 <p>【总结】</p>
 <p>在较大的项目中, 初始化需要 33s 时间, 而且每次初始化的时间差异很大, 有时会长达 60s 以上</p>
-<p><img data-src="/../../images/unity/unity_reference11.png" alt="总时间"></p>
+<p><img data-src="/images/unity/unity_reference1.png" alt="总时间"></p>
 <p>查询 1 个文件的耗时 0.7s</p>
-<p><img data-src="/../../images/unity/unity_reference2.png" alt="单文件"></p>
+<p><img data-src="/images/unity/unity_reference2.png" alt="单文件"></p>
 <p>但是随着文件增多, 需要的查询时间也会随之上升, 查询 10 个文件时需要 6s</p>
-<p>!1<a href="../../images/unity/unity_reference3.png">10个文件</a></p>
+<p><img data-src="/images/unity/unity_reference3.png" alt="10个文件"></p>
 <p>查询 20 个文件时需要 16s</p>
-<p><img data-src="/../../images/unity/unity_reference4.png" alt="20个文件"></p>
+<p><img data-src="/images/unity/unity_reference4.png" alt="20个文件"></p>
 <p>【<strong>适用情况</strong>】</p>
 <ul>
 <li><p>由于每次修改 C# 代码都会导致缓存清空, 因此适用于关卡, 美术和优化等基本不会修改代码的人员</p>
@@ -381,17 +382,17 @@
 </ul>
 <h3 id="使用-Ripgrep-软件"><a href="#使用-Ripgrep-软件" class="headerlink" title="使用 Ripgrep 软件"></a>使用 Ripgrep 软件</h3><p>使用 Ripgrep 软件的查询功能实现引用查询</p>
 <p>Ripgrep 是命令行下一个基于行的搜索工具, 使用 Rust 开发, 可以在多平台下运行, RipGrep 官方号称比其它类似工具在搜索速度上快上 N 倍, VSCode 的搜索功能默认就是用的 Ripgrep</p>
-<p><img data-src="/../../images/unity/unity_reference5.png" alt="vscode"></p>
+<p><img data-src="/images/unity/unity_reference5.png" alt="vscode"></p>
 <p>使用 VSCode 执行搜索时在任务管理器中就可以看到</p>
-<p><img data-src="/../../images/unity/unity_reference6.png" alt="vscode"></p>
+<p><img data-src="/images/unity/unity_reference6.png" alt="vscode"></p>
 <p>软件下载地址: <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0J1cm50U3VzaGkvcmlwZ3JlcC90cmVlLzEzLjAuMA==">Ripgrep 开源地址<i class="fa fa-external-link-alt"></i></span></p>
 <p>将软件导入到 Unity 中, 编写代码使用 <code>Process</code> 类, 设置好参数, 启动软件查询即可</p>
 <p>推荐将参数写为可配置的方式, 这样使用过程中需要调整参数时可以直接外部调整</p>
-<p><img data-src="/../../images/unity/unity_reference11.png" alt="参数"></p>
+<p><img data-src="/images/unity/unity_reference11.png" alt="参数"></p>
 <p>另外 .exe 程序和 .ignore 文件都可以直接放到项目中</p>
-<p><img data-src="/../../images/unity/unity_reference12.png" alt="程序"></p>
+<p><img data-src="/images/unity/unity_reference12.png" alt="程序"></p>
 <p>在较大的项目中, 每次查询需要消耗 6 ~ 10s</p>
-<p><img data-src="/../../images/unity/unity_reference7.png" alt="耗时"></p>
+<p><img data-src="/images/unity/unity_reference7.png" alt="耗时"></p>
 <p>【<strong>适用情况</strong>】</p>
 <ul>
 <li><p>没有了初始化操作带来的时间消耗, 单次查询的时间大幅度缩短, 适用于程序等经常修改代码的人员</p>
@@ -428,11 +429,11 @@
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">foreach</span> (<span class="keyword">var</span> guid <span class="keyword">in</span> dependencies.Keys)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> dependPath <span class="keyword">in</span> dependencies[guid])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> dependGuid = AssetDatabase.AssetPathToGUID(dependPath);</span><br><span class="line">        <span class="keyword">if</span> (!assetData.referencedAssets.TryGetValue(dependGuid, <span class="keyword">out</span> _))</span><br><span class="line">        &#123;</span><br><span class="line">            assetData.referencedAssets[dependGuid] = <span class="keyword">new</span> List&lt;<span class="built_in">string</span>&gt;();</span><br><span class="line">        &#125;</span><br><span class="line">        assetData.referencedAssets[dependGuid].Add(guid);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这个方法的耗时主要在构建依赖关系上, 经测试每次构建需要耗时 70s 以上</p>
-<p><img data-src="/../../images/unity/unity_reference8.png" alt="构建耗时"></p>
+<p><img data-src="/images/unity/unity_reference8.png" alt="构建耗时"></p>
 <p>而将依赖关系转换为引用关系仅花费了 1s 左右</p>
-<p><img data-src="/../../images/unity/unity_reference9.png" alt="转换数据"></p>
+<p><img data-src="/images/unity/unity_reference9.png" alt="转换数据"></p>
 <p>查询耗时连 1ms 都不到</p>
-<p><img data-src="/../../images/unity/unity_reference10.png" alt="查询耗时"></p>
+<p><img data-src="/images/unity/unity_reference10.png" alt="查询耗时"></p>
 <p>【<strong>适用情况</strong>】</p>
 <ul>
 <li><p>因为每次构建字典的时间过长, 不适合经常使用, 多适用于批量查询, 全局查询</p>
@@ -580,14 +581,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">95k</span>
+    <span title="站点总字数">96k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">5:46</span>
+    <span title="站点阅读时长">5:48</span>
   </span>
 </div>
 
