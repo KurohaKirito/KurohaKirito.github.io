@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.0.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="项目中饱受模型究竟如何导入材质球的折磨，打包、依赖、卡顿、版本管理、团队合作等，苦不堪言，是时候揭竿而起了！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Unity 中导入模型材质球的最优雅姿势">
+<meta property="og:url" content="https://kuroha.vip/unity/unity_model_importer.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="项目中饱受模型究竟如何导入材质球的折磨，打包、依赖、卡顿、版本管理、团队合作等，苦不堪言，是时候揭竿而起了！">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/images/unity/importer_material_1.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity/importer_material_2.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity/importer_material_3.png">
+<meta property="article:published_time" content="2025-03-20T03:42:10.000Z">
+<meta property="article:modified_time" content="2025-03-20T07:17:11.595Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="Unity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/images/unity/importer_material_1.png">
+
+
+<link rel="canonical" href="https://kuroha.vip/unity/unity_model_importer.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/unity/unity_model_importer.html","path":"unity/unity_model_importer.html","title":"在 Unity 中导入模型材质球的最优雅姿势"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>在 Unity 中导入模型材质球的最优雅姿势 | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">52</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">22</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%A5%A6Model-Importer-%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">🥦Model Importer 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8E%88Material-Tab-%E8%A7%A3%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">🎈Material Tab 解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#None"><span class="nav-number">2.1.</span> <span class="nav-text">None</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Standard-Legacy"><span class="nav-number">2.2.</span> <span class="nav-text">Standard (Legacy)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Import-via-MaterialDescription"><span class="nav-number">2.3.</span> <span class="nav-text">Import via MaterialDescription</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8D%B8%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">🍸三种模式的总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8D%80Standard-Legacy"><span class="nav-number">4.</span> <span class="nav-text">🍀Standard (Legacy)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8D%87Use-External-Materials-Legacy"><span class="nav-number">5.</span> <span class="nav-text">🍇Use External Materials (Legacy)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8D%89-External-%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">🍉 External 模式总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8D%92Use-Embedded-Materials"><span class="nav-number">7.</span> <span class="nav-text">🍒Use Embedded Materials</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E5%AF%BC%E5%87%BA%E5%8A%9F%E8%83%BD"><span class="nav-number">7.1.</span> <span class="nav-text">资源导出功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E9%87%8D%E6%98%A0%E5%B0%84%E5%8A%9F%E8%83%BD"><span class="nav-number">7.2.</span> <span class="nav-text">资源重映射功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8D%8DEmbedded-%E6%A8%A1%E5%BC%8F%E6%80%BB%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">🍍Embedded 模式总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%A5%92%E5%A6%82%E4%BD%95%E6%89%B9%E9%87%8F%E8%AE%BE%E7%BD%AE%E5%AF%BC%E5%87%BA%E4%BF%A1%E6%81%AF"><span class="nav-number">9.</span> <span class="nav-text">🥒如何批量设置导出信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8D%91%E6%80%BB%E7%BB%93"><span class="nav-number">10.</span> <span class="nav-text">🍑总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8C%B3%E9%99%84%E5%BD%95%E4%B8%80%EF%BC%9A%E6%9F%A5%E6%89%BE%E8%A7%84%E5%88%99%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">11.</span> <span class="nav-text">🌳附录一：查找规则的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Naming"><span class="nav-number">11.1.</span> <span class="nav-text">Naming</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Search"><span class="nav-number">11.2.</span> <span class="nav-text">Search</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8D%88%E9%99%84%E5%BD%95%E4%BA%8C%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88-Extract-Materials-%E6%8C%89%E9%92%AE-Extract-Textures-%E6%8C%89%E9%92%AE%E6%98%AF%E7%BD%AE%E7%81%B0%E7%9A%84"><span class="nav-number">12.</span> <span class="nav-text">🍈附录二：为什么 Extract Materials 按钮, Extract Textures 按钮是置灰的 ?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%A5%95%E9%99%84%E5%BD%95%E4%B8%89%EF%BC%9A%E8%AE%BE%E7%BD%AE%E6%A8%A1%E5%9E%8B%E5%AF%BC%E5%87%BA%E4%BF%A1%E6%81%AF%E7%9A%84%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="nav-number">13.</span> <span class="nav-text">🥕附录三：设置模型导出信息的完整代码</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/about/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/unity/unity_model_importer.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="在 Unity 中导入模型材质球的最优雅姿势 | 二次元游宅客">
+      <meta itemprop="description" content="项目中饱受模型究竟如何导入材质球的折磨，打包、依赖、卡顿、版本管理、团队合作等，苦不堪言，是时候揭竿而起了！">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在 Unity 中导入模型材质球的最优雅姿势
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2025-03-20 11:42:10 / 修改时间：15:17:11" itemprop="dateCreated datePublished" datetime="2025-03-20T11:42:10+08:00">2025-03-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">项目中饱受模型究竟如何导入材质球的折磨，打包、依赖、卡顿、版本管理、团队合作等，苦不堪言，是时候揭竿而起了！</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="🥦Model-Importer-前言"><a href="#🥦Model-Importer-前言" class="headerlink" title="🥦Model Importer 前言"></a>🥦Model Importer 前言</h1><p>对于项目中模型的材质球导入问题一直没有明确的规范, 导致这块美术资源的处理要么依赖出问题, 分包出问题, 资源加载卡顿, 要么产生的额外材质球导致版本管理异常, 到处充斥着 Unity 拉的屎, 这里一坨, 那里一坨, 对于我这种强迫症晚期患者而言, 每每看见一坨坨的屎, 上班的心情都没有了~</p>
+<p>想起来自己曾经处理过这个问题, 但是当时的思路还是模模糊糊的, 处于一种总感觉哪里有问题却又说不上来的状态, 于是趁最近几天的空闲时间, 再次把这个问题捡起来, 彻底把坑填上!</p>
+<p>先来看一下官方对模型导入材质球的说明: <span class="exturl" data-url="aHR0cHM6Ly9kb2NzLnVuaXR5M2QuY29tLzYwMDAuMS9Eb2N1bWVudGF0aW9uL01hbnVhbC9GQlhJbXBvcnRlci1NYXRlcmlhbHMuaHRtbA==">跳转官方手册 Materials tab<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="🎈Material-Tab-解析"><a href="#🎈Material-Tab-解析" class="headerlink" title="🎈Material Tab 解析"></a>🎈Material Tab 解析</h1><p>先来彻底解析一下 Model Importer 的 Material 页面</p>
+<p><img data-src="/images/unity/importer_material_1.png" alt="Material Tab"></p>
+<p>这个页面就是控制 Unity 如何生成材质球的, 生成材质球的模式有 3 种: <code>None</code> <code>Standard (Legacy)</code> <code>Import via MaterialDescription</code> 下面来逐一说明</p>
+<h2 id="None"><a href="#None" class="headerlink" title="None"></a>None</h2><p>此模式下 Unity 将不参考任何模型数据, 而是直接引用 Unity 标准材质球, 原文是 &quot;Unity&#39;s default diffuse Material&quot;</p>
+<h2 id="Standard-Legacy"><a href="#Standard-Legacy" class="headerlink" title="Standard (Legacy)"></a>Standard (Legacy)</h2><p>此模式下 Unity 将使用一组默认规则生成材质球, 即规则固定, 不支持自定义, 同时标准模式也不支持复杂的材质球</p>
+<p>比如 <code>Arnold Material</code> <code>Physical Material</code> <code>HDRP Material</code> 等</p>
+<h2 id="Import-via-MaterialDescription"><a href="#Import-via-MaterialDescription" class="headerlink" title="Import via MaterialDescription"></a>Import via MaterialDescription</h2><p>此模式下 Unity 将使用 FBX 文件中嵌入的材质描述来生成材质, 相比标准模式, 此模式可以提供更准确的结果并支持更广泛的材质类型</p>
+<h1 id="🍸三种模式的总结"><a href="#🍸三种模式的总结" class="headerlink" title="🍸三种模式的总结"></a>🍸三种模式的总结</h1><p><code>None</code> 模式下会引用标准材质球, 并且无法移除, 因此不满足要求</p>
+<p><code>Standard (Legacy)</code> 模式下会按默认规则生成材质球, 但是可以移除, 因此可以使用此模式</p>
+<p><code>Import via MaterialDescription</code> 模式下会按材质描述生成材质球, 也可以移除, 因此也可以使用此模式</p>
+<p>但是考虑到项目中并不使用 Unity 生成的材质球, 因此后两种模式都可以, 反正都是要移除的, 这里选择 <code>Standard (Legacy)</code></p>
+<p>再次说明, 因为并不需要使用 Unity 生成的材质球, 所以后两种模式都满足目前的要求, 都可以选择, 没有区别</p>
+<h1 id="🍀Standard-Legacy"><a href="#🍀Standard-Legacy" class="headerlink" title="🍀Standard (Legacy)"></a>🍀Standard (Legacy)</h1><p>下面来详细说明一下 <code>Standard (Legacy)</code> 模式</p>
+<ul>
+<li><strong>sRGB Albedo Colors</strong></li>
+</ul>
+<p>此选项控制使用伽马空间还是线性空间</p>
+<p>说实话我并没有图形学相关知识, 我感觉这个选项技美人员肯定知道怎么设置, 交给专业人士了! 我们来看其他选项</p>
+<ul>
+<li><strong>Location</strong></li>
+</ul>
+<p>重点来了 <code>Location</code> 选项, 这个选项用来控制 Unity 生成材质球的位置, 有 2 种选择</p>
+<p><code>Use External Materials (Legacy)</code> 和 <code>Use Embedded Materials</code> 我来逐个说明</p>
+<h1 id="🍇Use-External-Materials-Legacy"><a href="#🍇Use-External-Materials-Legacy" class="headerlink" title="🍇Use External Materials (Legacy)"></a>🍇Use External Materials (Legacy)</h1><p><img data-src="/images/unity/importer_material_2.png" alt="Use External Materials (Legacy)"></p>
+<p>这个选项下, Unity 会尝试查找已有的材质球资源, 查找时按照 <code>Naming</code> 和 <code>Search</code> 配置的查找方式进行查找 (查找方式的配置在本文最后)</p>
+<p>那如果找不到会怎么样呢? 会 <strong>使用默认规则新建材质球资源并放置于同级的 Materials 文件夹中</strong></p>
+<p>上图中可以看到, 模型 Model Demo 同级目录中有一个 Materials 文件夹, 里面存放的就是 Unity 在标准模式下生成的材质球</p>
+<h1 id="🍉-External-模式总结"><a href="#🍉-External-模式总结" class="headerlink" title="🍉 External 模式总结"></a>🍉 External 模式总结</h1><p><code>优先尝试搜寻外部材质球, 搜寻不到则按默认规则新建材质球</code></p>
+<blockquote>
+<p>只有当模型和材质球具有强制要求的命名规则, 并且强绑定, 材质球不会复用的情况下才推荐 Use External Materials (Legacy) 设置</p>
+<p>否则一旦 Unity 找不到对应的材质球便会新建 Materials 文件夹以及对应的材质球资源, 但是没有哪个项目会使用 Unity 生成的默认材质球的, 这部分默认材质球很显然是多余的资源!</p>
+<p>因此<strong>不推荐</strong>!</p>
+</blockquote>
+<p>接下来看另一个选项</p>
+<h1 id="🍒Use-Embedded-Materials"><a href="#🍒Use-Embedded-Materials" class="headerlink" title="🍒Use Embedded Materials"></a>🍒Use Embedded Materials</h1><p><img data-src="/images/unity/importer_material_3.png" alt="Use Embedded Materials"></p>
+<p>这个选项下, Unity 会直接使用默认规则新建材质球资源</p>
+<p>但是和上一个选项不同的是不再放置于同级的 Materials 文件夹中, 而是直接作为模型的 SubAsset</p>
+<p>从上图中可以很明显地看到生成了 <code>01 - Default</code> <code>02 - Default</code> <code>03 - Default</code> 三个材质球, 并且是作为模型内嵌资源的形式</p>
+<p>但是作为内嵌资源的方式有很大的弊端, 那就是无法修改材质球的参数, 为了解决这个问题, Unity 提供了 <code>资源导出</code> 功能</p>
+<h2 id="资源导出功能"><a href="#资源导出功能" class="headerlink" title="资源导出功能"></a>资源导出功能</h2><ul>
+<li>Extract Materials</li>
+</ul>
+<p>提取 Unity 使用默认规则新建的作为模型 SubAsset 资源的材质球资源到指定的目录中</p>
+<ul>
+<li>Extract Textures</li>
+</ul>
+<p>提取 Unity 使用默认规则新建的作为模型 SubAsset 资源的贴图资源到指定的目录中</p>
+<p>使用上述两按钮便可以导出 Unity 创建的材质球和贴图, 并且会将导出信息记录在 meta 文件的 <code>externalObjects</code> 字段中</p>
+<p>导出时无法指定某一个材质球或纹理单独导出, 只能导出全部的材质球或者全部的纹理</p>
+<p>每一条导出信息都由以下信息构成, 其中最关键的就是 <code>name</code> 信息, 只有名称和模型中记录的名称完全匹配的信息才视为一条正确的导出信息</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">first:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">UnityEngine:Material</span></span><br><span class="line">    <span class="attr">assembly:</span> <span class="string">UnityEngine.CoreModule</span></span><br><span class="line">    <span class="attr">name:</span> <span class="number">01</span> <span class="bullet">-</span> <span class="string">Default</span></span><br><span class="line">  <span class="attr">second:</span> &#123;<span class="attr">fileID:</span> <span class="number">2100000</span>, <span class="attr">guid:</span> <span class="string">6ec473d8d7e6a0f4b98313871e38903d</span>, <span class="attr">type:</span> <span class="number">2</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是资源导出功能也仅仅是将资源导出而已, 使用的还是 Unity 按照默认规则生成的资源, 并不是我们自己的资源, 于是还有一个功能 <code>资源重映射</code> 功能</p>
+<h2 id="资源重映射功能"><a href="#资源重映射功能" class="headerlink" title="资源重映射功能"></a>资源重映射功能</h2><p><code>Remapped Materials</code> 同样使用 <code>Naming</code> 和 <code>Search</code> 配置的查找规则尝试查找重映射材质球</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">first:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">UnityEngine:Material</span></span><br><span class="line">    <span class="attr">assembly:</span> <span class="string">UnityEngine.CoreModule</span></span><br><span class="line">    <span class="attr">name:</span> <span class="number">01</span> <span class="bullet">-</span> <span class="string">Default</span></span><br><span class="line">  <span class="attr">second:</span> &#123;<span class="attr">fileID:</span> <span class="number">2100000</span>, <span class="attr">guid:</span> <span class="string">6ec473d8d7e6a0f4b98313871e38903d</span>, <span class="attr">type:</span> <span class="number">2</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面是一条合法的导出信息, 重映射功能修改的就是其中的 <code>guid</code> 字段信息</p>
+<p>因此 <code>资源重映射</code> 功能是以 <code>资源导出</code> 功能为基础的, 如果此时 meta 文件中没有任何导出信息, 执行重映射时便会自动新建对应材质球的导出信息, 相当于将指定的一个材质球执行了导出操作, 其余没有创建导出信息的依旧会以内嵌资源 (SubAsset) 的形式存在于模型资源中</p>
+<h1 id="🍍Embedded-模式总结"><a href="#🍍Embedded-模式总结" class="headerlink" title="🍍Embedded 模式总结"></a>🍍Embedded 模式总结</h1><p>简单概括: <code>不存在导出信息时以内嵌资源的形式创建材质球, 存在导出信息时引用导出信息中的资源</code></p>
+<blockquote>
+<p>此模式在存在导出信息时会直接引用导出信息中的资源, 因此自定义程度极高, 强烈推荐此模式!</p>
+<p>但是要注意, 在没有导出信息的情况下, Unity 依旧会创建材质球, 虽然是以内嵌资源的形式, 但这依然不是我们想要的, 所以切记要设置导出信息才行!</p>
+<p><strong>强烈推荐</strong>!</p>
+</blockquote>
+<h1 id="🥒如何批量设置导出信息"><a href="#🥒如何批量设置导出信息" class="headerlink" title="🥒如何批量设置导出信息"></a>🥒如何批量设置导出信息</h1><p>本文最后会贴出完整代码, 这里就只说一下思路</p>
+<ul>
+<li>将模型导入设置修改为 Standard + Embedded, 并重新序列化 meta 文件</li>
+</ul>
+<p>这是为了统一导入设置, 同时规范 meta 文件的格式, 为后面文本处理做准备</p>
+<ul>
+<li>使用逐行扫描的方式删除 &quot;  externalObjects:&quot; 到 &quot;  materials:&quot; 的全部 Remap 信息</li>
+</ul>
+<p>这里为什么不使用 Unity 自带的 <code>RemoveRemap</code> 呢? 因为模型中很可能会存在非法的 Remap 信息, 使用 <code>RemoveRemap</code> 根本无法移除这部分信息</p>
+<p>另外模型的 meta 文件结构固定且内容不多, 而且前面我们已经重新序列化了 meta 文件, 保证了 meta 文件格式的正确性, 因此直接逐行分析即可, 同时多线程进行优化</p>
+<ul>
+<li>添加空的 Remap 信息</li>
+</ul>
+<p>Remap 信息清空后, 只要添加空的 Remap 信息就可以实现既不生成额外资源, 又不会引用到外部资源的效果!</p>
+<p>至此结束, 具体代码可查看本文最后! 最后实现的效果如下, 可以看到正确生成了导出信息并且没有引用额外的资源!</p>
+<p><strong>「算是某种意义上的卡 Bug？什么叫 Bug？！这叫机制！」</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">first:</span></span><br><span class="line">    <span class="attr">type:</span> <span class="string">UnityEngine:Material</span></span><br><span class="line">    <span class="attr">assembly:</span> <span class="string">UnityEngine.CoreModule</span></span><br><span class="line">    <span class="attr">name:</span> <span class="number">01</span> <span class="bullet">-</span> <span class="string">Default</span></span><br><span class="line">  <span class="attr">second:</span> &#123;<span class="attr">instanceID:</span> <span class="number">0</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="🍑总结"><a href="#🍑总结" class="headerlink" title="🍑总结"></a>🍑总结</h1><table>
+<thead>
+<tr>
+<th>模式</th>
+<th>描述</th>
+<th>是否推荐</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>None</strong></td>
+<td>直接引用 Unity 默认材质球，无法移除</td>
+<td>❌ 不推荐</td>
+</tr>
+<tr>
+<td><strong>Standard (Legacy)</strong></td>
+<td>按默认规则生成材质球，可移除</td>
+<td>✅ 可选</td>
+</tr>
+<tr>
+<td><strong>Import via MaterialDescription</strong></td>
+<td>按材质描述生成材质球，可移除</td>
+<td>✅ 可选</td>
+</tr>
+<tr>
+<td><strong>Use External Materials (Legacy)</strong></td>
+<td>优先查找外部材质球，找不到则新建材质球资源</td>
+<td>❌ 不推荐</td>
+</tr>
+<tr>
+<td><strong>Use Embedded Materials</strong></td>
+<td>生成材质球为 SubAsset，可配合导出和重映射功能</td>
+<td>✅ 强烈推荐</td>
+</tr>
+<tr>
+<td><strong>Extract Materials</strong></td>
+<td>提取 Unity 生成的材质球资源</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Extract Textures</strong></td>
+<td>提取 Unity 生成的纹理资源</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Remapped Materials</strong></td>
+<td>通过导出信息替换默认材质</td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="🌳附录一：查找规则的配置"><a href="#🌳附录一：查找规则的配置" class="headerlink" title="🌳附录一：查找规则的配置"></a>🌳附录一：查找规则的配置</h1><h2 id="Naming"><a href="#Naming" class="headerlink" title="Naming"></a>Naming</h2><p>用于控制搜索时的名称规则</p>
+<ul>
+<li><code>By Base Texture Name</code></li>
+</ul>
+<p>使用材质关联的主纹理名称作为线索进行查找</p>
+<ul>
+<li><code>Fome Model&#39;s Material</code></li>
+</ul>
+<p>直接使用模型文件中定义的材质名称作为线索进行查找</p>
+<ul>
+<li><code>Model Name + Model&#39;s Material</code></li>
+</ul>
+<p>组合模型文件名和模型文件中定义的材质名作为线索进行查找</p>
+<h2 id="Search"><a href="#Search" class="headerlink" title="Search"></a>Search</h2><p>用于控制搜索的位置</p>
+<ul>
+<li><code>Local Materials Folder</code></li>
+</ul>
+<p>仅在模型文件同级目录的 Materials 文件夹中搜索</p>
+<ul>
+<li><code>Recursive Up</code></li>
+</ul>
+<p>从模型文件所在目录开始向上逐级递归搜索</p>
+<ul>
+<li><code>Project Wide</code></li>
+</ul>
+<p>在整个项目范围内搜索</p>
+<h1 id="🍈附录二：为什么-Extract-Materials-按钮-Extract-Textures-按钮是置灰的"><a href="#🍈附录二：为什么-Extract-Materials-按钮-Extract-Textures-按钮是置灰的" class="headerlink" title="🍈附录二：为什么 Extract Materials 按钮, Extract Textures 按钮是置灰的 ?"></a>🍈附录二：为什么 Extract Materials 按钮, Extract Textures 按钮是置灰的 ?</h1><p>这两个按钮在两种情况下是置灰的</p>
+<ol>
+<li><p>模型内部没有材质球和贴图时</p>
+</li>
+<li><p>meta 文件中已经记录了全部资源的导出信息时</p>
+</li>
+</ol>
+<p>第一种情况很好理解, 关键是第二种情况, 假设 Unity 检测到模型中有 3 张纹理, 2 个材质球</p>
+<p><code>tex_1</code> <code>tex_2</code> <code>tex_3</code> <code>mat_1</code> <code>mat_2</code></p>
+<p>而目前 meta 中已经记录了 2 张纹理和 2 个材质球的导出信息</p>
+<p><code>tex_1</code> <code>tex_2</code> <code>mat_1</code> <code>mat_2</code></p>
+<p>则导出贴图按钮就是可用的, 导出材质球按钮就是置灰的</p>
+<h1 id="🥕附录三：设置模型导出信息的完整代码"><a href="#🥕附录三：设置模型导出信息的完整代码" class="headerlink" title="🥕附录三：设置模型导出信息的完整代码"></a>🥕附录三：设置模型导出信息的完整代码</h1><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> 移除模型的内嵌资源</span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;/summary&gt;</span></span></span><br><span class="line"><span class="comment"><span class="doctag">///</span> <span class="doctag">&lt;param name=&quot;modelGUIDs&quot;&gt;</span>需要处理的模型 GUID<span class="doctag">&lt;/param&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">async</span> <span class="keyword">void</span> <span class="title">RemoveEmbeddedAssetsInModel</span>(<span class="params"><span class="keyword">params</span> <span class="built_in">string</span>[] modelGUIDs</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="meta">#<span class="keyword">region</span> 前提准备, 反射内部逻辑</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> sourceMaterialsProperty = <span class="keyword">typeof</span>(ModelImporter).GetProperty(<span class="string">&quot;sourceMaterials&quot;</span>, BindingFlags.NonPublic | BindingFlags.Instance);</span><br><span class="line">    <span class="keyword">if</span> (sourceMaterialsProperty == <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        DebugUtil.LogError(<span class="string">&quot;未反射到属性 sourceMaterials! 请更新工具逻辑!&quot;</span>, DebugUtil.RED);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="keyword">endregion</span></span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> modelList = TempDictionary&lt;<span class="built_in">string</span>, ModelImporter&gt;.Get();</span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="keyword">region</span> 获取全部模型</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> modelGUID <span class="keyword">in</span> modelGUIDs)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> assetPath = AssetDatabase.GUIDToAssetPath(modelGUID);</span><br><span class="line">        <span class="keyword">var</span> assetImporter = AssetImporter.GetAtPath(assetPath);</span><br><span class="line">        <span class="keyword">var</span> modelImporter = assetImporter <span class="keyword">as</span> ModelImporter;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (modelImporter == <span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        modelList.Add(assetPath, modelImporter);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="keyword">endregion</span></span></span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="keyword">region</span> 将模型设置为 Standard + Embedded</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> modelImporter <span class="keyword">in</span> modelList.Values)</span><br><span class="line">    &#123;</span><br><span class="line">        modelImporter.materialImportMode = ModelImporterMaterialImportMode.ImportStandard;</span><br><span class="line">        modelImporter.useSRGBMaterialColor = <span class="literal">true</span>;</span><br><span class="line">        modelImporter.materialLocation = ModelImporterMaterialLocation.InPrefab;</span><br><span class="line">        modelImporter.SaveAndReimport();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="keyword">endregion</span></span></span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="keyword">region</span> 删除 &quot;  externalObjects:&quot; 到 &quot;  materials:&quot; 的全部 Remap 信息</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 另外因为模型中会存在非法的 Remap 信息, 使用 RemoveRemap 根本无法移除这部分信息</span></span><br><span class="line">    <span class="comment">// 加上模型的 meta 文件结构固定且内容不多, 因此直接逐行分析</span></span><br><span class="line">    <span class="keyword">var</span> tasks = TempleList&lt;Task&gt;.Get();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> modelData <span class="keyword">in</span> modelList)</span><br><span class="line">    &#123;</span><br><span class="line">        tasks.Add(Task.Run(() =&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">var</span> metaPath = <span class="string">$&quot;<span class="subst">&#123;modelData.Key&#125;</span>.meta&quot;</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> needKeep = <span class="literal">true</span>;</span><br><span class="line">            <span class="keyword">var</span> newMeta = TempleList&lt;<span class="built_in">string</span>&gt;.Get();</span><br><span class="line">            <span class="keyword">var</span> metaLines = File.ReadAllLines(metaPath);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">foreach</span> (<span class="keyword">var</span> line <span class="keyword">in</span> metaLines)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (needKeep)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (line == <span class="string">&quot;  externalObjects:&quot;</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        newMeta.Add(<span class="string">&quot;  externalObjects: []&quot;</span>);</span><br><span class="line">                        needKeep = <span class="literal">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        newMeta.Add(line);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (line == <span class="string">&quot;  materials:&quot;</span>)</span><br><span class="line">                    &#123;</span><br><span class="line">                        needKeep = <span class="literal">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            File.WriteAllLines(metaPath, newMeta);</span><br><span class="line">            TempleList&lt;<span class="built_in">string</span>&gt;.Back(newMeta);</span><br><span class="line">        &#125;));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> Task.WhenAll(tasks);</span><br><span class="line"></span><br><span class="line">    TempleList&lt;Task&gt;.Back(tasks);</span><br><span class="line"></span><br><span class="line">    AssetDatabase.Refresh();</span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="keyword">endregion</span></span></span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="keyword">region</span> 添加空的 Remap 信息</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">foreach</span> (<span class="keyword">var</span> modelData <span class="keyword">in</span> modelList)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">var</span> assetIdentifiers = sourceMaterialsProperty.GetValue(modelData.Value) <span class="keyword">as</span> AssetImporter.SourceAssetIdentifier[];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (assetIdentifiers.IsNullOrEmpty())</span><br><span class="line">        &#123;</span><br><span class="line">            DebugUtil.LogError(<span class="string">$&quot;错误! 模型 <span class="subst">&#123;modelData.Key&#125;</span> 没有可以执行重映射逻辑的材质球!&quot;</span>, DebugUtil.RED, modelData.Value);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        assetIdentifiers.TheAll(identifier =&gt; modelData.Value.AddRemap(identifier, <span class="literal">null</span>));</span><br><span class="line">        modelData.Value.SaveAndReimport();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">#<span class="keyword">endregion</span></span></span><br><span class="line"></span><br><span class="line">    TempDictionary&lt;<span class="built_in">string</span>, ModelImporter&gt;.Back(modelList);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/about/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/unity/unity_model_importer.html" title="在 Unity 中导入模型材质球的最优雅姿势">https://kuroha.vip/unity/unity_model_importer.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Unity/" rel="tag"><i class="fa fa-tag"></i> Unity</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/computer/computer_ide.html" rel="prev" title="自定义 Rider 的配置和缓存位置">
+                  <i class="fa fa-angle-left"></i> 自定义 Rider 的配置和缓存位置
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">100k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">6:02</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>
