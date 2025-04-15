@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://kuroha.vip/images/unity/importer_material_2.png">
 <meta property="og:image" content="https://kuroha.vip/images/unity/importer_material_3.png">
 <meta property="article:published_time" content="2025-03-20T03:42:10.000Z">
-<meta property="article:modified_time" content="2025-03-20T07:17:11.595Z">
+<meta property="article:modified_time" content="2025-04-01T06:51:42.283Z">
 <meta property="article:author" content="Kuroha">
 <meta property="article:tag" content="Unity">
 <meta name="twitter:card" content="summary">
@@ -115,7 +115,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">52</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">22</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">53</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">22</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -181,7 +181,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -284,9 +284,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2025-03-20 11:42:10 / 修改时间：15:17:11" itemprop="dateCreated datePublished" datetime="2025-03-20T11:42:10+08:00">2025-03-20</time>
+      <time title="创建时间：2025-03-20 11:42:10" itemprop="dateCreated datePublished" datetime="2025-03-20T11:42:10+08:00">2025-03-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-04-01 14:51:42" itemprop="dateModified" datetime="2025-04-01T14:51:42+08:00">2025-04-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -305,7 +311,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3k</span>
+      <span>2.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -337,11 +343,9 @@
 <h2 id="Import-via-MaterialDescription"><a href="#Import-via-MaterialDescription" class="headerlink" title="Import via MaterialDescription"></a>Import via MaterialDescription</h2><p>此模式下 Unity 将使用 FBX 文件中嵌入的材质描述来生成材质, 相比标准模式, 此模式可以提供更准确的结果并支持更广泛的材质类型</p>
 <h1 id="🍸三种模式的总结"><a href="#🍸三种模式的总结" class="headerlink" title="🍸三种模式的总结"></a>🍸三种模式的总结</h1><p><code>None</code> 模式下会引用标准材质球, 并且无法移除, 因此不满足要求</p>
 <p><code>Standard (Legacy)</code> 模式下会按默认规则生成材质球, 但是可以移除, 因此可以使用此模式</p>
-<p><code>Import via MaterialDescription</code> 模式下会按材质描述生成材质球, 也可以移除, 因此也可以使用此模式</p>
-<p>但是考虑到项目中并不使用 Unity 生成的材质球, 因此后两种模式都可以, 反正都是要移除的, 这里选择 <code>Standard (Legacy)</code></p>
-<p>再次说明, 因为并不需要使用 Unity 生成的材质球, 所以后两种模式都满足目前的要求, 都可以选择, 没有区别</p>
-<h1 id="🍀Standard-Legacy"><a href="#🍀Standard-Legacy" class="headerlink" title="🍀Standard (Legacy)"></a>🍀Standard (Legacy)</h1><p>下面来详细说明一下 <code>Standard (Legacy)</code> 模式</p>
-<ul>
+<p><code>Import via MaterialDescription</code> 模式下会按模型内的材质描述信息生成材质球, 但目前项目中的模型都没有使用材质描述, 因此不适用</p>
+<p>下面来详细说明一下 <code>Standard (Legacy)</code> 模式, <code>Import via MaterialDescription</code> 模式就不讲解了, 感兴趣的可以自行查阅资料 (我才不会说我也不知道呢(●ˇ∀ˇ●))</p>
+<h1 id="🍀Standard-Legacy"><a href="#🍀Standard-Legacy" class="headerlink" title="🍀Standard (Legacy)"></a>🍀Standard (Legacy)</h1><ul>
 <li><strong>sRGB Albedo Colors</strong></li>
 </ul>
 <p>此选项控制使用伽马空间还是线性空间</p>
@@ -431,7 +435,7 @@
 <tr>
 <td><strong>Import via MaterialDescription</strong></td>
 <td>按材质描述生成材质球，可移除</td>
-<td>✅ 可选</td>
+<td>❌ 不适用</td>
 </tr>
 <tr>
 <td><strong>Use External Materials (Legacy)</strong></td>
@@ -566,6 +570,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/game/game-true-hit.html" rel="next" title="战棋游戏命中率研究">
+                  战棋游戏命中率研究 <i class="fa fa-angle-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -604,7 +611,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:02</span>
+    <span title="站点阅读时长">6:05</span>
   </span>
 </div>
 
