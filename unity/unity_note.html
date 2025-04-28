@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="二次元游宅客">
 <meta property="og:description" content="最近对 Unity 的 GC 问题产生了一些兴趣, 一方面是总会有一些人才, 他们偶然在网络上看到些 &quot;几百年前&quot; 的说辞, 在这个迭代如此迅速的世界中也不对它们加以验证, 甚至还到处传播, 为了尽可能地避免自己陷入误区, 另一方面也是避免自己看完就忘, 于是把一些实验后的结果记录下来, 同时也把一些自己做项目所积累的经验记录下来.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kuroha.vip/images/unity/il2cpp.png">
 <meta property="og:image" content="https://kuroha.vip/images/unity/unity_unicode_utf8.png">
+<meta property="og:image" content="https://kuroha.vip/images/unity/il2cpp.png">
 <meta property="article:published_time" content="2025-01-03T12:36:04.000Z">
-<meta property="article:modified_time" content="2025-03-20T06:43:31.944Z">
+<meta property="article:modified_time" content="2025-04-28T09:15:19.591Z">
 <meta property="article:author" content="Kuroha">
 <meta property="article:tag" content="Unity">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kuroha.vip/images/unity/il2cpp.png">
+<meta name="twitter:image" content="https://kuroha.vip/images/unity/unity_unicode_utf8.png">
 
 
 <link rel="canonical" href="https://kuroha.vip/unity/unity_note.html">
@@ -165,7 +165,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E4%B8%AD%E5%85%B3%E4%BA%8E%E7%BB%A7%E6%89%BF%E5%92%8C%E6%8E%A5%E5%8F%A3%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">1.</span> <span class="nav-text">编程中关于继承和接口的选择</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E9%A1%B9%E7%9B%AE%E7%9A%84%E4%B8%AD%E5%89%8D%E6%9C%9F%E4%BD%BF%E7%94%A8-Mono-%E6%89%93%E5%8C%85-%E5%90%8E%E6%9C%9F%E4%BD%BF%E7%94%A8-IL2CPP-%E6%89%93%E5%8C%85"><span class="nav-number">2.</span> <span class="nav-text">Unity 项目的中前期使用 Mono 打包, 后期使用 IL2CPP 打包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E4%B8%AD%E4%BD%BF%E7%94%A8-foreach-%E9%81%8D%E5%8E%86%E4%B8%8D%E4%BC%9A%E6%9C%89-GC"><span class="nav-number">3.</span> <span class="nav-text">Unity 中使用 foreach 遍历不会有 GC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%86%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0%E6%97%B6%E5%BF%85%E9%A1%BB%E4%BD%BF%E7%94%A8%E5%8C%BF%E5%90%8D%E6%96%B9%E5%BC%8F%E4%B8%94%E5%BF%85%E9%A1%BB%E4%B8%8D%E5%8F%91%E7%94%9F%E9%97%AD%E5%8C%85"><span class="nav-number">4.</span> <span class="nav-text">将函数作为参数时必须使用匿名方式且必须不发生闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E4%BC%A0%E9%80%92%E5%87%BD%E6%95%B0%E7%9A%84%E6%83%85%E5%86%B5%E5%BF%85%E7%84%B6%E4%BC%9A%E6%9C%89-GC-%E6%97%A0%E8%AE%BA%E4%BC%A0%E9%80%92%E7%9A%84%E5%87%BD%E6%95%B0%E6%98%AF%E5%90%A6%E4%B8%BA%E9%9D%99%E6%80%81%E5%87%BD%E6%95%B0"><span class="nav-number">4.1.</span> <span class="nav-text">直接传递函数的情况必然会有 GC, 无论传递的函数是否为静态函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%8C%BF%E5%90%8D%E6%96%B9%E5%BC%8F%E4%BC%A0%E9%80%92%E5%87%BD%E6%95%B0-%E5%88%99%E6%A0%B9%E6%8D%AE%E6%98%AF%E5%90%A6%E9%97%AD%E5%8C%85%E5%86%B3%E5%AE%9A%E6%9C%89%E6%97%A0-GC"><span class="nav-number">4.2.</span> <span class="nav-text">使用匿名方式传递函数, 则根据是否闭包决定有无 GC</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E7%9A%84-Git-%E4%BB%93%E5%BA%93%E5%BF%85%E9%A1%BB%E6%B7%BB%E5%8A%A0-RenameLimit-%E9%99%90%E5%88%B6"><span class="nav-number">5.</span> <span class="nav-text">Unity 的 Git 仓库必须添加 RenameLimit 限制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E7%9A%84-Git-%E4%BB%93%E5%BA%93%E5%BF%85%E9%A1%BB%E6%B7%BB%E5%8A%A0-gitattribute-%E9%85%8D%E7%BD%AE"><span class="nav-number">6.</span> <span class="nav-text">Unity 的 Git 仓库必须添加 .gitattribute 配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E9%A1%B9%E7%9B%AE%E6%89%80%E5%9C%A8%E7%94%B5%E8%84%91%E5%BF%85%E9%A1%BB%E8%AE%BE%E7%BD%AE%E5%BC%80%E5%90%AF-Unicode-UTF-8-%E6%8F%90%E4%BE%9B%E5%85%A8%E7%90%83%E8%AF%AD%E8%A8%80%E6%94%AF%E6%8C%81-%E6%88%96%E8%80%85%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E4%BB%BB%E4%BD%95%E9%9D%9E-ASCII-%E5%AD%97%E7%AC%A6"><span class="nav-number">7.</span> <span class="nav-text">Unity 项目所在电脑必须设置开启 &quot;Unicode UTF-8 提供全球语言支持&quot; 或者不要使用任何非 ASCII 字符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E6%97%B6-struct-%E5%86%85%E7%9A%84%E5%AD%97%E6%AE%B5%E5%BF%85%E9%A1%BB%E6%98%AF%E7%BA%AF%E5%80%BC%E7%B1%BB%E5%9E%8B-%E5%A6%82%E6%9E%9C%E5%90%AB%E6%9C%89%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B-%E8%AF%B7%E4%BD%BF%E7%94%A8-class"><span class="nav-number">8.</span> <span class="nav-text">编程时 struct 内的字段必须是纯值类型, 如果含有引用类型, 请使用 class</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%97%B6-%E9%A1%B6%E7%82%B9%E6%95%B0%E5%B0%8F%E4%BA%8E-300-%E7%9A%84%E7%BD%91%E6%A0%BC%E7%A6%81%E6%AD%A2%E5%8F%82%E4%B8%8E%E9%9D%99%E6%80%81%E6%89%B9%E5%A4%84%E7%90%86"><span class="nav-number">9.</span> <span class="nav-text">性能优化时, 顶点数小于 300 的网格禁止参与静态批处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E4%B8%AD%E5%85%B3%E4%BA%8E-Null-%E5%80%BC%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">10.</span> <span class="nav-text">编程中关于 Null 值的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">10.1.</span> <span class="nav-text">返回值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0"><span class="nav-number">10.2.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%BB%93%E8%AE%BA"><span class="nav-number">10.3.</span> <span class="nav-text">最终结论</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E4%B8%AD%E7%9A%84%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">Unity 中的乱码问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E4%B8%AD%E5%85%B3%E4%BA%8E-Null-%E5%80%BC%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">编程中关于 Null 值的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%AD%E7%9A%84-null-%E5%80%BC"><span class="nav-number">2.1.</span> <span class="nav-text">返回值中的 null 值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E4%B8%AD%E7%9A%84-null-%E5%80%BC"><span class="nav-number">2.2.</span> <span class="nav-text">参数中的 null 值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E4%B8%AD%E5%85%B3%E4%BA%8E%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">编程中关于结构体的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E4%B8%AD%E5%85%B3%E4%BA%8E%E7%BB%A7%E6%89%BF%E5%92%8C%E6%8E%A5%E5%8F%A3%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">4.</span> <span class="nav-text">编程中关于继承和接口的选择</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E9%A1%B9%E7%9B%AE%E7%9A%84%E4%B8%AD%E5%89%8D%E6%9C%9F%E4%BD%BF%E7%94%A8-Mono-%E6%89%93%E5%8C%85-%E5%90%8E%E6%9C%9F%E4%BD%BF%E7%94%A8-IL2CPP-%E6%89%93%E5%8C%85"><span class="nav-number">5.</span> <span class="nav-text">Unity 项目的中前期使用 Mono 打包, 后期使用 IL2CPP 打包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E4%B8%AD%E4%BD%BF%E7%94%A8-foreach-%E9%81%8D%E5%8E%86%E4%B8%8D%E4%BC%9A%E6%9C%89-GC"><span class="nav-number">6.</span> <span class="nav-text">Unity 中使用 foreach 遍历不会有 GC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%86%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0%E6%97%B6%E5%BF%85%E9%A1%BB%E4%BD%BF%E7%94%A8%E5%8C%BF%E5%90%8D%E6%96%B9%E5%BC%8F%E4%B8%94%E5%BF%85%E9%A1%BB%E4%B8%8D%E5%8F%91%E7%94%9F%E9%97%AD%E5%8C%85"><span class="nav-number">7.</span> <span class="nav-text">将函数作为参数时必须使用匿名方式且必须不发生闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E4%BC%A0%E9%80%92%E5%87%BD%E6%95%B0%E7%9A%84%E6%83%85%E5%86%B5%E5%BF%85%E7%84%B6%E4%BC%9A%E6%9C%89-GC-%E6%97%A0%E8%AE%BA%E4%BC%A0%E9%80%92%E7%9A%84%E5%87%BD%E6%95%B0%E6%98%AF%E5%90%A6%E4%B8%BA%E9%9D%99%E6%80%81%E5%87%BD%E6%95%B0"><span class="nav-number">7.1.</span> <span class="nav-text">直接传递函数的情况必然会有 GC, 无论传递的函数是否为静态函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%8C%BF%E5%90%8D%E6%96%B9%E5%BC%8F%E4%BC%A0%E9%80%92%E5%87%BD%E6%95%B0-%E5%88%99%E6%A0%B9%E6%8D%AE%E6%98%AF%E5%90%A6%E9%97%AD%E5%8C%85%E5%86%B3%E5%AE%9A%E6%9C%89%E6%97%A0-GC"><span class="nav-number">7.2.</span> <span class="nav-text">使用匿名方式传递函数, 则根据是否闭包决定有无 GC</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E7%9A%84-Git-%E4%BB%93%E5%BA%93%E5%BF%85%E9%A1%BB%E6%B7%BB%E5%8A%A0-RenameLimit-%E9%99%90%E5%88%B6"><span class="nav-number">8.</span> <span class="nav-text">Unity 的 Git 仓库必须添加 RenameLimit 限制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%97%B6-%E9%A1%B6%E7%82%B9%E6%95%B0%E5%B0%8F%E4%BA%8E-300-%E7%9A%84%E7%BD%91%E6%A0%BC%E7%A6%81%E6%AD%A2%E5%8F%82%E4%B8%8E%E9%9D%99%E6%80%81%E6%89%B9%E5%A4%84%E7%90%86"><span class="nav-number">9.</span> <span class="nav-text">性能优化时, 顶点数小于 300 的网格禁止参与静态批处理</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -291,7 +291,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-03-20 14:43:31" itemprop="dateModified" datetime="2025-03-20T14:43:31+08:00">2025-03-20</time>
+      <time title="修改时间：2025-04-28 17:15:19" itemprop="dateModified" datetime="2025-04-28T17:15:19+08:00">2025-04-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -310,14 +310,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>801</span>
+      <span>1.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -330,6 +330,23 @@
     
     <div class="post-body" itemprop="articleBody"><span id="more"></span>
 
+<h1 id="Unity-中的乱码问题"><a href="#Unity-中的乱码问题" class="headerlink" title="Unity 中的乱码问题"></a>Unity 中的乱码问题</h1><p>Unity 项目所在电脑必须设置开启 <code>Unicode UTF-8 提供全球语言支持</code> 或者不要使用任何非 ASCII 字符</p>
+<p><img data-src="/images/unity/unity_unicode_utf8.png" alt="Unicode UTF8 提供全球语言支持"></p>
+<p>另外当路径过长时, 就不要使用中文了, 或者使用中文时要保证路径长度较短, 因为 Unity 的进度条在显示时, 当检测到长路径会自动切割, 中间使用 ... 代替显示, 此时可能会出现乱码, Unity 在切割时可能把中文字符切割为乱码, 为了保证项目中哪里都不会出现乱码, 尽量还是全部文件名称和路径名称都使用英文</p>
+<p>路径和文件名中的中文编码是不可控的, 这个是操作系统决定的, 我们用户能决定的只有文件内容的编码, 因此强烈建议目录和文件名全部使用英文</p>
+<h1 id="编程中关于-Null-值的处理"><a href="#编程中关于-Null-值的处理" class="headerlink" title="编程中关于 Null 值的处理"></a>编程中关于 Null 值的处理</h1><h2 id="返回值中的-null-值"><a href="#返回值中的-null-值" class="headerlink" title="返回值中的 null 值"></a>返回值中的 null 值</h2><p>返回值的最终结论为: 项目中不存在任何的 <strong>return null</strong> 语句, 同时 <strong>不允许返回引用类型</strong>, 任何方法只能返回 <code>Task</code> <code>void</code> <code>bool</code> 这几种类型, 其中 <code>bool</code> 是成功标志</p>
+<p>优化措施:</p>
+<ol>
+<li>对于值类型的返回值, 将合法的 <strong>return null</strong> 全部改为有效空白值, 比如 string.Empty, 0, -1 等</li>
+<li>对于引用类型的返回值, 将合法的 <strong>return null</strong> 全部改为 out 类型参数返回, 本来的返回值改为 bool</li>
+<li>任意类型的非法的 <strong>return null</strong> 全部删除, 改为输出错误日志并抛出异常</li>
+</ol>
+<h2 id="参数中的-null-值"><a href="#参数中的-null-值" class="headerlink" title="参数中的 null 值"></a>参数中的 null 值</h2><p>参数的最终结论为: 使用断言进行判断, 断言的好处是正式版本中断言是不执行的, 因此只要在开发版本中进行全覆盖测试, 就可以在正式版本中杜绝参数为 null 的情况</p>
+<h1 id="编程中关于结构体的使用"><a href="#编程中关于结构体的使用" class="headerlink" title="编程中关于结构体的使用"></a>编程中关于结构体的使用</h1><p>编程时结构体内的字段必须全部都是纯粹的值类型, 如果含有引用类型, 请使用 class</p>
+<ol>
+<li>struct 中的字段禁止使用引用类型</li>
+<li>当一个数据体内部的全部字段是一个不可变化的整体时, 才能使用 struct, 并且每一个 struct 都是一个独立的数据副本</li>
+</ol>
 <h1 id="编程中关于继承和接口的选择"><a href="#编程中关于继承和接口的选择" class="headerlink" title="编程中关于继承和接口的选择"></a>编程中关于继承和接口的选择</h1><ol>
 <li>当单纯需要代码复用时可使用继承, 但不允许使用 override</li>
 <li>当明确存在默认行为时可使用继承以及 override</li>
@@ -349,24 +366,7 @@
 
 <h1 id="Unity-的-Git-仓库必须添加-RenameLimit-限制"><a href="#Unity-的-Git-仓库必须添加-RenameLimit-限制" class="headerlink" title="Unity 的 Git 仓库必须添加 RenameLimit 限制"></a>Unity 的 Git 仓库必须添加 RenameLimit 限制</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[user]</span><br><span class="line">    name = Kuroha</span><br><span class="line">    email = KurohaKirito@gmail.com</span><br><span class="line">[diff]</span><br><span class="line">    renameLimit=1</span><br><span class="line">    renames=false</span><br><span class="line">[merge]</span><br><span class="line">    renameLimit=1</span><br><span class="line">    renames=false</span><br><span class="line">    directoryRenames=conflict</span><br><span class="line">[status]</span><br><span class="line">    renameLimit=1</span><br><span class="line">    renames=false</span><br><span class="line">[http]</span><br><span class="line">    proxy = http://127.0.0.1:20122</span><br><span class="line">[https]</span><br><span class="line">    proxy = https://127.0.0.1:20122</span><br></pre></td></tr></table></figure>
 
-<h1 id="Unity-的-Git-仓库必须添加-gitattribute-配置"><a href="#Unity-的-Git-仓库必须添加-gitattribute-配置" class="headerlink" title="Unity 的 Git 仓库必须添加 .gitattribute 配置"></a>Unity 的 Git 仓库必须添加 .gitattribute 配置</h1><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dpdGF0dHJpYnV0ZXMvZ2l0YXR0cmlidXRlcw==">https://github.com/gitattributes/gitattributes<i class="fa fa-external-link-alt"></i></span></p>
-<h1 id="Unity-项目所在电脑必须设置开启-Unicode-UTF-8-提供全球语言支持-或者不要使用任何非-ASCII-字符"><a href="#Unity-项目所在电脑必须设置开启-Unicode-UTF-8-提供全球语言支持-或者不要使用任何非-ASCII-字符" class="headerlink" title="Unity 项目所在电脑必须设置开启 &quot;Unicode UTF-8 提供全球语言支持&quot; 或者不要使用任何非 ASCII 字符"></a>Unity 项目所在电脑必须设置开启 &quot;Unicode UTF-8 提供全球语言支持&quot; 或者不要使用任何非 ASCII 字符</h1><p><img data-src="/images/unity/unity_unicode_utf8.png" alt="Unicode UTF8 提供全球语言支持"></p>
-<h1 id="编程时-struct-内的字段必须是纯值类型-如果含有引用类型-请使用-class"><a href="#编程时-struct-内的字段必须是纯值类型-如果含有引用类型-请使用-class" class="headerlink" title="编程时 struct 内的字段必须是纯值类型, 如果含有引用类型, 请使用 class"></a>编程时 struct 内的字段必须是纯值类型, 如果含有引用类型, 请使用 class</h1><ol>
-<li>struct 中的字段禁止使用引用类型</li>
-<li>当一个数据体内部的全部字段是一个不可变化的整体时, 才能使用 struct, 并且每一个 struct 都是一个独立的数据副本</li>
-</ol>
-<h1 id="性能优化时-顶点数小于-300-的网格禁止参与静态批处理"><a href="#性能优化时-顶点数小于-300-的网格禁止参与静态批处理" class="headerlink" title="性能优化时, 顶点数小于 300 的网格禁止参与静态批处理"></a>性能优化时, 顶点数小于 300 的网格禁止参与静态批处理</h1><p>当小于 300 定点数的网格参与静态批处理时, 即使它仅仅作为一个 submesh 存在, 但会导致整个静态网格的 KeepVertices 被开启, 导致顶点信息被保留在内存中, 从而使整个网格的内存占用翻倍</p>
-<h1 id="编程中关于-Null-值的处理"><a href="#编程中关于-Null-值的处理" class="headerlink" title="编程中关于 Null 值的处理"></a>编程中关于 Null 值的处理</h1><h2 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h2><p>最终优化为: 项目中不存在任何的 <strong>return null</strong> 语句</p>
-<p>优化措施:</p>
-<ol>
-<li>对于值类型的返回值, 将合法的 <strong>return null</strong> 全部改为有效空白值, 比如 string.Empty, 0, -1 等</li>
-<li>对于引用类型的返回值, 将合法的 <strong>return null</strong> 全部改为 out 类型参数返回, 本来的返回值改为 bool</li>
-<li>任意类型的非法的 <strong>return null</strong> 全部删除, 改为输出错误日志并抛出异常</li>
-</ol>
-<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><ol>
-<li>使用 debug 断言进行判断, 断言的好处是 release 版本中断言是不执行的. 因此只要在 debug 版本中进行全覆盖测试, 就可以直接在 debug 版本中就杜绝参数为 null 的情况</li>
-</ol>
-<h2 id="最终结论"><a href="#最终结论" class="headerlink" title="最终结论"></a>最终结论</h2><p>编程时任何方法只能返回 <code>Task</code> <code>void</code> <code>bool</code> <code>string</code> 这几种类型, 其中 <code>string</code> 是错误信息, <code>bool</code> 是成功标志</p>
+<h1 id="性能优化时-顶点数小于-300-的网格禁止参与静态批处理"><a href="#性能优化时-顶点数小于-300-的网格禁止参与静态批处理" class="headerlink" title="性能优化时, 顶点数小于 300 的网格禁止参与静态批处理"></a>性能优化时, 顶点数小于 300 的网格禁止参与静态批处理</h1><p>当小于 300 顶点数的网格参与静态批处理时, 即使它最终只会作为静态网格的一个 submesh 存在, 但也会导致整个静态网格的 KeepVertices 被开启, 一旦这个选项被开启, 网格的顶点信息将会被保留在 CPU 内存中, 同时因为 GPU 那边还有一份内存占用, 从而导致静态网格的内存占用翻倍。因此顶点数小于 300 的网格禁止参与静态批处理。</p>
 
     </div>
 
@@ -470,14 +470,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">100k</span>
+    <span title="站点总字数">101k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:05</span>
+    <span title="站点阅读时长">6:06</span>
   </span>
 </div>
 
