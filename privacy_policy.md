@@ -1,64 +1,53 @@
-**Privacy Policy**
+# 隐私政策（Privacy Policy）
 
-[Developer/Company name] built the Square Link app as [open source/free/freemium/ad-supported/commercial] app. This SERVICE is provided by [Developer/Company name] [at no cost] and is intended for use as is.
+**更新日期：2025 年 6 月 9 日**
 
-This page is used to inform visitors regarding [my/our] policies with the collection, use, and disclosure of Personal Information if anyone decided to use [my/our] Service.
+感谢您游玩本游戏！
 
-If you choose to use [my/our] Service, then you agree to the collection and use of information in relation to this policy. The Personal Information that [I/We] collect is used for providing and improving the Service. [I/We] will not use or share your information with anyone except as described in this Privacy Policy.
+我非常重视您的隐私，并郑重声明如下：
 
-The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which are accessible at Square Link unless otherwise defined in this Privacy Policy.
+---
 
-**Information Collection and Use**
+## 🔒 本游戏不主动收集您的任何个人信息
 
-For a better experience, while using our Service, [I/We] may require you to provide us with certain personally identifiable information[add whatever else you collect here, e.g. users name, address, location, pictures] The information that [I/We] request will be [retained on your device and is not collected by [me/us] in any way]/[retained by us and used as described in this privacy policy].
+- 游戏本体**不包含广告、追踪器或数据分析工具**。
+- 游戏本身**不读取、不上传、不使用**您的任何设备信息或隐私数据。
+- 游戏内容**完全支持离线游玩**，不依赖网络连接。
 
-The app does use third-party services that may collect information used to identify you.
+---
 
-Link to the privacy policy of third-party service providers used by the app
+## 🧩 第三方 SDK 使用说明
 
-*   [Google Play Services](https://www.google.com/policies/privacy/)
+本游戏基于 **Unity 引擎** 开发，虽然我本人未集成任何数据采集行为，但由于使用了第三方 SDK（即 Unity 引擎本身）
 
-**Log Data**
+根据 Unity 官方隐私条款，该 SDK **可能自动收集部分设备信息**，包括但不限于：
 
-[I/We] want to inform you that whenever you use [my/our] Service, in a case of an error in the app [I/We] collect data and information (through third-party products) on your phone called Log Data. This Log Data may include information such as your device Internet Protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing [my/our] Service, the time and date of your use of the Service, and other statistics.
+- **第三方 SDK 名称**：Unity 3D
+- **提供方**：Unity Technologies
+- **可能收集的信息类型**：Android ID、设备传感器信息
+- **收集目的**：基础框架运行与技术支持
+- **隐私政策链接**：[https://unity3d.com/cn/legal/privacy-policy](https://unity3d.com/cn/legal/privacy-policy)
 
-**Cookies**
+> 请注意：该收集行为为 SDK 自带机制，**非我方主动行为**，且我方**无法访问该信息**。如您对此存在疑问，建议查阅上述链接以获取 Unity 官方解释。
 
-Cookies are files with a small amount of data that are commonly used as anonymous unique identifiers. These are sent to your browser from the websites that you visit and are stored on your device's internal memory.
+---
 
-This Service does not use these “cookies” explicitly. However, the app may use third-party code and libraries that use “cookies” to collect information and improve their services. You have the option to either accept or refuse these cookies and know when a cookie is being sent to your device. If you choose to refuse our cookies, you may not be able to use some portions of this Service.
+## 🎮 关于防沉迷实名验证（如适用）
 
-**Service Providers**
+根据相关法律法规的要求，在某些地区（如中国大陆），游戏接入了**第三方实名认证服务**，用于防沉迷系统：
 
-[I/We] may employ third-party companies and individuals due to the following reasons:
+- 该系统可能会请求并验证用户的身份信息。
+- 实名验证的过程与数据均由**相关平台或认证服务提供方处理**，我**不会储存或使用这些数据**。
+- 此功能仅为遵守当地法律政策的需要，不涉及开发者主动收集数据。
 
-*   To facilitate our Service;
-*   To provide the Service on our behalf;
-*   To perform Service-related services; or
-*   To assist us in analyzing how our Service is used.
+---
 
-[I/We] want to inform users of this Service that these third parties have access to their Personal Information. The reason is to perform the tasks assigned to them on our behalf. However, they are obligated not to disclose or use the information for any other purpose.
+## 📬 联系我
 
-**Security**
+若您对游戏中的任何隐私相关内容有疑问，或认为存在不当数据收集行为，欢迎随时与我联系，我将第一时间进行调查与处理。
 
-[I/We] value your trust in providing us your Personal Information, thus we are striving to use commercially acceptable means of protecting it. But remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and [I/We] cannot guarantee its absolute security.
+---
 
-**Links to Other Sites**
+## ✉️ 联系方式
 
-This Service may contain links to other sites. If you click on a third-party link, you will be directed to that site. Note that these external sites are not operated by [me/us]. Therefore, [I/We] strongly advise you to review the Privacy Policy of these websites. [I/We] have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.
-
-**Children’s Privacy**
-
-These Services do not address anyone under the age of 13. [I/We] do not knowingly collect personally identifiable information from children under 13 years of age. In the case [I/We] discover that a child under 13 has provided [me/us] with personal information, [I/We] immediately delete this from our servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact [me/us] so that [I/We] will be able to do the necessary actions.
-
-**Changes to This Privacy Policy**
-
-[I/We] may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. [I/We] will notify you of any changes by posting the new Privacy Policy on this page.
-
-This policy is effective as of 2023-06-01
-
-**Contact Us**
-
-If you have any questions or suggestions about [my/our] Privacy Policy, do not hesitate to contact [me/us] at Kuroha.vip.
-
-This privacy policy page was created at [privacypolicytemplate.net](https://privacypolicytemplate.net) and modified/generated by [App Privacy Policy Generator](https://app-privacy-policy-generator.nisrulz.com/)
+📧 [QQ 邮箱](2422523318@qq.com)
