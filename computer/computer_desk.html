@@ -20,31 +20,30 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="最近对 Unity 的 GC 问题产生了一些兴趣, 一方面是总会有一些人才, 他们偶然在网络上看到些 &quot;几百年前&quot; 的说辞, 在这个迭代如此迅速的世界中也不对它们加以验证, 甚至还到处传播, 为了尽可能地避免自己陷入误区, 另一方面也是避免自己看完就忘, 于是把一些实验后的结果记录下来, 同时也把一些自己做项目所积累的经验记录下来.">
+    <meta name="description" content="前段时间霉运爆发, 电脑硬盘, 随身 U 盘, 手机都坏掉了, 这次就记录一下 U 盘损坏后数据恢复的历程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Unity 项目注意点总结 (持续更新)">
-<meta property="og:url" content="https://kuroha.vip/unity/unity_note.html">
+<meta property="og:title" content="记录一次 U 盘损坏并成功进行数据恢复的历程">
+<meta property="og:url" content="https://kuroha.vip/computer/computer_desk.html">
 <meta property="og:site_name" content="二次元游宅客">
-<meta property="og:description" content="最近对 Unity 的 GC 问题产生了一些兴趣, 一方面是总会有一些人才, 他们偶然在网络上看到些 &quot;几百年前&quot; 的说辞, 在这个迭代如此迅速的世界中也不对它们加以验证, 甚至还到处传播, 为了尽可能地避免自己陷入误区, 另一方面也是避免自己看完就忘, 于是把一些实验后的结果记录下来, 同时也把一些自己做项目所积累的经验记录下来.">
+<meta property="og:description" content="前段时间霉运爆发, 电脑硬盘, 随身 U 盘, 手机都坏掉了, 这次就记录一下 U 盘损坏后数据恢复的历程">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://kuroha.vip/images/unity/unity_unicode_utf8.png">
-<meta property="og:image" content="https://kuroha.vip/images/unity/il2cpp.png">
-<meta property="article:published_time" content="2025-01-03T12:36:04.000Z">
-<meta property="article:modified_time" content="2025-05-02T07:42:32.425Z">
+<meta property="og:image" content="https://kuroha.vip/images/computer/u.png">
+<meta property="article:published_time" content="2025-07-25T02:43:25.000Z">
+<meta property="article:modified_time" content="2025-07-19T12:22:59.964Z">
 <meta property="article:author" content="Kuroha">
-<meta property="article:tag" content="Unity">
+<meta property="article:tag" content="数据恢复">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://kuroha.vip/images/unity/unity_unicode_utf8.png">
+<meta name="twitter:image" content="https://kuroha.vip/images/computer/u.png">
 
 
-<link rel="canonical" href="https://kuroha.vip/unity/unity_note.html">
+<link rel="canonical" href="https://kuroha.vip/computer/computer_desk.html">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/unity/unity_note.html","path":"unity/unity_note.html","title":"Unity 项目注意点总结 (持续更新)"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/computer/computer_desk.html","path":"computer/computer_desk.html","title":"记录一次 U 盘损坏并成功进行数据恢复的历程"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Unity 项目注意点总结 (持续更新) | 二次元游宅客</title>
+<title>记录一次 U 盘损坏并成功进行数据恢复的历程 | 二次元游宅客</title>
   
 
 
@@ -165,7 +164,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E4%B8%AD%E7%9A%84%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">Unity 中的乱码问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E4%B8%AD%E5%85%B3%E4%BA%8E-Null-%E5%80%BC%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">编程中关于 Null 值的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%94%E5%9B%9E%E5%80%BC%E4%B8%AD%E7%9A%84-null-%E5%80%BC"><span class="nav-number">2.1.</span> <span class="nav-text">返回值中的 null 值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E4%B8%AD%E7%9A%84-null-%E5%80%BC"><span class="nav-number">2.2.</span> <span class="nav-text">参数中的 null 值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E4%B8%AD%E5%85%B3%E4%BA%8E%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">编程中关于结构体的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E4%B8%AD%E5%85%B3%E4%BA%8E%E7%BB%A7%E6%89%BF%E5%92%8C%E6%8E%A5%E5%8F%A3%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-number">4.</span> <span class="nav-text">编程中关于继承和接口的选择</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E9%A1%B9%E7%9B%AE%E7%9A%84%E4%B8%AD%E5%89%8D%E6%9C%9F%E4%BD%BF%E7%94%A8-Mono-%E6%89%93%E5%8C%85-%E5%90%8E%E6%9C%9F%E4%BD%BF%E7%94%A8-IL2CPP-%E6%89%93%E5%8C%85"><span class="nav-number">5.</span> <span class="nav-text">Unity 项目的中前期使用 Mono 打包, 后期使用 IL2CPP 打包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E4%B8%AD%E4%BD%BF%E7%94%A8-foreach-%E9%81%8D%E5%8E%86%E4%B8%8D%E4%BC%9A%E6%9C%89-GC"><span class="nav-number">6.</span> <span class="nav-text">Unity 中使用 foreach 遍历不会有 GC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%86%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0%E6%97%B6%E5%BF%85%E9%A1%BB%E4%BD%BF%E7%94%A8%E5%8C%BF%E5%90%8D%E6%96%B9%E5%BC%8F%E4%B8%94%E5%BF%85%E9%A1%BB%E4%B8%8D%E5%8F%91%E7%94%9F%E9%97%AD%E5%8C%85"><span class="nav-number">7.</span> <span class="nav-text">将函数作为参数时必须使用匿名方式且必须不发生闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E4%BC%A0%E9%80%92%E5%87%BD%E6%95%B0%E7%9A%84%E6%83%85%E5%86%B5%E5%BF%85%E7%84%B6%E4%BC%9A%E6%9C%89-GC-%E6%97%A0%E8%AE%BA%E4%BC%A0%E9%80%92%E7%9A%84%E5%87%BD%E6%95%B0%E6%98%AF%E5%90%A6%E4%B8%BA%E9%9D%99%E6%80%81%E5%87%BD%E6%95%B0"><span class="nav-number">7.1.</span> <span class="nav-text">直接传递函数的情况必然会有 GC, 无论传递的函数是否为静态函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%8C%BF%E5%90%8D%E6%96%B9%E5%BC%8F%E4%BC%A0%E9%80%92%E5%87%BD%E6%95%B0-%E5%88%99%E6%A0%B9%E6%8D%AE%E6%98%AF%E5%90%A6%E9%97%AD%E5%8C%85%E5%86%B3%E5%AE%9A%E6%9C%89%E6%97%A0-GC"><span class="nav-number">7.2.</span> <span class="nav-text">使用匿名方式传递函数, 则根据是否闭包决定有无 GC</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity-%E7%9A%84-Git-%E4%BB%93%E5%BA%93%E5%BF%85%E9%A1%BB%E6%B7%BB%E5%8A%A0-RenameLimit-%E9%99%90%E5%88%B6"><span class="nav-number">8.</span> <span class="nav-text">Unity 的 Git 仓库必须添加 RenameLimit 限制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%97%B6-%E9%A1%B6%E7%82%B9%E6%95%B0%E5%B0%8F%E4%BA%8E-300-%E7%9A%84%E7%BD%91%E6%A0%BC%E7%A6%81%E6%AD%A2%E5%8F%82%E4%B8%8E%E9%9D%99%E6%80%81%E6%89%B9%E5%A4%84%E7%90%86"><span class="nav-number">9.</span> <span class="nav-text">性能优化时, 顶点数小于 300 的网格禁止参与静态批处理</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%91%BB%E7%8E%B0%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">👻现象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%91%80%E6%81%A2%E5%A4%8D%E8%BF%87%E7%A8%8B-%E5%AF%BB%E6%89%BE%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">👀恢复过程 - 寻找思路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8D%89%E6%81%A2%E5%A4%8D%E8%BF%87%E7%A8%8B-%E6%AD%A5%E9%AA%A4%E4%B8%80"><span class="nav-number">2.1.</span> <span class="nav-text">🍉恢复过程 - 步骤一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%84%E6%81%A2%E5%A4%8D%E8%BF%87%E7%A8%8B-%E6%AD%A5%E9%AA%A4%E4%BA%8C"><span class="nav-number">2.2.</span> <span class="nav-text">🎄恢复过程 - 步骤二</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A4%A0%E6%81%A2%E5%A4%8D%E8%BF%87%E7%A8%8B-%E6%AD%A5%E9%AA%A4%E4%B8%89"><span class="nav-number">2.3.</span> <span class="nav-text">🤠恢复过程 - 步骤三</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A6%84%E6%81%A2%E5%A4%8D%E8%BF%87%E7%A8%8B-%E6%AD%A5%E9%AA%A4%E5%9B%9B"><span class="nav-number">2.4.</span> <span class="nav-text">🦄恢复过程 - 步骤四</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -255,7 +254,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/unity/unity_note.html">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/computer/computer_desk.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/about/avatar.gif">
@@ -268,12 +267,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Unity 项目注意点总结 (持续更新) | 二次元游宅客">
-      <meta itemprop="description" content="最近对 Unity 的 GC 问题产生了一些兴趣, 一方面是总会有一些人才, 他们偶然在网络上看到些 "几百年前" 的说辞, 在这个迭代如此迅速的世界中也不对它们加以验证, 甚至还到处传播, 为了尽可能地避免自己陷入误区, 另一方面也是避免自己看完就忘, 于是把一些实验后的结果记录下来, 同时也把一些自己做项目所积累的经验记录下来.">
+      <meta itemprop="name" content="记录一次 U 盘损坏并成功进行数据恢复的历程 | 二次元游宅客">
+      <meta itemprop="description" content="前段时间霉运爆发, 电脑硬盘, 随身 U 盘, 手机都坏掉了, 这次就记录一下 U 盘损坏后数据恢复的历程">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Unity 项目注意点总结 (持续更新)
+          记录一次 U 盘损坏并成功进行数据恢复的历程
         </h1>
 
         <div class="post-meta-container">
@@ -284,14 +283,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-01-03 20:36:04" itemprop="dateCreated datePublished" datetime="2025-01-03T20:36:04+08:00">2025-01-03</time>
+      <time title="创建时间：2025-07-25 10:43:25" itemprop="dateCreated datePublished" datetime="2025-07-25T10:43:25+08:00">2025-07-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-05-02 15:42:32" itemprop="dateModified" datetime="2025-05-02T15:42:32+08:00">2025-05-02</time>
+      <time title="修改时间：2025-07-19 20:22:59" itemprop="dateModified" datetime="2025-07-19T20:22:59+08:00">2025-07-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -299,7 +298,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+          <a href="/categories/Computer/" itemprop="url" rel="index"><span itemprop="name">Computer</span></a>
         </span>
     </span>
 
@@ -310,7 +309,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
+      <span>992</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -321,7 +320,7 @@
     </span>
 </div>
 
-            <div class="post-description">最近对 Unity 的 GC 问题产生了一些兴趣, 一方面是总会有一些人才, 他们偶然在网络上看到些 "几百年前" 的说辞, 在这个迭代如此迅速的世界中也不对它们加以验证, 甚至还到处传播, 为了尽可能地避免自己陷入误区, 另一方面也是避免自己看完就忘, 于是把一些实验后的结果记录下来, 同时也把一些自己做项目所积累的经验记录下来.</div>
+            <div class="post-description">前段时间霉运爆发, 电脑硬盘, 随身 U 盘, 手机都坏掉了, 这次就记录一下 U 盘损坏后数据恢复的历程</div>
         </div>
       </header>
 
@@ -330,43 +329,25 @@
     
     <div class="post-body" itemprop="articleBody"><span id="more"></span>
 
-<h1 id="Unity-中的乱码问题"><a href="#Unity-中的乱码问题" class="headerlink" title="Unity 中的乱码问题"></a>Unity 中的乱码问题</h1><p>Unity 项目所在电脑必须设置开启 <code>Unicode UTF-8 提供全球语言支持</code> 或者不要使用任何非 ASCII 字符</p>
-<p><img data-src="/images/unity/unity_unicode_utf8.png" alt="Unicode UTF8 提供全球语言支持"></p>
-<p>另外当路径过长时, 就不要使用中文了, 或者使用中文时要保证路径长度较短, 因为 Unity 的进度条在显示时, 当检测到长路径会自动切割, 中间使用 ... 代替显示, 此时可能会出现乱码, Unity 在切割时可能把中文字符切割为乱码, 为了保证项目中哪里都不会出现乱码, 尽量还是全部文件名称和路径名称都使用英文</p>
-<p>路径和文件名中的中文编码是不可控的, 这个是操作系统决定的, 我们用户能决定的只有文件内容的编码, 因此强烈建议目录和文件名全部使用英文</p>
-<h1 id="编程中关于-Null-值的处理"><a href="#编程中关于-Null-值的处理" class="headerlink" title="编程中关于 Null 值的处理"></a>编程中关于 Null 值的处理</h1><h2 id="返回值中的-null-值"><a href="#返回值中的-null-值" class="headerlink" title="返回值中的 null 值"></a>返回值中的 null 值</h2><p>返回值的最终结论为: 项目中不存在任何的 <strong>return null</strong> 语句, 同时 <strong>不允许返回引用类型</strong>, 任何方法只能返回 <code>Task</code> <code>void</code> <code>bool</code> 这几种类型, 其中 <code>bool</code> 是成功标志</p>
-<p>优化措施:</p>
-<ol>
-<li>对于值类型的返回值, 将合法的 <strong>return null</strong> 全部改为有效空白值, 比如 string.Empty, 0, -1 等</li>
-<li>对于引用类型的返回值, 将合法的 <strong>return null</strong> 全部改为 out 类型参数返回, 本来的返回值改为 bool</li>
-<li>任意类型的非法的 <strong>return null</strong> 全部删除, 改为输出错误日志并抛出异常</li>
-</ol>
-<h2 id="参数中的-null-值"><a href="#参数中的-null-值" class="headerlink" title="参数中的 null 值"></a>参数中的 null 值</h2><p>参数的最终结论为: 使用断言进行判断, 断言的好处是正式版本中断言是不执行的, 因此只要在开发版本中进行全覆盖测试, 就可以在正式版本中杜绝参数为 null 的情况</p>
-<h1 id="编程中关于结构体的使用"><a href="#编程中关于结构体的使用" class="headerlink" title="编程中关于结构体的使用"></a>编程中关于结构体的使用</h1><p>编程时结构体内的字段必须全部都是纯粹的值类型, 如果含有引用类型, 请使用 class</p>
-<ol>
-<li>struct 中的字段禁止使用引用类型</li>
-<li>当一个数据体内部的全部字段是一个不可变化的整体时, 才能使用 struct, 并且每一个 struct 都是一个独立的数据副本</li>
-</ol>
-<h1 id="编程中关于继承和接口的选择"><a href="#编程中关于继承和接口的选择" class="headerlink" title="编程中关于继承和接口的选择"></a>编程中关于继承和接口的选择</h1><ol>
-<li>当单纯需要代码复用时可使用继承, 但不允许使用 override</li>
-<li>当明确存在默认行为时可使用继承以及 override</li>
-<li>多态一律使用接口实现: interface</li>
-</ol>
-<h1 id="Unity-项目的中前期使用-Mono-打包-后期使用-IL2CPP-打包"><a href="#Unity-项目的中前期使用-Mono-打包-后期使用-IL2CPP-打包" class="headerlink" title="Unity 项目的中前期使用 Mono 打包, 后期使用 IL2CPP 打包"></a>Unity 项目的中前期使用 Mono 打包, 后期使用 IL2CPP 打包</h1><p>IL2CPP 打包需要安装的环境</p>
-<p><img data-src="/images/unity/il2cpp.png" alt="IL2CPP打包环境"></p>
-<ol>
-<li>Visual Studio 核心编辑器</li>
-<li>C++ 桌面开发环境</li>
-<li>MSVC C++ 编译器</li>
-<li>Windows 10 SDK &#x2F; Windows 11 SDK</li>
-</ol>
-<h1 id="Unity-中使用-foreach-遍历不会有-GC"><a href="#Unity-中使用-foreach-遍历不会有-GC" class="headerlink" title="Unity 中使用 foreach 遍历不会有 GC"></a>Unity 中使用 foreach 遍历不会有 GC</h1><h1 id="将函数作为参数时必须使用匿名方式且必须不发生闭包"><a href="#将函数作为参数时必须使用匿名方式且必须不发生闭包" class="headerlink" title="将函数作为参数时必须使用匿名方式且必须不发生闭包"></a>将函数作为参数时必须使用匿名方式且必须不发生闭包</h1><h2 id="直接传递函数的情况必然会有-GC-无论传递的函数是否为静态函数"><a href="#直接传递函数的情况必然会有-GC-无论传递的函数是否为静态函数" class="headerlink" title="直接传递函数的情况必然会有 GC, 无论传递的函数是否为静态函数"></a>直接传递函数的情况必然会有 GC, 无论传递的函数是否为静态函数</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 传递普通方法 Sum, 会有 GC</span></span><br><span class="line">Launch(Sum);</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Sum</span>()</span> &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 传递静态方法 Sum, 同样有 GC</span></span><br><span class="line">Launch(Sum);</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Sum</span>()</span> &#123; &#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用匿名方式传递函数-则根据是否闭包决定有无-GC"><a href="#使用匿名方式传递函数-则根据是否闭包决定有无-GC" class="headerlink" title="使用匿名方式传递函数, 则根据是否闭包决定有无 GC"></a>使用匿名方式传递函数, 则根据是否闭包决定有无 GC</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Sum 是闭包, 会有 GC</span></span><br><span class="line">Launch(() =&gt; Sum());</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">Sum</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    sum++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Sum 不是闭包, 无 GC</span></span><br><span class="line">Launch(() =&gt; Sum());</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Sum</span>()</span></span><br><span class="line">&#123;</span><br><span class="line">    sum++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h1 id="Unity-的-Git-仓库必须添加-RenameLimit-限制"><a href="#Unity-的-Git-仓库必须添加-RenameLimit-限制" class="headerlink" title="Unity 的 Git 仓库必须添加 RenameLimit 限制"></a>Unity 的 Git 仓库必须添加 RenameLimit 限制</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[user]</span><br><span class="line">    name = Kuroha</span><br><span class="line">    email = KurohaKirito@gmail.com</span><br><span class="line">[diff]</span><br><span class="line">    renameLimit=1</span><br><span class="line">    renames=false</span><br><span class="line">[merge]</span><br><span class="line">    renameLimit=1</span><br><span class="line">    renames=false</span><br><span class="line">    directoryRenames=conflict</span><br><span class="line">[status]</span><br><span class="line">    renameLimit=1</span><br><span class="line">    renames=false</span><br><span class="line">[http]</span><br><span class="line">    proxy = http://127.0.0.1:20122</span><br><span class="line">[https]</span><br><span class="line">    proxy = https://127.0.0.1:20122</span><br></pre></td></tr></table></figure>
-
-<h1 id="性能优化时-顶点数小于-300-的网格禁止参与静态批处理"><a href="#性能优化时-顶点数小于-300-的网格禁止参与静态批处理" class="headerlink" title="性能优化时, 顶点数小于 300 的网格禁止参与静态批处理"></a>性能优化时, 顶点数小于 300 的网格禁止参与静态批处理</h1><p>当小于 300 顶点数的网格参与静态批处理时, 即使它最终只会作为静态网格的一个 submesh 存在, 但也会导致整个静态网格的 KeepVertices 被开启, 一旦这个选项被开启, 网格的顶点信息将会被保留在 CPU 内存中, 同时因为 GPU 那边还有一份内存占用, 从而导致静态网格的内存占用翻倍。因此顶点数小于 300 的网格禁止参与静态批处理。</p>
+<h1 id="👻现象"><a href="#👻现象" class="headerlink" title="👻现象"></a>👻现象</h1><p>先说下当时 U 盘的现象. 当时 U 盘可以正常识别, 不过识别率是有所下降的, 得好好插一下才能识别出来, 哈哈</p>
+<p>U 盘可以识别, 然后里面的文件也是可以看到列表的. 打开文件也没有什么问题, 没有尝试直接在 U 盘中运行程序, 所以这点就不清楚了</p>
+<p>至此可以看到 U 盘和正常 U 盘并没有什么区别, 但是当我复制或者剪切后粘贴时, 就会频繁掉盘. 在一次复制或者剪切的过程中, 大概每 1 MB 就会掉盘, 所以文件根本复制不出来</p>
+<p>总结一下: 文件可访问, 可打开, 可复制粘贴, 也可预览压缩包, 几乎和正常无异, 但操作大文件必然掉盘, 无论复制粘贴, 还是剪切粘贴都会</p>
+<h1 id="👀恢复过程-寻找思路"><a href="#👀恢复过程-寻找思路" class="headerlink" title="👀恢复过程 - 寻找思路"></a>👀恢复过程 - 寻找思路</h1><p>因为没有办法进行文件操作, 加上我也不懂数据恢复这一块, 所以我就问 AI 有没有其他的办法, AI 回复说可以越过 &quot;文件&quot; 这个概念, 直接将整个 U 盘的扇区拷贝出来</p>
+<h2 id="🍉恢复过程-步骤一"><a href="#🍉恢复过程-步骤一" class="headerlink" title="🍉恢复过程 - 步骤一"></a>🍉恢复过程 - 步骤一</h2><p>我们直接开始执行思路, 将整个 U 盘的扇区完整复制到一个 img 镜像文件中</p>
+<p>使用工具: <code>DMDE</code>, 按理来说 <code>HDD Raw Copy</code> 应该也可以, 但是我使用后失败了</p>
+<p>打开 <code>DMDE</code>, 切记这里要选择 <code>物理设备</code>, 为什么选择物理设备呢, 因为会掉盘呀, 哈哈, 所以不能选逻辑磁盘</p>
+<p>之后点击 &quot;工具&quot;, 选择 &quot;复制扇区&quot;, 在弹出的窗口中, &quot;来源&quot; 这一项会自动设置好, 关键是 &quot;目的地&quot; 这项</p>
+<p>设置 &quot;目的地&quot; 时要点击 &quot;文件&quot;, 选择一个合适的目录, 当然记得把后缀改为 &quot;img&quot;</p>
+<p>之后就是等待了, 在复制的过程中, 因为 U 盘会频繁掉盘, 所以工具就会频繁等待 U 盘自动重连, 因此会花费很长时间, 耐心等待吧</p>
+<p>因为是直接复制整个扇区, 所以 U 盘多大, 复制出来就有多大, 比如 64GB 的 U 盘, 即使你的文件只有 1GB, 复制出来的镜像文件也是 64GB, 你可以理解为这一步直接创建了一份虚拟 U 盘, 和你的物理 U 盘一模一样的</p>
+<h2 id="🎄恢复过程-步骤二"><a href="#🎄恢复过程-步骤二" class="headerlink" title="🎄恢复过程 - 步骤二"></a>🎄恢复过程 - 步骤二</h2><p>前面我们已经把整个 U 盘移动到电脑上了, 这样我们就可以随意处置其中的数据啦! 下面是我当时复制出来的镜像文件截图</p>
+<p><img data-src="/images/computer/u.png" alt="镜像文件"></p>
+<p>首先需要将 <code>img</code> 文件挂载为虚拟磁盘, 这样我们就可以想磁盘一样, 处理这个 <code>img</code> 文件了, 这里使用的工具是 <code>OSFMount</code></p>
+<h2 id="🤠恢复过程-步骤三"><a href="#🤠恢复过程-步骤三" class="headerlink" title="🤠恢复过程 - 步骤三"></a>🤠恢复过程 - 步骤三</h2><p>先说明下, 这一步不一定需要, 前面我们已经将 <code>img</code> 文件挂载为虚拟磁盘了, 这一步我们需要打开虚拟磁盘, 查看里面的文件, 看看是否有丢失</p>
+<p>如果确实存在文件丢失, 可以进行文件恢复, 恢复时不用选择真正的 U 盘, 因为现在的虚拟磁盘和你的 U 盘是完全一致的, 虚拟磁盘就是完全拷贝的 U 盘扇区, 所以直接对虚拟磁盘进行数据恢复即可, 使用 <code>DiskGenius</code> 工具</p>
+<p>从这一步的数据恢复中我得到一个教训, <code>长时间存储文件时不要使用 7z! 不要使用 7z! 不要使用 7z!</code></p>
+<h2 id="🦄恢复过程-步骤四"><a href="#🦄恢复过程-步骤四" class="headerlink" title="🦄恢复过程 - 步骤四"></a>🦄恢复过程 - 步骤四</h2><p>既然文件也已经检查过没有问题了, 剩下的就很简单了, 直接将虚拟磁盘中的文件全部拷贝出来就可以了, 至此, U 盘中的数据就完全恢复出来了, 旧的 U 盘可以处理掉了</p>
 
     </div>
 
@@ -398,7 +379,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://kuroha.vip/unity/unity_note.html" title="Unity 项目注意点总结 (持续更新)">https://kuroha.vip/unity/unity_note.html</a>
+      <a href="https://kuroha.vip/computer/computer_desk.html" title="记录一次 U 盘损坏并成功进行数据恢复的历程">https://kuroha.vip/computer/computer_desk.html</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -424,21 +405,18 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/Unity/" rel="tag"><i class="fa fa-tag"></i> Unity</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D/" rel="tag"><i class="fa fa-tag"></i> 数据恢复</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/git/git_conflict_different_file.html" rel="prev" title="不同文件间冲突 ? 远端文件冲突描述信息残留 ?">
-                  <i class="fa fa-angle-left"></i> 不同文件间冲突 ? 远端文件冲突描述信息残留 ?
+                <a href="/unity/unity_mod_programming.html" rel="prev" title="Unity 游戏的模组支持开发总结">
+                  <i class="fa fa-angle-left"></i> Unity 游戏的模组支持开发总结
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/unity/unity_textmeshpro.html" rel="next" title="面向新手的 TextMeshPro 使用说明">
-                  面向新手的 TextMeshPro 使用说明 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
