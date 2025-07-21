@@ -20,28 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="最近一个项目中出现了内存溢出的问题, 借此了解了一下 csharp 的垃圾回收机制.">
+    <meta name="description" content="整理游戏库的时候, 突发奇想, 于是折腾一下 Cemu 模拟器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CSharp 垃圾回收">
-<meta property="og:url" content="https://kuroha.vip/csharp/csharp_garbagecollect.html">
+<meta property="og:title" content="Cemu 模拟器的正确使用姿势">
+<meta property="og:url" content="https://kuroha.vip/game/game_cemu.html">
 <meta property="og:site_name" content="二次元游宅客">
-<meta property="og:description" content="最近一个项目中出现了内存溢出的问题, 借此了解了一下 csharp 的垃圾回收机制.">
+<meta property="og:description" content="整理游戏库的时候, 突发奇想, 于是折腾一下 Cemu 模拟器">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-12-23T14:07:38.000Z">
-<meta property="article:modified_time" content="2024-01-05T06:54:16.069Z">
+<meta property="article:published_time" content="2025-07-21T13:27:29.000Z">
+<meta property="article:modified_time" content="2025-07-21T13:28:38.100Z">
 <meta property="article:author" content="Kuroha">
-<meta property="article:tag" content="编程基础">
+<meta property="article:tag" content="Cemu">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://kuroha.vip/csharp/csharp_garbagecollect.html">
+<link rel="canonical" href="https://kuroha.vip/game/game_cemu.html">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/csharp/csharp_garbagecollect.html","path":"csharp/csharp_garbagecollect.html","title":"CSharp 垃圾回收"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/game/game_cemu.html","path":"game/game_cemu.html","title":"Cemu 模拟器的正确使用姿势"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>CSharp 垃圾回收 | 二次元游宅客</title>
+<title>Cemu 模拟器的正确使用姿势 | 二次元游宅客</title>
   
 
 
@@ -149,7 +149,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -162,7 +162,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8C%B4%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">🌴前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8D%80-NET%E7%9A%84-GC-%E6%9C%BA%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">🍀.NET的 GC 机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%A5%9D%E6%89%98%E7%AE%A1%E8%B5%84%E6%BA%90%E5%92%8C%E9%9D%9E%E6%89%98%E7%AE%A1%E8%B5%84%E6%BA%90"><span class="nav-number">3.</span> <span class="nav-text">🥝托管资源和非托管资源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%98%E7%AE%A1%E8%B5%84%E6%BA%90"><span class="nav-number">3.1.</span> <span class="nav-text">托管资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E6%89%98%E7%AE%A1%E8%B5%84%E6%BA%90"><span class="nav-number">3.2.</span> <span class="nav-text">非托管资源</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8C%BC%E6%88%91%E4%BB%AC%E5%A6%82%E4%BD%95%E5%91%8A%E8%AF%89-NET-%E9%9D%9E%E6%89%98%E7%AE%A1%E8%B5%84%E6%BA%90%E5%B7%B2%E7%BB%8F%E7%94%A8%E5%AE%8C%E4%BA%86%E5%91%A2"><span class="nav-number">4.</span> <span class="nav-text">🌼我们如何告诉 .NET 非托管资源已经用完了呢?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%BE%E5%BC%8F%E8%B0%83%E7%94%A8-Dispose-%E6%96%B9%E6%B3%95"><span class="nav-number">4.1.</span> <span class="nav-text">显式调用 Dispose() 方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-using-%E8%AF%AD%E5%8F%A5%E5%9D%97%E9%9A%90%E5%BC%8F%E8%B0%83%E7%94%A8-Dispose-%E6%96%B9%E6%B3%95"><span class="nav-number">4.2.</span> <span class="nav-text">使用 using 语句块隐式调用 Dispose() 方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%A6%84%E5%9B%9E%E6%94%B6%E5%86%85%E5%AD%98%E7%9A%84%E9%9D%9E%E5%AE%9E%E6%97%B6%E6%80%A7"><span class="nav-number">5.</span> <span class="nav-text">🦄回收内存的非实时性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%91%80GC-Collect-%E6%96%B9%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">👀GC.Collect() 方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%99%84%E6%88%91%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">7.</span> <span class="nav-text">🙄我的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%90%AC%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">8.</span> <span class="nav-text">🐬参考文章</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -252,7 +251,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/csharp/csharp_garbagecollect.html">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/game/game_cemu.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/about/avatar.gif">
@@ -265,12 +264,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="CSharp 垃圾回收 | 二次元游宅客">
-      <meta itemprop="description" content="最近一个项目中出现了内存溢出的问题, 借此了解了一下 csharp 的垃圾回收机制.">
+      <meta itemprop="name" content="Cemu 模拟器的正确使用姿势 | 二次元游宅客">
+      <meta itemprop="description" content="整理游戏库的时候, 突发奇想, 于是折腾一下 Cemu 模拟器">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          CSharp 垃圾回收
+          Cemu 模拟器的正确使用姿势
         </h1>
 
         <div class="post-meta-container">
@@ -280,15 +279,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2020-12-23 22:07:38" itemprop="dateCreated datePublished" datetime="2020-12-23T22:07:38+08:00">2020-12-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-01-05 14:54:16" itemprop="dateModified" datetime="2024-01-05T14:54:16+08:00">2024-01-05</time>
+      <time title="创建时间：2025-07-21 21:27:29 / 修改时间：21:28:38" itemprop="dateCreated datePublished" datetime="2025-07-21T21:27:29+08:00">2025-07-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -296,7 +289,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/CSharp/" itemprop="url" rel="index"><span itemprop="name">CSharp</span></a>
+          <a href="/categories/Game/" itemprop="url" rel="index"><span itemprop="name">Game</span></a>
         </span>
     </span>
 
@@ -307,18 +300,18 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.8k</span>
+      <span>1</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
+      <span>1 分钟</span>
     </span>
 </div>
 
-            <div class="post-description">最近一个项目中出现了内存溢出的问题, 借此了解了一下 csharp 的垃圾回收机制.</div>
+            <div class="post-description">整理游戏库的时候, 突发奇想, 于是折腾一下 Cemu 模拟器</div>
         </div>
       </header>
 
@@ -327,67 +320,6 @@
     
     <div class="post-body" itemprop="articleBody"><span id="more"></span>
 
-<h1 id="🌴前言"><a href="#🌴前言" class="headerlink" title="🌴前言"></a>🌴前言</h1><p>网上关于 Garbage Collect 的文章已多如牛毛, 所以这里主要说一下我遇到的问题和 GC 使用方面的一些注意事项以及自己对垃圾回收中几个方法的理解.</p>
-<p>[<strong>注</strong>] 以下 GC 的含义均为 : Garbage Collect.</p>
-<h1 id="🍀-NET的-GC-机制"><a href="#🍀-NET的-GC-机制" class="headerlink" title="🍀.NET的 GC 机制"></a>🍀.NET的 GC 机制</h1><p>先说一下 .Net 上的 GC 机制:</p>
-<ol>
-<li><p>GC 并不是能自动释放所有的资源, 它<font color='red'><strong>只能自动释放托管资源</strong></font> .</p>
-</li>
-<li><p>GC 并不是实时回收内存的, 具体回收内存的时间由 GC 自身的算法控制.</p>
-</li>
-</ol>
-<h1 id="🥝托管资源和非托管资源"><a href="#🥝托管资源和非托管资源" class="headerlink" title="🥝托管资源和非托管资源"></a>🥝托管资源和非托管资源</h1><p>这两个具体怎么定义的没去查, 只说一下 GC 对待他们的区别.</p>
-<h2 id="托管资源"><a href="#托管资源" class="headerlink" title="托管资源"></a>托管资源</h2><p><strong>.NET 可以自动释放托管资源并回收其内存, 不需要人工干预</strong>.</p>
-<p>这句话的意思就是说当我们写程序时, 创建了一个托管资源, 我们使用了一段时间后就不用了, 此时我们并不需要告诉程序: &quot;这个资源已经用完了, 一会有空了的时候帮我回收一下这些内存, thank you!&quot;, .NET 会自动判断其是否已经不再使用, 如果 .NET 判断其确实已经不再使用了, 便会自动将其占用的内存回收.</p>
-<h2 id="非托管资源"><a href="#非托管资源" class="headerlink" title="非托管资源"></a>非托管资源</h2><p><strong>.NET 不会自动回收非托管资源, 如需回收, 需要提前通知</strong>.</p>
-<p>常见的非托管资源: 文件, 字体, 窗口, 网络连接, 数据库连接, 画刷, 图标等.</p>
-<p>上面那句话的意思就是说当我们写程序时, 创建了一个非托管资源, 我们使用了一段时间后就不用了, 此时我们就必须告诉程序: &quot;这个我用完了, 有空了一定要记得回收一下这块内存哈! thanks!&quot;. 不然的话, 那个非托管资源就会一直被我们的程序占用. 即使每过一段时间 .NET 都会来内存处收垃圾, 但是 .NET 永远也不知道这个资源已经成为垃圾了, 因为我们并没有告诉他.</p>
-<p>这就是 .NET 对待两种资源的态度区别.</p>
-<h1 id="🌼我们如何告诉-NET-非托管资源已经用完了呢"><a href="#🌼我们如何告诉-NET-非托管资源已经用完了呢" class="headerlink" title="🌼我们如何告诉 .NET 非托管资源已经用完了呢?"></a>🌼我们如何告诉 .NET 非托管资源已经用完了呢?</h1><p>想要给非托管资源打上一个 &quot;可被回收&quot; 标记, 需要使用 Dispose 方法.</p>
-<h2 id="显式调用-Dispose-方法"><a href="#显式调用-Dispose-方法" class="headerlink" title="显式调用 Dispose() 方法"></a>显式调用 Dispose() 方法</h2><p>对于实现了 <code>IDisposable</code> 接口的非托管资源, 可以直接调用其中的 <code>Dispose()</code> 方法, 这个方法可以用来告知程序: &quot;这个资源已经用完了, 你抽空安排一下吧!&quot; 😃</p>
-<h2 id="使用-using-语句块隐式调用-Dispose-方法"><a href="#使用-using-语句块隐式调用-Dispose-方法" class="headerlink" title="使用 using 语句块隐式调用 Dispose() 方法"></a>使用 using 语句块隐式调用 Dispose() 方法</h2><p>所有实现了 <code>IDisposable</code> 接口的资源都可以放到 <code>using</code> 语句块中进行资源管理, 在 using 中进行声明以及实例化. 以下摘录自 Microsoft Document 中对 using 的介绍.</p>
-<blockquote>
-<ol>
-<li><p>IDisposable 对象的生存期限于单个方法时, 应在 using 语句中声明并实例化它.</p>
-</li>
-<li><p>using 语句会按照正确的方式调用对象上的 Dispose 方法, 即使 using 语句块中出现了异常, 也能保证 Dispose 被正常调用.</p>
-</li>
-<li><p>在 using 块中, 对象是只读的并且无法进行修改或重新分配.</p>
-</li>
-<li><p>不要先实例化资源对象, 然后将变量传递到 using 语句, 而是应该直接在 using 语句中实例化该对象, 并将其范围限制在 using 块中.</p>
-</li>
-</ol>
-</blockquote>
-<h1 id="🦄回收内存的非实时性"><a href="#🦄回收内存的非实时性" class="headerlink" title="🦄回收内存的非实时性"></a>🦄回收内存的非实时性</h1><p>GC 一个很大的特点就是内存的回收并不是实时的, 它内部有一套完整的算法会进行智能判断回收的时机. 而且文章上面所提到的各种通知系统资源已使用完毕的方式也仅仅只是告诉系统这个 &quot;非托管资源&quot; 已经成为垃圾了, 可以被回收了. 但是实际上此时这块内存还没有被回收, 具体什么时候回收是由系统决定的.</p>
-<h1 id="👀GC-Collect-方法"><a href="#👀GC-Collect-方法" class="headerlink" title="👀GC.Collect() 方法"></a>👀GC.Collect() 方法</h1><p>因此系统提供了一个 GC.Collect() 方法, 这个方法会以系统的 root 为基础层层遍历, 将所有的可回收内存全部回收. 借由此方法, 程序员可以立即回收内存. 但是除非特殊情况, 不要主动调用此方法, 频繁调用会严重影响程序性能. (微软说的~)</p>
-<h1 id="🙄我的问题"><a href="#🙄我的问题" class="headerlink" title="🙄我的问题"></a>🙄我的问题</h1><p>当时我遇到的问题是, ASP 程序中需要将数据库中的 240 万条数据导出到一个文件中, 大概 500MB 左右, 而程序是一次性将这全部的 240 万行数据读取出来, 放到一个临时的 DataSet 中, 之后向文件中写入. 但是这个 DataSet 过大, 直接导致内存溢出了......</p>
-<p>于是我开始分批次读取, 并且使用 using 语句块进行资源的自动管理, 如下, 外面套了一层 for 循环.</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 追加模式写入流, 使用 using 自动管理资源</span></span><br><span class="line"><span class="keyword">using</span> (StreamWriter sw = <span class="keyword">new</span> StreamWriter(path, <span class="literal">true</span>, Encoding.GetEncoding(<span class="string">&quot;GB2312&quot;</span>)))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">using</span> (DataSet ds = <span class="keyword">new</span> GOOGOSOFT.DATABASE.OracleHelper().GetDataSet(str_sql))</span><br><span class="line">    &#123;</span><br><span class="line">        WriteFileCSV(ds, i, sw);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我一共分了 8 个批次查询, 但是当程序循环到第 6 次时, 还是内存溢出了......我当时就很郁闷, 不是都已经使用 using 了吗, 为啥还内存溢出......后来才知道, using 只是会告诉程序资源使用完毕了, 但并不会立即回收那部分内存. 于是在每次开始新一轮循环的时候强制回收一次内存就可以了.</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 追加模式写入流, 使用 using 自动释放资源</span></span><br><span class="line"><span class="keyword">using</span> (StreamWriter sw = <span class="keyword">new</span> StreamWriter(path, <span class="literal">true</span>, Encoding.GetEncoding(<span class="string">&quot;GB2312&quot;</span>)))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">using</span> (DataSet ds = <span class="keyword">new</span> GOOGOSOFT.DATABASE.OracleHelper().GetDataSet(str_sql))</span><br><span class="line">    &#123;</span><br><span class="line">        WriteFileCSV(ds, i, sw);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 强制调用垃圾回收器, 回收上面资源占用的内存</span></span><br><span class="line">GC.Collect();</span><br></pre></td></tr></table></figure>
-
-<p>我觉得释放和回收可以这样理解:</p>
-<ol>
-<li>释放是指解除对非托管资源的占用和锁定.</li>
-</ol>
-<p>比如一个文件, 在没有释放资源的时候, 不能对其进行其他操作, 比如删除操作. 释放资源后可以进行删除.</p>
-<ol start="2">
-<li>回收是指将资源使用的内存进行回收.</li>
-</ol>
-<p>比如我之前遇到的问题, 释放资源只是将资源打上一个 &quot;可被回收&quot; 的标记等待被 GC 回收, 此时内存还是被占用的, 之后 GC 真正回收内存之后, 内存使用率才会真正降低...</p>
-<p>最后还是要在强调一下, 通常情况下, 我们应该避免调用 GC.Collect() 方法, 让垃圾回收器独立运行. 在大多数情况下, 对于执行回收的最佳时机, 垃圾回收器的算法更有优势.</p>
-<p>除非在某些特殊情况下, 我们的程序占用了大量的内存, 需要立即释放, 在这种情况下我们才能使用 GC.Collect() 方法手动回收内存.</p>
-<h1 id="🐬参考文章"><a href="#🐬参考文章" class="headerlink" title="🐬参考文章"></a>🐬参考文章</h1><ul>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly93d3cuY25ibG9ncy5jb20veXVuZmVpZmVpL3AvMzk5NTM0Mi5odG1s">从 C# 垃圾回收机制中挖掘性能优化方案<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm1pY3Jvc29mdC5jb20vemgtY24vZG90bmV0L2NzaGFycC9sYW5ndWFnZS1yZWZlcmVuY2Uva2V5d29yZHMvdXNpbmctc3RhdGVtZW50">using 语句<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9iYnMuY3Nkbi5uZXQvdG9waWNzLzM5MDE4MTIwNw==">关于using和System.GC.Collect()对于释放资源的讨论<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9jbG91ZC50ZW5jZW50LmNvbS9kZXZlbG9wZXIvYXJ0aWNsZS8xMTYwNDgy">.Net中Finalize()和Dispose()有什么区别?<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ul>
 
     </div>
 
@@ -419,7 +351,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://kuroha.vip/csharp/csharp_garbagecollect.html" title="CSharp 垃圾回收">https://kuroha.vip/csharp/csharp_garbagecollect.html</a>
+      <a href="https://kuroha.vip/game/game_cemu.html" title="Cemu 模拟器的正确使用姿势">https://kuroha.vip/game/game_cemu.html</a>
   </li>
   <li class="post-copyright-license">
       <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
@@ -445,21 +377,18 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" rel="tag"><i class="fa fa-tag"></i> 编程基础</a>
+              <a href="/tags/Cemu/" rel="tag"><i class="fa fa-tag"></i> Cemu</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/unity/unity_closure.html" rel="prev" title="闭包">
-                  <i class="fa fa-angle-left"></i> 闭包
+                <a href="/unity/unity_spacetimedb.html" rel="prev" title="Unity 网络框架学习">
+                  <i class="fa fa-angle-left"></i> Unity 网络框架学习
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/game/game_note.html" rel="next" title="游戏笔记">
-                  游戏笔记 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>

@@ -20,28 +20,26 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="克隆 Git 仓库的时候真的急死人, 20KB 简直了, 下载 zip 倒是很快, 但是 zip 中没有 git 目录树啊, 就很烦...😖">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Git Clone 慢速 20KB 的终极解决方案">
-<meta property="og:url" content="https://kuroha.vip/git/git_clone_slow.html">
+    <meta name="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+<meta property="og:type" content="website">
+<meta property="og:title" content="二次元游宅客">
+<meta property="og:url" content="https://kuroha.vip/tags/Cemu/index.html">
 <meta property="og:site_name" content="二次元游宅客">
-<meta property="og:description" content="克隆 Git 仓库的时候真的急死人, 20KB 简直了, 下载 zip 倒是很快, 但是 zip 中没有 git 目录树啊, 就很烦...😖">
+<meta property="og:description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-09T13:08:24.000Z">
-<meta property="article:modified_time" content="2024-03-23T14:22:25.537Z">
 <meta property="article:author" content="Kuroha">
-<meta property="article:tag" content="Git">
+<meta property="article:tag" content="Unity,游戏,二次元,Kuroha,宅男,极客">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://kuroha.vip/git/git_clone_slow.html">
+<link rel="canonical" href="https://kuroha.vip/tags/Cemu/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/git/git_clone_slow.html","path":"git/git_clone_slow.html","title":"Git Clone 慢速 20KB 的终极解决方案"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"tags/Cemu/index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Git Clone 慢速 20KB 的终极解决方案 | 二次元游宅客</title>
+<title>标签: Cemu | 二次元游宅客</title>
   
 
 
@@ -149,7 +147,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -162,7 +160,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9C%81%E6%B5%81%E7%89%88"><span class="nav-number">1.</span> <span class="nav-text">省流版</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E4%BB%A3%E7%90%86%E7%AB%AF%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text">查看代理端口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE-git-%E4%BB%A3%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">设置 git 代理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E4%BB%A3%E7%90%86%E6%98%AF%E5%90%A6%E8%AE%BE%E7%BD%AE%E6%AD%A3%E7%A1%AE"><span class="nav-number">5.</span> <span class="nav-text">检查代理是否设置正确</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-https-%E9%93%BE%E6%8E%A5%E5%85%8B%E9%9A%86%E9%A1%B9%E7%9B%AE"><span class="nav-number">6.</span> <span class="nav-text">通过 https 链接克隆项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E5%90%8E%E5%A6%82%E6%9E%9C%E4%B8%8D%E6%94%BE%E5%BF%83%E5%8F%AF%E4%BB%A5%E6%8A%8A%E4%BB%A3%E7%90%86%E5%85%B3%E6%8E%89"><span class="nav-number">7.</span> <span class="nav-text">最后如果不放心可以把代理关掉</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -241,192 +238,50 @@
 
     </div>
 
-    <div class="main-inner post posts-expand">
+    <div class="main-inner tag posts-collapse">
 
 
   
-
-
-<div class="post-block">
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/git/git_clone_slow.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/about/avatar.gif">
-      <meta itemprop="name" content="Kuroha">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="二次元游宅客">
-      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Git Clone 慢速 20KB 的终极解决方案 | 二次元游宅客">
-      <meta itemprop="description" content="克隆 Git 仓库的时候真的急死人, 20KB 简直了, 下载 zip 倒是很快, 但是 zip 中没有 git 目录树啊, 就很烦...😖">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Git Clone 慢速 20KB 的终极解决方案
+  <div class="post-block">
+    <div class="post-content">
+      <div class="collection-title">
+        <h1 class="collection-header">Cemu
+          <small>标签</small>
         </h1>
+      </div>
 
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-05-09 21:08:24" itemprop="dateCreated datePublished" datetime="2023-05-09T21:08:24+08:00">2023-05-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-03-23 22:22:25" itemprop="dateModified" datetime="2024-03-23T22:22:25+08:00">2024-03-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>184</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-            <div class="post-description">克隆 Git 仓库的时候真的急死人, 20KB 简直了, 下载 zip 倒是很快, 但是 zip 中没有 git 目录树啊, 就很烦...😖</div>
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody"><span id="more"></span>
-
-<h1 id="省流版"><a href="#省流版" class="headerlink" title="省流版"></a>省流版</h1><ul>
-<li>设置 remote 必须使用 https 链接</li>
-<li>使用命令指定 git 代理的 IP 和 端口</li>
-</ul>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>此方案需要代理, 不会有人还没有代理吧? 不会吧不会吧? [赶紧溜....]</p>
-<h1 id="查看代理端口"><a href="#查看代理端口" class="headerlink" title="查看代理端口"></a>查看代理端口</h1><p>查看自己的 SS, SSR, Clash 等代理软件的端口, 我这里的是 <kb>1080</kb></p>
-<h1 id="设置-git-代理"><a href="#设置-git-代理" class="headerlink" title="设置 git 代理"></a>设置 git 代理</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.proxy http://127.0.0.1:1080</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global https.proxy https://127.0.0.1:1080</span><br></pre></td></tr></table></figure>
-
-<h1 id="检查代理是否设置正确"><a href="#检查代理是否设置正确" class="headerlink" title="检查代理是否设置正确"></a>检查代理是否设置正确</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global -l</span><br></pre></td></tr></table></figure>
-
-<h1 id="通过-https-链接克隆项目"><a href="#通过-https-链接克隆项目" class="headerlink" title="通过 https 链接克隆项目"></a>通过 https 链接克隆项目</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone [url]</span><br></pre></td></tr></table></figure>
-
-<p>实验结果最终克隆速度直接跑满带宽, 终于... 可以开始敲代码了, 哈哈哈</p>
-<h1 id="最后如果不放心可以把代理关掉"><a href="#最后如果不放心可以把代理关掉" class="headerlink" title="最后如果不放心可以把代理关掉"></a>最后如果不放心可以把代理关掉</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global --unset http.proxy</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global --unset https.proxy</span><br></pre></td></tr></table></figure>
-
+      
+    <div class="collection-year">
+      <span class="collection-header">2025</span>
     </div>
 
-    
-    
-    
-
-    <footer class="post-footer">
-          <div class="reward-container">
-  <div>请我一杯咖啡吧！</div>
-  <button>
-    赞赏
-  </button>
-  <div class="post-reward">
-      <div>
-        <img src="/images/about/alipay.png" alt="Kuroha 支付宝">
-        <span>支付宝</span>
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2025-07-21T21:27:29+08:00"
+              content="2025-07-21">
+          07-21
+        </time>
       </div>
 
-  </div>
-</div>
-
-          
-
-<div class="post-copyright">
-<ul>
-  <li class="post-copyright-author">
-      <strong>本文作者： </strong>Kuroha
-  </li>
-  <li class="post-copyright-link">
-      <strong>本文链接：</strong>
-      <a href="https://kuroha.vip/git/git_clone_slow.html" title="Git Clone 慢速 20KB 的终极解决方案">https://kuroha.vip/git/git_clone_slow.html</a>
-  </li>
-  <li class="post-copyright-license">
-      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
-          <div class="followme">
-  <span>欢迎关注我的其它发布渠道</span>
-
-  <div class="social-list">
-
-      <div class="social-item">
-          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
-            <span class="icon">
-              <i class="fab fa-telegram"></i>
-            </span>
-
-            <span class="label">Telegram</span>
-          </a>
+      <div class="post-title">
+        <a class="post-title-link" href="/game/game_cemu.html" itemprop="url">
+          <span itemprop="name">Cemu 模拟器的正确使用姿势</span>
+        </a>
       </div>
-  </div>
-</div>
 
-          <div class="post-tags">
-              <a href="/tags/Git/" rel="tag"><i class="fa fa-tag"></i> Git</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/unity/unity_reference.html" rel="prev" title="关于 Unity 中引用查询的研究">
-                  <i class="fa fa-angle-left"></i> 关于 Unity 中引用查询的研究
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/unity_editor/unity_editor_odin.html" rel="next" title="Unity Plugins Odin">
-                  Unity Plugins Odin <i class="fa fa-angle-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
+      
+    </header>
   </article>
-</div>
 
-
-
-
-
+    </div>
+  </div>
+  
+  
+  
 
 </div>
   </main>
