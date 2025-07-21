@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://kuroha.vip/images/computer/u.png">
 <meta property="article:published_time" content="2025-07-25T02:43:25.000Z">
-<meta property="article:modified_time" content="2025-07-19T12:22:59.964Z">
+<meta property="article:modified_time" content="2025-07-21T12:52:12.848Z">
 <meta property="article:author" content="Kuroha">
 <meta property="article:tag" content="数据恢复">
 <meta name="twitter:card" content="summary">
@@ -113,7 +113,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">55</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">24</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">56</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">25</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -179,7 +179,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -190,7 +190,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -290,7 +290,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2025-07-19 20:22:59" itemprop="dateModified" datetime="2025-07-19T20:22:59+08:00">2025-07-19</time>
+      <time title="修改时间：2025-07-21 20:52:12" itemprop="dateModified" datetime="2025-07-21T20:52:12+08:00">2025-07-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -335,15 +335,15 @@
 <p>总结一下: 文件可访问, 可打开, 可复制粘贴, 也可预览压缩包, 几乎和正常无异, 但操作大文件必然掉盘, 无论复制粘贴, 还是剪切粘贴都会</p>
 <h1 id="👀恢复过程-寻找思路"><a href="#👀恢复过程-寻找思路" class="headerlink" title="👀恢复过程 - 寻找思路"></a>👀恢复过程 - 寻找思路</h1><p>因为没有办法进行文件操作, 加上我也不懂数据恢复这一块, 所以我就问 AI 有没有其他的办法, AI 回复说可以越过 &quot;文件&quot; 这个概念, 直接将整个 U 盘的扇区拷贝出来</p>
 <h2 id="🍉恢复过程-步骤一"><a href="#🍉恢复过程-步骤一" class="headerlink" title="🍉恢复过程 - 步骤一"></a>🍉恢复过程 - 步骤一</h2><p>我们直接开始执行思路, 将整个 U 盘的扇区完整复制到一个 img 镜像文件中</p>
-<p>使用工具: <code>DMDE</code>, 按理来说 <code>HDD Raw Copy</code> 应该也可以, 但是我使用后失败了</p>
-<p>打开 <code>DMDE</code>, 切记这里要选择 <code>物理设备</code>, 为什么选择物理设备呢, 因为会掉盘呀, 哈哈, 所以不能选逻辑磁盘</p>
+<p>使用工具: <code>DMDE</code> 按理来说 <code>HDD Raw Copy</code> 应该也可以, 但是我使用后失败了</p>
+<p>打开 <code>DMDE</code> 切记这里要选择 <code>物理设备</code> 为什么选择物理设备呢, 因为会掉盘呀, 哈哈, 所以不能选逻辑磁盘</p>
 <p>之后点击 &quot;工具&quot;, 选择 &quot;复制扇区&quot;, 在弹出的窗口中, &quot;来源&quot; 这一项会自动设置好, 关键是 &quot;目的地&quot; 这项</p>
 <p>设置 &quot;目的地&quot; 时要点击 &quot;文件&quot;, 选择一个合适的目录, 当然记得把后缀改为 &quot;img&quot;</p>
 <p>之后就是等待了, 在复制的过程中, 因为 U 盘会频繁掉盘, 所以工具就会频繁等待 U 盘自动重连, 因此会花费很长时间, 耐心等待吧</p>
 <p>因为是直接复制整个扇区, 所以 U 盘多大, 复制出来就有多大, 比如 64GB 的 U 盘, 即使你的文件只有 1GB, 复制出来的镜像文件也是 64GB, 你可以理解为这一步直接创建了一份虚拟 U 盘, 和你的物理 U 盘一模一样的</p>
 <h2 id="🎄恢复过程-步骤二"><a href="#🎄恢复过程-步骤二" class="headerlink" title="🎄恢复过程 - 步骤二"></a>🎄恢复过程 - 步骤二</h2><p>前面我们已经把整个 U 盘移动到电脑上了, 这样我们就可以随意处置其中的数据啦! 下面是我当时复制出来的镜像文件截图</p>
 <p><img data-src="/images/computer/u.png" alt="镜像文件"></p>
-<p>首先需要将 <code>img</code> 文件挂载为虚拟磁盘, 这样我们就可以想磁盘一样, 处理这个 <code>img</code> 文件了, 这里使用的工具是 <code>OSFMount</code></p>
+<p>首先需要将 <code>img</code> 文件挂载为虚拟磁盘, 这样我们就可以像磁盘一样, 处理这个 <code>img</code> 文件了, 这里使用的工具是 <code>OSFMount</code></p>
 <h2 id="🤠恢复过程-步骤三"><a href="#🤠恢复过程-步骤三" class="headerlink" title="🤠恢复过程 - 步骤三"></a>🤠恢复过程 - 步骤三</h2><p>先说明下, 这一步不一定需要, 前面我们已经将 <code>img</code> 文件挂载为虚拟磁盘了, 这一步我们需要打开虚拟磁盘, 查看里面的文件, 看看是否有丢失</p>
 <p>如果确实存在文件丢失, 可以进行文件恢复, 恢复时不用选择真正的 U 盘, 因为现在的虚拟磁盘和你的 U 盘是完全一致的, 虚拟磁盘就是完全拷贝的 U 盘扇区, 所以直接对虚拟磁盘进行数据恢复即可, 使用 <code>DiskGenius</code> 工具</p>
 <p>从这一步的数据恢复中我得到一个教训, <code>长时间存储文件时不要使用 7z! 不要使用 7z! 不要使用 7z!</code></p>
@@ -412,8 +412,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/unity/unity_mod_programming.html" rel="prev" title="Unity 游戏的模组支持开发总结">
-                  <i class="fa fa-angle-left"></i> Unity 游戏的模组支持开发总结
+                <a href="/unity/unity_spacetimedb.html" rel="prev" title="Unity 网络框架学习">
+                  <i class="fa fa-angle-left"></i> Unity 网络框架学习
                 </a>
             </div>
             <div class="post-nav-item">
@@ -448,14 +448,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">108k</span>
+    <span title="站点总字数">113k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">6:35</span>
+    <span title="站点阅读时长">6:50</span>
   </span>
 </div>
 
