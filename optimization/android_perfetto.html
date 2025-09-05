@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/icon/logo.svg" color="#222">
+  <meta name="google-site-verification" content="UtyDAPkH1wac_9oyOpkJSRJ1JE7hPHvMFl9d2jPe5cQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.25.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12,"width":280},"hljswrap":true,"codeblock":{"theme":{"light":"vs","dark":"vs"},"prism":{"light":"prism-shades-of-purple","dark":"prism-shades-of-purple"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="学习一下新的性能分析工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Perfetto 之内存优化">
+<meta property="og:url" content="https://kuroha.vip/optimization/android_perfetto.html">
+<meta property="og:site_name" content="二次元游宅客">
+<meta property="og:description" content="学习一下新的性能分析工具">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://kuroha.vip/images/optimization/perfetto-1.png">
+<meta property="og:image" content="https://kuroha.vip/images/optimization/perfetto-2.png">
+<meta property="og:image" content="https://kuroha.vip/images/optimization/perfetto-3.png">
+<meta property="og:image" content="https://kuroha.vip/images/optimization/perfetto-4.png">
+<meta property="og:image" content="https://kuroha.vip/images/optimization/perfetto-5.png">
+<meta property="og:image" content="https://kuroha.vip/images/optimization/perfetto-6.png">
+<meta property="og:image" content="https://kuroha.vip/images/optimization/perfetto-7.png">
+<meta property="article:published_time" content="2025-08-25T09:42:05.000Z">
+<meta property="article:modified_time" content="2025-08-26T06:38:33.551Z">
+<meta property="article:author" content="Kuroha">
+<meta property="article:tag" content="Unity">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kuroha.vip/images/optimization/perfetto-1.png">
+
+
+<link rel="canonical" href="https://kuroha.vip/optimization/android_perfetto.html">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/optimization/android_perfetto.html","path":"optimization/android_perfetto.html","title":"Perfetto 之内存优化"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Perfetto 之内存优化 | 二次元游宅客</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js" defer></script>
+
+
+
+  
+
+
+
+
+
+
+    <script>
+        (function () {
+            if ('') {
+                var str = prompt('😈 私密日记, 查看请输入密码!');
+                if (str == "" || str == null) {
+                    history.back();
+                } else if (str !== '') {
+                    alert('😥 这个密码好像不太对, 再试试...');
+                    history.back();
+                }
+            }
+        })();
+    </script>
+
+
+<!--动漫菜单-->
+
+    <link rel="stylesheet" href="/js/galmenu/css/GalMenu.css">
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">二次元游宅客</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">一个热爱二次元和游戏开发的宅极客!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">58</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">26</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">11</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-捉小猫游戏"><a href="/catch_cat/" rel="section"><i class="fa fa-cat fa-fw"></i>捉小猫游戏</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%A5%A6-Perfetto-%E5%B7%A5%E5%85%B7%E7%9A%84%E6%9D%A5%E6%BA%90"><span class="nav-number">1.</span> <span class="nav-text">🥦 Perfetto 工具的来源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%A5%9D-Perfetto-%E7%9A%84%E7%BB%84%E6%88%90"><span class="nav-number">2.</span> <span class="nav-text">🥝 Perfetto 的组成</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%91%BB-%E5%86%85%E5%AD%98%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">3.</span> <span class="nav-text">👻 内存基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A6%84-%E5%86%85%E5%AD%98%E5%88%86%E7%B1%BB"><span class="nav-number">3.1.</span> <span class="nav-text">🦄 内存分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%90%94-%E9%9D%9E%E6%89%98%E7%AE%A1-%E5%A0%86-%E5%86%85%E5%AD%98"><span class="nav-number">3.1.1.</span> <span class="nav-text">🐔 非托管 (堆) 内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%90%A4-%E6%89%98%E7%AE%A1-%E5%A0%86-%E5%86%85%E5%AD%98"><span class="nav-number">3.1.2.</span> <span class="nav-text">🐤 托管 (堆) 内存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8E%84-%E5%86%85%E5%AD%98%E7%9A%84%E7%BB%84%E6%88%90"><span class="nav-number">3.2.</span> <span class="nav-text">🎄 内存的组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%A6%B4-%E5%B8%B8%E8%A7%81%E7%9A%84%E6%89%98%E7%AE%A1%E8%BF%90%E8%A1%8C%E6%97%B6"><span class="nav-number">3.3.</span> <span class="nav-text">🦴 常见的托管运行时</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%8F%B3-Perfetto-%E5%A0%86%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">⏳ Perfetto 堆内存分析的原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8D%96-Perfetto-%E4%B9%8B-UI-%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.</span> <span class="nav-text">🍖 Perfetto 之 UI 模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E5%87%86%E5%A4%87"><span class="nav-number">5.1.</span> <span class="nav-text">分析准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E8%AE%BE%E5%A4%87"><span class="nav-number">5.2.</span> <span class="nav-text">连接设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E8%B7%9F%E8%B8%AA"><span class="nav-number">5.3.</span> <span class="nav-text">配置跟踪</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%9F%E8%B8%AA%E5%86%85%E5%AD%98"><span class="nav-number">5.4.</span> <span class="nav-text">跟踪内存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8D%89-Perfetto-%E4%B9%8B-CLI-%E6%A8%A1%E5%BC%8F"><span class="nav-number">6.</span> <span class="nav-text">🍉 Perfetto 之 CLI 模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8D%91-WSL-%E7%9A%84%E8%AF%B4%E6%98%8E"><span class="nav-number">7.</span> <span class="nav-text">🍑 WSL 的说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8D%92-%E5%BC%80%E5%90%AF-WSL"><span class="nav-number">7.1.</span> <span class="nav-text">🍒 开启 WSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8D%85-%E5%AE%89%E8%A3%85-Linux-Ubuntu"><span class="nav-number">7.2.</span> <span class="nav-text">🍅 安装 Linux : Ubuntu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8D%90-%E6%9B%B4%E6%96%B0-Ubuntu"><span class="nav-number">7.3.</span> <span class="nav-text">🍐 更新 Ubuntu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8D%8E-%E5%9C%A8-Linux-%E4%B8%8A%E5%AE%89%E8%A3%85-Perfetto-%E6%89%80%E9%9C%80%E7%9A%84%E7%8E%AF%E5%A2%83"><span class="nav-number">7.4.</span> <span class="nav-text">🍎 在 Linux 上安装 Perfetto 所需的环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8D%8A-Windows-%E4%B8%8E-Linux-%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE%E6%80%BB%E7%BA%BF"><span class="nav-number">7.5.</span> <span class="nav-text">🍊 Windows 与 Linux 共享数据总线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8D%88-Linux-%E9%80%9A%E8%BF%87-ADB-%E8%BF%9E%E6%8E%A5-Android-%E8%AE%BE%E5%A4%87"><span class="nav-number">7.6.</span> <span class="nav-text">🍈 Linux 通过 ADB 连接 Android 设备</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8C%88-Perfetto-%E4%B9%8B-CLI-%E6%A8%A1%E5%BC%8F"><span class="nav-number">8.</span> <span class="nav-text">🌈 Perfetto 之 CLI 模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E5%89%8D%E6%8F%90"><span class="nav-number">8.1.</span> <span class="nav-text">分析前提</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%89%8B%E6%9C%BA"><span class="nav-number">8.2.</span> <span class="nav-text">连接手机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86%E5%87%86%E5%A4%87%E6%96%87%E4%BB%B6%E6%94%BE%E7%BD%AE%E5%88%B0-Linux"><span class="nav-number">8.3.</span> <span class="nav-text">将准备文件放置到 Linux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%99%E4%BA%88-heap-profile-%E8%84%9A%E6%9C%AC%E6%89%A7%E8%A1%8C%E6%9D%83%E9%99%90"><span class="nav-number">8.4.</span> <span class="nav-text">给予 heap_profile 脚本执行权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%95%E8%8E%B7%E9%9D%9E%E6%89%98%E7%AE%A1%E5%86%85%E5%AD%98%E5%BF%AB%E7%85%A7"><span class="nav-number">8.5.</span> <span class="nav-text">捕获非托管内存快照</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7%E5%8C%96"><span class="nav-number">8.6.</span> <span class="nav-text">符号化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%8D%80-%E5%8F%82%E8%80%83"><span class="nav-number">9.</span> <span class="nav-text">🍀 参考</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9A%A1-%E6%B3%A8%E8%A7%A31"><span class="nav-number">9.1.</span> <span class="nav-text">⚡ 注解1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9A%A1-%E6%B3%A8%E8%A7%A32"><span class="nav-number">9.2.</span> <span class="nav-text">⚡ 注解2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%A5-%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">9.3.</span> <span class="nav-text">🔥 参考链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%A5-%E5%A6%82%E4%BD%95%E5%88%A4%E6%96%AD%E5%AE%89%E5%8D%93%E8%AE%BE%E5%A4%87%E6%9E%B6%E6%9E%84"><span class="nav-number">9.4.</span> <span class="nav-text">🔥 如何判断安卓设备架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%A5-%E5%91%BD%E4%BB%A4%E7%A4%BA%E4%BE%8B"><span class="nav-number">9.5.</span> <span class="nav-text">🔥 命令示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%8C%B4-Perfetto-SQL"><span class="nav-number">9.6.</span> <span class="nav-text">🌴 Perfetto SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#stack-profile-mapping"><span class="nav-number">9.6.1.</span> <span class="nav-text">stack_profile_mapping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stack-profile-frame"><span class="nav-number">9.6.2.</span> <span class="nav-text">stack_profile_frame</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stack-profile-callsite"><span class="nav-number">9.6.3.</span> <span class="nav-text">stack_profile_callsite</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#heap-profile-allocation"><span class="nav-number">9.6.4.</span> <span class="nav-text">heap_profile_allocation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stack-profile-symbol"><span class="nav-number">9.6.5.</span> <span class="nav-text">stack_profile_symbol</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-SQL"><span class="nav-number">9.6.6.</span> <span class="nav-text">示例 SQL</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Kuroha"
+      src="/images/about/avatar.gif">
+  <p class="site-author-name" itemprop="name">Kuroha</p>
+  <div class="site-description" itemprop="description">本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly90Lm1lL0t1cm9oYUtpcml0bw==" title="Telegram → https:&#x2F;&#x2F;t.me&#x2F;KurohaKirito"><i class="fab fa-telegram fa-fw"></i>Telegram</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9zdGVhbWNvbW11bml0eS5jb20vcHJvZmlsZXMvNzY1NjExOTgzOTQxNDcwMDUv" title="Steam → https:&#x2F;&#x2F;steamcommunity.com&#x2F;profiles&#x2F;76561198394147005&#x2F;"><i class="fab fa-steam fa-fw"></i>Steam</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="bWFpbHRvOmt1cm9oYWtpcml0b0BnbWFpbC5jb20=" title="E-Mail → mailto:kurohakirito@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0t1cm9oYUtpcml0bw==" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KurohaKirito"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+  </div>
+
+
+    <div>
+        <canvas id="canvasDiyBlock" style="width:60%;">您的浏览器不支持 Canvas, 请更换浏览器!</canvas>
+        <script type="text/javascript" src="/js/clock.js"></script>
+    </div>
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          链接
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <span class="exturl" data-url="aHR0cHM6Ly9zaHlhcmNoZXIuZ2l0aHViLmlvLw==" title="https:&#x2F;&#x2F;shyarcher.github.io&#x2F;">ShyArcher</span>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kuroha.vip/optimization/android_perfetto.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/about/avatar.gif">
+      <meta itemprop="name" content="Kuroha">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二次元游宅客">
+      <meta itemprop="description" content="本人是一个热爱二次元和游戏开发的宅极客, 这是我的个人博客! 主要记录我学习的经历以及自己喜欢的动漫, 音乐, 偶尔也会写一些异想天开的脑洞, 哈哈!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Perfetto 之内存优化 | 二次元游宅客">
+      <meta itemprop="description" content="学习一下新的性能分析工具">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Perfetto 之内存优化
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-08-25 17:42:05" itemprop="dateCreated datePublished" datetime="2025-08-25T17:42:05+08:00">2025-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-08-26 14:38:33" itemprop="dateModified" datetime="2025-08-26T14:38:33+08:00">2025-08-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>22 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">学习一下新的性能分析工具</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+
+<h1 id="🥦-Perfetto-工具的来源"><a href="#🥦-Perfetto-工具的来源" class="headerlink" title="🥦 Perfetto 工具的来源"></a>🥦 Perfetto 工具的来源</h1><p>想详细了解 Perfetto 的话, 可以跳转 <span class="exturl" data-url="aHR0cHM6Ly9kZXZlbG9wZXIuYW5kcm9pZC5jb20vdG9waWMvcGVyZm9ybWFuY2UvdHJhY2luZz9obD16aC1jbg==">谷歌开发者文档<i class="fa fa-external-link-alt"></i></span> 查阅, 这里只是简单引用几句话说明一下</p>
+<blockquote>
+<p>The System tracing utility is an Android tool that saves device activity to a trace file. On a device running Android 10 (API level 29) or higher, trace files are saved in Perfetto format, as shown later in this document. On a device running an earlier version of Android, trace files are saved in the Systrace format.</p>
+</blockquote>
+<p>从上面一段的描述可以看出, Android 系统是内置跟踪程序的, 此程序可以将设备的活动保存至跟踪文件中, 在 Android 10 及以上版本中, 跟踪文件会以 Perfetto 格式保存, 在 Android  9 及以下版本中, 跟踪文件会以 Systrace 格式保存</p>
+<blockquote>
+<p><strong>Systrace</strong> is a legacy platform-provided command-line tool that records device activity over a short period of time in a compressed text file. The tool produces a report that combines data from the Android kernel, such as the CPU scheduler, disk activity, and app threads. Systrace works on all Android platform versions, but we recommend Perfetto for devices running Android 10 and higher.</p>
+</blockquote>
+<blockquote>
+<p><strong>Perfetto</strong> is the platform-wide tracing tool introduced in Android 10. It is a sophisticated open source tracing project for Android, Linux, and Chrome. It offers a superset of data sources compared to Systrace and lets you record arbitrarily long traces in a protocol buffer binary stream. You can open these traces in the Perfetto UI.</p>
+</blockquote>
+<p>从上面两段的描述可以看出, Perfetto 本质就是 Systrace 的上位替代品, 是谷歌新推出的一款跟踪工具, 已于 Android 系统中 <strong>内置</strong></p>
+<h1 id="🥝-Perfetto-的组成"><a href="#🥝-Perfetto-的组成" class="headerlink" title="🥝 Perfetto 的组成"></a>🥝 Perfetto 的组成</h1><p>Perfetto 是一套开源的多平台性能分析工具集, 它可以跟踪多种性能数据, 可以看下面的截图, 以 <strong>CPU</strong> <strong>GPU</strong> <strong>Memory</strong> 为例, 当然远不止这些</p>
+<p><img data-src="/images/optimization/perfetto-1.png" alt="perfetto-1"></p>
+<p><img data-src="/images/optimization/perfetto-2.png" alt="perfetto-2"></p>
+<p><img data-src="/images/optimization/perfetto-3.png" alt="perfetto-3"></p>
+<p>这里我们就专注于看内存分析中的 <strong>Native Heap Profiling</strong> 部分</p>
+<h1 id="👻-内存基础知识"><a href="#👻-内存基础知识" class="headerlink" title="👻 内存基础知识"></a>👻 内存基础知识</h1><p>先来补充一下基础知识, 对基础很了解的可以直接跳到这里: <a href="#%E2%8F%B3-perfetto-%E5%A0%86%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90%E7%9A%84%E5%8E%9F%E7%90%86">堆内存分析的原理</a></p>
+<h2 id="🦄-内存分类"><a href="#🦄-内存分类" class="headerlink" title="🦄 内存分类"></a>🦄 内存分类</h2><p>内存可以按照 <strong>堆内存</strong> (Heap) 和 <strong>栈内存</strong> (Stack) 的方式分类, 栈内存不会有内存泄漏问题, 而且通常不纳入分析, 因此我们之后分析的都是堆内存</p>
+<p>而堆内存又分为 <strong>托管内存</strong> (managed memory) 和 <strong>原生内存</strong> (native memory), 原生内存也叫做非托管内存, 下文都称为 <strong>非托管内存</strong></p>
+<h3 id="🐔-非托管-堆-内存"><a href="#🐔-非托管-堆-内存" class="headerlink" title="🐔 非托管 (堆) 内存"></a>🐔 非托管 (堆) 内存</h3><p>在学校学习时期编写的 C 语言控制台程序就是纯粹的非托管内存程序, 那时候无论申请还是释放堆内存, 都要自己手动调用 <code>malloc</code> &#x2F; <code>calloc</code> &#x2F; <code>realloc</code> &#x2F; <code>free</code></p>
+<p>用一句话总结的话, 完全由开发者手动申请手动释放的堆内存就是非托管内存</p>
+<h3 id="🐤-托管-堆-内存"><a href="#🐤-托管-堆-内存" class="headerlink" title="🐤 托管 (堆) 内存"></a>🐤 托管 (堆) 内存</h3><p>那么什么是托管内存呢 ? 要说明托管内存, 就要先说明一下 &quot;托管运行时&quot;, 在开发 C&#x2F;C++ 程序时, 有下面一些问题:</p>
+<ol>
+<li><p>由 <strong>指针</strong> 引发的内存安全问题, 为了避免 野指针, 内存越界 等内存安全问题, 需要一个统一的管理层</p>
+</li>
+<li><p>&quot;跨平台&quot; 问题, 如何做到只编写一份代码就可以在各个平台上正确运行, 也需要一个统一的管理层</p>
+</li>
+<li><p>系统安全问题, 使用 C&#x2F;C++ 可以做内存病毒, 因为是直接在操作系统上裸跑, 所以为了限制程序访问敏感资源, 防止损坏系统, 也需要一个统一的管理层</p>
+</li>
+</ol>
+<p>基于上面种种问题, &quot;托管运行时&quot; 被提出, 一个 <strong>负责执行程序代码, 并统一管理内存, 类型安全, 线程, 异常, GC 等功能的中间层</strong>, 由 &quot;托管运行时&quot; 帮我们申请的内存, 就是由这个 &quot;托管运行时&quot; 来管理的, 它会帮我们管理, 帮我们释放, 不过释放时有卡顿风险</p>
+<p>这样我们的程序和最初的 C&#x2F;C++ 程序相比, 可以简单理解为, 不再直接和操作系统打交道, 而是交给一个托管商, 这个托管商帮助我们管理资源, 调度执行, 处理异常, 回收垃圾内存等, 这部分被托管商管理的内存就是托管内存啦</p>
+<h2 id="🎄-内存的组成"><a href="#🎄-内存的组成" class="headerlink" title="🎄 内存的组成"></a>🎄 内存的组成</h2><p>虽说托管运行时接管了部分内存的申请和释放, 但托管运行时并没有硬性限制我们只能用托管内存, 我们也可以跳过托管, 直接向系统申请非托管内存, 不要想当然地理解成有了托管运行时后, 所有内存就都走托管了, 所以现代软件中, 几乎全部程序的堆内存都是由 <strong>非托管内存</strong> 和 <strong>托管内存</strong> 共同组成的</p>
+<p>举一个例子, 比如 <strong>Android NDK</strong>, 全称是 <strong>Android Native Development Kit</strong>, 允许 Android 应用直接编写 C&#x2F;C++ 代码, 既然都可以写 C&#x2F;C++ 代码了, 自然就可以直接申请非托管堆内存, 以及调用底层系统 API</p>
+<p>再举一个例子, 我们都知道, Java 程序运行在 JVM 上, JVM 的全称是 <strong>Java Virtual Machine</strong>, 翻译过来就是 Java 虚拟机, 但是也不要想当然认为 Java 代码申请的内存就全是托管内存, 比如 <strong>JNI</strong>, 全称是 <strong>Java Native Interface</strong>, 其中像 <code>ByteBuffer.allocateDirect()</code> 这样的 API 就可以实现在 JVM 堆外申请内存, 这种内存是不归 JVM 管的, 也是非托管内存</p>
+<p>所以再次说明, 现代应用程序的堆内存是由 <strong>非托管内存</strong> 和 <strong>托管内存</strong> 共同组成的</p>
+<h2 id="🦴-常见的托管运行时"><a href="#🦴-常见的托管运行时" class="headerlink" title="🦴 常见的托管运行时"></a>🦴 常见的托管运行时</h2><p>下面是一些常见的托管运行时, 看看有没有你所熟知的</p>
+<table>
+<thead>
+<tr>
+<th>托管运行时</th>
+<th>主要编程语言</th>
+<th>代表平台 &#x2F; 应用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>.NET CLR &#x2F; CoreCLR &#x2F; Mono &#x2F; IL2CPP</strong></td>
+<td>C#, F#, VB.NET</td>
+<td>Windows 应用, Unity 游戏的 C# 层, Xamarin</td>
+</tr>
+<tr>
+<td><strong>JVM (Java Virtual Machine)</strong></td>
+<td>Java, Kotlin, Scala, Groovy</td>
+<td>Android 应用, 企业服务器端</td>
+</tr>
+<tr>
+<td><strong>V8 &#x2F; SpiderMonkey &#x2F; JavaScriptCore</strong></td>
+<td>JavaScript, TypeScript</td>
+<td>Chrome &#x2F; Node.js &#x2F; Safari &#x2F; Web 前端</td>
+</tr>
+<tr>
+<td><strong>Python Interpreter (CPython, PyPy)</strong></td>
+<td>Python</td>
+<td>AI 脚本, 数据分析, 自动化</td>
+</tr>
+<tr>
+<td><strong>Ruby MRI &#x2F; YARV</strong></td>
+<td>Ruby</td>
+<td>Web 开发 (Rails)</td>
+</tr>
+<tr>
+<td><strong>BEAM VM</strong></td>
+<td>Erlang, Elixir</td>
+<td>电信系统, 高并发后台</td>
+</tr>
+<tr>
+<td><strong>Lua VM</strong></td>
+<td>Lua</td>
+<td>游戏脚本, 嵌入式脚本系统</td>
+</tr>
+</tbody></table>
+<h1 id="⏳-Perfetto-堆内存分析的原理"><a href="#⏳-Perfetto-堆内存分析的原理" class="headerlink" title="⏳ Perfetto 堆内存分析的原理"></a>⏳ Perfetto 堆内存分析的原理</h1><p>基础知识说明完毕, 接下来开始说明如何使用 Perfetto 进行堆内存分析, Perfetto 提供了两种互补的技术来专项负责调试上述两种内存</p>
+<p>第一种 : <strong>heap profiling for native code</strong></p>
+<p><strong>非托管代码</strong> 的堆内存分析, 基于 malloc&#x2F;free 时点, 对调用堆栈进行采样 (此次的研究内容)</p>
+<p>像 C&#x2F;C++&#x2F;Rust 这样的 Native Languages, 通常使用 libc 系列的 malloc &#x2F; free 函数在底层分配和释放内存</p>
+<p>Perfetto 分析这部分非托管内存的工作原理是拦截对这些函数的调用, 并注入代码来跟踪已分配但未释放的内存的调用栈, 还可以实现追踪每次分配的代码来源</p>
+<blockquote>
+<p>注意:</p>
+<p>使用 Perfetto 进行非托管堆内存分析仅适用于 Android 和 Linux, 因为 Perfetto 所开发的拦截 malloc &#x2F; free 的技术, 仅适用于这些操作系统</p>
+<p>另外此堆分析不具有追溯力, 它只能报告跟踪开始后发生的分配, 无法提供任何有关跟踪开始前的信息</p>
+<p>如果需要分析进程启动时的内存使用情况, 则必须在进程启动前便开始跟踪</p>
+</blockquote>
+<p>第二种 : <strong>heap dumps for Java&#x2F;managed code</strong></p>
+<p><strong>托管代码</strong> 的堆内存转储, 以创建堆保留图的形式, 来显示对象之间的保留依赖关系 (目前不做研究)</p>
+<h1 id="🍖-Perfetto-之-UI-模式"><a href="#🍖-Perfetto-之-UI-模式" class="headerlink" title="🍖 Perfetto 之 UI 模式"></a>🍖 Perfetto 之 UI 模式</h1><p>Perfetto 有两种使用方式, 第一种使用谷歌所提供的 Perfetto UI 网站来使用 Perfetto</p>
+<h2 id="分析准备"><a href="#分析准备" class="headerlink" title="分析准备"></a>分析准备</h2><ol>
+<li>目标设备必须是 Android 10 及以上</li>
+<li>应用程序是 <strong>可分析</strong> 或 <strong>可调试</strong> 包</li>
+<li>找到待分析的进程名称</li>
+<li>安装 android-tools, 即 ADB</li>
+</ol>
+<blockquote>
+<p>在 adb 中执行 <code>adb shell ps -A</code> 可以打印出进程信息, 通过筛选缩小数量, 最后一列就是需要填写的内容</p>
+<p>Windows 操作系统可以使用 <strong>Select-String</strong> 进行筛选, Linux 则是使用 <strong>grep</strong> : <code>adb shell ps -A | Select-String funny</code></p>
+</blockquote>
+<h2 id="连接设备"><a href="#连接设备" class="headerlink" title="连接设备"></a>连接设备</h2><ol>
+<li>打开 Perfetto UI 网站 <span class="exturl" data-url="aHR0cHM6Ly91aS5wZXJmZXR0by5kZXYv">https://ui.perfetto.dev/<i class="fa fa-external-link-alt"></i></span></li>
+<li>选择 <strong>Record new trace</strong></li>
+<li>选择 <strong>Target device</strong></li>
+<li>选择 <strong>Android</strong></li>
+<li>选择 <strong>WebUSB</strong> (FireFox 不支持 WebUSB, 请使用 Chrome 或 Edge)</li>
+<li>点击 <strong>Connect new device</strong></li>
+</ol>
+<p>成功连接设备后如下图</p>
+<p><img data-src="/images/optimization/perfetto-4.png" alt="perfetto-4"></p>
+<h2 id="配置跟踪"><a href="#配置跟踪" class="headerlink" title="配置跟踪"></a>配置跟踪</h2><ol>
+<li>选择左侧 Probes 中的 Memory</li>
+<li>开启 Native heap profiling</li>
+<li>填写 进程名称, 转储延时, 连续转储间隔 等</li>
+<li>选择左侧 Record settings 中的 Buffers and duration, 设置时长和大小限制</li>
+</ol>
+<h2 id="跟踪内存"><a href="#跟踪内存" class="headerlink" title="跟踪内存"></a>跟踪内存</h2><ol>
+<li>选择 Target device</li>
+<li>点击最下方的 Start tracing</li>
+</ol>
+<h1 id="🍉-Perfetto-之-CLI-模式"><a href="#🍉-Perfetto-之-CLI-模式" class="headerlink" title="🍉 Perfetto 之 CLI 模式"></a>🍉 Perfetto 之 CLI 模式</h1><p>前面说了 Perfetto 的第一种使用方式, 直接使用 Web UI, 但是这种方式无法对堆栈信息进行符号化, 而 CLI 模式可以, 所以我们选择 CLI 模式, CLI 模式也有两种使用方式</p>
+<p>第一种 : <strong>直接使用 perfetto 命令</strong></p>
+<p>使用 perfetto 命令, 这种使用方式灵活, 通过不同的配置文件可以进行不同的数据跟踪, 指定堆内存分析配置, 就可以进行堆内存分析了, 指定 CPU 分析配置, 就可以跟踪 CPU 数据, 但是使用难度很高, 而且进行非托管内存跟踪时无法自动符号化, 关于此命令的详细说明, 请参考 <a href="#%E2%9A%A1-%E6%B3%A8%E8%A7%A31">注解1</a></p>
+<p>第二种 : <strong>使用官方的 heap_profile 脚本</strong></p>
+<p>这个脚本是专门用于堆内存分析的, 只会跟踪堆内存数据, 无法进行其他的数据跟踪, 但对我们而言, 已经足够了, 另外 heap_profile 脚本支持自动符号化, 还能直接将跟踪数据从手机导出到 Linux 中, 不再需要手动 pull, 因此后续会讲解 heap_profile 脚本进行非托管内存分析</p>
+<p>现在可以先将这个脚本下载下来, 后面会用: <span class="exturl" data-url="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2dvb2dsZS9wZXJmZXR0by9tYWluL3Rvb2xzL2hlYXBfcHJvZmlsZQ==">https://raw.githubusercontent.com/google/perfetto/main/tools/heap_profile<i class="fa fa-external-link-alt"></i></span></p>
+<h1 id="🍑-WSL-的说明"><a href="#🍑-WSL-的说明" class="headerlink" title="🍑 WSL 的说明"></a>🍑 WSL 的说明</h1><p>是不是觉得很奇怪, 前面不是在讲 CLI 模式嘛, 怎么只讲了一点概述就跳转到 WSL 了 ? WSL 又是什么 ?</p>
+<p>先说一下什么是 WSL, WSL 全称 <strong>Windows Subsystem for Linux</strong>, 是一个可以让开发人员在 Windows 计算机上同时访问 Windows 和 Linux 的强大功能, 通过 WSL, 我们就可以直接安装各种 Linux 发行版, 例如 Ubuntu, Debian, Arch Linux 等, 并直接在 Windows 上使用 Linux 程序和 Bash 命令行工具, 而不用进行任何修改, 也无需运行虚拟机或配置双启动, 是不是很方便呢 ?</p>
+<p>那么为什么要提到 Linux 呢 ? 前面有提到 &quot;堆栈信息符号化&quot;, 目前这个功能只能在 Linux 或者 MacOS 上实现, 虽然其他的功能 Windows 都能实现, 但对于堆内存分析而言, &quot;堆栈信息符号化&quot; 是必须的一环, 不能跳过, 否则跟踪出来的数据就是一堆垃圾, 毫无用处, 所以接下来我们要在 Linux 上使用 Perfetto, 不过在这之前, 先说明一下如何使用 WSL</p>
+<h2 id="🍒-开启-WSL"><a href="#🍒-开启-WSL" class="headerlink" title="🍒 开启 WSL"></a>🍒 开启 WSL</h2><p>WSL 是 Windows 操作系统内置的, 不需要手动安装, 但是默认是关闭的, 想要启用 WSL, 需要开启以下设置</p>
+<ol>
+<li>启用 <strong>CPU 虚拟化</strong>, 这个需要在主板设置中开启, 不同主板的设置方法不用, 请自行搜索</li>
+<li>开启 <strong>虚拟机平台</strong> 功能, 在 &quot;启用或关闭 Windows 功能&quot; 中开启</li>
+<li>开启 <strong>适用于 Linux 的 Windows 子系统</strong> 功能, 在 &quot;启用或关闭 Windows 功能&quot; 中开启</li>
+</ol>
+<p><img data-src="/images/optimization/perfetto-5.png" alt="perfetto-5"></p>
+<p>设置完毕后, 记得重启计算机, 这样 WSL 就成功启用了</p>
+<p>如果担心自己电脑上的 WSL 不是最新版, 可以通过 <code>wsl --update --web-download</code> 更新 WSL</p>
+<p>如果通过命令更新失败, 也可以直接去 github 下载 <strong>.msixbundle</strong> 文件, 手动进行更新 (<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC9XU0wvcmVsZWFzZXM=">https://github.com/microsoft/WSL/releases<i class="fa fa-external-link-alt"></i></span>)</p>
+<p>可以通过 <code>wsl --version</code> 查看当前已安装 WSL 的版本信息</p>
+<blockquote>
+<p>WSL 版本: 2.6.1.0</p>
+<p>内核版本: 6.6.87.2-1</p>
+<p>WSLg 版本: 1.0.66</p>
+<p>MSRDC 版本: 1.2.6353</p>
+<p>Direct3D 版本: 1.611.1-81528511</p>
+<p>DXCore 版本: 10.0.26100.1-240331-1435.ge-release</p>
+<p>Windows: 10.0.19045.6216</p>
+</blockquote>
+<h2 id="🍅-安装-Linux-Ubuntu"><a href="#🍅-安装-Linux-Ubuntu" class="headerlink" title="🍅 安装 Linux : Ubuntu"></a>🍅 安装 Linux : Ubuntu</h2><p><code>wsl --list --online</code> : 列出当前可安装的 Linux 发行版本</p>
+<p><code>wsl --list --verbose</code> : 列出当前已安装的 Linux 发行版本</p>
+<p><code>wsl --install &lt;name&gt;</code> : 例如 <strong>Ubuntu-24.04</strong>, 安装 Ubuntu-24.04 子系统</p>
+<p><code>wsl --unregister &lt;name&gt;</code> : 例如 <strong>Ubuntu</strong>, 删除已安装的 <strong>Ubuntu</strong> 子系统</p>
+<p>先通过 list 命令得到想要安装的发行版名称, 再使用 install 命令安装即可, 我安装的是 Ubuntu 发行版, 所以下面说明一下 Ubuntu 的一些命令</p>
+<h2 id="🍐-更新-Ubuntu"><a href="#🍐-更新-Ubuntu" class="headerlink" title="🍐 更新 Ubuntu"></a>🍐 更新 Ubuntu</h2><p>上一步安装完 Linux 之后, 开始菜单中就可以看到 Ubuntu 了, 可以直接启动, 启动后就是一个控制台, 是的, 就只是一个控制台, 因为我们并没有安装桌面系统, 所以这里的 Ubuntu 是没有桌面的, 当然你可以自己安装一个桌面系统, 就可以使用带桌面的 Linux 了, 不过我们这里并不需要, 因为我们之后使用 Perfetto 也是以命令行的方式使用</p>
+<p><code>cat /etc/os-release</code></p>
+<p>通过此命令可以查看系统信息, 其中 &quot;cat&quot; 全称 &quot;concatenate&quot;</p>
+<p><code>sudo apt update</code></p>
+<p><strong>apt</strong> 就是 Ubuntu 系列的包管理器命令, 不同的 Linux 系列使用不同的包管理器命令</p>
+<blockquote>
+<p>Debian 系列, 使用 apt, dpkg</p>
+<p>Red Hat 系列, 使用 rpm, yum, dnf</p>
+<p>Arch Linux 系列, 使用 pacman, yay, paru</p>
+</blockquote>
+<p>使用此命令可以更新本地的软件包索引, 以熟悉的 git 对比的话, 这就是 &quot;fetch&quot; 命令, 执行后通常会提示有多少包需要更新</p>
+<p><code>sudo apt upgrade</code></p>
+<p>前面查询出需要更新的包, 现在就可以使用此命令执行更新, 可以使用 &quot;-y&quot; 来取消交互, 一路自动 &quot;yes&quot;</p>
+<h2 id="🍎-在-Linux-上安装-Perfetto-所需的环境"><a href="#🍎-在-Linux-上安装-Perfetto-所需的环境" class="headerlink" title="🍎 在 Linux 上安装 Perfetto 所需的环境"></a>🍎 在 Linux 上安装 Perfetto 所需的环境</h2><p><code>sudo apt install adb</code></p>
+<p>我们的目标是跟踪 Android 程序, 因此必须安装 ADB</p>
+<p><code>sudo apt install llvm</code></p>
+<p>这里的 llvm 是什么呢 ? 我们为什么要安装它呢 ?</p>
+<p>llvm 的全称是 <strong>Low Level Virtual Machine</strong>, 但是现代的 llvm 早已不再是虚拟机, 而是一整套编译器基础设施, 包含一系列模块化的编译器组件和工具链, 主要用于开发编译器以及优化编译, 而我们想要让堆栈信息符号化, 就必须安装其中的 <code>llvm-symbolizer</code>, 这是 <code>llvm</code> 工具集的一部分, 所以我们直接安装 <code>llvm</code> 即可</p>
+<p>安装完成后, 可以使用 <code>llvm-symbolizer --version</code> 验证是否安装成功</p>
+<h2 id="🍊-Windows-与-Linux-共享数据总线"><a href="#🍊-Windows-与-Linux-共享数据总线" class="headerlink" title="🍊 Windows 与 Linux 共享数据总线"></a>🍊 Windows 与 Linux 共享数据总线</h2><p>这是什么意思呢 ? 虽然 WSL 实现了 Windows 和 Linux 几乎一体化的操作体验, 但是它们俩本质还是两个操作系统</p>
+<p>我们的安卓手机通过数据线只能连接到 Windows, 而无法连接到 Linux, 所以接下来我们要想办法让 Linux 可以连接我们的安卓手机</p>
+<p>那么怎么做到呢 ? 就是标题了 : <strong>Windows 与 Linux 共享数据总线</strong></p>
+<ol>
+<li><p>安装 <strong>USBIPD</strong>, 去 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2RvcnNzZWwvdXNiaXBkLXdpbi9yZWxlYXNlcw==">usbipd<i class="fa fa-external-link-alt"></i></span> 这里下载 <strong>usbipd-win_5.2.0_x64.msi</strong> 并安装</p>
+</li>
+<li><p>执行 <code>adb kill-server</code> : 目的是让 Windows 端停止 ADB 服务, 防止 ADB 占用总线, 导致无法共享</p>
+</li>
+<li><p>执行 <code>usbipd list</code> : 列出连接到 Windows 的所有 USB 设备, 找到要共享到 WSL 的总线 ID, 我的是 <strong>2-8</strong></p>
+</li>
+<li><p>执行 <code>usbipd bind --busid 2-8 --force</code> : 共享总线, 之后可以通过执行 <code>usbipd list</code> 验证是否正确开启共享</p>
+</li>
+<li><p>执行 <code>usbipd attach --wsl --busid 2-8</code> : 将总线附加到 WSL 中, 这样 WSL 就可以访问这条数据总线了</p>
+</li>
+</ol>
+<h2 id="🍈-Linux-通过-ADB-连接-Android-设备"><a href="#🍈-Linux-通过-ADB-连接-Android-设备" class="headerlink" title="🍈 Linux 通过 ADB 连接 Android 设备"></a>🍈 Linux 通过 ADB 连接 Android 设备</h2><p>切换到 Linux 这边, 也不是说现在就可以连接 Android 了, 还需要先安装一个工具</p>
+<ol>
+<li><p>执行 <code>sudo apt install usbutils</code> 安装 USB 助手: usbutils</p>
+</li>
+<li><p>执行 <code>lsusb</code> 查看连接的 USB 设备, 此时应该就可以看到安卓手机了 (MTP + ADB)</p>
+</li>
+<li><p>执行 <code>adb devices</code> 就可以进行 USB 调试了</p>
+</li>
+</ol>
+<h1 id="🌈-Perfetto-之-CLI-模式"><a href="#🌈-Perfetto-之-CLI-模式" class="headerlink" title="🌈 Perfetto 之 CLI 模式"></a>🌈 Perfetto 之 CLI 模式</h1><p>做完前面的步骤, 我们的 Linux 就准备好了, 接下来正式讲解 Perfetto 命令行模式的使用步骤</p>
+<h2 id="分析前提"><a href="#分析前提" class="headerlink" title="分析前提"></a>分析前提</h2><p>先来看下分析的前提</p>
+<ol>
+<li>目标设备必须是 Android 10 及以上</li>
+<li>应用程序是 <strong>可分析</strong> 或 <strong>可调试</strong> 包</li>
+<li>找到待分析的进程名称</li>
+<li>linux 安装 android-tools, 即 ADB</li>
+<li>linux 安装 llvm-symbolizer</li>
+<li>linux 安装 python3</li>
+</ol>
+<p>前面的步骤中, 我们已经安装好了 adb 以及 llvm-symbolizer, 看要求还要安装 python3 ? 为什么要用 python3 呢 ? 因为前面 <a href="#%F0%9F%8D%89-perfetto-%E4%B9%8B-cli-%E6%A8%A1%E5%BC%8F">这里</a> 不是说了要用 heap_profile 脚本嘛, 而这个脚本就是一个 python 脚本 😂 哈哈哈</p>
+<p>那为什么安装 Linux 那里没有让你安装呢, 是因为 Ubuntu 中已经自带了 python3, 所以不需要再次安装, 可以使用 <code>python3 --version</code> 命令查看当前版本</p>
+<h2 id="连接手机"><a href="#连接手机" class="headerlink" title="连接手机"></a>连接手机</h2><p><code>adb devices</code></p>
+<p>使用命令检查手机, 确保 Linux 已通过 ADB 连接手机</p>
+<blockquote>
+<p>List of devices attached</p>
+<p>9dcb88d1        device</p>
+</blockquote>
+<h2 id="将准备文件放置到-Linux"><a href="#将准备文件放置到-Linux" class="headerlink" title="将准备文件放置到 Linux"></a>将准备文件放置到 Linux</h2><p>在 Windows 文件管理器中输入 <code>\\wsl$</code> 即可访问安装的 Linux 发行版</p>
+<p>将之前下载好的 heap_profile 文件, 以及需要解析的符号表 (*.so) 放置到 <code>home/kuroha/Documents</code> 文件夹中</p>
+<p>其中 kuroha 是我设置的 Linux 用户名, Documents 需要自己新建</p>
+<p>符号表文件解压后直接放进文件夹即可, 后面我们会设置为 index 模式, 此模式下会自动递归搜索文件夹, 所以不需要什么特殊路径配置</p>
+<p><img data-src="/images/optimization/perfetto-6.png" alt="perfetto-6"></p>
+<h2 id="给予-heap-profile-脚本执行权限"><a href="#给予-heap-profile-脚本执行权限" class="headerlink" title="给予 heap_profile 脚本执行权限"></a>给予 heap_profile 脚本执行权限</h2><p><code>chmod +x ~/Documents/heap_profile</code></p>
+<p>这里的 <code>~</code> 就是用户文件夹, 即: <code>home/kuroha</code></p>
+<p>给予 heap_profile 脚本执行权限, 这样 heap_profile 就可以在命令行中执行了, 权限设置好之后, 我们开始使用 heap_profile 命令进行堆内存跟踪</p>
+<p>关于这个脚本的具体使用方法可以执行 <code>Documents/heap_profile -h</code> 进行查看, 也可以在 <span class="exturl" data-url="aHR0cHM6Ly9wZXJmZXR0by5kZXYvZG9jcy9yZWZlcmVuY2UvaGVhcF9wcm9maWxlLWNsaQ==">cli<i class="fa fa-external-link-alt"></i></span> 文档中查看帮助信息</p>
+<h2 id="捕获非托管内存快照"><a href="#捕获非托管内存快照" class="headerlink" title="捕获非托管内存快照"></a>捕获非托管内存快照</h2><p>如果直接使用 <code>heap_profile -n &lt;name&gt;</code> 命令, 可以执行默认配置的内存捕获</p>
+<p>但是我们一般都是使用参数来进行自定义的内存捕获, 下面是常用的参数, 具体请参考 <a href="#%E2%9A%A1-%E6%B3%A8%E8%A7%A32">注解2</a></p>
+<p><code>-n</code> 用于指定需要跟踪的进程的名称</p>
+<p><code>-c</code> 可以设置数据保存的间隔</p>
+<p><code>-d</code> 可以设置总的跟踪时长</p>
+<p>命令示例 : <code>Documents/heap_profile -n com.Kuroha.SwordRequiem -c 5000 -d 60000</code></p>
+<h2 id="符号化"><a href="#符号化" class="headerlink" title="符号化"></a>符号化</h2><p>通过环境变量 <code>PERFETTO_SYMBOLIZER_MODE</code> 和 <code>PERFETTO_BINARY_PATH</code> 可以指定符号文件的位置</p>
+<p>将 PERFETTO_SYMBOLIZER_MODE 设置为 index 就可以递归搜索文件夹, 寻找符号表文件, 这样就不需要关注路径问题了</p>
+<p>PERFETTO_BINARY_PATH 的值就是符号表文件所在的根目录, 下面是最终的完整命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PERFETTO_SYMBOLIZER_MODE=&quot;index&quot; PERFETTO_BINARY_PATH=&quot;/home/kuroha/Documents/symbols_sword/&quot; Documents/heap_profile -n com.Kuroha.SwordRequiem -c 5000 -d 60000</span><br></pre></td></tr></table></figure>
+
+<p>执行此命令后, 会立即进行一次数据保存, 并且接下来的 1 分钟内, 每过 5 秒会再进行一次数据保存, 并生成跟踪文件, 此时生成的文件在 Android 手机中</p>
+<p>1 分钟结束后, 会自动拉取跟踪数据到本机, 即从 Android 手机拉取到 Linux 上, 并自动进行符号化</p>
+<p>最终生成 13 个 <code>.pb.gz</code> 跟踪数据文件, <code>raw-trace</code> 文件, <code>symbolized-trace</code> 文件, <code>symbols</code> 文件</p>
+<p>此时打开 Perfetto UI 网站, 点击 <code>Open trace file</code>, 选择 <code>symbolized-trace</code> 文件即可查看最终数据</p>
+<p><img data-src="/images/optimization/perfetto-7.png" alt="perfetto-7"></p>
+<h1 id="🍀-参考"><a href="#🍀-参考" class="headerlink" title="🍀 参考"></a>🍀 参考</h1><p>以下是一些参考资料</p>
+<h2 id="⚡-注解1"><a href="#⚡-注解1" class="headerlink" title="⚡ 注解1"></a>⚡ 注解1</h2><p>Perfetto 命令的使用</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">adb</span> <span class="string">shell</span> <span class="string">perfetto</span> <span class="string">-h</span></span><br><span class="line"></span><br><span class="line"><span class="attr">Usage:</span> <span class="string">perfetto</span></span><br><span class="line">  <span class="string">--background</span>     <span class="string">-d</span>      <span class="string">:</span> <span class="string">Exits</span> <span class="string">immediately</span> <span class="string">and</span> <span class="string">continues</span> <span class="string">tracing</span> <span class="string">in</span> <span class="string">background</span></span><br><span class="line">  <span class="string">--config</span>         <span class="string">-c</span>      <span class="string">:</span> <span class="string">/path/to/trace/config/file</span> <span class="string">or</span> <span class="bullet">-</span> <span class="string">for</span> <span class="string">stdin</span></span><br><span class="line">  <span class="string">--out</span>            <span class="string">-o</span>      <span class="string">:</span> <span class="string">/path/to/out/trace/file</span> <span class="string">or</span> <span class="bullet">-</span> <span class="string">for</span> <span class="string">stdout</span></span><br><span class="line">  <span class="string">--upload</span>                 <span class="string">:</span> <span class="string">Upload</span> <span class="string">field</span> <span class="string">trace</span></span><br><span class="line">                             <span class="string">(Android</span> <span class="string">only)</span></span><br><span class="line">  <span class="string">--dropbox</span>        <span class="attr">TAG     : DEPRECATED:</span> <span class="string">Use</span> <span class="string">--upload</span> <span class="string">instead</span> <span class="string">TAG</span> <span class="string">should</span> <span class="string">always</span> <span class="string">be</span> <span class="string">set</span> <span class="string">to</span> <span class="string">&#x27;perfetto&#x27;</span></span><br><span class="line">  <span class="string">--no-guardrails</span>          <span class="string">:</span> <span class="string">Ignore</span> <span class="string">guardrails</span> <span class="string">triggered</span> <span class="string">when</span> <span class="string">using</span> <span class="string">--dropbox</span></span><br><span class="line">                             <span class="string">(for</span> <span class="string">testing).</span></span><br><span class="line">  <span class="string">--txt</span>                    <span class="string">:</span> <span class="string">Parse</span> <span class="string">config</span> <span class="string">as</span> <span class="string">pbtxt.</span> <span class="string">Not</span> <span class="string">for</span> <span class="string">production</span> <span class="string">use.</span> <span class="string">Not</span> <span class="string">a</span> <span class="string">stable</span> <span class="string">API.</span></span><br><span class="line">  <span class="string">--reset-guardrails</span>       <span class="string">:</span> <span class="string">Resets</span> <span class="string">the</span> <span class="string">state</span> <span class="string">of</span> <span class="string">the</span> <span class="string">guardails</span> <span class="string">and</span> <span class="string">exits</span> <span class="string">all_heaps</span></span><br><span class="line">                             <span class="string">(for</span> <span class="string">testing).</span></span><br><span class="line">  <span class="string">--query</span>                  <span class="string">:</span> <span class="string">Queries</span> <span class="string">the</span> <span class="string">service</span> <span class="string">state</span> <span class="string">and</span> <span class="string">prints</span> <span class="string">it</span> <span class="string">as</span> <span class="string">human-readable</span> <span class="string">text.</span></span><br><span class="line">  <span class="string">--query-raw</span>              <span class="string">:</span> <span class="string">Like</span> <span class="string">--query,</span> <span class="string">but</span> <span class="string">prints</span> <span class="string">raw</span> <span class="string">proto-encoded</span> <span class="string">bytes</span> <span class="string">of</span> <span class="string">tracing_service_state.proto.</span></span><br><span class="line">  <span class="string">--help</span>           <span class="string">-h</span></span><br><span class="line"></span><br><span class="line"><span class="attr">light configuration flags:</span> <span class="string">(only</span> <span class="string">when</span> <span class="string">NOT</span> <span class="string">using</span> <span class="string">-c/--config)</span></span><br><span class="line">  <span class="string">--time</span>           <span class="string">-t</span>      <span class="string">:</span> <span class="string">Trace</span> <span class="string">duration</span> <span class="string">N[s,m,h]</span> <span class="string">(default:</span> <span class="string">10s)</span></span><br><span class="line">  <span class="string">--buffer</span>         <span class="string">-b</span>      <span class="string">:</span> <span class="string">Ring</span> <span class="string">buffer</span> <span class="string">size</span> <span class="string">N[mb,gb]</span> <span class="string">(default:</span> <span class="string">32mb)</span></span><br><span class="line">  <span class="string">--size</span>           <span class="string">-s</span>      <span class="string">:</span> <span class="string">Max</span> <span class="string">file</span> <span class="string">size</span> <span class="string">N[mb,gb]</span> <span class="string">(default:</span> <span class="string">in-memory</span> <span class="string">ring-buffer</span> <span class="string">only)</span></span><br><span class="line">  <span class="attr">ATRACE_CAT               :</span> <span class="string">Record</span> <span class="string">ATRACE_CAT</span> <span class="string">(e.g.</span> <span class="string">wm)</span></span><br><span class="line">  <span class="attr">FTRACE_GROUP/FTRACE_NAME :</span> <span class="string">Record</span> <span class="string">ftrace</span> <span class="string">event</span> <span class="string">(e.g.</span> <span class="string">sched/sched_switch)</span></span><br><span class="line">  <span class="attr">FTRACE_GROUP/*           :</span> <span class="string">Record</span> <span class="string">all</span> <span class="string">events</span> <span class="string">in</span> <span class="string">group</span> <span class="string">(e.g.</span> <span class="string">sched/*)</span></span><br><span class="line"></span><br><span class="line"><span class="attr">statsd-specific flags:</span></span><br><span class="line">  <span class="string">--alert-id</span>           <span class="string">:</span> <span class="string">ID</span> <span class="string">of</span> <span class="string">the</span> <span class="string">alert</span> <span class="string">that</span> <span class="string">triggered</span> <span class="string">this</span> <span class="string">trace.</span></span><br><span class="line">  <span class="string">--config-id</span>          <span class="string">:</span> <span class="string">ID</span> <span class="string">of</span> <span class="string">the</span> <span class="string">triggering</span> <span class="string">config.</span></span><br><span class="line">  <span class="string">--config-uid</span>         <span class="string">:</span> <span class="string">UID</span> <span class="string">of</span> <span class="string">app</span> <span class="string">which</span> <span class="string">registered</span> <span class="string">the</span> <span class="string">config.</span></span><br><span class="line">  <span class="string">--subscription-id</span>    <span class="string">:</span> <span class="string">ID</span> <span class="string">of</span> <span class="string">the</span> <span class="string">subscription</span> <span class="string">that</span> <span class="string">triggered</span> <span class="string">this</span> <span class="string">trace.</span></span><br><span class="line"></span><br><span class="line"><span class="string">Detach</span> <span class="string">mode.</span> <span class="string">DISCOURAGED,</span> <span class="string">read</span> <span class="string">https://docs.perfetto.dev/#/detached-mode</span> <span class="string">:</span></span><br><span class="line">  <span class="string">--detach=key</span>          <span class="string">:</span> <span class="string">Detach</span> <span class="string">from</span> <span class="string">the</span> <span class="string">tracing</span> <span class="string">session</span> <span class="string">with</span> <span class="string">the</span> <span class="string">given</span> <span class="string">key.</span></span><br><span class="line">  <span class="string">--attach=key</span> [<span class="string">--stop</span>] <span class="string">:</span> <span class="string">Re-attach</span> <span class="string">to</span> <span class="string">the</span> <span class="string">session</span> <span class="string">(optionally</span> <span class="string">stop</span> <span class="string">tracing</span> <span class="string">once</span> <span class="string">reattached).</span></span><br><span class="line">  <span class="string">--is_detached=key</span>     <span class="string">:</span> <span class="string">Check</span> <span class="string">if</span> <span class="string">the</span> <span class="string">session</span> <span class="string">can</span> <span class="string">be</span> <span class="string">re-attached</span> <span class="string">(0:Yes,</span> <span class="number">2</span><span class="string">:No,</span> <span class="number">1</span><span class="string">:Error).</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="⚡-注解2"><a href="#⚡-注解2" class="headerlink" title="⚡ 注解2"></a>⚡ 注解2</h2><p>Heap_Profile 脚本的使用</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">/home/kuroha/Documents/heap_profile</span> <span class="string">-h</span></span><br><span class="line"></span><br><span class="line"><span class="attr">usage:</span> <span class="string">heap_profile</span> [<span class="string">-h</span>] [<span class="string">-i</span> <span class="string">INTERVAL</span>] [<span class="string">-d</span> <span class="string">DURATION</span>] [<span class="string">--no-start</span>] [<span class="string">-p</span> <span class="string">PIDS</span>] [<span class="string">-n</span> <span class="string">NAMES</span>] [<span class="string">-c</span> <span class="string">CONTINUOUS_DUMP</span>]</span><br><span class="line">                    [<span class="string">--heaps</span> <span class="string">HEAPS</span>] [<span class="string">--all-heaps</span>] [<span class="string">--no-android-tree-symbolization</span>] [<span class="string">--disable-selinux</span>]</span><br><span class="line">                    [<span class="string">--no-versions</span>] [<span class="string">--no-running</span>] [<span class="string">--no-startup</span>] [<span class="string">--shmem-size</span> <span class="string">SHMEM_SIZE</span>] [<span class="string">--block-client</span>]</span><br><span class="line">                    [<span class="string">--block-client-timeout</span> <span class="string">BLOCK_CLIENT_TIMEOUT</span>] [<span class="string">--no-block-client</span>] [<span class="string">--idle-allocations</span>]</span><br><span class="line">                    [<span class="string">--dump-at-max</span>] [<span class="string">--disable-fork-teardown</span>] [<span class="string">--simpleperf</span>] [<span class="string">--traceconv-binary</span> <span class="string">TRACECONV_BINARY</span>]</span><br><span class="line">                    [<span class="string">--no-annotations</span>] [<span class="string">--print-config</span>] [<span class="string">-o</span> <span class="string">DIRECTORY</span>]</span><br><span class="line"></span><br><span class="line"><span class="string">Collect</span> <span class="string">a</span> <span class="string">heap</span> <span class="string">profile</span></span><br><span class="line"></span><br><span class="line">  <span class="string">The</span> <span class="string">PERFETTO_PROGUARD_MAP=packagename=map_filename.txt[:packagename=map_filename.txt...]</span> <span class="string">environment</span> <span class="string">variable</span> <span class="string">can</span> <span class="string">be</span> <span class="string">used</span> <span class="string">to</span> <span class="string">pass</span> <span class="string">proguard</span> <span class="string">deobfuscation</span> <span class="string">maps</span> <span class="string">for</span> <span class="string">different</span> <span class="string">packages</span></span><br><span class="line"></span><br><span class="line"><span class="attr">options:</span></span><br><span class="line">  <span class="string">-h,</span> <span class="string">--help</span>                        <span class="string">show</span> <span class="string">this</span> <span class="string">help</span> <span class="string">message</span> <span class="string">and</span> <span class="string">exit</span></span><br><span class="line">  <span class="string">-i,</span> <span class="string">--interval</span>                    <span class="string">Sampling</span> <span class="string">interval.</span> <span class="string">Default</span> <span class="number">4096</span> <span class="string">(4KiB)</span></span><br><span class="line">  <span class="string">-d,</span> <span class="string">--duration</span>                    <span class="attr">Duration of profile (ms). 0 to run until interrupted. Default:</span> <span class="string">until</span> <span class="string">interrupted</span> <span class="string">by</span> <span class="string">user.</span></span><br><span class="line">  <span class="string">--no-start</span>                        <span class="string">Do</span> <span class="string">not</span> <span class="string">start</span> <span class="string">heapprofd.</span></span><br><span class="line">  <span class="string">-p,</span> <span class="string">--pid</span>                         <span class="string">Comma-separated</span> <span class="string">list</span> <span class="string">of</span> <span class="string">PIDs</span> <span class="string">to</span> <span class="string">profile.</span></span><br><span class="line">  <span class="string">-n,</span> <span class="string">--name</span>                        <span class="string">Comma-separated</span> <span class="string">list</span> <span class="string">of</span> <span class="string">process</span> <span class="string">names</span> <span class="string">to</span> <span class="string">profile.</span></span><br><span class="line">  <span class="string">-c,</span> <span class="string">--continuous-dump</span>             <span class="string">Dump</span> <span class="string">interval</span> <span class="string">in</span> <span class="string">ms.</span> <span class="number">0</span> <span class="string">to</span> <span class="string">disable</span> <span class="string">continuous</span> <span class="string">dump.</span></span><br><span class="line">  <span class="string">--heaps</span>                           <span class="string">Comma-separated</span> <span class="string">list</span> <span class="string">of</span> <span class="string">heaps</span> <span class="string">to</span> <span class="string">collect,</span> <span class="attr">e.g:</span> <span class="string">libc.malloc,com.android.art.</span> <span class="string">Requires</span> <span class="string">Android</span> <span class="number">12</span><span class="string">.</span></span><br><span class="line">  <span class="string">--all-heaps</span>                       <span class="string">Collect</span> <span class="string">allocations</span> <span class="string">from</span> <span class="string">all</span> <span class="string">heaps</span> <span class="string">registered</span> <span class="string">by</span> <span class="string">target.</span></span><br><span class="line">  <span class="string">--no-android-tree-symbolization</span>   <span class="string">Do</span> <span class="string">not</span> <span class="string">symbolize</span> <span class="string">using</span> <span class="string">currently</span> <span class="string">lunched</span> <span class="string">target</span> <span class="string">in</span> <span class="string">the</span> <span class="string">Android</span> <span class="string">tree.</span></span><br><span class="line">  <span class="string">--disable-selinux</span>                 <span class="string">Disable</span> <span class="string">SELinux</span> <span class="string">enforcement</span> <span class="string">for</span> <span class="string">duration</span> <span class="string">of</span> <span class="string">profile.</span></span><br><span class="line">  <span class="string">--no-versions</span>                     <span class="string">Do</span> <span class="string">not</span> <span class="string">get</span> <span class="string">version</span> <span class="string">information</span> <span class="string">about</span> <span class="string">APKs.</span></span><br><span class="line">  <span class="string">--no-running</span>                      <span class="string">Do</span> <span class="string">not</span> <span class="string">target</span> <span class="string">already</span> <span class="string">running</span> <span class="string">processes.</span> <span class="string">Requires</span> <span class="string">Android</span> <span class="number">11</span><span class="string">.</span></span><br><span class="line">  <span class="string">--no-startup</span>                      <span class="string">Do</span> <span class="string">not</span> <span class="string">target</span> <span class="string">processes</span> <span class="string">that</span> <span class="string">start</span> <span class="string">during</span> <span class="string">the</span> <span class="string">profile.</span> <span class="string">Requires</span> <span class="string">Android</span> <span class="number">11</span><span class="string">.</span></span><br><span class="line">  <span class="string">--shmem-size</span>                      <span class="string">Size</span> <span class="string">of</span> <span class="string">buffer</span> <span class="string">between</span> <span class="string">client</span> <span class="string">and</span> <span class="string">heapprofd.</span> <span class="string">Default</span> <span class="string">8MiB.</span> <span class="string">Needs</span> <span class="string">to</span> <span class="string">be</span> <span class="string">a</span> <span class="string">power</span> <span class="string">of</span> <span class="string">two</span> <span class="string">multiple</span> <span class="string">of</span> <span class="number">4096</span><span class="string">,</span> <span class="string">at</span> <span class="string">least</span> <span class="number">8192</span><span class="string">.</span></span><br><span class="line">  <span class="string">--block-client</span>                    <span class="string">When</span> <span class="string">buffer</span> <span class="string">is</span> <span class="string">full,</span> <span class="string">block</span> <span class="string">the</span> <span class="string">client</span> <span class="string">to</span> <span class="string">wait</span> <span class="string">for</span> <span class="string">buffer</span> <span class="string">space.</span> <span class="string">Use</span> <span class="string">with</span> <span class="string">caution</span> <span class="string">as</span> <span class="string">this</span> <span class="string">can</span> <span class="string">significantly</span> <span class="string">slow</span> <span class="string">down</span> <span class="string">the</span> <span class="string">client.</span> <span class="string">This</span> <span class="string">is</span> <span class="string">the</span> <span class="string">default</span></span><br><span class="line">  <span class="string">--block-client-timeout</span>            <span class="string">If</span> <span class="string">--block-client</span> <span class="string">is</span> <span class="string">given,</span> <span class="string">do</span> <span class="string">not</span> <span class="string">block</span> <span class="string">any</span> <span class="string">allocation</span> <span class="string">for</span> <span class="string">longer</span> <span class="string">than</span> <span class="string">this</span> <span class="string">timeout</span> <span class="string">(us).</span></span><br><span class="line">  <span class="string">--no-block-client</span>                 <span class="string">When</span> <span class="string">buffer</span> <span class="string">is</span> <span class="string">full,</span> <span class="string">stop</span> <span class="string">the</span> <span class="string">profile</span> <span class="string">early.</span></span><br><span class="line">  <span class="string">--idle-allocations</span>                <span class="string">Keep</span> <span class="string">track</span> <span class="string">of</span> <span class="string">how</span> <span class="string">many</span> <span class="string">bytes</span> <span class="string">were</span> <span class="string">unused</span> <span class="string">since</span> <span class="string">the</span> <span class="string">last</span> <span class="string">dump,</span> <span class="string">per</span> <span class="string">callstack</span></span><br><span class="line">  <span class="string">--dump-at-max</span>                     <span class="string">Dump</span> <span class="string">the</span> <span class="string">maximum</span> <span class="string">memory</span> <span class="string">usage</span> <span class="string">rather</span> <span class="string">than</span> <span class="string">at</span> <span class="string">the</span> <span class="string">time</span> <span class="string">of</span> <span class="string">the</span> <span class="string">dump.</span></span><br><span class="line">  <span class="string">--disable-fork-teardown</span>           <span class="string">Do</span> <span class="string">not</span> <span class="string">tear</span> <span class="string">down</span> <span class="string">client</span> <span class="string">in</span> <span class="string">forks.</span> <span class="string">This</span> <span class="string">can</span> <span class="string">be</span> <span class="string">useful</span> <span class="string">for</span> <span class="string">programs</span> <span class="string">that</span> <span class="string">use</span> <span class="string">vfork.</span> <span class="string">Android</span> <span class="number">11</span><span class="string">+</span> <span class="string">only.</span></span><br><span class="line">  <span class="string">--simpleperf</span>                      <span class="string">Get</span> <span class="string">simpleperf</span> <span class="string">profile</span> <span class="string">of</span> <span class="string">heapprofd.</span> <span class="string">This</span> <span class="string">is</span> <span class="string">only</span> <span class="string">for</span> <span class="string">heapprofd</span> <span class="string">development.</span></span><br><span class="line">  <span class="string">--traceconv-binary</span>                <span class="string">Path</span> <span class="string">to</span> <span class="string">local</span> <span class="string">trace</span> <span class="string">to</span> <span class="string">text.</span> <span class="string">For</span> <span class="string">debugging.</span></span><br><span class="line">  <span class="string">--no-annotations</span>                  <span class="string">Do</span> <span class="string">not</span> <span class="string">suffix</span> <span class="string">the</span> <span class="string">pprof</span> <span class="string">function</span> <span class="string">names</span> <span class="string">with</span> <span class="string">Android</span> <span class="string">ART</span> <span class="string">mode</span> <span class="string">annotations</span> <span class="string">such</span> <span class="string">as</span> [<span class="string">jit</span>]<span class="string">.</span></span><br><span class="line">  <span class="string">--print-config</span>                    <span class="string">Print</span> <span class="string">config</span> <span class="string">instead</span> <span class="string">of</span> <span class="string">running.</span> <span class="string">For</span> <span class="string">debugging.</span></span><br><span class="line">  <span class="string">-o,</span> <span class="string">--output</span>                      <span class="string">Output</span> <span class="string">directory.</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="🔥-参考链接"><a href="#🔥-参考链接" class="headerlink" title="🔥 参考链接"></a>🔥 参考链接</h2><p>download heap_profile : <span class="exturl" data-url="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2dvb2dsZS9wZXJmZXR0by9tYWluL3Rvb2xzL2hlYXBfcHJvZmlsZQ==">https://raw.githubusercontent.com/google/perfetto/main/tools/heap_profile<i class="fa fa-external-link-alt"></i></span></p>
+<p>download record_android_trace : <span class="exturl" data-url="aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL2dvb2dsZS9wZXJmZXR0by9tYXN0ZXIvdG9vbHMvcmVjb3JkX2FuZHJvaWRfdHJhY2U=">https://raw.githubusercontent.com/google/perfetto/master/tools/record_android_trace<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9wZXJmZXR0by5kZXYvZG9jcy9jYXNlLXN0dWRpZXMvbWVtb3J5">使用 Perfetto 调试内存<i class="fa fa-external-link-alt"></i></span> 其中的 &quot;Analyzing the Native Heap&quot; 段</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9wZXJmZXR0by5kZXYvZG9jcy9kYXRhLXNvdXJjZXMvbmF0aXZlLWhlYXAtcHJvZmlsZXI=">关于 Heap profiler 的更多信息<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cuYW5kcm9pZHBlcmZvcm1hbmNlLmNvbS8yMDI0LzA1LzIxL0FuZHJvaWQtUGVyZmV0dG8tMDItaG93LXRvLWdldC1wZXJmZXR0by8=">Perfetto Trace 的抓取<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="🔥-如何判断安卓设备架构"><a href="#🔥-如何判断安卓设备架构" class="headerlink" title="🔥 如何判断安卓设备架构"></a>🔥 如何判断安卓设备架构</h2><p><code>adb shell getprop ro.product.cpu.abi</code></p>
+<p>这将输出设备的主 CPU 架构类型</p>
+<p>arm64-v8a : 表示 64-bit ARM 架构, 通常是 arm64</p>
+<p>armeabi-v7a : 表示 32-bit ARM 架构, 通常是 armv7</p>
+<p>x86_64 : 表示 64-bit x86 架构</p>
+<p>x86 : 表示 32-bit x86 架构</p>
+<h2 id="🔥-命令示例"><a href="#🔥-命令示例" class="headerlink" title="🔥 命令示例"></a>🔥 命令示例</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PERFETTO_SYMBOLIZER_MODE=&quot;index&quot; PERFETTO_BINARY_PATH=&quot;/home/kuroha/Documents/symbols_sword/&quot; Documents/heap_profile -n com.Kuroha.SwordRequiem -c 5000 -d 60000</span><br><span class="line"></span><br><span class="line">PERFETTO_SYMBOLIZER_MODE=&quot;index&quot; PERFETTO_BINARY_PATH=&quot;/home/kuroha/Documents/symbols_test/&quot; Documents/heap_profile -n com.DefaultCompany.Perfetto -c 5000 -d 60000</span><br><span class="line"></span><br><span class="line">PERFETTO_SYMBOLIZER_MODE=&quot;index&quot; PERFETTO_BINARY_PATH=&quot;/home/kuroha/Documents/symbols_funny/&quot; Documents/heap_profile -n com.sofunny.Sausage -c 5000 -d 60000</span><br></pre></td></tr></table></figure>
+
+<h2 id="🌴-Perfetto-SQL"><a href="#🌴-Perfetto-SQL" class="headerlink" title="🌴 Perfetto SQL"></a>🌴 Perfetto SQL</h2><h3 id="stack-profile-mapping"><a href="#stack-profile-mapping" class="headerlink" title="stack_profile_mapping"></a>stack_profile_mapping</h3><p><code>stack_profile_mapping</code> 表存储调用堆栈的进程地址空间映射信息 (a mapping (binary &#x2F; library) in a process), 是由堆栈分析器 heapprofd 和 traced_perf 生成的</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id, build_id, exact_offset, start_offset, <span class="keyword">start</span>, <span class="keyword">end</span>, load_bias, name <span class="keyword">from</span> stack_profile_mapping</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>id: 唯一标识符</li>
+<li>build_id: 符号表文件 *.so 的 Build ID</li>
+<li>start: 映射在进程地址空间中的开始位置</li>
+<li>end: 映射在进程地址空间中的结束位置</li>
+<li>name: 符号表文件 *.so 的名字</li>
+</ul>
+<h3 id="stack-profile-frame"><a href="#stack-profile-frame" class="headerlink" title="stack_profile_frame"></a>stack_profile_frame</h3><p><code>stack_profile_frame</code> 表存储的是调用堆栈的帧信息 (a frame on the callstack), 也是由堆栈分析器 heapprofd 和 traced_perf 生成的</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id, name, mapping, rel_pc, symbol_set_id, deobfuscated_name <span class="keyword">from</span> stack_profile_frame</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>id: 唯一标识符</li>
+<li>name: 此位置所在的函数的名称</li>
+<li>mapping: 此位置所在的映射</li>
+<li>rel_pc: 相对于映射开始的程序计数器</li>
+<li>symbol_set_id: 此帧的离线符号信息</li>
+<li>deobfuscated_name: 此位置所在的函数的去混淆名称</li>
+</ul>
+<h3 id="stack-profile-callsite"><a href="#stack-profile-callsite" class="headerlink" title="stack_profile_callsite"></a>stack_profile_callsite</h3><p><code>stack_profile_callsite</code> 表存储的是堆栈上的帧列表 (a callsite, callsite is a list of frames that were on the stack), 也是由堆栈分析器 heapprofd 和 traced_perf 生成的</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id, depth, parent_id, frame_id <span class="keyword">from</span> stack_profile_callsite</span><br></pre></td></tr></table></figure>
+
+<h3 id="heap-profile-allocation"><a href="#heap-profile-allocation" class="headerlink" title="heap_profile_allocation"></a>heap_profile_allocation</h3><p><code>heap_profile_allocation</code> 表存储的是一个 callsite 上发生的分配, 这是由 heapprofd 生成的</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id, ts, upid, heap_name, callsite_id, count, size <span class="keyword">from</span> heap_profile_allocation</span><br></pre></td></tr></table></figure>
+
+<h3 id="stack-profile-symbol"><a href="#stack-profile-symbol" class="headerlink" title="stack_profile_symbol"></a>stack_profile_symbol</h3><p><code>stack_profile_symbol</code> 表存储帧的符号化数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> id, symbol_set_id, name, source_file, line_number <span class="keyword">from</span> stack_profile_symbol</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例-SQL"><a href="#示例-SQL" class="headerlink" title="示例 SQL"></a>示例 SQL</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> heap.callsite_id, frame.name, frame.symbol_set_id, mapping.name <span class="keyword">as</span> mapping_name</span><br><span class="line"><span class="keyword">from</span> heap_profile_allocation heap</span><br><span class="line"><span class="keyword">join</span> stack_profile_callsite callsite <span class="keyword">on</span> (heap.callsite_id <span class="operator">=</span> callsite.id)</span><br><span class="line"><span class="keyword">join</span> stack_profile_frame frame <span class="keyword">on</span> (callsite.frame_id <span class="operator">=</span> frame.id)</span><br><span class="line"><span class="keyword">join</span> stack_profile_mapping mapping <span class="keyword">on</span> (frame.mapping <span class="operator">=</span> mapping.id)</span><br><span class="line"><span class="keyword">where</span> </span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/about/alipay.png" alt="Kuroha 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Kuroha
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://kuroha.vip/optimization/android_perfetto.html" title="Perfetto 之内存优化">https://kuroha.vip/optimization/android_perfetto.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC96aF9DTg=="><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/KurohaKirito">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Unity/" rel="tag"><i class="fa fa-tag"></i> Unity</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/game/game_cemu.html" rel="prev" title="CEMU 模拟器的正确使用姿势">
+                  <i class="fa fa-angle-left"></i> CEMU 模拟器的正确使用姿势
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2019 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-leaf"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Kuroha</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">121k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">7:21</span>
+  </span>
+</div>
+
+    <div id="days"></div>
+    <script type="text/javascript" src="/js/website_runtime.js"></script>
+
+
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+  <span class="exturl github-corner" data-url="aHR0cHM6Ly9naXRodWIuY29tL2t1cm9oYWtpcml0bw==" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></span>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+<!--究极看板娘效果-->
+
+    <!-- JQuery 依赖 -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery.js"></script>
+    <!-- 实现拖动效果，需引入 JQuery UI -->
+    <script type="text/javascript" src="/js/live2d_demo/jquery-ui.js"></script>
+    <!-- 使用 autoload.js 引入看板娘 -->
+    <script type="text/javascript" src="/js/live2d_demo/autoload.js"></script>
+
+
+<!--Aplayer 吸底式音乐播放功能-->
+
+    <link rel="stylesheet" href="/js/aplayer/APlayer.min.css">
+    <div id="aplayer_fixed"></div>
+    <script type="text/javascript" src="/js/aplayer/APlayer.min.js"></script>
+    <script type="text/javascript" src="/js/fixedAplayer.js"></script>
+
+
+<!--崩溃欺骗-->
+
+    <script type="text/javascript" src="/js/crash_cheat.js"></script>
+
+
+<!--鼠标红心效果-->
+
+
+<!--烟花爆炸特效-->
+
+    <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
+    <script type="text/javascript" src="/js/fireworks.js"></script>
+
+
+<!--动漫菜单-->
+
+    <div class="GalMenu GalDropDown">
+        <div class="circle" id="gal">
+            <div class="ring">
+                <a href="/" class="menuItem">首页</a>
+                <a href="javascript:history.go(1);" class="menuItem">前进</a>
+                <a href="javascript:$('html,body').animate({scrollTop:0},500);" class="menuItem">顶部</a>
+                <a href="javascript:location.reload();" class="menuItem">刷新</a>
+                <a href="/about/" class="menuItem">留言</a>
+                <a href="javascript:history.go(-1);" class="menuItem">后退</a>
+            </div>
+            
+                <audio id="audio" src="/js/galmenu/audio/sao-menu.wav"></audio>
+            
+        </div>
+    </div>
+    <script type="text/javascript">
+        var items = document.querySelectorAll('.menuItem');
+        for (var i = 0, l = items.length; i < l; i++) {
+            items[i].style.left = (50 - 35 * Math.cos(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (50 + 35 * Math.sin(- 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+        }
+    </script>
+    <script>
+        window.jQuery || document.write('<script src="/js/galmenu/js/jquery.min.js"><\/script>')
+    </script>
+    <script src="/js/galmenu/js/GalMenu.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('body').GalMenu({'menu': 'GalDropDown'})
+        });
+    </script>
+
+
+<!--Sakana-->
+<div class="sakana-box"></div>
+<script src="/js/sakana/sakana.js"></script>
+<script>
+Sakana.init({
+    el:         '.sakana-box',     // 启动元素 node 或 选择器
+    scale:      0.5,               // 缩放倍数
+    canSwitchCharacter: true,      // 允许换角色
+});
+Sakana.setMute(false);
+</script>
+</body>
+</html>
