@@ -15,10 +15,10 @@
 
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.css" integrity="sha256-6cQIC71/iBIYXFK+0RHAvwmjwWzkWd+r7v/BX3/vZDc=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.25.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12,"width":280},"hljswrap":true,"codeblock":{"theme":{"light":"vs","dark":"vs"},"prism":{"light":"prism-shades-of-purple","dark":"prism-shades-of-purple"},"copy_button":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"top_n_per_article":1,"unescape":false,"preload":false,"trigger":"auto"}}</script><script src="/js/config.js" defer></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"kuroha.vip","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.19.1","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":280},"copycode":{"enable":true,"style":"mac"},"fold":{"enable":false,"height":500},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"buttons","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="迭代器? foreach? IEnumerable? IEnumerator?">
 <meta property="og:type" content="article">
@@ -39,6 +39,7 @@
 <link rel="canonical" href="https://kuroha.vip/csharp/csharp_ienumerator.html">
 
 
+
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://kuroha.vip/csharp/csharp_ienumerator.html","path":"csharp/csharp_ienumerator.html","title":"CSharp 迭代器"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
@@ -47,29 +48,6 @@
 
 
 
-
-
-
-
-
-  
-  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous" defer></script>
-<script src="/js/utils.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script><script src="/js/bookmark.js" defer></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
-<script src="/js/third-party/search/local-search.js" defer></script>
-
-
-
-
-  <script src="/js/third-party/fancybox.js" defer></script>
-
-
-
-  
 
 
 
@@ -146,25 +124,25 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-      <div class="search-header">
-        <span class="search-icon">
-          <i class="fa fa-search"></i>
-        </span>
-        <div class="search-input-container">
-          <input autocomplete="off" autocapitalize="off" maxlength="80"
-                placeholder="搜索..." spellcheck="false"
-                type="search" class="search-input">
-        </div>
-        <span class="popup-btn-close" role="button">
-          <i class="fa fa-times-circle"></i>
-        </span>
-      </div>
-      <div class="search-result-container">
-        <div class="search-result-icon">
-          <i class="fa fa-spinner fa-pulse fa-5x"></i>
-        </div>
-      </div>
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
     </div>
   </div>
 
@@ -367,7 +345,8 @@
 
 <h2 id="C-1-0-中如何自己实现一个迭代器类型"><a href="#C-1-0-中如何自己实现一个迭代器类型" class="headerlink" title="C# 1.0 中如何自己实现一个迭代器类型"></a>C# 1.0 中如何自己实现一个迭代器类型</h2><p>C# 1.0 中, 想要实现一个迭代器类型, 只要让这个类型正确实现 IEnumerator 接口即可. IEnumerator 接口中需要实现的内容有:</p>
 <blockquote>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IEnumerator</span></span><br><span class="line">&gt;&#123;</span><br><span class="line">   <span class="comment">//</span></span><br><span class="line">   <span class="comment">// 摘要:</span></span><br><span class="line">   <span class="comment">//     获取集合中位于枚举数当前位置的元素。</span></span><br><span class="line">   <span class="comment">//</span></span><br><span class="line">   <span class="comment">// 返回结果:</span></span><br><span class="line">   <span class="comment">//     集合中位于枚举数当前位置的元素。</span></span><br><span class="line">   <span class="built_in">object</span> Current &#123; <span class="keyword">get</span>; &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//</span></span><br><span class="line">   <span class="comment">// 摘要:</span></span><br><span class="line">   <span class="comment">//     将枚举数推进到集合的下一个元素。</span></span><br><span class="line">   <span class="comment">//</span></span><br><span class="line">   <span class="comment">// 返回结果:</span></span><br><span class="line">   <span class="comment">//     如果枚举数已成功地推进到下一个元素，则为 true；如果枚举数传递到集合的末尾，则为 false。</span></span><br><span class="line">   <span class="comment">//</span></span><br><span class="line">   <span class="comment">// 异常:</span></span><br><span class="line">   <span class="comment">//   T:System.InvalidOperationException:</span></span><br><span class="line">   <span class="comment">//     创建枚举器后，已修改该集合。</span></span><br><span class="line">   <span class="function"><span class="built_in">bool</span> <span class="title">MoveNext</span>()</span>;</span><br><span class="line">   <span class="comment">//</span></span><br><span class="line">   <span class="comment">// 摘要:</span></span><br><span class="line">   <span class="comment">//     将枚举数设置为其初始位置，该位置位于集合中第一个元素之前。</span></span><br><span class="line">   <span class="comment">//</span></span><br><span class="line">   <span class="comment">// 异常:</span></span><br><span class="line">   <span class="comment">//   T:System.InvalidOperationException:</span></span><br><span class="line">   <span class="comment">//     创建枚举器后，已修改该集合。</span></span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">Reset</span>()</span>;</span><br><span class="line">&gt;&#125;</span><br></pre></td></tr></table></figure></blockquote>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IEnumerator</span></span><br><span class="line">&gt;&#123;</span><br><span class="line">   <span class="comment">//</span></span><br><span class="line">   <span class="comment">// 摘要:</span></span><br><span class="line">   <span class="comment">//     获取集合中位于枚举数当前位置的元素。</span></span><br><span class="line">   <span class="comment">//</span></span><br><span class="line">   <span class="comment">// 返回结果:</span></span><br><span class="line">   <span class="comment">//     集合中位于枚举数当前位置的元素。</span></span><br><span class="line">   <span class="built_in">object</span> Current &#123; <span class="keyword">get</span>; &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//</span></span><br><span class="line">   <span class="comment">// 摘要:</span></span><br><span class="line">   <span class="comment">//     将枚举数推进到集合的下一个元素。</span></span><br><span class="line">   <span class="comment">//</span></span><br><span class="line">   <span class="comment">// 返回结果:</span></span><br><span class="line">   <span class="comment">//     如果枚举数已成功地推进到下一个元素，则为 true；如果枚举数传递到集合的末尾，则为 false。</span></span><br><span class="line">   <span class="comment">//</span></span><br><span class="line">   <span class="comment">// 异常:</span></span><br><span class="line">   <span class="comment">//   T:System.InvalidOperationException:</span></span><br><span class="line">   <span class="comment">//     创建枚举器后，已修改该集合。</span></span><br><span class="line">   <span class="function"><span class="built_in">bool</span> <span class="title">MoveNext</span>()</span>;</span><br><span class="line">   <span class="comment">//</span></span><br><span class="line">   <span class="comment">// 摘要:</span></span><br><span class="line">   <span class="comment">//     将枚举数设置为其初始位置，该位置位于集合中第一个元素之前。</span></span><br><span class="line">   <span class="comment">//</span></span><br><span class="line">   <span class="comment">// 异常:</span></span><br><span class="line">   <span class="comment">//   T:System.InvalidOperationException:</span></span><br><span class="line">   <span class="comment">//     创建枚举器后，已修改该集合。</span></span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">Reset</span>()</span>;</span><br><span class="line">&gt;&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
 <ol>
 <li><p>Current 属性. 必须是 public 修饰, 必须返回 object 类型, 必须实现 Get 器, 必须遵守的 Get 器规则: 获取当前索引位置的值.</p>
 </li>
@@ -489,7 +468,7 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/csharp/csharp_delegate_04.html" rel="prev" title="委托(四) &quot;委托与事件的区别&quot; 以及 &quot;观察者模式&quot;">
+                <a href="/csharp/csharp_delegate_04.html" rel="prev" title="委托(四) "委托与事件的区别" 以及 "观察者模式"">
                   <i class="fa fa-angle-left"></i> 委托(四) "委托与事件的区别" 以及 "观察者模式"
                 </a>
             </div>
@@ -548,12 +527,6 @@
   </footer>
 
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-  <div class="sidebar-dimmer"></div>
   <div class="reading-progress-bar"></div>
   <a role="button" class="book-mark-link book-mark-link-fixed"></a>
 
@@ -562,6 +535,30 @@
 <noscript>
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.28/fancybox/fancybox.umd.js" integrity="sha256-ytMJGN3toR+a84u7g7NuHm91VIR06Q41kMWDr2pq7Zo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
 <!--究极看板娘效果-->
 
     <!-- JQuery 依赖 -->
