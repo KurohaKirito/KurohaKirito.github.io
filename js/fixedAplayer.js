@@ -18,8 +18,8 @@ const aplayer_fixed = new APlayer({
     {
       name: 'Unicorn', // 歌曲名
       artist: '泽野弘之', // 演唱者
-      url: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/PAK0Le3a79kGkJvM7c5ARST76Lr4UN/unicorn.mp3', //音乐文件
-      cover: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/NAK0Le3a79kGlfvM8c5ARST77hr4UN/unicorn.png', //音乐封面
+      url: '//ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/PAK0Le3a79kGkJvM7c5ARST76Lr4UN/unicorn.mp3', //音乐文件
+      cover: '//ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/NAK0Le3a79kGlfvM8c5ARST77hr4UN/unicorn.png', //音乐封面
       // lrc: 'lrc1.lrc', // 歌词文件
       // theme: '#00FFFF', // 主题色 会覆盖全局设置
       // type: auto // 歌曲类型 auto hls normal 或 自定义
@@ -27,8 +27,8 @@ const aplayer_fixed = new APlayer({
     {
       name: 'Swordland', // 歌曲名
       artist: '梶浦由记', // 演唱者
-      url: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/PAK0Le3a79kGkJv9Sc5ARST76Kr4UN/swordland.mp3', //音乐文件
-      cover: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/NAK0Le3a79kGkIv9Rc5ARST76Jr4UN/swordland.jpg', //音乐封面
+      url: '//ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/PAK0Le3a79kGkJv9Sc5ARST76Kr4UN/swordland.mp3', //音乐文件
+      cover: '//ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/NAK0Le3a79kGkIv9Rc5ARST76Jr4UN/swordland.jpg', //音乐封面
       // lrc: 'lrc1.lrc', // 歌词文件
       // theme: '#00FFFF', // 主题色 会覆盖全局设置
       // type: auto // 歌曲类型 auto hls normal 或 自定义
@@ -36,8 +36,8 @@ const aplayer_fixed = new APlayer({
     {
       name: 'Light your sword', // 歌曲名
       artist: '梶浦由记', // 演唱者
-      url: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/NAK0Le3a79iXKuh62DO8QWCL1veBR/light-your-sword.mp3', //音乐文件
-      cover: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/NAK0Le3a79kGkIv9Qc5ARST76Ir4UN/light-your-sword.jpg', //音乐封面
+      url: '//ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/NAK0Le3a79iXKuh62DO8QWCL1veBR/light-your-sword.mp3', //音乐文件
+      cover: '//ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/NAK0Le3a79kGkIv9Qc5ARST76Ir4UN/light-your-sword.jpg', //音乐封面
       // lrc: 'lrc1.lrc', // 歌词文件
       // theme: '#00FFFF', // 主题色 会覆盖全局设置
       // type: auto // 歌曲类型 auto hls normal 或 自定义
@@ -45,8 +45,8 @@ const aplayer_fixed = new APlayer({
     {
       name: 'A Tender Feeling', // 歌曲名
       artist: '梶浦由记', // 演唱者
-      url: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/NAK0Le3a79kGkIv9Oc5ARST76lr4UN/a-tender-feeling.mp3', //音乐文件
-      cover: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/NAK0Le3a79kGkIv9Pc5ARST76Hr4UN/a-tender-feeling.png', //音乐封面
+      url: '//ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/NAK0Le3a79kGkIv9Oc5ARST76lr4UN/a-tender-feeling.mp3', //音乐文件
+      cover: '//ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25FkgG/NAK0Le3a79kGkIv9Pc5ARST76Hr4UN/a-tender-feeling.png', //音乐封面
       // lrc: 'lrc1.lrc', // 歌词文件
       // theme: '#00FFFF', // 主题色 会覆盖全局设置
       // type: auto // 歌曲类型 auto hls normal 或 自定义
