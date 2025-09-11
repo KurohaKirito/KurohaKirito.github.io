@@ -18,8 +18,8 @@ const aplayer_fixed = new APlayer({
     {
       name: 'A Tender Feeling', // 歌曲名
       artist: '梶浦由记', // 演唱者
-      url: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvYy8xNWRlOGNlODk2MmJjODM5L0lRVDdHMDFvN1Z6eFRJMWFFWFhtZGNoS0FiNUk5M3VkekFoR25oMC1YdUV0MkZJ.mp3', //音乐文件
-      cover: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy8xNWRlOGNlODk2MmJjODM5L0lRVGMxeWZSWVhmYVJZVnRxa2VwZlBMR0FSLWg1aVZ2TE9FR0syWFpiQWRkaGVn.png', //音乐封面
+      url: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/321d7e490ee19b5d/a-tender-feeling.mp3', //音乐文件
+      cover: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/8f27c887f0723e53/a-tender-feeling.png', //音乐封面
       // lrc: 'lrc1.lrc', // 歌词文件
       // theme: '#00FFFF', // 主题色 会覆盖全局设置
       // type: auto // 歌曲类型 auto hls normal 或 自定义
@@ -27,8 +27,8 @@ const aplayer_fixed = new APlayer({
     {
       name: 'Unicorn', // 歌曲名
       artist: '泽野弘之', // 演唱者
-      url: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvYy8xNWRlOGNlODk2MmJjODM5L0lRVGJyMWgwS3dJc1Rva1FQSUxqTWoza0FTVHVlSElLZlVyM2VFVjV6RGVwMk1F.mp3', //音乐文件
-      cover: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy8xNWRlOGNlODk2MmJjODM5L0lRVFV4T3RfV0lOTVRLd05PRUhaNENCMEFZMDF0ODd4ZzBQQ2xPeG9lNG9wTTMw.png', //音乐封面
+      url: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/f75e83de5c431860/unicorn.mp3', //音乐文件
+      cover: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/b50df8bcc92828c4/unicorn.png', //音乐封面
       // lrc: 'lrc1.lrc', // 歌词文件
       // theme: '#00FFFF', // 主题色 会覆盖全局设置
       // type: auto // 歌曲类型 auto hls normal 或 自定义
@@ -36,8 +36,8 @@ const aplayer_fixed = new APlayer({
     {
       name: 'Swordland', // 歌曲名
       artist: '梶浦由记', // 演唱者
-      url: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvYy8xNWRlOGNlODk2MmJjODM5L0lRU1hyWk1URVBwd1JJLVRkRDc0ZEpBckFRbmFBZ3BQclVvV25ZUjYzbnd0dkNz.mp3', //音乐文件
-      cover: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy8xNWRlOGNlODk2MmJjODM5L0lRUU9GUzJvNDRvZ1JaNFR1SEttMG5WZEFXRUFmSXF0LUI4ZlB3enhwNWFkZ2E0.jpg', //音乐封面
+      url: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/f743feabf75e3505/swordland.mp3', //音乐文件
+      cover: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/f66d868302645f24/swordland.jpg', //音乐封面
       // lrc: 'lrc1.lrc', // 歌词文件
       // theme: '#00FFFF', // 主题色 会覆盖全局设置
       // type: auto // 歌曲类型 auto hls normal 或 自定义
@@ -45,8 +45,8 @@ const aplayer_fixed = new APlayer({
     {
       name: 'Light your sword', // 歌曲名
       artist: '梶浦由记', // 演唱者
-      url: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvYy8xNWRlOGNlODk2MmJjODM5L0lRUTJpY3dDaHFsNFM1X2VXRlRQb24yOEFYbUEydGVNU3JRY0toWmo3S1lVSXVN.mp3', //音乐文件
-      cover: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy8xNWRlOGNlODk2MmJjODM5L0lRUVBBX1hoM1k0MVQ1UmdNaEYwbUJIcUFkSk1jR1BNSG9sODlpWTk0eEQ0Rkw0.jpg', //音乐封面
+      url: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/007016468832e6be/light-your-sword.mp3', //音乐文件
+      cover: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/134ef2391adf4cec/light-your-sword.jpg', //音乐封面
       // lrc: 'lrc1.lrc', // 歌词文件
       // theme: '#00FFFF', // 主题色 会覆盖全局设置
       // type: auto // 歌曲类型 auto hls normal 或 自定义
