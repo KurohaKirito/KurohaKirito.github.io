@@ -16,10 +16,19 @@ const aplayer_fixed = new APlayer({
   audio: 
   [
     {
+      name: 'A Tender Feeling', // 歌曲名
+      artist: '梶浦由记', // 演唱者
+      url: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvYy8xNWRlOGNlODk2MmJjODM5L0lRVDdHMDFvN1Z6eFRJMWFFWFhtZGNoS0FiNUk5M3VkekFoR25oMC1YdUV0MkZJ.mp3', //音乐文件
+      cover: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy8xNWRlOGNlODk2MmJjODM5L0lRVGMxeWZSWVhmYVJZVnRxa2VwZlBMR0FSLWg1aVZ2TE9FR0syWFpiQWRkaGVn.png', //音乐封面
+      // lrc: 'lrc1.lrc', // 歌词文件
+      // theme: '#00FFFF', // 主题色 会覆盖全局设置
+      // type: auto // 歌曲类型 auto hls normal 或 自定义
+    },
+    {
       name: 'Unicorn', // 歌曲名
       artist: '泽野弘之', // 演唱者
-      url: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25ENji/PAK0Le3a79kGkJvM7c5ARST76Lr4UN/unicorn.mp3', //音乐文件
-      cover: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25ENji/NAK0Le3a79kGlfvM8c5ARST77hr4UN/unicorn.png', //音乐封面
+      url: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvYy8xNWRlOGNlODk2MmJjODM5L0lRVGJyMWgwS3dJc1Rva1FQSUxqTWoza0FTVHVlSElLZlVyM2VFVjV6RGVwMk1F.mp3', //音乐文件
+      cover: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy8xNWRlOGNlODk2MmJjODM5L0lRVFV4T3RfV0lOTVRLd05PRUhaNENCMEFZMDF0ODd4ZzBQQ2xPeG9lNG9wTTMw.png', //音乐封面
       // lrc: 'lrc1.lrc', // 歌词文件
       // theme: '#00FFFF', // 主题色 会覆盖全局设置
       // type: auto // 歌曲类型 auto hls normal 或 自定义
@@ -27,8 +36,8 @@ const aplayer_fixed = new APlayer({
     {
       name: 'Swordland', // 歌曲名
       artist: '梶浦由记', // 演唱者
-      url: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25ENji/PAK0Le3a79kGkJv9Sc5ARST76Kr4UN/swordland.mp3', //音乐文件
-      cover: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25ENji/NAK0Le3a79kGkIv9Rc5ARST76Jr4UN/swordland.jpg', //音乐封面
+      url: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvYy8xNWRlOGNlODk2MmJjODM5L0lRU1hyWk1URVBwd1JJLVRkRDc0ZEpBckFRbmFBZ3BQclVvV25ZUjYzbnd0dkNz.mp3', //音乐文件
+      cover: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy8xNWRlOGNlODk2MmJjODM5L0lRUU9GUzJvNDRvZ1JaNFR1SEttMG5WZEFXRUFmSXF0LUI4ZlB3enhwNWFkZ2E0.jpg', //音乐封面
       // lrc: 'lrc1.lrc', // 歌词文件
       // theme: '#00FFFF', // 主题色 会覆盖全局设置
       // type: auto // 歌曲类型 auto hls normal 或 自定义
@@ -36,17 +45,8 @@ const aplayer_fixed = new APlayer({
     {
       name: 'Light your sword', // 歌曲名
       artist: '梶浦由记', // 演唱者
-      url: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25ENji/NAK0Le3a79iXKuh62DO8QWCL1veBR/light-your-sword.mp3', //音乐文件
-      cover: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25ENji/NAK0Le3a79kGkIv9Qc5ARST76Ir4UN/light-your-sword.jpg', //音乐封面
-      // lrc: 'lrc1.lrc', // 歌词文件
-      // theme: '#00FFFF', // 主题色 会覆盖全局设置
-      // type: auto // 歌曲类型 auto hls normal 或 自定义
-    },
-    {
-      name: 'A Tender Feeling', // 歌曲名
-      artist: '梶浦由记', // 演唱者
-      url: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25ENji/NAK0Le3a79kGkIv9Oc5ARST76lr4UN/a-tender-feeling.mp3', //音乐文件
-      cover: 'http://ys-d.ysepan.com/wap/kuroha/D9N5Ie9UQ25ENji/NAK0Le3a79kGkIv9Pc5ARST76Hr4UN/a-tender-feeling.png', //音乐封面
+      url: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL3UvYy8xNWRlOGNlODk2MmJjODM5L0lRUTJpY3dDaHFsNFM1X2VXRlRQb24yOEFYbUEydGVNU3JRY0toWmo3S1lVSXVN.mp3', //音乐文件
+      cover: 'https://dlink.host/1drv/aHR0cHM6Ly8xZHJ2Lm1zL2kvYy8xNWRlOGNlODk2MmJjODM5L0lRUVBBX1hoM1k0MVQ1UmdNaEYwbUJIcUFkSk1jR1BNSG9sODlpWTk0eEQ0Rkw0.jpg', //音乐封面
       // lrc: 'lrc1.lrc', // 歌词文件
       // theme: '#00FFFF', // 主题色 会覆盖全局设置
       // type: auto // 歌曲类型 auto hls normal 或 自定义
