@@ -18,8 +18,8 @@ const aplayer_fixed = new APlayer({
     {
       name: 'A Tender Feeling', // 歌曲名
       artist: '梶浦由记', // 演唱者
-      url: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/321d7e490ee19b5d/a-tender-feeling.mp3', //音乐文件
-      cover: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/8f27c887f0723e53/a-tender-feeling.png', //音乐封面
+      url: 'https://od.lk/s/NzNfMTA0OTUyMzQ1Xw/a-tender-feeling.mp3', //音乐文件
+      cover: 'https://od.lk/s/NzNfMTA0OTUyMzQ2Xw/a-tender-feeling.png', //音乐封面
       // lrc: 'lrc1.lrc', // 歌词文件
       // theme: '#00FFFF', // 主题色 会覆盖全局设置
       // type: auto // 歌曲类型 auto hls normal 或 自定义
@@ -27,8 +27,8 @@ const aplayer_fixed = new APlayer({
     {
       name: 'Unicorn', // 歌曲名
       artist: '泽野弘之', // 演唱者
-      url: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/f75e83de5c431860/unicorn.mp3', //音乐文件
-      cover: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/b50df8bcc92828c4/unicorn.png', //音乐封面
+      url: 'https://od.lk/s/NzNfMTA0OTUyMzQzXw/unicorn.mp3', //音乐文件
+      cover: 'https://od.lk/s/NzNfMTA0OTUyMzQ0Xw/unicorn.png', //音乐封面
       // lrc: 'lrc1.lrc', // 歌词文件
       // theme: '#00FFFF', // 主题色 会覆盖全局设置
       // type: auto // 歌曲类型 auto hls normal 或 自定义
@@ -36,8 +36,8 @@ const aplayer_fixed = new APlayer({
     {
       name: 'Swordland', // 歌曲名
       artist: '梶浦由记', // 演唱者
-      url: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/f743feabf75e3505/swordland.mp3', //音乐文件
-      cover: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/f66d868302645f24/swordland.jpg', //音乐封面
+      url: 'https://od.lk/s/NzNfMTA0OTUyMzQxXw/swordland.mp3', //音乐文件
+      cover: 'https://od.lk/s/NzNfMTA0OTUyMzQyXw/swordland.jpg', //音乐封面
       // lrc: 'lrc1.lrc', // 歌词文件
       // theme: '#00FFFF', // 主题色 会覆盖全局设置
       // type: auto // 歌曲类型 auto hls normal 或 自定义
@@ -45,11 +45,29 @@ const aplayer_fixed = new APlayer({
     {
       name: 'Light your sword', // 歌曲名
       artist: '梶浦由记', // 演唱者
-      url: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/007016468832e6be/light-your-sword.mp3', //音乐文件
-      cover: 'https://fs-im-kefu.7moor-fs1.com/ly/4d2c3f00-7d4c-11e5-af15-41bf63ae4ea0/134ef2391adf4cec/light-your-sword.jpg', //音乐封面
+      url: 'https://od.lk/s/NzNfMTA0OTUyMzM5Xw/light-your-sword.mp3', //音乐文件
+      cover: 'https://od.lk/s/NzNfMTA0OTUyMzQwXw/light-your-sword.jpg', //音乐封面
       // lrc: 'lrc1.lrc', // 歌词文件
       // theme: '#00FFFF', // 主题色 会覆盖全局设置
       // type: auto // 歌曲类型 auto hls normal 或 自定义
-    }
+    },
+    {
+      name: '光るなら', // 歌曲名
+      artist: 'Goose house', // 演唱者
+      url: 'https://od.lk/s/NzNfMTA0OTUyMzUyXw/001.mp3', //音乐文件
+      cover: 'https://od.lk/s/NzNfMjUyMzcyNzhf/001.jpg', //音乐封面
+      // lrc: 'lrc1.lrc', // 歌词文件
+      // theme: '#00FFFF', // 主题色 会覆盖全局设置
+      // type: auto // 歌曲类型 auto hls normal 或 自定义
+    },
+    {
+      name: '緋色の空', // 歌曲名
+      artist: '川田まみ', // 演唱者
+      url: 'https://od.lk/s/NzNfMTA0OTUyMzU0Xw/002.mp3', //音乐文件
+      cover: 'https://od.lk/s/NzNfMTA0OTUyMzUzXw/002.jpg', //音乐封面
+      // lrc: 'lrc1.lrc', // 歌词文件
+      // theme: '#00FFFF', // 主题色 会覆盖全局设置
+      // type: auto // 歌曲类型 auto hls normal 或 自定义
+    },
   ]
 });
